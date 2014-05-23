@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*"
+		 xmlns:ui="sceneModule.view.ui.*"
+		 xmlns:view1="sceneModule.view.role.view.*"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 width="520" height="348">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.CommonTools;
+			
+			private var l_liliang:TextField;
+			private var l_minjie:TextField;
+			private var l_zhili:TextField;
+			private var l_naili:TextField;
+			private var l_jingshen:TextField;
+			
+			private var l_wugong:TextField;
+			private var l_mogong:TextField;
+			
+			private var curData:Object;
+			
+			public function set data(obj:Object):void{
+				this.curData = obj;
+				setCurInfo(obj);
+			}
+			
+			private function setCurInfo(obj:Object=null):void{
+				if (obj == null) return;
+				//l_zhenying.text = obj.unionType;
+				l_juntuan.text = obj.roleCorpsInfo.joinCorpsFlag?obj.roleCorpsInfo.corpsName:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu');
+				l_jingjipaiming.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu');
+				l_liliang.text = obj.manualStr;
+				l_zhili.text = obj.manualWis;
+				l_jingshen.text = obj.block;
+				l_minjie.text = obj.manualDex;
+				l_naili.text = obj.manualVit;
+				l_wugong.text = obj.physicalAttack.toFixed(1);
+				l_mogong.text = obj.magicAttack.toFixed(1);
+				
+				
+				//				setProperty(l_liliang, obj.manualStr, obj.exULiliang);
+				//				setProperty(l_zhili, obj.manualWis, obj.exUZhili);
+				//				setProperty(l_jingshen, obj.manualSpi, obj.exUJingshen);
+				//				setProperty(l_minjie, obj.manualDex, obj.exUMinjie);
+				//				setProperty(l_naili, obj.manualVit, obj.exUNaili);
+				//				setProperty(l_wugong, obj.physicalAttack, obj.exUWugong);
+				//				setProperty(l_mogong, obj.magicAttack, obj.exUMogong);
+				
+				//l_wugong.text = int(obj.physicalAttack).toString();
+				//l_mogong.text = int(obj.magicAttack).toString();
+				l_gongsu.text = obj.speed.toFixed(1);
+				l_baoji.text = obj.critRate.toFixed(1);
+				l_wufang.text = int(obj.physicalDefense).toString();
+				l_mofang.text = int(obj.magicDefense).toString();
+				l_mingzhong.text =obj.hitRate.toFixed(1);
+				l_shanbi.text = obj.dodgeRate.toFixed(1);
+				
+				comp_hp.cur_Num = obj.hp;
+				comp_hp.max_Num = obj.maxHp;
+				
+				comp_jingli.cur_Num = obj.energy;
+				comp_jingli.max_Num = 200;
+				
+				comp_role_style.role_data = obj;
+				
+				cardtype.selectedValue = '0';
+				union_shizhuang.enabled = false;
+				union_pet.enabled = false;
+			}
+			
+			private function setProperty(tf:TextField, base:int, ex:int):void{
+				tf.text = base.toString();
+				var startIndex:int = tf.text.length;
+				if(ex > 0){
+					var a:String = " + " + ex;
+					tf.appendText(a);
+					var f:TextFormat = new TextFormat();
+					f.color = 0x00FF00;
+					f.size = 12;
+					tf.setTextFormat(f, startIndex, startIndex + a.length);	
+				}
+			}
+			
+			public function set equip_obj(obj:Object):void{
+				comp_role_style.equip_data = obj;	
+			}
+
+			private function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_mainMenu","role_bg");
+				
+				l_liliang = CommonTools.createFTF();
+				//x="77" y="253"
+				l_liliang.text = "力量";
+				l_liliang.x = 78;
+				l_liliang.y = 205;
+				property_contain.addChild(l_liliang);
+				
+				l_minjie = CommonTools.createFTF();
+				//x="160" y="253"
+				l_minjie.x = 160;
+				l_minjie.y = 162;
+				//property_contain.addChild(l_minjie);
+				
+				l_zhili = CommonTools.createFTF();
+				//x="77" y="271"
+				l_zhili.text = "智力";
+				l_zhili.x = 78;
+				l_zhili.y = 228;
+				property_contain.addChild(l_zhili);
+				
+				l_naili = CommonTools.createFTF();
+				//x="160" y="272"
+				l_naili.x = 160;
+				l_naili.y = 180;
+				//property_contain.addChild(l_naili);
+				
+				l_jingshen = CommonTools.createFTF();
+				//x="77" y="289"
+				l_jingshen.x = 73;
+				l_jingshen.y = 290;
+				//property_contain.addChild(l_jingshen);
+				
+				l_wugong = CommonTools.createFTF();
+				//x="76" y="343"
+				l_wugong.x = 73;
+				l_wugong.y = 218;
+				//property_contain.addChild(l_wugong);
+				
+				l_mogong = CommonTools.createFTF();
+				//x="76" y="361"
+				l_mogong.x = 73;
+				l_mogong.y = 236;
+				//property_contain.addChild(l_mogong);
+				
+				setCurInfo(this.curData);
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"/>
+	</fx:Declarations>
+	<mx:Image
+		id="bg"   x="0" y="0"/>
+	<s:RadioButton
+		id="union_role"
+		value="0"
+		group="{cardtype}"
+		skinClass="style.Skin_CrotaPackRadioButtonMidSide" 
+		styleName="MAINMENUROLEFONT12e4e0b3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('role','mriC_js')}" visible="false" 
+		width="70" height="26" x="279" y="4"/>
+	<s:RadioButton
+		id="union_shizhuang"
+		value="1" visible="false"
+		group="{cardtype}"
+		skinClass="style.Skin_CrotaPackRadioButtonMidSide" 
+		styleName="MAINMENUROLEFONT12e4e0b3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('role','mriC_sz')}" 
+		width="70" height="26" x="349" y="4"/>
+	<s:RadioButton
+		id="union_pet"
+		value="2"
+		group="{cardtype}"
+		skinClass="style.Skin_CrotaPackRadioButtonRSide" 
+		styleName="MAINMENUROLEFONT12e4e0b3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('role','mriC_cw')}" visible="false"
+		width="70" height="26" x="419" y="4"/>
+	
+	<mx:UIComponent id="property_contain" y="-3"/>
+	<!--<component:CrotaBasicLabel 
+		id="l_zhenying"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('role','mriC_zy')}"
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="80" y="60"
+	/>-->
+	<component:CrotaBasicLabel 
+		id="l_juntuan"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jt')}"
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="80" y="61"
+	/>
+	<component:CrotaBasicLabel 
+		id="l_jingjipaiming"			 
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('role','mriC_jjpm')}"
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="120" y="129"
+	/>
+	<!--<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="74" y="162"
+		text="力量"
+	 id="l_liliang"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="74" y="180"
+		text="智力"
+	 id="l_zhili"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="77" y="290"
+		text="精神"
+	 id="l_jingshen"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="160" y="180"
+		text="耐力"
+	 id="l_naili"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="160" y="163"
+		text="敏捷"
+	 id="l_minjie"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="76" y="218"
+		text="物攻"
+	 id="l_wugong"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="74" y="236"
+		text="魔攻"
+	 id="l_mogong"/>-->
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="78" y="252"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gs')}"
+	 id="l_gongsu"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="78" y="273"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_bj')}"
+	 id="l_baoji"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="186" y="205"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_wf')}"
+	 id="l_wufang"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="186" y="228"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mf')}"
+	 id="l_mofang"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="186" y="251"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mz')}"
+	 id="l_mingzhong"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	x="186" y="274"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sb')}"
+	 id="l_shanbi"/>
+	<ui:RedAndBludComponent 
+		_bgWidth="127" height="11" x="88" y="81" 
+		_bgUrl="null" 
+		_Obj="0" 
+	 id="comp_hp"/>
+	<ui:RedAndBludComponent 
+		_bgWidth="127" height="11" x="88" y="106" 
+		_bgUrl="null" 
+		_Obj="2" 
+	 id="comp_jingli"/>
+	
+	
+	<view1:NMainRoleStyleComponent
+		id="comp_role_style"
+		x="252" y="11"/>
+</s:Group>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" width="70" height="60" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.sg.event.MediatorRegisterSGEvent;
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				dispatchEvent(new MediatorRegisterSGEvent(MediatorRegisterSGEvent.MEDIATORREGISTERSGEVENT,this,true));
+			}
+			
+			private function getButtonStutsImg(flag:Boolean):Bitmap{
+				var bitmap:Bitmap = new Bitmap();
+				if(flag){
+					bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_shengdi","sgBtn1_bg");
+				}else{
+					bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_shengdi","sgBtn4_bg");
+				}
+				return bitmap;
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image mouseChildren="false" mouseEnabled="false" source="{getButtonStutsImg(data.activateFlag)}"/>
+	<component:CrotaBasicLabel mouseChildren="false" mouseEnabled="false" id="desTxt" text="{data.sgName}" fontWeight="bold" styleName="TOOLTIPTEXTFORMAT4" x="22" y="15" width="30"/>
+</s:ItemRenderer>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="63" height="63"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.reward.event.MediatorRegisterRewardEvent;
+			
+			import util.CommonTools;
+			//获取装备图标路径
+			public function setEquipmentUrl(t:int,num:int,itemType:int,icon:int):String{
+				var url:String = '';
+				switch(t){
+					case 0:
+						//物品
+						if(itemType != 0){
+							url = ProConst.getImageResUrl(itemType);
+							url += (icon + '.png');
+						}
+						break;
+					case 1:
+						//金币
+						url = 'assets/battle/coin.png';
+						break;
+					case 2:
+						//钻
+						url = 'assets/Image/Reward/zuan.png';
+						break;
+					case 3:
+						//体力
+						url = 'assets/Image/Reward/tili.png';
+						break;
+				}
+				return url;
+			}
+			
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(rewardDayBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_day_reward', 'dy_reward_item_bg');
+				dispatchEvent(new MediatorRegisterRewardEvent(MediatorRegisterRewardEvent.MEDIATORREGISTERREWARDDAYORGUIDEEVENT,this,true));
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:Image id="rewardDayBg"/>
+	<mx:Image id="equipImg" x="6" y="6" source="{setEquipmentUrl(data.type,data.rewardNum,data.itemsBonus.type,data.itemsBonus.icon)}" width="42" height="42"/>
+	<component:CrotaBasicLabel text="{data.type != 0 ? data.rewardNum : data.itemsBonus.stack}" textAlign="center" x="6" y="37" fontSize="10" styleName="ROLEINFOTEXTFORMAT" width="42"/>
+</s:ItemRenderer>

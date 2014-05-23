@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<utilComp:CrotaBasicBaseItemRender xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				 width="740" height="24" xmlns:component="component.*"  
+				 xmlns:utilComp="util.*"
+				 creationComplete="show_data()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import model.SystemDataModel;
+			
+			import mx.controls.Menu;
+			import mx.core.FlexGlobals;
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			import sceneModule.view.corps.mediator.NCorpsOutMediator;
+			
+			import util.xtrace;
+			
+			private function show_data():void{
+				this.addEventListener(FlexEvent.DATA_CHANGE, data_change);
+				this.addEventListener(MouseEvent.CLICK, on_item_click);
+				
+				refresh_view();
+			}
+			
+			private function get_pos(str:String):int {
+				var r:int = 0;
+				switch (str) 
+				{
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_jtz'):
+						r = 4;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_yl'):
+						r = 3;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_cm'):
+						r = 2;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_ys'):
+						r = 1;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_xb'):
+						r = 0;
+						break;
+					default:
+						break;
+				}
+				return r;
+			}
+			
+			private function on_item_click(e:MouseEvent):void {
+				//不能和自身交互操作
+				if (model.SystemDataModel.roleInfo.id == data.memberliId) {
+					return;
+				}
+				
+				//this.dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_MEMBER_CLICK,data,true));
+				var arr:Array = null;
+				arr = new Array([CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_fsyj')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncmM_tcjt')]);
+				if(sceneModule.view.corps.mediator.NCorpsOutMediator.UNION_POS_LEADER == model.SystemDataModel.roleInfo.roleCorpsInfo.corpsPosition){
+					arr = new Array([CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_yjtz')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_fsyj')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncmM_tcjt')]);
+				}
+				var selfpos:int = model.SystemDataModel.roleInfo.roleCorpsInfo.corpsPosition;
+				if(selfpos <= get_pos(data.memberRank)){
+					arr.pop();
+				}
+				var myMenu:Menu = Menu.createMenu(null,getItemMenuData(arr), false);
+				myMenu.labelField = 'label';
+//				myMenu.width=80;
+				myMenu.addEventListener(MenuEvent.ITEM_CLICK,onMenuItemClick);
+				myMenu.show(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
+			}
+			
+			private function onMenuItemClick(e:MenuEvent):void{
+				xtrace("处理军团成员",e.label);
+				switch(e.label){
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl'):
+						NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_MEMBER_LOOK,data,true));
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_yjtz'):
+						//移交团长
+						NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_MEMBER_GIVE_LEADER,data,true));
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_fsyj'):
+						//发送邮件
+						NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_MEMBER_SEND_MAIL,data,true));
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl'):
+						//私聊
+						NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_MEMBER_CHAT,data,true));
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncmM_tcjt'):
+						//踢出军团
+						NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_MEMBER_REMOVE,data,true));
+						break;
+				}
+			}
+			
+			private function getItemMenuData(itemArr:Array):Array {
+				var l:int = itemArr.length;
+				var itemMenuData:Array = new Array();
+				for(var i:int=0;i<l;i++){
+					var menuItem:Object = new Object();
+					menuItem.label = itemArr[i];
+					itemMenuData.push(menuItem);
+				}
+				return itemMenuData;
+			}
+			
+			private function data_change(e:FlexEvent):void{
+				refresh_view();
+			}
+			
+			private function refresh_view():void{
+				member_name.text = data.memberName;
+				member_level.text = data.memberLevel;
+				member_job.text = data.memberProfession;
+				member_rank.text = data.memberRank;
+				member_time.text = data.onlineState;
+				member_contrib.text = data.memberContribution.toString();
+				
+				if(CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_zx') == data.onlineState){
+					member_name.styleName = "MAINMENUROLEFONT12a18c70";
+					member_level.styleName = "MAINMENUROLEFONT12a18c70";
+					member_job.styleName = "MAINMENUROLEFONT12a18c70";
+					member_rank.styleName = "MAINMENUROLEFONT12a18c70";
+					member_time.styleName = "MAINMENUROLEFONT12a18c70";
+					member_contrib.styleName = "MAINMENUROLEFONT12a18c70";
+				}
+				else{
+					member_name.styleName = "MAINMENUROLEFONT808080";
+					member_level.styleName = "MAINMENUROLEFONT808080";
+					member_job.styleName = "MAINMENUROLEFONT808080";
+					member_rank.styleName = "MAINMENUROLEFONT808080";
+					member_time.styleName = "MAINMENUROLEFONT808080";
+					member_contrib.styleName = "MAINMENUROLEFONT808080";
+				}
+			}
+			private function remove_if_have(element:IVisualElement):void{
+				if(element.parent){
+					this.removeElement(element);
+				}
+			}
+		]]>
+	</fx:Script>
+	<component:CrotaBasicLabel 
+		id="member_name"
+		x="0" y="8" width="97" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_level"
+		x="95" y="8" width="120" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_job"
+		x="209" y="8" width="108" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_rank"
+		x="328" y="8" width="126" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_time"
+		x="462" y="8" width="110" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_contrib"
+		x="562" y="8" width="176" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+</utilComp:CrotaBasicBaseItemRender>

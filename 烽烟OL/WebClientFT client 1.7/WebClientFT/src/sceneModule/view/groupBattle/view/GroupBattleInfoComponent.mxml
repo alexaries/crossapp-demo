@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<managers:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:managers="managers.*" width="907" height="496" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.groupBattle.command.GroupBattleMessage;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = 'sceneModule.view.groupBattle.view.GroupBattleInfoComponent';
+			
+			public static const BASE_PATH:String = "assets/ncorps/junhui/";
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source="groupBattle/gBattleBg.png"/>
+	<mx:Image source="{BASE_PATH+SystemDataModel.groupBattleInfo.groupBattleInfo.group1Info.icon+'.png'}" width="42" height="42" x="94" y="91"/>
+	<mx:Image source="{BASE_PATH+SystemDataModel.groupBattleInfo.groupBattleInfo.group2Info.icon+'.png'}" width="42" height="42" x="659" y="91"/>
+	<component:CrotaBasicLabel
+		id="l_name"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','gbic_di')+SystemDataModel.groupBattleInfo.groupBattleInfo.roundCount+CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','gbic_djlj')+CommonTools.formateTimeToString2(SystemDataModel.groupBattleInfo.groupBattleInfo.remainTime)}"
+		width="288" y="111"
+	    fontSize="18" color="#ffffff" textAlign="center" x="306"/>
+	<component:CrotaBasicLabel
+		id="l_name0"
+		text="{SystemDataModel.groupBattleInfo.groupBattleInfo.jishaCount}"
+		width="56" y="380"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="342"/>
+	<component:CrotaBasicLabel
+		id="l_name4"
+		text="{SystemDataModel.groupBattleInfo.groupBattleInfo.group1Info.groupName}"
+		width="108" y="98"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="141"/>
+	<component:CrotaBasicLabel
+		id="l_name5"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','pbic_jf')+SystemDataModel.groupBattleInfo.groupBattleInfo.group1Info.groupCount}"
+		width="108" y="115"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="141"/>
+	<component:CrotaBasicLabel
+		id="l_name6"
+		text="{SystemDataModel.groupBattleInfo.groupBattleInfo.group2Info.groupName}"
+		width="108" y="98"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="705"/>
+	<component:CrotaBasicLabel
+		id="l_name7"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','pbic_jf')+SystemDataModel.groupBattleInfo.groupBattleInfo.group2Info.groupCount}"
+		width="108" y="115"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="705"/>
+	<component:CrotaBasicLabel
+		id="l_name2"
+		text="{SystemDataModel.groupBattleInfo.groupBattleInfo.obtainCoin}"
+		width="56" y="380"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="460"/>
+	<component:CrotaBasicLabel
+		id="l_name3"
+		text="{SystemDataModel.groupBattleInfo.groupBattleInfo.obtainSw}"
+		width="56" y="415"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="460"/>
+	<component:CrotaBasicLabel
+		id="l_name1"
+		text="{SystemDataModel.groupBattleInfo.groupBattleInfo.failCount}"
+		width="56" y="415"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="342"/>
+	<s:List id="battleInfoList"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.groupBattleInfo.groupBattleInfo.battleInfoList}"
+			itemRenderer="sceneModule.view.groupBattle.view.GroupBattleInfoBattleItemRender" 
+			x="259" y="166" width="382" height="173">
+		<s:layout>
+			<s:TileLayout verticalGap="1" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:List id="memList1"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.groupBattleInfo.groupBattleInfo.group1Info.groupMemberArr}"
+			itemRenderer="sceneModule.view.groupBattle.view.GroupBattleMemberInfoItemRender" 
+			x="95" y="182" width="170" height="282">
+		<s:layout>
+			<s:TileLayout verticalGap="1" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:List id="memList2"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.groupBattleInfo.groupBattleInfo.group2Info.groupMemberArr}"
+			itemRenderer="sceneModule.view.groupBattle.view.GroupBattleMemberInfoItemRender" 
+			x="658" y="182" width="170" height="282">
+		<s:layout>
+			<s:TileLayout verticalGap="1" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:Button id="tzBtn" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','pbic_cz')}" 
+			  skinClass="style.Skin_CrotaPackRedButton" 
+			  click="{GroupBattleMessage.getInstance().joinGroupBattle()}"
+			  x="529" y="372"/>
+	<component:CrotaBasicCheckBox x="530" y="412" id="autoBat" change="{GroupBattleMessage.getInstance().autoJoinBattle(autoBat.selected)}"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="837" y="24"/>
+</managers:BaseWindow>

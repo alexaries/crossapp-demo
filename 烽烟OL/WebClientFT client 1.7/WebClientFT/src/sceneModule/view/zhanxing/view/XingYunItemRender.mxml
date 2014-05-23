@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				 creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.zhanxing.event.MediatorRegisterXyEvent;
+			
+			import util.CommonTools;
+			
+			public function getImageURL(t:int,s:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_zhanxing","xyBg_bg");
+				dispatchEvent(new MediatorRegisterXyEvent(MediatorRegisterXyEvent.MEDIATORREGISTERXYEVENT,this,true));
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="bg"/>
+	<mx:Image id="img" source="{getImageURL(data.type,data.icon)}" x="1" y="1"/>
+	<component:CrotaBasicLabel mouseEnabled="false" mouseChildren="false" text="{data.xyName}" textAlign="center" x="0" y="3" fontSize="12" color="{CommonTools.get_equipement_color(data.quality)}" width="55"/>
+	<component:CrotaBasicLabel mouseEnabled="false" mouseChildren="false" text="{'Lv.'+data.level}" textAlign="center" x="0" y="40" fontSize="12" color="{CommonTools.get_equipement_color(data.quality)}" width="55"/>
+</s:ItemRenderer>

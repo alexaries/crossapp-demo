@@ -1,0 +1,9 @@
+[2013-10-29 17:47:33.132000]
+ERROR
+	"[Failure instance: Traceback from remote host -- Traceback unavailable\nexceptions.AttributeError: 'NoneType' object has no attribute 'get'\n]"
+[2013-10-29 17:50:06.698000]
+ERROR
+	"[Failure instance: Traceback from remote host -- Traceback unavailable\nexceptions.AttributeError: 'NoneType' object has no attribute 'get'\n]"
+[2013-10-29 17:52:20.524000]
+ERROR
+	"[Failure instance: Traceback from remote host -- Traceback unavailable\nexceptions.AttributeError: 'NoneType' object has no attribute 'get'\n]"

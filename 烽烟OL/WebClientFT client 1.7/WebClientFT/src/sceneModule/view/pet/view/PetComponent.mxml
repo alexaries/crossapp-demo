@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="group1_creationCompleteHandler(event)"
+	height="443"
+	width="939"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:view="sceneModule.view.pet.view.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import model.GuideInfo;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.pet.event.MediatorRegisterPetEvent;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaPackRedButton;
+			
+			import util.CommonTools;
+			
+			public static var NAME:String = "sceneModule.view.pet.view.PetComponent";
+			
+			public var curSelectedIndex:Object = CrotaResourceConfig.getInstance().getTextByModuleAndId('pet', 'pCM_sx');
+			
+			private function onClickFunBtn(evt:MouseEvent):void {
+				if (iViewStack.selectedIndex == 1) {
+					iViewStack.selectedIndex = 0;
+				} else {
+					iViewStack.selectedIndex = 1;
+					GuidEventCenter.getInstance().dispatchEvent(new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_LIKE_BUZHEN));
+				}
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				this.dispatchEvent(new MediatorRegisterPetEvent(MediatorRegisterPetEvent.MR_PET_COMP, this, true));
+				CommonTools.make_bitmap(petBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet", "pet_bg");
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_sx')}" />
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		<mx:Image id="petBg" />
+		<!--<mx:Image id="petBg" source='assets/pet/petBg.png'/>-->
+		<s:List dataProvider="{SystemDataModel.petList}"
+			height="305"
+			id="petList"
+			itemRenderer="sceneModule.view.pet.view.PetItemRender"
+			selectedIndex="0"
+			skinClass="style.Skin_CrotaBasicList"
+			width="125"
+			x="93"
+			y="116">
+			<s:layout>
+				<s:TileLayout horizontalGap="8"
+					requestedColumnCount="2"
+					requestedRowCount="5"
+					verticalGap="5" />
+			</s:layout>
+		</s:List>
+		<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','mpnC_cclb')+SystemDataModel.curPetNum+'/'+SystemDataModel.maxPetNum}"
+			textAlign="center"
+			width="117"
+			x="92"
+			y="87" />
+		<mx:ViewStack height="361"
+			id="iViewStack"
+			width="633"
+			x="227"
+			y="76">
+			<mx:VBox height="100%"
+				width="100%">
+				<view:PetPropertyComponent />
+			</mx:VBox>
+			<mx:VBox height="100%"
+				width="100%">
+				<view:PetPeiYangComponent id="py" />
+			</mx:VBox>
+			<mx:VBox height="100%"
+				width="100%">
+				<view:PetBuZhenComponent />
+			</mx:VBox>
+			<mx:VBox height="100%"
+				width="100%">
+				<view:PetChuanChengComponent />
+			</mx:VBox>
+			<mx:VBox height="100%"
+				width="100%">
+				<view:PetTuJianComponent id="tjComp" />
+			</mx:VBox>
+		</mx:ViewStack>
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_sx')}"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="70"
+			x="246"
+			y="54" />
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_py')}"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="70"
+			x="316"
+			y="54" />
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_bz')}"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="70"
+			x="386"
+			y="54" />
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_cc')}"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="70"
+			x="456"
+			y="54" />
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_tj')}"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="70"
+			x="526"
+			y="54" />
+		<util:CommonButton id="closeBtn"
+			skinClass="style.Skin_CrotaCloseButton111"
+			x="847"
+			y="19" />
+	</s:SkinnableContainer>
+</win:BaseWindow>

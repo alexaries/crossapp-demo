@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin name="CustomAccordionHeaderSkin"
+			 xmlns:fx="http://ns.adobe.com/mxml/2009"
+			 xmlns:s="library://ns.adobe.com/flex/spark"
+			 minWidth="21" minHeight="21"
+			 alpha.disabled="0.5">
+	<!-- states -->
+	<s:states>  
+		<s:State name="up" />  
+		<s:State name="over" />  
+		<s:State name="down" />  
+		<s:State name="disabled" />  
+		<s:State name="selectedUp" />  
+		<s:State name="selectedOver" />  
+		<s:State name="selectedDown" />  
+		<s:State name="selectedDisabled" />  
+	</s:states>  
+	
+	<s:BorderContainer  width="137" height="25" borderAlpha="0" textAlign="center"
+					   backgroundImage.up="@Embed('/embed/ui_n/commonBtn1.png',scaleGridTop='7',scaleGridBottom='8',scaleGridLeft='18',scaleGridRight='19')"  
+					   backgroundImage.over="@Embed('/embed/ui_n/commonBtn1.png',scaleGridTop='7',scaleGridBottom='8',scaleGridLeft='18',scaleGridRight='19')"  
+					   backgroundImage.down="@Embed('/embed/ui_n/commonBtn2.png',scaleGridTop='7',scaleGridBottom='8',scaleGridLeft='18',scaleGridRight='19')"  
+					   backgroundImage.selectedOver="@Embed('/embed/ui_n/commonBtn2.png',scaleGridTop='7',scaleGridBottom='8',scaleGridLeft='18',scaleGridRight='19')"
+					   backgroundImage.selectedDown="@Embed('/embed/ui_n/commonBtn2.png',scaleGridTop='7',scaleGridBottom='8',scaleGridLeft='18',scaleGridRight='19')"
+					   backgroundImage.selectedUp="@Embed('/embed/ui_n/commonBtn4.png',scaleGridTop='7',scaleGridBottom='8',scaleGridLeft='18',scaleGridRight='19')"
+					   />
+	
+</s:SparkSkin>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" autoDrawBackground="false"
+					  xmlns:s="library://ns.adobe.com/flex/spark" implements="mx.core.IToolTip" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*" width="272" height="197">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.IToolTip;
+			
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaBasicTextAreaCommon;
+			
+			/**
+			 * IToolTip的set get方法
+			 */
+			public function get text():String
+			{
+				return null;
+			}
+			
+			public function set text(value:String):void
+			{
+			}
+			
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+			
+			private function getItemState(s:int):String{
+				var str:String;
+				switch(s){
+					case 0:
+						str="非绑定物品";
+						break;
+					case 1:
+						str="拾取即绑定";
+						break;
+					case 2:
+						str="装备即绑定";
+						break;
+				}
+				return str;
+			}
+			/**
+			 * 
+			 */
+			private function getBodyType(i:int):String{
+				var bs:String;
+				switch(i){
+					case -1:
+						bs="非装备";
+						break;
+					case 0:
+						bs="头部（帽子）";
+						break;
+					case 1:
+						bs="身体（上衣）";
+						break;
+					case 2:
+						bs="腰带";
+						break;
+					case 3:
+						bs="下装";
+						break;
+					case 4:
+						bs="鞋子";
+						break;
+					case 5:
+						bs="护腕";
+						break;
+					case 6:
+						bs="披风";
+						break;
+					case 7:
+						bs="项链";
+						break;
+					case 8:
+						bs="腰饰";
+						break;
+					case 9:
+						bs="武器";
+						break;
+				}
+				return bs;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image source='assets/ui/tips_1.png'/>
+		<component:CrotaBasicLabel text="{data.name}" styleName="MAINMENUROLEFONT12bebebe" width="154" x="89" y="18"/>
+		<mx:Text id="itemDes" enabled="false" text="{data.description}" styleName="MAINMENUROLEFONT12bebebe" width="230" x="21" y="48" height="62"/>
+		<component:CrotaBasicLabel id="number" text="{data.maxstack}" styleName="MAINMENUROLEFONT12bebebe" width="92" x="92" y="139" height="18"/>
+		<component:CrotaBasicLabel id="itemType" text="{(data.levelRequire+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_ji'))}" styleName="MAINMENUROLEFONT12bebebe" x="91" width="92" y="164"/>
+	</s:SkinnableContainer>	
+</s:ItemRenderer>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NPC任务奖励 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*"
+		 width="420" height="100"
+		 creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.CommonTools;
+			public var data:Object;
+			private function init():void{
+				CommonTools.make_bitmap(img_price_ico).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npc_task',
+						'npc_task_ico_price');
+				
+//				CommonTools.make_bitmap(img_g_money_ico).bitmapData = 
+//					AssetCenter.getInstance().get_img_form_pacakge('common_res',
+//						'coin_img');
+//				
+//				CommonTools.make_bitmap(img_r_money_ico).bitmapData = 
+//					AssetCenter.getInstance().get_img_form_pacakge('common_res',
+//						'cry_img');
+//				
+//				CommonTools.make_bitmap(img_r_exp_ico).bitmapData = 
+//					AssetCenter.getInstance().get_img_form_pacakge('common_res',
+//						'npt_task_ico_exp');
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="img_price_ico"  x="13" y="11"/>
+	<component:CrotaBasicLabel
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnpV_rwjl')}"
+		styleName="TASK_NPC_NAMW"
+		x="46" y="17" fontWeight="bold"/>
+	<mx:Image 
+		id="img_price_0" x="303" y="44"/>
+	<component:CrotaBasicLabel
+		id="l_price0_num"
+		text="X5"
+		styleName="MAINMENUROLEFONT12bebebe"
+		x="336" y="71" textAlign="right"/>
+	<mx:Image 
+		id="img_price_1"
+		x="351" y="44"/>
+	<component:CrotaBasicLabel
+		id="l_price1_num"
+		text="X4"
+		styleName="MAINMENUROLEFONT12bebebe"
+		x="384" y="71" textAlign="right"/>
+    <!--<mx:Image id="img_g_money_ico"  x="202" y="44"/>-->
+	<component:CrotaBasicLabel styleName="MAINMENUROLEFONT12bebebe" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnpV_jb')}"    id="img_g_money_ico"  x="181" y="48"/>
+	<component:CrotaBasicLabel
+		id="l_g_money"
+		text="12345678"
+		 textAlign="right"
+		styleName="TASK_PRICE_NUMBER"
+		x="255" y="50" fontWeight="bold"/>
+	<!--<mx:Image id="img_r_money_ico"  x="200" y="70"/>-->
+	<component:CrotaBasicLabel styleName="MAINMENUROLEFONT12bebebe" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnpV_z')}"  id="img_r_money_ico"   x="181" y="74"/>
+	<component:CrotaBasicLabel
+		id="l_r_money"
+		text="12345678"
+		textAlign="right"
+		styleName="TASK_PRICE_NUMBER"
+		x="255" y="75" fontWeight="bold"/>
+	<!--<mx:Image id="img_r_exp_ico"  x="201" y="91"/>-->
+	<component:CrotaBasicLabel styleName="MAINMENUROLEFONT12bebebe" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnpV_jy')}"  id="img_r_exp_ico"  x="181" y="100"/>
+	<component:CrotaBasicLabel
+		id="l_r_exp"
+		text="12345678"
+		textAlign="right"
+		styleName="TASK_PRIVE_EXP"
+		x="255" y="100" fontWeight="bold"/>
+	<!--<util:CommonButton
+		skinClass="style.Skin_CrotaPackRedButton"
+		id="btn_accept" 
+		x="339" y="46"
+		label="接受任务"/>-->
+	<component:CrotaBasicLabel
+		id="btn_accept" 
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnpV_jsrw')}"
+		styleName="TASK_USER_WORD"
+		buttonMode="true"
+		x="40" y="67" width="142" textDecoration="underline"/>
+</s:Group>

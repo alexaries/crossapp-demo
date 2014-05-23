@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="1000" height="600" 
+		 xmlns:view="view.*" 
+		 xmlns:createRoleModule="createRoleModule.*" 
+		 xmlns:component="component.*" 
+		 xmlns:view1="createRoleModule.view.*" 
+		 creationComplete="initApp()" 
+		 xmlns:loader="loader.*" xmlns:util="util.*">
+	<!--<fx:Style source="assets/css/textFormat_css.css"/>-->
+	<fx:Script>
+		<![CDATA[
+			import Animation.Animation;
+			import Animation.CreateRoleMovieNextStopEvent;
+			
+			import event.ChangeModuleEvent;
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import flashx.textLayout.operations.InsertTextOperation;
+			
+			import model.GuideInfo;
+			import model.ProConst;
+			import model.SystemDataModel;
+			import model.URLConst;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.CollectionEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaCreateRoleRadioButton;
+			import style.Skin_CrotaDeleteRoleButton;
+			import style.Skin_CrotaMageButton;
+			import style.Skin_CrotaPastorButton;
+			import style.Skin_CrotaRangerButton;
+			import style.Skin_CrotaSelectedRoleRadioButton;
+			import style.Skin_CrotaWarriorButton;
+			
+			//战士
+			private const  WARRIOR:int = 1;
+			//法师
+			private const MAGE:int = 2;
+			//牧师
+			private const PASTOR:int = 4;
+			//游侠
+			private const RANGER:int = 3; 
+			private const ZERO:int=0;
+			
+			//标志位  确定按钮是否可以操作
+			[Bindable]
+			private var submitIsCanClick:Boolean = false;
+			//所选择角色在SystemData.roleCollection中的索引
+			public var selectId:int;
+			//选择的职业 默认是法师MAGE
+			[Bindable]
+			public var selectWork:int = 0;
+			//新手引导标志位
+			[Bindable]
+			private var isGuideCanBtn:Boolean = false;
+			//中间变量
+			[Bindable]
+			public var preWorkType:int = 0;
+			
+			private var animation:Animation;
+			
+			private function initApp():void{
+				defaultSelectRole();
+				
+				//				addAnimation();
+				//角色集合
+			}			
+			/**
+			 * 确定当前的状态
+			 * 如果是先手引导则为状态guideState
+			 * 如果不是新手引导，则若角色集合长度大于等于时，说明存在角色，则为normalState，即选择角色状态，否则为创建角色状态
+			 */
+			private function defaultSelectRole():void{
+				cardtype.selectedValue = "mageBtn";
+				this.selectWork = MAGE;
+				preWorkType = MAGE;
+			}
+			
+			
+			/**
+			 * 昵称输入框改变事件，处理确定按钮是否可以点击
+			 */
+			private function onRoleNameChange():void{
+				if(roleName.text.toString().length<2 || roleName.text.toString().length>16){
+					trace("昵称长度为2-16");
+					submitIsCanClick = false;
+				}else{
+					submitIsCanClick = true;
+				}
+			}
+			public function set _subBtnCanClick(value:Boolean):void{
+				submitIsCanClick = value;
+			}
+			/**
+			 * 姓名输入事件
+			 * 
+			 */ 
+			protected function onRoleNameChangeing(evt:TextOperationEvent):void
+			{
+				if((evt.operation as InsertTextOperation)==null)
+				{
+					return;
+				}
+				
+				var input:String=(evt.operation as InsertTextOperation).text;
+				
+				if((__getStringBytesLength(roleName.text,"gb2312") + __getStringBytesLength(input,'gb2312')) > roleName.maxChars)
+				{
+					evt.preventDefault();
+				}
+			}
+			
+			
+			/**
+			 * 获取该字符串的字节数 
+			 */ 
+			private function __getStringBytesLength(str:String,charSet:String):int
+			{
+				var bytes:ByteArray = new ByteArray();
+				
+				bytes.writeMultiByte(str, charSet);
+				
+				bytes.position = 0;
+				return bytes.length;
+				
+			}
+			
+			//菜单项 change
+			private var pastorUrl:String = "assets/swf/pastorAnimation.swf";
+			private function handleCard(evt:ItemClickEvent=null):void{
+				var selectValue:Object = cardtype.selectedValue;
+					switch(selectValue){
+						case "mageBtn":
+							if(this.selectWork == PASTOR && animation){
+								animation.removeFromParent(this);
+							}
+							this.selectWork = MAGE;
+							preWorkType = MAGE;
+							break;
+						case "warriorBtn":
+							if(this.selectWork == PASTOR && animation){
+								animation.removeFromParent(this);
+							}
+							this.selectWork = WARRIOR;
+							preWorkType = WARRIOR;
+							break;
+						case "pastorBtn":
+							this.selectWork = PASTOR;
+							preWorkType = PASTOR;
+							animation = new Animation(pastorUrl);
+							animation.mouseChildren = false;
+							animation.mouseEnabled = false;
+							animation.mouseFocusEnabled = false;
+							animation.buttonMode = true;
+							animation.setProgressBarPosAndSize(50,300,460,30);
+							
+							//				roleSwf.source = anmationUrl;
+							animation.setPosition(275,0);
+							//把动画sprite添加的当前组件上
+							animation.addToParent(this);
+							//加载完毕后开始播放动画
+							animation.play(1,93);
+							break;
+						case "rangerBtn":
+							if(this.selectWork == PASTOR && animation){
+								animation.removeFromParent(this);
+							}
+							this.selectWork = RANGER;
+							preWorkType = RANGER;
+							break;
+					}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="roleBtn"
+							itemClick="handleCard(event);"/>
+	</fx:Declarations>
+	<view1:RoleStaticSwfComponent width="480" height="570" x="485" y="0" enabled="false" _url='assets/swf/rangerAnimation.swf' visible="{selectWork ==RANGER}"/>
+	<view1:RoleStaticSwfComponent width="620" height="570" x="312" y="0" enabled="false" _url='assets/swf/warriorAnimation.swf' visible="{selectWork ==WARRIOR}"/>
+	<view1:RoleStaticSwfComponent width="515" height="570" x="315" y="0" enabled="false" _url='assets/swf/mageAnimation.swf' visible="{selectWork ==MAGE}"/>
+	
+	<!--创建角色界面-->
+	<s:SkinnableContainer>	
+		<s:SkinnableContainer id="iContainer"  visible="false" width="297" height="375" x="701" y="23">
+			<mx:Image source='assets/createRole/npcAiBackground.png' maintainAspectRatio="false" width="297" height="375"/>
+			<component:CrotaBasicLabel  id="rolelabel" x="25" y="63" styleName="ROLEDESCRIPTION" width="45"/>
+			<component:CrotaBasicLabel id="profession" x="104" y="27" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('createRoleModule','crV_zyjs')}" styleName="PROFESSION"/>
+			<component:CrotaBasicLabel id="roleDes" x="72" y="63" width="192" height="273" styleName="ROLEDESCRIPTION"/>
+		</s:SkinnableContainer>
+		<s:SkinnableContainer x="48" y="426">
+			<mx:Image source='assets/createRole/createNameBg.png'/>
+			<component:CrotaChatTextInputLoginbar editable="{selectWork !=0}" height="24" id="roleName" changing="onRoleNameChangeing(event)" change="onRoleNameChange()" x="70" y="1" styleName="REGISTERTEXTINPUTTEXTFORMAT" maxChars="16" restrict = "^ "/>
+		</s:SkinnableContainer>
+		<util:CommonButton id="radomName" x="270" y="423" skinClass="style.Skin_CrotaDiceButton" width="27" height="27"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCreateRoleEnterGameButton" id="submit" enabled="{submitIsCanClick}" width="173" height="60" styleName="CREATEROLEBUTTON" x="89" y="486"/>
+		<s:RadioButton label="mageBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMageButton" width="213" height="60" x="73" y="33"/>
+		<s:RadioButton label="warriorBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaWarriorButton" width="213" height="60" x="73" y="106"/>
+		<s:RadioButton label="rangerBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaRangerButton" width="213" height="60" x="73" y="182"/>
+		<!--<s:RadioButton label="pastorBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaPastorButton" width="213" height="60" x="73" y="268"/>-->
+	</s:SkinnableContainer>	
+</s:Group>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:win="managers.*"
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				width="941" height="597" xmlns:util="util.*" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaPackRedButton;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			public static const NAME:String = 'sceneModule.view.jingji.view.JingjiWindow';
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_jingji","jingji_bg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="853" y="40"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.roleInfo.nickname}" styleName="RANKINGFORMAT1" x="415" y="246" textAlign="center" width="171"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.rankInfo+CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjW_lqsj')+ByteArrayUtil.formateTimeToString2(SystemDataModel.mainJingJiInfoVo.obtainTime*1000)}" color="#ffff00" fontSize="18" x="291" y="166" textAlign="center" width="410"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.rankAnnou}" styleName="RANKINGFORMAT1" fontSize="18" x="291" y="117" textAlign="center" width="410"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.weiwang}" fontSize="14" fontWeight="bold" color="#ffff00" x="447" y="286" textAlign="left"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.rank}" fontSize="14" fontWeight="bold" color="#ffff00" x="447" y="311" textAlign="left"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.liansheng}" fontSize="14" fontWeight="bold" color="#ffff00" x="447" y="337" textAlign="left"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.rank}" fontSize="14" fontWeight="bold" color="#ffff00" x="801" y="448" textAlign="left" width="54"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainJingJiInfoVo.tzCount}" fontSize="14" fontWeight="bold" color="#ffff00" x="769" y="485" textAlign="left" width="86"/>
+	<s:List id="role_list"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.mainJingJiInfoVo.drList}"
+			itemRenderer="sceneModule.view.jingji.view.JingJiRoleItemRender" 
+			x="725" y="99" width="139" height="349">
+		<s:layout>
+			<s:TileLayout verticalGap="2" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:List id="role_list0"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.mainJingJiInfoVo.battleInfoList}"
+			itemRenderer="sceneModule.view.jingji.view.JingJiBattleInfoItemRender" 
+			x="314" y="396" width="387" height="130">
+		<s:layout>
+			<s:TileLayout verticalGap="1" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:Button id="addBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjW_zj')}" skinClass="style.Skin_CrotaPackRedButton" x="736" y="507"/>
+</win:BaseWindow>

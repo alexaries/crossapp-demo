@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="633" height="361" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.pet.event.MediatorRegisterPetEvent;
+			import sceneModule.view.pet.vo.PetInfoVO;
+			import sceneModule.view.pet.vo.PetSkillInfoVO;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+			import style.Skin_CrotaCommonButton4;
+			import style.Skin_CrotaPackRedButton;
+			import style.Skin_CrotaSmallButton;
+			
+			import util.CommonTools;
+			public var posArr:Array = 
+				[new Point(317,38),new Point(317,139),new Point(317,243),
+				new Point(215,38),new Point(215,139),new Point(215,243),
+				new Point(113,38),new Point(113,139),new Point(113,243)];
+			public function getLabelDes(man:int):String{
+				var str:String='';
+				if(man!=0){
+					str = " + <font color='#26C900'>"+man+"</font>";
+				}
+				return str;
+			}
+			
+			private function getPetSkillListInfo(arr:ArrayCollection):ArrayCollection{
+				var l:int = arr.length;
+				var skillList:ArrayCollection = new ArrayCollection();
+				for(var i:int=0;i<5;i++){
+					var petSkillInfo:PetSkillInfoVO  = new PetSkillInfoVO();
+					if(i<l){
+						petSkillInfo.hasActivationFlag = true;
+						petSkillInfo.icon = arr[i].icon;
+						petSkillInfo.petSkillDes = arr[i].petSkillDes;
+						petSkillInfo.petSkillId = arr[i].petSkillId;
+						petSkillInfo.petSkillLevel = arr[i].petSkillLevel;
+						petSkillInfo.petSkillMaxLevel = arr[i].petSkillMaxLevel;
+						petSkillInfo.petSkillName = arr[i].petSkillName;
+						petSkillInfo.type = arr[i].type;
+					}
+					petSkillInfo.skillPos = i;
+					skillList.addItem(petSkillInfo);
+				}
+				return skillList;
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.dispatchEvent(new MediatorRegisterPetEvent(MediatorRegisterPetEvent.MR_PET_INFO,this,true));
+				CommonTools.make_bitmap(petBuZhenBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet","pet_buzhen_bg");
+			}
+			
+			private function getPetAnimationURL(rId:int):String{
+				var url:String='';
+				if(rId != 0){
+					url = 'assets/swf/battleRes/'+rId+'550.swf';
+				}
+				return url;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="petBuZhenBg" />
+	<component:CrotaBasicText text="100" htmlText="{SystemDataModel.petMatrixList.jwDes}" styleName="RANKINGFORMAT1" x="570" y="25" width="69" textAlign="left"/>
+	<component:CrotaBasicText htmlText="{SystemDataModel.petMatrixList.curNum+'/'+SystemDataModel.petMatrixList.maxNum}" styleName="RANKINGFORMAT1" x="570" y="53" width="59" textAlign="left"/>
+	<!--丢弃-->
+</s:Group>

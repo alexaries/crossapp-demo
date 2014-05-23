@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer autoDrawBackground="false"
+	creationComplete="itemrenderer1_creationCompleteHandler(event)"
+	height="85"
+	width="605"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import resource.CrotaResourceConfig;
+			import sceneModule.view.reward.event.MediatorRegisterRewardEvent;
+			import style.Skin_CrotaCommonButton;
+			import style.Skin_CrotaPackRedButton;
+			
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void {
+				dispatchEvent(new MediatorRegisterRewardEvent(MediatorRegisterRewardEvent.MEDIATORREGISTERREWARDEVENT, this, true));
+			}
+		]]>
+	</fx:Script>
+	<mx:Image source="{data.r_type == 0 ? 'assets/reward/rewardCy.png' : 'assets/reward/rewardCity.png'}"
+		x="22"
+		y="30" />
+	<mx:Text color="#00FF66"
+		fontSize="16"
+		fontWeight="bold"
+		htmlText="{data.t_name}"
+		id="profession"
+		textAlign="center"
+		width="89"
+		x="66"
+		y="15" />
+	<!--<util:CommonButton skinClass="style.Skin_CrotaCommonButton" width="89" height="25" styleName="RICHEDITABLETEXT" label="{data.t_name}" x="66" y="15"/>-->
+	<util:CommonButton height="25"
+		id="iBtn"
+		label="{data.r_type == 0 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_djrq') : CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_wrq')}"
+		skinClass="style.Skin_CrotaCommonButton"
+		styleName="RICHEDITABLETEXT"
+		width="89"
+		x="66"
+		y="46" />
+	<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+		text="{data.r_type == 0 ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_tgcs')+data.t_e1+CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_c') ): (CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_czsr')+data.t_e1+CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','bfIRM_zhuan'))}"
+		textAlign="left"
+		width="273"
+		x="185"
+		y="21" />
+	<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_ss')+data.t_e3}"
+		textAlign="left"
+		width="273"
+		x="185"
+		y="53" />
+	<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_ss')+data.t_e3}"
+		textAlign="right"
+		width="167"
+		x="429"
+		y="22" />
+	<util:CommonButton id="obtainBtn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rIR_lqjj')}"
+		skinClass="style.Skin_CrotaPackRedButton"
+		x="505"
+		y="40" />
+</s:ItemRenderer>

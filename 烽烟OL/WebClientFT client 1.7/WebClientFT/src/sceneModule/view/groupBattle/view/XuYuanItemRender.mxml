@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="414" height="25"
+				autoDrawBackground="false" xmlns:component="component.*">
+	
+	<component:CrotaBasicChatTextArea 
+		id="t_name" htmlText="{data.des}"
+		fontSize="12" color="#ffff00" 
+		borderStyle="none" rollOver="this.t_name.setFocus();" editable="false"
+		selectable="false" focusEnabled="false" focusAlpha="0" wordWrap="false" backgroundAlpha="0.0"
+		width="394" textAlign="left" x="14" y="4"/>
+</s:ItemRenderer>

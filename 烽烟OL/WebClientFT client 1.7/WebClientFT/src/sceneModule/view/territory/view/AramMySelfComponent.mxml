@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 buttonMode="true" useHandCursor="true"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="42" height="42">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				switch(SystemDataModel.roleInfo.profession){
+					case ProConst.PROFESSIONREQUIRE2:
+						petImg.source = "assets/pet/petWarriorImg.png";
+						break;
+					case ProConst.PROFESSIONREQUIRE3:
+						petImg.source = "assets/pet/petMageImg.png";
+						break;
+					case ProConst.PROFESSIONREQUIRE4:
+						petImg.source = "assets/pet/petPastorImg.png";
+						break;
+					case ProConst.PROFESSIONREQUIRE5:
+						petImg.source = "assets/pet/petRangerImg.png";
+						break;
+				}
+
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		<mx:Image id="petImg" width="42" height="42" maintainAspectRatio="false"/>
+		<mx:Image id="topLayerImg" visible="{SystemDataModel.aramInfoVo.roleRunningFlag}" source='assets/territory/runningImg.png' width="42" height="42" maintainAspectRatio="false"/>
+		<mx:Image id="selectedImg" source='assets/pet/petSelected.png' width="42" height="42" maintainAspectRatio="false"/>
+	</s:SkinnableContainer>
+</s:Group>

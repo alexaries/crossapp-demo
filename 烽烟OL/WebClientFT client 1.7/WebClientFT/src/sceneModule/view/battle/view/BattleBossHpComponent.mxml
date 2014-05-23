@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="373" height="102" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			public const HP_MAX_LEN:int = 246;
+			
+			public function initBossInfo(id:int,level:int,name:String,curHp:int,maxHp:int):void{
+				bossImg.source = 'assets/Image/boss/'+id+'.png';
+				iTxt.text = 'Lv.'+level+' '+name;
+				changeBossHp(curHp,maxHp);
+			}
+			private var url_boss:String;
+			private var per_hp:Number;
+			public function changeBossHp(curHp:int,maxHp:int):void{
+				if(curHp > maxHp)return;
+				if(curHp <= 0){
+					curHp=0;
+					TweenLite.to(hpImg,1,{width:0,onComplete:onBossComplete});
+					return;
+				}
+//				trace('curHp:'+curHp+'maxHp:'+maxHp);
+				var per:Number = Number((curHp/maxHp).toFixed(2));
+				if(hpImg.source == null){
+					//初始化boss血条
+					if(per > 0.8){
+						per = per - 0.8;
+						per = Number((per/0.2).toFixed(2));
+						hpImg.source = "assets/battle/pinkHp.png";
+						hpImg.width = HP_MAX_LEN;
+					}else if(per > 0.6){
+						per = per - 0.6;
+						per = Number((per/0.2).toFixed(2));
+						hpImg.source = "assets/battle/blueHp.png";
+						hpImg.width = HP_MAX_LEN;
+						
+					}else if(per > 0.4){
+						per = per - 0.4;
+						per = Number((per/0.2).toFixed(2));
+						hpImg.source = "assets/battle/greenHp.png";
+						hpImg.width = HP_MAX_LEN;
+					}else if(per > 0.2){
+						per = per - 0.2;
+						per = Number((per/0.2).toFixed(2));
+						hpImg.source = "assets/battle/orangeHp.png";
+						hpImg.width = HP_MAX_LEN;
+					}else{
+						per = Number((per/0.2).toFixed(2));
+						hpImg.source = "assets/battle/redHp.png";
+						hpImg.width = HP_MAX_LEN;
+					}
+					TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+				}else{
+					//血量变化操作
+					if(per > 0.8){
+						per = per - 0.8;
+						per = Number((per/0.2).toFixed(2));
+						TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+						
+					}else if(per > 0.6){
+						per = per - 0.6;
+						per = Number((per/0.2).toFixed(2));
+						if(hpImg.source != "assets/battle/blueHp.png"){
+							url_boss = "assets/battle/blueHp.png";
+							per_hp = per;
+							TweenLite.to(hpImg,1,{width:0,onComplete:onBossComplete});
+						}else{
+							TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+						}
+						
+					}else if(per > 0.4){
+						per = per - 0.4;
+						per = Number((per/0.2).toFixed(2));
+						if(hpImg.source != "assets/battle/greenHp.png"){
+							url_boss = "assets/battle/greenHp.png";
+							per_hp = per;
+							TweenLite.to(hpImg,1,{width:0,onComplete:onBossComplete});
+						}else{
+							TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+						}
+						
+					}else if(per > 0.2){
+						per = per - 0.2;
+						per = Number((per/0.2).toFixed(2));
+						if(hpImg.source != "assets/battle/orangeHp.png"){
+							url_boss = "assets/battle/orangeHp.png";
+							per_hp = per;
+							TweenLite.to(hpImg,1,{width:0,onComplete:onBossComplete});
+						}else{
+							TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+						}
+						
+					}else{
+						per = Number((per/0.2).toFixed(2));
+						if(hpImg.source != "assets/battle/redHp.png"){
+							url_boss = "assets/battle/redHp.png";
+							per_hp = per;
+							TweenLite.to(hpImg,1,{width:0,onComplete:onBossComplete});
+						}else{
+							TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+						}
+						
+					}
+				}
+				
+//				hpImg.width = HP_MAX_LEN * per;
+//				TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per});
+			}
+			
+			private function onBossComplete():void{
+				hpImg.source = url_boss;
+				hpImg.width = HP_MAX_LEN;
+				TweenLite.to(hpImg,1,{width:HP_MAX_LEN*per_hp});
+				per_hp=0;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="hpBg" source='assets/battle/battleBossHp.png'/>
+	<mx:Image id="hpImg" maintainAspectRatio="false" x="16" y="51" width="246" height="16"/>
+	<mx:Image id="bossImg" x="272" y="18" width="55" height="55"/>
+	<component:CrotaBasicLabel id="iTxt" y="32" text="Lv.13 买条小胖" styleName="TOOLTIPTEXTFORMAT4" x="83" width="175" textAlign="right"/>
+</s:Group>

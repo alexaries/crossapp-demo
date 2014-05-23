@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="178" height="138"
+				autoDrawBackground="false" creationComplete="initApp();" xmlns:component="component.*" xmlns:loading="com.greensock.loading.*" xmlns:view="sceneModule.view.battle.view.*">
+	<fx:Script>
+		<![CDATA[
+			
+			import model.ProConst;
+			
+			import mx.controls.Alert;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.battle.event.BattleFlipSendSelectedEvemt;
+			import sceneModule.view.battle.event.MediatorRegisterBattleBettlementEvent;
+			
+			//牌子是否已经翻过来，需要显示相应的信息
+			[Bindable]
+			private var isShowInfo:Boolean = false;
+			
+			private function initApp():void{
+				dispatchEvent(new MediatorRegisterBattleBettlementEvent(MediatorRegisterBattleBettlementEvent.MEDIATORREGISTERBATTLEBETTLEMENT,this,true));
+				
+				iSwfComponent.source = AssetCenter.getInstance().get_mc_form_pacakge("ui_battle_suc",'flip_swf',onFlipComplete);
+			}
+			
+			private function onClickSwf():void{
+				if(data){
+					dispatchEvent(new BattleFlipSendSelectedEvemt(BattleFlipSendSelectedEvemt.SENDSELECTEDCOMMAND,data.cardId));
+				}
+			}
+			
+			public function onStartFlip():void{
+				mc.play();
+//				iSwfComponent.mc.addEventListener(Event.ENTER_FRAME,onEnterFrame);
+			}
+			
+			private var mc:MovieClip;
+			private function onFlipComplete(m_c:MovieClip):void{
+				iSwfComponent.source = m_c;
+				mc = m_c
+				mc.addEventListener(Event.ENTER_FRAME,onEnterFrame);
+			}
+			
+			private function onEnterFrame(evt:Event):void{
+				if(iSwfComponent && mc.currentFrame == mc.framesLoaded){
+					iSwfComponent.mouseEnabled = false;
+					iSwfComponent.mouseChildren = false;
+					isShowInfo = true;
+					mc.removeEventListener(Event.ENTER_FRAME,onEnterFrame);
+				}
+			}
+			
+			private function getBorderIsShow(id:int,isShow:Boolean):Boolean{
+				if(isShow && (id !=0)){
+					return true;
+				}
+                return false;
+			}
+			private function getNoItemIsShow(id:int,isShow:Boolean):Boolean{
+				if(isShow && (id ==0)){
+					return true;
+				}
+				return false;
+			}
+			//获取装备图标路径
+			public function setEquipmentUrl(s:String,t:int):String{
+				if(t == 0){
+					return 'assets/battle/coin.png';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+			private function getNickName(name:String):String{
+				if(name && !isShowInfo){
+					onStartFlip();
+				}
+				
+				return name;
+			}
+			
+			public function destoryThisCompCache():void{
+				if(iSwfComponent){
+					iSwfComponent.unloadAndStop();
+					iSwfComponent = null;
+					equipImg.source = "";
+				}
+				
+			}
+		]]>
+	</fx:Script>
+	<mx:SWFLoader id="iSwfComponent" click="onClickSwf()" x="21" y="14" source='assets/battle/flipComp.swf'/>
+	<component:CrotaBasicLabel visible="{isShowInfo}" id="roleName" text="{getNickName(data.nickName)}" textAlign="center" x="28" y="26" width="124" styleName="ROLEINFOTEXTFORMAT"/>
+	<component:CrotaBasicLabel visible="{isShowInfo}" id="itemName" text="{data.coinBounds == 0 ? data.itemBound.name : data.coinBounds}" textAlign="center" x="29" y="90" width="122" styleName="ROLEINFOTEXTFORMAT"/>
+	<mx:Image id="equipImg" visible="{isShowInfo}" source="{setEquipmentUrl(data.itemBound.icon,data.itemBound.type)}" x="67" y="43" width="42" height="42"/>
+</s:ItemRenderer>

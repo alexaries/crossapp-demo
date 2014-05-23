@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<managers:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:managers="managers.*" 
+					 width="1024" height="670">
+	<fx:Script>
+		<![CDATA[
+			public static const NAME:String = "sceneModule.view.wordmap.view.SceneMapView";
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:UIComponent id="bg" x="0" y="0"/>
+	<mx:UIComponent id="contain" x="35" y="35" />
+</managers:BaseWindow>

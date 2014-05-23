@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><data>
+    <item build="0" input="changqiangbing" output="../bin/res/charchangqiangbing/" posy="55"/>
+    <item build="0" input="daobing" output="../bin/res/chardaobing/" posy="55"/>
+    <item build="0" input="gongjianbing" output="../bin/res/chargongjianbing/" posy="40"/>
+    <item build="0" input="huangjinbing" output="../bin/res/charhuangjinbing/" posy="40"/>
+    <item build="0" input="huangjinjiangling2" output="../bin/res/charhuangjinjiangling2/" posy="60"/>
+    <item build="0" input="jiangling1" output="../bin/res/charjiangling1/" posy="60"/>
+    <item build="0" input="tengjiabing" output="../bin/res/chartengjiabing/" posy="55"/>
+    <item build="0" input="wudoubing" output="../bin/res/charwudoubing/" posy="55"/>
+    <item build="0" input="yexingren" output="../bin/res/charyexingren/" posy="40"/>
+    <item build="0" input="npc1" output="../bin/res/charnpc1/" posy="261"/>
+    <item build="0" input="npc2" output="../bin/res/charnpc2/" posy="261"/>
+    <item build="0" input="npc3" output="../bin/res/charnpc3/" posy="261"/>
+    <item build="0" input="npc4" output="../bin/res/charnpc4/" posy="261"/>
+    <item build="0" input="npc5" output="../bin/res/charnpc5/" posy="99"/>
+    <item build="0" input="npc6" output="../bin/res/charnpc6/" posy="99"/>
+</data>

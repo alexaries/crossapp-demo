@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<managers:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx" 
+					 xmlns:managers="managers.*"
+					 creationComplete="basewindow1_creationCompleteHandler(event)"
+					 width="1029" height="612" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.CommonTools;
+			public static const NAME:String = 'sceneModule.view.groupBattle.view.GroupCityComponent';
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_lingdi","ld_groupcitybg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="0"/>
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<s:Group id="content_layer" width="739" height="508" x="211" y="88"/>
+	<s:RadioButton
+		id="union_rb"
+		group="{cardtype}"
+		value="0"
+		skinClass="style.Skin_CrotaPackRadioButtonRight" 
+		styleName="MAINMENUROLEFONT12e4e0b3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','gcc_ssld')}" 
+		width="76" height="31" x="223" y="61"/>
+	<s:RadioButton
+		id="member_rb"
+		value="1"
+		group="{cardtype}" 
+		skinClass="style.Skin_CrotaPackRadioButtonRight" 
+		styleName="MAINMENUROLEFONT12e4e0b3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','gcc_czlb')}" 
+		width="76" height="31" x="299" y="61"/>
+	<s:RadioButton
+		id="junhui_rb"
+		value="2"
+		group="{cardtype}" 
+		skinClass="style.Skin_CrotaPackRadioButtonRight" 
+		styleName="MAINMENUROLEFONT12e4e0b3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','gcc_jtxy')}" 
+		width="76" height="31" x="375" y="61"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="958" y="23"/>
+</managers:BaseWindow>

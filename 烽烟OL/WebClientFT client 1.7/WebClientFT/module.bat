@@ -1,0 +1,3 @@
+mxmlc -load-externs=report.xml -source-path=src,libs -library-path+=libs -debug=true -theme=${flexlib}/themes/Halo/halo.swc -target-player=10.0 -keep-as3-metadata+=Inject src/createRoleModule/CreateRoleModule.mxml -o bin/createRoleModule/CreateRoleModule.swf
+mxmlc -load-externs=report.xml -source-path=src,libs -library-path+=libs -debug=true -theme=${flexlib}/themes/Halo/halo.swc -target-player=10.0 -keep-as3-metadata+=Inject src/logonModule/LogonModule.mxml -o bin/logonModule/LogonModule.swf
+mxmlc -load-externs=report.xml -source-path=src,libs -library-path+=libs -debug=true -theme=${flexlib}/themes/Halo/halo.swc -target-player=10.0 -keep-as3-metadata+=Inject src/sceneModule/SceneModule.mxml -o bin/sceneModule/SceneModule.swf

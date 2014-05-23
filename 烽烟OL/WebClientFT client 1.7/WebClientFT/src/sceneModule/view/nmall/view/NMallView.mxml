@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<managers:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="403"
+	width="1003"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:managers="managers.*"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			public static const NAME:String = "sceneModule.view.nmall.view.NMallView";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_mail','tm_hot')}" />
+	</fx:Declarations>
+	<mx:UIComponent id="bg"
+		x="0"
+		y="0" />
+	<mx:UIComponent id="contain"
+		x="0"
+		y="0" />
+	<s:RadioButton group="{cardtype}"
+		height="28"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_mail','tm_hot')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="70"
+		x="104"
+		y="56" />
+	<s:RadioButton group="{cardtype}"
+		height="28"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_mail','tm_sy')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="70"
+		x="174"
+		y="56" />
+	<s:RadioButton group="{cardtype}"
+		height="28"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_mail','tm_qh')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="70"
+		x="244"
+		y="56" />
+	<s:RadioButton group="{cardtype}"
+		height="28"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_mail','tm_cw')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="70"
+		x="314"
+		y="56" />
+</managers:BaseWindow>

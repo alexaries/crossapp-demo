@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="525" height="368" xmlns:view="sceneModule.view.blacksmith.view.*" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import mediator.TaskGuideMediator;
+			
+			import model.GuideInfo;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.event.MediatorRegisterItemEuipmentEvent;
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import util.CommonTools;
+			import util.DelayExcuter;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				dispatchEvent(new MediatorRegisterItemEuipmentEvent(MediatorRegisterItemEuipmentEvent.MEDIATORREGISTERHECHENG,this,true));
+//				source="assets/blacksmith/heChengBg.png"
+				CommonTools.make_bitmap(hechengbg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_strengthen","hecheng_bg");
+			}
+
+
+			protected function cardtype_changeHandler(event:Event):void
+			{
+				switch(cardtype.selectedValue){
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_zb'):
+						ItemList.dataProvider = SystemDataModel.mainStrInfoVo.hcInfoVo.equiplist;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_bs'):
+						ItemList.dataProvider = SystemDataModel.mainStrInfoVo.hcInfoVo.gemlist;
+						new DelayExcuter(TaskGuideMediator.MAIN_PLAYER_DELAY, GuidEventCenter.getInstance().dispatchEvent, [new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_LIKE_BUZHEN)]);
+
+						break;
+				}
+			}
+
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_zb')}" change="cardtype_changeHandler(event)"/>
+	</fx:Declarations>
+	<mx:Image id="hechengbg"  x="270" y="-1"/>
+	<mx:Image source='assets/blacksmith/hechengscrollbag.png'    x="50" y="16"/>
+	<s:RadioButton group="{cardtype}" skinClass="style.Skin_CrotaPackRadioButtonRight" styleName="EQUIPMENTTEXTFORMAT" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_zb')}" width="70" height="30" x="74" y="3"/>
+	<s:RadioButton group="{cardtype}" skinClass="style.Skin_CrotaPackRadioButtonRight" styleName="EQUIPMENTTEXTFORMAT" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_bs')}" width="70" height="30" x="142" y="3"/>
+	<s:List id="ItemList" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.blacksmith.view.HeChengItemRender" dataProvider="{SystemDataModel.mainStrInfoVo.hcInfoVo.equiplist}" x="57" y="27" width="200" height="292">
+		<s:layout>
+			<s:TileLayout horizontalGap="0"  verticalAlign="bottom" requestedColumnCount="1" verticalGap="24" />
+		</s:layout>
+	</s:List>
+	<view:MainEquipmentComponent id="s1" x="303" y="42" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<view:MainEquipmentComponent id="s2" x="404" y="43" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<view:MainEquipmentComponent id="s3" x="355" y="132" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<component:CrotaBasicLabel id="reqLab" textAlign="left" x="364" y="194" fontSize="12" width="63" color="#F8F9B2"/>
+	<component:CrotaBasicLabel  text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_qc')}" textAlign="left" x="314" y="235" fontSize="12" width="149" color="#F8F9B2"/>
+	<util:CommonButton id="hcBtn" enabled="false" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_hc')}" x="340" y="279"/>
+</s:Group>

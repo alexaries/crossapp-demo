@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				mouseDown="itemrenderer1_mouseDownHandler(event)"
+				 mouseChildren="false"
+				autoDrawBackground="false" width="42" height="42">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			
+			public static var DRAGNAME:String = "dragName";
+			
+			private function onDragEnter(evt:DragEvent):void{
+				if(evt.dragSource.hasFormat(PackageDemoItemRender.DRAGNAME)){
+					DragManager.acceptDragDrop(IUIComponent(evt.target));
+				}
+			}
+			
+
+			protected function itemrenderer1_mouseDownHandler(event:MouseEvent):void
+			{
+				var iu:IUIComponent=event.currentTarget as IUIComponent;
+				var ds:DragSource=new DragSource();
+				ds.addData(data,PackageDemoItemRender.DRAGNAME);
+				//当前装备的部位用于左侧装备栏的效果
+//				var dragProxy:Image = new Image();
+//				dragProxy.width = 42;
+//				dragProxy.height = 42;
+//				dragProxy.source = equipImg.source;
+				DragManager.doDrag(iu, ds, event); // 开始拖动这个物体
+			}
+
+		]]>
+	</fx:Script>
+	
+	
+	<!--<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>
+	<mx:Image source="2001.png"/>-->
+	<mx:Image id="equipImg" source='assets/Image/equipment/Item/Chest/2001.png'/>
+</s:ItemRenderer>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group 
+	width="900"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:ui="sceneModule.view.ui.*"
+	xmlns:util="util.*"
+	xmlns:view14="sceneModule.view.blacksmith.view.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import style.*;
+			
+			private function getIsVisible(placeId:int, isBattleFlag:Boolean):Boolean {
+				if (ProConst.MAX_CITY_ID < placeId && !isBattleFlag) {
+					return true;
+				}
+				return false;
+			}
+			
+			private function getCurImageVisible(funLev:int, roleLev:int, placeId:int, isBattleFlag:Boolean):Boolean {
+//				if(roleLev >= funLev && ProConst.MAX_CITY_ID >= placeId && !isBattleFlag){
+//					return true;
+//				}
+				if (!isBattleFlag) {
+					return true;
+				}
+				return false;
+			}
+			
+			private function getEscBattleBtnVisible(vLev:int, isBattleFlag:Boolean):Boolean {
+				if (vLev >= 4 && isBattleFlag) {
+					return true;
+				}
+				return false;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image right="0"
+		bottom="0"
+		source='assets/ui/expBackground.png'
+		visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+	<!--<mx:Image height="5"
+		 maintainAspectRatio="false"
+		 source='assets/ui/exp.png'
+		 visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}"
+		 width="{630*(SystemDataModel.roleInfo.exp/SystemDataModel.roleInfo.maxExp)}"
+		 x="263"
+		 y="69" />-->
+	<!--<mx:Image source='assets/ui/expTop.png' visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" right="0"/>-->
+	<!--<util:CommonButton bottom="4"
+		buttonMode="true"
+		id="vipBtn"
+		right="675"
+		skinClass="style.Skin_CrotaChongZhiButton"
+		useHandCursor="true"
+		visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />-->
+
+	<s:Group bottom="-7" right="109">
+		<util:CommonButton bottom="20"
+			buttonMode="true"
+			id="zhanyiBtn"
+			right="-60"
+			skinClass="style.Skin_CrotaZhanyiButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="shopButtn"
+			right="0"
+			skinClass="style.Skin_CrotaShopButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="guajiBtn"
+			right="60"
+			skinClass="style.Skin_CrotaMingXiangButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="territoryBtn"
+			right="120"
+			skinClass="style.Skin_CrotaTerritoryButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="friendBtn"
+			right="180"
+			skinClass="style.Skin_CrotaFriendButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="juntuanBtn"
+			right="240"
+			skinClass="style.Skin_CrotaJunTuanButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="skillBtn"
+			right="300"
+			skinClass="style.Skin_CrotaSkillButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="petBtn"
+			right="360"
+			skinClass="style.Skin_CrotaPetButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<view14:StrengthenButton bottom="0"
+			buttonMode="true"
+			id="qianghuaBtn"
+			right="420"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+		<util:CommonButton bottom="0"
+			buttonMode="true"
+			id="personBtn"
+			right="480"
+			skinClass="style.Skin_CrotaPersonButton"
+			useHandCursor="true"
+			visible="{getCurImageVisible(1,SystemDataModel.openFunLevel,SystemDataModel.placeId,SystemDataModel.isBattleStatusFlag)}" />
+	</s:Group>
+	
+	<util:CommonButton buttonMode="true"
+		id="escSceneBtn"
+		right="745"
+		skinClass="style.Skin_CrotaMainEscFBButton"
+		useHandCursor="true"
+		visible="{getIsVisible(SystemDataModel.placeResId,SystemDataModel.isBattleStatusFlag)}"
+		y="30" />
+	<ui:CrotaIIBasicBitmapButton disable="btn_esc_disable"
+		down="btn_esc_down"
+		id="escBattleBtn"
+		nomal="btn_esc_nomal"
+		over="btn_esc_over"
+		package_id="ldbtn_res"
+		right="183"
+		visible="{getEscBattleBtnVisible(SystemDataModel.roleInfo.roletype,SystemDataModel.isBattleStatusFlag)}"
+		y="-22" />
+	<!--<component:CrotaBasicLabel bottom="0"
+		id="xl_txt"
+		mouseOut="{xl_txt.text=''}"
+		mouseOver="{xl_txt.text=SystemDataModel.roleInfo.exp+'/'+SystemDataModel.roleInfo.maxExp+'('+(SystemDataModel.roleInfo.exp/SystemDataModel.roleInfo.maxExp*100).toFixed(2)+'%)'}"
+		right="0"
+		styleName="MAINMENUROLEFONTFFFFFF"
+		textAlign="center"
+		width="633" />-->
+</s:Group>

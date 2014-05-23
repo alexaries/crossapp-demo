@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="681" height="423" xmlns:win="managers.*" xmlns:component="component.*" xmlns:view="sceneModule.view.role.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import style.Skin_CrotaCloseButton111;
+			public static const NAME:String="sceneModule.view.roleInfo.view.MainLookRoleInfoComponent";
+			[Bindable]
+			private var selfdata:Object = data;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<!-- 	-->
+	</fx:Declarations>
+	
+	<s:SkinnableContainer>
+		<mx:Image id="lookroleBg" source='assets/nrole/lookrole.png' />
+		<mx:Image id="otherroleBg" source='assets/nrole/role_bg.png' x="81" y="56" />
+		<view:MainRoleInfoComponent id="roleInfoComp" data="{selfdata}" equip_obj="{selfdata.otherRoleItemsInfo}" x="80" y="55"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCloseButton111" id="canBtn" x="612" y="24"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

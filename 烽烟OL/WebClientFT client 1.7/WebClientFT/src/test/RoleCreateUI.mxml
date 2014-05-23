@@ -1,0 +1,1232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:UIComponent xmlns:mx="http://www.adobe.com/2006/mxml"  width="1000" height="600" addedToStage="init()"
+	xmlns:ns1="zhushen.ui.component.publicComp.*" implements="zhushen.zhushengame.core.IFrameUpdateTask">
+	<mx:Script>
+		<![CDATA[
+			import zhushen.zhushengame.utils.DrawStar;
+			import zhushen.vcm.roleCreate.RoleCreatevcm;
+			import zhushen.zhushengame.common.lang.LangLoad;
+		    import zhushen.zhushengame.common.font.FontText;
+			import style.skinClass.button.BackButton;
+			import t4game.utils.GameTip;
+			import flash.utils.getTimer;
+			import t4game.utils.BitmapText;
+			import mx.core.SpriteAsset;
+			import style.skinClass.button.YellowButton;
+			import zhushen.vcm.rolelist.RoleListvcm;
+			import mx.core.Application;
+			import badfox.controls.List.event.ItemEvent;
+			import badfox.controls.ComboBox;
+			import zhushen.ui.systemSet.SystemSetData;
+			import zhushen.zhushengame.music.GameBGMManager;
+			import com.greensock.TweenMax;
+			import com.greensock.TweenLite;
+			import style.skinClass.button.LoginButton;
+			import zhushen.ui.component.publicComp.ListBox;
+			import style.skinClass.button.AssistButton;
+			import badfox.controls.Button;
+			import zhushen.zhushengame.Game;
+			import zhushen.zhushengame.utils.SkinClass;
+			import t4game.graphics.Graphics2D;
+			import zhushen.ui.questPanel.CanRecieveItem;
+			import mx.managers.FocusManager;
+			import mx.core.UIComponent;
+			import t4game.common.*;
+			import t4game.data.*;
+			
+			import zhushen.ui.roleCreate.RoleCreateUIc;
+			import zhushen.ui.UIcFather;
+			import t4game.utils.Filters;
+			import zhushen.zhushengame.utils.DrawStar;
+			
+			public var hasSend:Boolean;
+			
+			private var _index:int=0;
+			private var controller:RoleCreateUIc;
+	        /**
+			 * 国家信息
+			 */
+	        public var setCountryIndex:int;
+	        /**
+			 * 性别信息
+			 */
+	        public var setSexIndex:int;
+	        /**
+			 * 职业信息
+			 */
+	        public var setCareerIndex:int;
+	        
+	        public var defaultString:String="";
+			private var inited:Boolean;
+			public var sendRoleInfoText:BitmapText = new BitmapText();
+			public var eastCountryTxt:BitmapText = new BitmapText();
+			public var southCountryTxt:BitmapText = new BitmapText();
+			public var northCountryTxt:BitmapText = new BitmapText();
+			public var randomCountryTxt:BitmapText = new BitmapText();
+			public var infoText:BitmapText = new BitmapText();
+			public var NameText:TextField = new TextField();
+			private var format:TextFormat = new TextFormat();
+			private var inputFormat:TextFormat = new TextFormat();
+			private var countryFormat:TextFormat = new TextFormat();
+			private var careerFormat:TextFormat = new TextFormat();
+			//按钮类
+			private var man:Button = new Button();
+			private var woman:Button = new Button();
+			public var SendRoleInfo:Button = new Button();
+			private var SendRoleInfo0:Button = new Button();
+			private var eastCountry:Button = new Button();
+			private var southCountry:Button = new Button();
+			private var northCountry:Button = new Button();
+			private var random:Button = new Button();
+			private var _createRoleBg:Bitmap = new(SkinClass.LoadBg);
+			private var _randomName:Button = new Button();
+			private var _inputNameBg:Bitmap = new (SkinClass.CreateRoletextInput);
+			
+			private var _createBgL:SpriteAsset=new (SkinClass.CreateBg) as SpriteAsset;
+			private var _createBgR:SpriteAsset=new (SkinClass.CreateBg) as SpriteAsset;
+			//sprite类
+			public var roleListCanvas1:Sprite = new Sprite();
+			public var roleListCanvas2:Sprite = new Sprite();
+			public var roleListCanvas3:Sprite = new Sprite();
+			public var roleListCanvas4:Sprite = new Sprite();
+			private var selectRoleList:Sprite;
+			
+			
+			private var countryIntroduceTxt:BitmapText=new BitmapText();
+			private var careerIntroduceTxt:BitmapText=new BitmapText();
+			private var createRoleTxt:BitmapText=new BitmapText();
+			private var countryInformation:BitmapText=new BitmapText();
+			//所属职业文字
+			private var cikeTxt:BitmapText=new BitmapText();
+			private var lishiTxt:BitmapText=new BitmapText();
+			private var tianshiTxt:BitmapText=new BitmapText();
+			private var huanleiTxt:BitmapText=new BitmapText();
+			
+			//智力，敏捷，耐力,体力，力量
+			private var zhiliTxt:BitmapText=new BitmapText();
+			private var minjieTxt:BitmapText=new BitmapText();
+			private var nailiTxt:BitmapText=new BitmapText();
+			private var tiliTxt:BitmapText=new BitmapText();
+			private var liliangTxt:BitmapText=new BitmapText();
+			
+			//职业头像
+			public var nancikeBtn:HeadButton=new HeadButton();
+			public var nvcikeBtn:HeadButton=new HeadButton();
+			public var nanhuanleiBtn:HeadButton=new HeadButton();
+			public var nvhuanleiBtn:HeadButton=new HeadButton();
+			public var nantianshiBtn:HeadButton=new HeadButton();
+			public var nvtianshiBtn:HeadButton=new HeadButton();
+			public var nanlishiBtn:HeadButton=new HeadButton();
+			public var nvlishiBtn:HeadButton=new HeadButton();
+//			public var randomArr:Array=[nvcikeBtn,nvlishiBtn,nvtianshiBtn,nvhuanleiBtn];
+			public var randomArr:Array=[nvlishiBtn,nvcikeBtn,nvhuanleiBtn,nvtianshiBtn];
+			
+			private var MaxArr:Array=[100,100,100,100,100];
+			private var cikeArr:Array=[35,10,20,20,15];
+			private var lishiArr:Array=[10,20,30,30,10];
+			private var tianshiArr:Array=[15,15,15,20,35];
+			private var huanleiArr:Array=[20,15,10,15,40];
+										
+			private var wumangxin:Bitmap=new(SkinClass.wumangxin);
+			private var wumangxinzhezhao:Bitmap=new(SkinClass.wumangxinzhezhao);
+			
+			//职业介绍
+			private var _info1:CreateCareerInfo = new CreateCareerInfo();
+			private var _info2:CreateCareerInfo = new CreateCareerInfo();
+			private var _info3:CreateCareerInfo = new CreateCareerInfo();
+			private var _info4:CreateCareerInfo = new CreateCareerInfo();
+			private var _lastInfo:CreateCareerInfo;
+			private var _txt:BitmapText = new BitmapText();
+			private var _glowfilter:GlowFilter=new GlowFilter(0x000000,0.8,30,30,2,1,true);
+			private var _arr:Array=new Array(_glowfilter);
+			
+			private var redWuMangXin:DrawStar=new DrawStar([100,100,100,100,100],[20,20,20,20,20],5,120,0,0,60,0xFF3300,0xFF3300,0.5,2);//,5,150,0,0,50,0x#FF6600,0xFF6600,0.5,2
+			//杨庆岩加
+			private var musicBtn:Button = new Button();
+			private var _selectedRole:Sprite;
+			private var _selectedSex:Sprite;
+			private var _blurType1:int;
+			private var _blurScope1:int;
+			private var _blurType:int;
+			private var _blurScope:int;
+			private var _selectedEffect:GlowFilter = new GlowFilter(0xffffbe,.75,8,8,1.5);
+			private var _randomEffect:GlowFilter = new GlowFilter(0xffffbe,.75,10,10,1.5);
+			private var _selectRoleGlow:GlowFilter = new GlowFilter(0x41d4e3,0.6,5,5,2);
+			private var _gameSetShareObject:SharedObject = SharedObject.getLocal("gameSet");
+			private var _effectClass:Class = GameResourceManager.getInstance().getClass("SelectRoleEffect");
+			private var _selectRoleEffect:MovieClip = new _effectClass();
+			
+			private var _headbtn:HeadButton;
+			private var headWH:int=70;
+			
+	        private function init():void
+	        {
+	        	if(inited == false)
+	        	{
+					this.addEventListener(KeyboardEvent.KEY_DOWN,onEnter);
+		        	initSprite();
+		        	initText();
+		        	initButton();
+					dispatchEvent(new Event(Event.COMPLETE));
+	        	}
+	        }
+	        private var colorOffset:int = 40;
+	        private var colorTrans:ColorTransform = new ColorTransform(1, 1, 1, 1, transform.colorTransform.redOffset, transform.colorTransform.greenOffset, transform.colorTransform.blueOffset, 0);
+	        private var grayTrans:ColorTransform = new ColorTransform(1, 1, 1, 1, transform.colorTransform.redOffset - colorOffset, transform.colorTransform.greenOffset - colorOffset, transform.colorTransform.blueOffset - colorOffset, 0);
+	        
+	        private function initSprite():void
+	        {
+	        	_createRoleBg.x += Defaults.LOADING_OFFSET_X;
+	        	_createRoleBg.y += Defaults.LOADING_OFFSET_Y;
+	        	addChild(_createRoleBg);
+	        	
+	        	 //创建角色背景
+	           _createBgL.x=30;
+	           _createBgL.y=60;
+	           _createBgL.width=240;
+	           _createBgL.height=470;
+	           _createBgL.alpha=0.6;
+//	           _createBgL.filters=_arr;
+	           addChild(_createBgL);
+	           
+	           
+	           _createBgR.x=_createBgL.width+_inputNameBg.width+320;
+	           _createBgR.y=60;
+	           _createBgR.width=240;
+	           _createBgR.height=470;
+	           _createBgR.alpha=0.6;
+//	           _createBgR.filters=_arr;
+	           addChild(_createBgR);
+	           
+	           //五芒星地框
+	           wumangxin.x=_createBgR.x+30;
+	           wumangxin.y=_createBgR.y+255;
+	           wumangxin.width=wumangxin.height=168;
+	           this.addChild(wumangxin);
+	           
+	           wumangxinzhezhao.x=_createBgR.x+30;
+	           wumangxinzhezhao.y=_createBgR.y+255;
+	           wumangxinzhezhao.width=wumangxinzhezhao.height=168;
+	           this.addChild(wumangxinzhezhao);
+	           
+//	           redWuMangXin.x=wumangxin.x+wumangxin.width/2;
+//	           redWuMangXin.y=wumangxin.y+wumangxin.height/2;
+	           redWuMangXin.x=wumangxin.x+84;
+	           redWuMangXin.y=wumangxin.y+77;
+	           this.addChild(redWuMangXin);
+	           redWuMangXin.visible=false;
+	           
+	           //角色效果和坐标排列
+	        	roleListCanvas2.x = 400//roleListCanvas1.x + 230;
+	        	roleListCanvas2.y = 96;
+	        	roleListCanvas2.transform.colorTransform = grayTrans;
+//	        	roleListCanvas2.addEventListener(MouseEvent.CLICK,selectRole);
+	        	roleListCanvas2.addEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+	        	roleListCanvas2.addEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+	        	this.addChild(roleListCanvas2);
+	        	
+	        	roleListCanvas1.x = 400//80;
+	        	roleListCanvas1.y = 96;
+	        	roleListCanvas1.transform.colorTransform = grayTrans;
+//	        	roleListCanvas1.addEventListener(MouseEvent.CLICK,selectRole);
+	        	roleListCanvas1.addEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+	        	roleListCanvas1.addEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+	        	this.addChild(roleListCanvas1);
+	        	
+	        	roleListCanvas3.x = 400;
+	        	roleListCanvas3.y = 96;
+	        	roleListCanvas3.transform.colorTransform = grayTrans;
+//	        	roleListCanvas3.addEventListener(MouseEvent.CLICK,selectRole);
+	        	roleListCanvas3.addEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+	        	roleListCanvas3.addEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+	        	this.addChild(roleListCanvas3);
+	        	
+	        	roleListCanvas4.x = 400;
+	        	roleListCanvas4.y = 96;
+	        	roleListCanvas4.transform.colorTransform = grayTrans;
+//	        	roleListCanvas4.addEventListener(MouseEvent.CLICK,selectRole);
+	        	roleListCanvas4.addEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+	        	roleListCanvas4.addEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+	        	this.addChild(roleListCanvas4);
+				
+				//人物头像排列			
+				nancikeBtn.setSkin(new(SkinClass.nancike));
+				nvcikeBtn.setSkin(new(SkinClass.nvcike));
+				nancikeBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nvcikeBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nancikeBtn.x=_createBgL.x+45;
+				nancikeBtn.y=_createBgL.y+50;
+				nancikeBtn.width = nancikeBtn.height = headWH;
+				nvcikeBtn.x=nancikeBtn.x+nancikeBtn.width+15;
+				nvcikeBtn.y=nancikeBtn.y;
+				nvcikeBtn.width = nvcikeBtn.height = headWH;
+				this.addChild(nancikeBtn);
+				this.addChild(nvcikeBtn);
+				
+				    
+				nanlishiBtn.setSkin(new(SkinClass.nanlishi));
+				nvlishiBtn.setSkin(new(SkinClass.nvlishi));
+				nanlishiBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nvlishiBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nanlishiBtn.x=nancikeBtn.x;
+				nanlishiBtn.y=nancikeBtn.y+nancikeBtn.height+15;
+				nanlishiBtn.width = nanlishiBtn.height = headWH;
+				nvlishiBtn.x=nvcikeBtn.x;
+				nvlishiBtn.y=nanlishiBtn.y;
+				nvlishiBtn.width = nvlishiBtn.height = headWH+2;
+				this.addChild(nanlishiBtn);
+				this.addChild(nvlishiBtn);
+				
+				nantianshiBtn.setSkin(new(SkinClass.nantianshi));
+				nvtianshiBtn.setSkin(new(SkinClass.nvtianshi));
+				nantianshiBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nvtianshiBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nantianshiBtn.x=nanlishiBtn.x;
+				nantianshiBtn.y=nanlishiBtn.y+nanlishiBtn.height+15;
+				nantianshiBtn.width = nantianshiBtn.height = headWH;
+				nvtianshiBtn.x=nvcikeBtn.x;
+				nvtianshiBtn.y=nantianshiBtn.y;
+				nvtianshiBtn.width = nvtianshiBtn.height = headWH;
+   				this.addChild(nantianshiBtn);
+				this.addChild(nvtianshiBtn);
+				
+				nanhuanleiBtn.setSkin(new(SkinClass.nanhuanlei));
+				nvhuanleiBtn.setSkin(new(SkinClass.nvhuanlei));
+				nanhuanleiBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nvhuanleiBtn.addEventListener(MouseEvent.CLICK,onClickHead);
+				nanhuanleiBtn.x=nantianshiBtn.x;
+				nanhuanleiBtn.y=nantianshiBtn.y+nantianshiBtn.height+15;
+				nanhuanleiBtn.width = nanhuanleiBtn.height = headWH;
+				nvhuanleiBtn.x=nvcikeBtn.x;
+				nvhuanleiBtn.y=nanhuanleiBtn.y;
+				nvhuanleiBtn.width = nvhuanleiBtn.height = headWH;
+				this.addChild(nanhuanleiBtn);
+				this.addChild(nvhuanleiBtn);
+				
+	        }
+			private	var randomCuic:UIComponent = new UIComponent();
+			private var eastCuic:UIComponent = new UIComponent();
+			private var southCuic:UIComponent = new UIComponent();
+			private var northCuic:UIComponent = new UIComponent();
+			 
+	        private function initButton():void
+	        {
+	        	
+//	        	randomArr[setCareerIndex].selected = true;
+//	        	man.width = 40;
+//	        	man.height = 40;
+//	        	man.x = 446;
+//	        	man.y = 390;
+//	        	man.toggle = true;
+//	        	man.selected = false;
+//	        	man.textColor = 0xebe69e;
+//				man.textOverColor = 0xebe69e;
+//				man.textSelectedColor = 0xebe69e;
+//	        	man.textFilters = [Filters.glow()];
+//	        	man.upState(SkinClass.CreateRole_ManUpSkin);
+//	        	man.downState(SkinClass.CreateRole_ManDownSkin);
+//	        	man.overState(SkinClass.CreateRole_ManOverSkin);
+//	        	man.selectedDownState(SkinClass.CreateRole_ManSelectedUpSkin);
+//	        	man.selectedUpState(SkinClass.CreateRole_ManSelectedUpSkin);
+//	        	man.selectedOverState(SkinClass.CreateRole_ManSelectedUpSkin);
+//				man.addEventListener(MouseEvent.CLICK,setSex);
+//				man.refresh();
+//				this.addChild(man);
+//				
+//				woman.width = 40;
+//	        	woman.height = 40;
+//	        	woman.x = 498;
+//	        	woman.y = 390;
+//	        	woman.toggle = true;
+//	        	woman.selected = true;
+//	        	woman.mouseEnabled = false;
+//	        	woman.textColor = 0xebe69e;
+//				woman.textOverColor = 0xebe69e;
+//				woman.textSelectedColor = 0xebe69e;
+//	        	woman.textFilters = [Filters.glow()];
+//	        	woman.upState(SkinClass.CreateRole_ManUpSkin_w);
+//	        	woman.downState(SkinClass.CreateRole_ManDownSkin_w);
+//	        	woman.overState(SkinClass.CreateRole_ManOverSkin_w);
+//	        	woman.selectedDownState(SkinClass.CreateRole_ManSelectedUpSkin_w);
+//	        	woman.selectedUpState(SkinClass.CreateRole_ManSelectedUpSkin_w);
+//	        	woman.selectedOverState(SkinClass.CreateRole_ManSelectedUpSkin_w);
+//				woman.addEventListener(MouseEvent.CLICK,setSex);
+//				woman.refresh();
+//				this.addChild(woman);
+				
+				var xInit:int = 45;
+				var xOffset:int = 70;// _createBgL.x=30;_createBgL.y=60;
+				var yInit:int = 445;
+				//东南北随机 国家按钮
+				eastCountry.width = 18;
+	        	eastCountry.height = 18;
+	        	eastCountry.toggle = true;
+	        	eastCountry.selected = true;
+	        	eastCountry.skinClass(YellowButton);
+				eastCountry.refresh();
+				eastCuic.addChild(eastCountry);
+				
+				southCountry.width = 18;
+	        	southCountry.height = 18;
+	        	southCountry.toggle = true;
+	        	southCountry.selected = false;
+	        	southCountry.skinClass(YellowButton);
+				southCountry.refresh();
+				southCuic.addChild(southCountry);
+				
+				northCountry.width = 18;
+	        	northCountry.height = 18;
+	        	northCountry.toggle = true;
+	        	northCountry.selected = false;
+	        	northCountry.skinClass(YellowButton);
+				northCountry.refresh();
+				northCuic.addChild(northCountry);
+				
+				random.width = 18;
+	        	random.height = 18;
+	        	random.toggle = true;
+	        	random.selected = false;
+	        	random.skinClass(YellowButton);
+				random.refresh();
+				randomCuic.addChild(random);
+				
+	        	//“进入游戏”按钮的各种状态
+				SendRoleInfo.width = 250;
+	        	SendRoleInfo.height = 50;
+	        	SendRoleInfo.x = 370;
+	        	SendRoleInfo.y = 540;
+				SendRoleInfo.upState(SkinClass.EnterGameUpSkin);
+				SendRoleInfo.overState(SkinClass.EnterGameOverSkin);
+				SendRoleInfo.downState(SkinClass.EnterGameDownSkin);
+				SendRoleInfo.addEventListener(MouseEvent.CLICK,SendInfo);
+				SendRoleInfo.refresh();
+				this.addChild(SendRoleInfo);
+				
+	        	//"进入游戏"文字的各种效果
+	        	var _textFilter:BitmapFilter;
+            	_textFilter = Filters.glow(0x31160C, 1, 2, 2, 10);
+	        	sendRoleInfoText.gradient = true;
+				sendRoleInfoText.gradientColor = [0xffffff,0xdd9900];
+				sendRoleInfoText.gradientAlpha = [1,1];
+				sendRoleInfoText.gradientRatio = [120,255];
+				sendRoleInfoText.createGradientBox(SpreadMethod.PAD);
+	        	sendRoleInfoText.textFilters = [_textFilter];
+	        	sendRoleInfoText.font = FontText.LI_SHU;
+	        	sendRoleInfoText.size = 26;
+	        	sendRoleInfoText.text = LangLoad.JINRU;	
+	        	sendRoleInfoText.x = SendRoleInfo.x + (SendRoleInfo.width - sendRoleInfoText.width)/2;
+	        	sendRoleInfoText.y = SendRoleInfo.y + (SendRoleInfo.height - sendRoleInfoText.height)/2;
+	        	addChild(sendRoleInfoText);
+	        	
+				
+				
+				//“创建角色”文字效果
+				createRoleTxt.x=nancikeBtn.x+26;
+				createRoleTxt.y=nancikeBtn.y-33;
+				createRoleTxt.gradient=true;
+				createRoleTxt.gradientColor=[0xffffff,0xdd9900];
+				createRoleTxt.gradientRatio=[130,255];
+				createRoleTxt.textFilters=[_textFilter];
+				createRoleTxt.font=FontText.KAI_TI;
+				createRoleTxt.createGradientBox(SpreadMethod.PAD);
+				createRoleTxt.size=22;
+				createRoleTxt.text=LangLoad.CHUANGJIAN;
+				addChild(createRoleTxt);
+				
+				//国家信息介绍
+				countryInformation.x=_createBgR.x+20;
+				countryInformation.y=nancikeBtn.y+15;
+				countryInformation.font=FontText.SONG_TI;
+				countryInformation.size=12;
+				countryInformation.leading=7;
+				countryInformation.textFormat.kerning=true;
+				countryInformation.textFormat.letterSpacing=2;
+				countryInformation.textColor=0xF1D79A;
+				countryInformation.text="";
+				this.addChild(countryInformation);
+				countryInformation.visible=false;
+				
+				var _txtFilter:BitmapFilter;
+            	_txtFilter = Filters.glow(0x31160C, 1, 2, 2, 15);
+				//“国家介绍”文字
+				countryIntroduceTxt.x=_createBgR.x+65;
+				countryIntroduceTxt.y=_createBgR.y+20;
+				countryIntroduceTxt.gradient=true;
+				countryIntroduceTxt.gradientColor=[0xffffff,0xdd9900];
+				countryIntroduceTxt.gradientRatio=[150,255];
+				countryIntroduceTxt.textFilters=[_txtFilter];
+				countryIntroduceTxt.font=FontText.LI_SHU;
+				countryIntroduceTxt.createGradientBox(SpreadMethod.PAD);
+				countryIntroduceTxt.size=26;
+				countryIntroduceTxt.text=LangLoad.GJJIESHAO;
+				addChild(countryIntroduceTxt);
+				
+				//“职业介绍”文字
+				careerIntroduceTxt.x=_createBgR.x+65;
+				careerIntroduceTxt.y=_createBgR.y+215;
+				careerIntroduceTxt.gradient=true;
+				careerIntroduceTxt.gradientColor=[0xffffff,0xdd9900];
+				careerIntroduceTxt.gradientRatio=[150,255];
+				careerIntroduceTxt.textFilters=[_txtFilter];
+				careerIntroduceTxt.font=FontText.LI_SHU;
+				careerIntroduceTxt.createGradientBox(SpreadMethod.PAD);
+				careerIntroduceTxt.size=26;
+				careerIntroduceTxt.text=LangLoad.ZYJIESHAO;
+				addChild(careerIntroduceTxt);
+				
+				zhiliTxt.x=wumangxin.x+125;//wumangxin.x+65;
+				zhiliTxt.y=wumangxin.y+45;//wumangxin.y+5;
+				zhiliTxt.gradient=true;
+				zhiliTxt.gradientColor=[0xffffff,0xFF9F06];
+				zhiliTxt.gradientRatio=[200,255];
+				zhiliTxt.textFilters=[_textFilter];
+				zhiliTxt.font=FontText.LI_SHU;
+				zhiliTxt.createGradientBox(SpreadMethod.PAD);
+				zhiliTxt.size=19;
+				zhiliTxt.text=LangLoad.ZHILI;
+				addChild(zhiliTxt);
+				
+				minjieTxt.x=wumangxin.x+100;//wumangxin.x+125;
+				minjieTxt.y=wumangxin.y+125;//wumangxin.y+45;
+				minjieTxt.gradient=true;
+				minjieTxt.gradientColor=[0xffffff,0xFF9F06];
+				minjieTxt.gradientRatio=[200,255];
+				minjieTxt.textFilters=[_textFilter];
+				minjieTxt.font=FontText.LI_SHU;
+				minjieTxt.createGradientBox(SpreadMethod.PAD);
+				minjieTxt.size=19;
+				minjieTxt.text=LangLoad.MINJIE;
+				addChild(minjieTxt);
+				
+				nailiTxt.x=wumangxin.x+25//wumangxin.x+100;
+				nailiTxt.y=wumangxin.y+125//wumangxin.y+125;
+				nailiTxt.gradient=true;
+				nailiTxt.gradientColor=[0xffffff,0xFF9F06];
+				nailiTxt.gradientRatio=[200,255];
+				nailiTxt.textFilters=[_textFilter];
+				nailiTxt.font=FontText.LI_SHU;
+				nailiTxt.createGradientBox(SpreadMethod.PAD);
+				nailiTxt.size=19;
+				nailiTxt.text=LangLoad.NAILI;
+				addChild(nailiTxt);
+				
+				tiliTxt.x=wumangxin.x+65;//wumangxin.x+25;
+				tiliTxt.y=wumangxin.y+5;//wumangxin.y+125;
+				tiliTxt.gradient=true;
+				tiliTxt.gradientColor=[0xffffff,0xFF9F06];
+				tiliTxt.gradientRatio=[200,255];
+				tiliTxt.textFilters=[_textFilter];
+				tiliTxt.font=FontText.LI_SHU;
+				tiliTxt.createGradientBox(SpreadMethod.PAD);
+				tiliTxt.size=19;
+				tiliTxt.text=LangLoad.TILI;
+				addChild(tiliTxt);
+				
+				liliangTxt.x=wumangxin.x+5;
+				liliangTxt.y=wumangxin.y+45;
+				liliangTxt.gradient=true;
+				liliangTxt.gradientColor=[0xffffff,0xFF9F06];
+				liliangTxt.gradientRatio=[200,255];
+				liliangTxt.textFilters=[_textFilter];
+				liliangTxt.font=FontText.LI_SHU;
+				liliangTxt.createGradientBox(SpreadMethod.PAD);
+				liliangTxt.size=19;
+				liliangTxt.text=LangLoad.LILIANG;
+				addChild(liliangTxt);
+				
+				cikeTxt.x=nancikeBtn.x-30;
+				cikeTxt.y=nancikeBtn.y+8;
+				cikeTxt.gradient=true;
+				cikeTxt.gradientColor=[0xffffff,0xFF9F06];
+				cikeTxt.gradientRatio=[80,255];
+				cikeTxt.textFilters=[_textFilter];
+				cikeTxt.font=FontText.KAI_TI;
+				cikeTxt.createGradientBox(SpreadMethod.PAD, 15, 30);
+				cikeTxt.size=19;
+				cikeTxt.text=LangLoad.CIKEH;
+				addChild(cikeTxt);
+				
+				lishiTxt.x=nancikeBtn.x-30;
+				lishiTxt.y=nanlishiBtn.y+8;
+				lishiTxt.gradient=true;
+				lishiTxt.gradientColor=[0xffffff,0xFF9F06];
+				lishiTxt.gradientRatio=[80,255];
+				lishiTxt.textFilters=[_textFilter];
+				lishiTxt.font=FontText.KAI_TI;
+				lishiTxt.createGradientBox(SpreadMethod.PAD, 15, 30);
+				lishiTxt.size=19;
+				lishiTxt.text=LangLoad.LISHIH;
+				addChild(lishiTxt);
+				
+				tianshiTxt.x=nantianshiBtn.x-30;
+				tianshiTxt.y=nantianshiBtn.y+8;
+				tianshiTxt.gradient=true;
+				tianshiTxt.gradientColor=[0xffffff,0xFF9F06];
+				tianshiTxt.gradientRatio=[80,255];
+				tianshiTxt.textFilters=[_textFilter];
+				tianshiTxt.font=FontText.KAI_TI;
+				tianshiTxt.createGradientBox(SpreadMethod.PAD, 15, 30);
+				tianshiTxt.size=19;
+				tianshiTxt.text=LangLoad.TIANSHIH;
+				addChild(tianshiTxt);
+				
+				huanleiTxt.x=nanhuanleiBtn.x-30;
+				huanleiTxt.y=nanhuanleiBtn.y+8;
+				huanleiTxt.gradient=true;
+				huanleiTxt.gradientColor=[0xffffff,0xFF9F06];
+				huanleiTxt.gradientRatio=[80,255];
+				huanleiTxt.textFilters=[_textFilter];
+				huanleiTxt.font=FontText.KAI_TI;
+				huanleiTxt.createGradientBox(SpreadMethod.PAD, 15, 30);
+				huanleiTxt.size=19;
+				huanleiTxt.text=LangLoad.HUANLEIH;
+				addChild(huanleiTxt);
+				
+				//“东伯、南伯、北伯、听天由命” 文字的效果
+	        	eastCuic.x = _createBgL.x+15;
+	        	eastCuic.y = _createBgL.y+385;
+				addChild(eastCuic);
+	        	eastCountryTxt.x = eastCountry.x + eastCountry.width;
+	        	eastCountryTxt.y = eastCountry.y-3;
+	        	eastCountryTxt.gradient = true;
+				eastCountryTxt.gradientColor = [0x0BEC4E,0x57C318];
+				eastCountryTxt.gradientAlpha = [1,1];
+				eastCountryTxt.gradientRatio = [140,255];
+				eastCountryTxt.createGradientBox(SpreadMethod.PAD);
+	        	eastCountryTxt.textFilters = [_textFilter];
+	        	eastCountryTxt.font = FontText.LI_SHU;
+	        	eastCountryTxt.size = 20;
+	        	eastCountryTxt.text = LangLoad.DONG;
+	        	eastCuic.addEventListener(MouseEvent.CLICK,countryEvent);
+				eastCuic.addChild(eastCountryTxt);
+				
+	        	southCuic.x = eastCuic.x + xOffset;
+	        	southCuic.y = yInit;
+				addChild(southCuic);
+	        	southCountryTxt.x = southCountry.x + southCountry.width;
+	        	southCountryTxt.y = southCountry.y-3;
+	        	southCountryTxt.gradient = true;
+				southCountryTxt.gradientColor = [0x0BEC4E,0x57C318];
+				southCountryTxt.gradientAlpha = [1,1];
+				southCountryTxt.gradientRatio = [140,255];
+				southCountryTxt.createGradientBox(SpreadMethod.PAD);
+	        	southCountryTxt.textFilters = [_textFilter];
+	        	southCountryTxt.font = FontText.LI_SHU;
+	        	southCountryTxt.size = 20;
+	        	southCountryTxt.text = LangLoad.NAN;
+	        	southCuic.addEventListener(MouseEvent.CLICK,countryEvent);
+				southCuic.addChild(southCountryTxt);
+				
+	        	northCuic.x = southCuic.x + xOffset;
+	        	northCuic.y = yInit;
+				addChild(northCuic);
+	        	northCountryTxt.x = northCountry.x + northCountry.width;
+	        	northCountryTxt.y = northCountry.y-3;
+	        	northCountryTxt.gradient = true;
+				northCountryTxt.gradientColor = [0x0BEC4E,0x57C318];
+				northCountryTxt.gradientAlpha = [1,1];
+				northCountryTxt.gradientRatio = [140,255];
+				northCountryTxt.createGradientBox(SpreadMethod.PAD);
+	        	northCountryTxt.textFilters = [_textFilter];
+	        	northCountryTxt.font = FontText.LI_SHU;
+	        	northCountryTxt.size = 20;
+	        	northCountryTxt.text = LangLoad.BEI;
+	        	northCuic.addEventListener(MouseEvent.CLICK,countryEvent);
+				northCuic.addChild(northCountryTxt);
+				
+	        	randomCuic.x = eastCountry.x + 90;
+	        	randomCuic.y = eastCountry.y + 485;
+				addChild(randomCuic);
+	        	randomCountryTxt.x = random.x + random.width;
+	        	randomCountryTxt.y = random.y-3;
+	        	randomCountryTxt.gradient = true;
+				randomCountryTxt.gradientColor = [0x0BEC4E,0x57C318];
+				randomCountryTxt.gradientAlpha = [1,1];
+				randomCountryTxt.gradientRatio = [140,255];
+				randomCountryTxt.createGradientBox(SpreadMethod.PAD);
+	        	randomCountryTxt.textFilters = [_textFilter];
+	        	randomCountryTxt.font = FontText.LI_SHU;
+	        	randomCountryTxt.size = 20;
+	        	randomCountryTxt.text = LangLoad.TING;
+	        	randomCuic.addEventListener(MouseEvent.CLICK,countryEvent);
+				randomCuic.addEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+				randomCuic.addEventListener(MouseEvent.MOUSE_MOVE,randomCountryRollOver);
+				randomCuic.addChild(randomCountryTxt);
+				
+				//屏蔽“输入角色名称”
+//	        	infoText.gradient = true;
+//				infoText.gradientColor = [0xffffff,0xdd9900];
+//				infoText.gradientAlpha = [1,1];
+//				infoText.gradientRatio = [120,255];
+//				infoText.createGradientBox(SpreadMethod.PAD);
+//	        	infoText.textFilters = [_textFilter];
+//	        	infoText.font = FontText.LI_SHU;
+//	        	infoText.size = 22;
+//	        	infoText.text = LangLoad.SHURU1;	
+//	        	infoText.x = southCuic.x + 15;
+//	        	infoText.y = southCuic.y + 25;
+//				this.addChild(infoText);
+				
+				//返回已经创建的人物列表按钮
+				SendRoleInfo0.width = 26;
+	        	SendRoleInfo0.height = 26;
+	        	SendRoleInfo0.x = 78;
+	        	SendRoleInfo0.y = 552;
+	        	SendRoleInfo0.skinClass(BackButton);
+				SendRoleInfo0.addEventListener(MouseEvent.CLICK,backToSelectRole);
+				SendRoleInfo0.addEventListener(MouseEvent.ROLL_OVER,backRollOver);
+				SendRoleInfo0.addEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+				SendRoleInfo0.refresh();
+				this.addChild(SendRoleInfo0);
+				
+				//=== 音乐按钮
+				musicBtn.toggle = true;
+				musicBtn.name = "musicBtn";
+				musicBtn.width = 26;
+				musicBtn.height = 26;
+				musicBtn.upState(SkinClass.MusicOpenUp);
+				musicBtn.overState(SkinClass.MusicOpenOver);
+				musicBtn.downState(SkinClass.MusicOpenDown);
+				musicBtn.selectedUpState(SkinClass.MusicCloseUp);
+				musicBtn.selectedOverState(SkinClass.MusicCloseOver);
+				musicBtn.selectedDownState(SkinClass.MusicCloseDown);
+				musicBtn.x = 974;
+				musicBtn.y = 0;
+				musicBtn.selected = !Boolean(_gameSetShareObject.data.group[6]);
+				SystemSetData.getInstance().musicBtnArray.push(musicBtn);
+				musicBtn.addEventListener(MouseEvent.CLICK,musicBtnHandle);
+				this.addChild(musicBtn);
+				
+				_textFilter = Filters.glow(0x000000, 1, 1.2, 1.2, 1);
+				
+//				“在此建立新角色，诛神世界因您而变”文字
+//				var bt:Bitmap = new Bitmap();
+//				_txt.textColor = 0x000000;
+//				_txt.font = FontText.LI_SHU;
+//				_txt.size = 24;
+//	        	_txt.textFilters = [_textFilter];
+//				_txt.text = LangLoad.JIAN;
+//				_txt.x = (this.width - _txt.width)/2;
+//				_txt.y = 30;
+//				addChild(_txt);
+//				bt.x = (this.width - _txt.width)/2;
+//				bt.y = 30;
+//				bt.bitmapData = new BitmapData(_txt.width,_txt.height,true,0x0);
+//				bt.bitmapData.draw(_txt);
+//				bt.filters = [new GlowFilter(0xffffff,1,3,3,6)];
+//				addChild(bt);
+	        }
+	       private  var _recondBtn:HeadButton;
+	       
+	       //头像出现黄色选中框
+	        public function headSelected(btn:HeadButton):void
+			{
+				if (_recondBtn)
+					_recondBtn.selected=false;
+				_recondBtn=btn;
+//				_recondBtn._headframe.visible=false;
+				_recondBtn.selected=true;  
+			}
+			
+				public function getHeadBtn(occuId:int):HeadButton
+				{
+					var tempBtn:HeadButton;
+					if (occuId == CommonConstants.OCCUPATION_CIKE && CommonConstants.SEX_WOMAN)
+					{
+						tempBtn=nvcikeBtn;
+					}
+					else if (occuId == CommonConstants.OCCUPATION_LISHI && CommonConstants.SEX_WOMAN)
+					{
+						tempBtn=nvlishiBtn;
+					}
+					else if (occuId == CommonConstants.OCCUPATION_TIANSHI && CommonConstants.SEX_WOMAN)
+					{
+						tempBtn=nvtianshiBtn;
+					}
+					else if (occuId == CommonConstants.OCCUPATION_HUANLEISHI && CommonConstants.SEX_WOMAN)
+					{
+						tempBtn=nvhuanleiBtn;
+					}
+					return tempBtn;
+				}
+			
+			//服务器下发的人物的职业所对应红色多边形（初始化时）
+			public function showDuoBianXing(occuId:int):void
+			{
+				drawRed(getHeadBtn(occuId) as HeadButton);
+			}
+			
+			public function drawRed(btn:HeadButton):void
+			{
+				switch(btn)
+	        	{
+	        		case nancikeBtn:
+	        		case nvcikeBtn:
+	        		setCareerIndex=1;
+	        		redWuMangXin.updateCurNum(cikeArr,MaxArr);
+	        		redWuMangXin.visible=true;
+	        		break;
+	        		case nanlishiBtn:
+	        		case nvlishiBtn:
+	        		setCareerIndex=0;
+	        		redWuMangXin.updateCurNum(lishiArr,MaxArr);
+	        		redWuMangXin.visible=true;
+	        		break;
+	        		case nantianshiBtn:
+	        		case nvtianshiBtn:
+	        		setCareerIndex=3;
+	        		redWuMangXin.updateCurNum(tianshiArr,MaxArr);
+	        		redWuMangXin.visible=true;
+	        		break;
+	        		case nanhuanleiBtn:
+	        		case nvhuanleiBtn:
+	        		setCareerIndex=2;
+	        		redWuMangXin.updateCurNum(huanleiArr,MaxArr);
+	        		redWuMangXin.visible=true;
+	        		break;
+	        	}
+			}
+	        public function onClickHead(e:MouseEvent):void
+	        {
+	        	
+				headSelected(e.currentTarget as HeadButton);
+	        	
+				drawRed(e.currentTarget as HeadButton);
+				
+				if(e.currentTarget==nancikeBtn||e.currentTarget==nanlishiBtn||
+						e.currentTarget==nantianshiBtn||e.currentTarget==nanhuanleiBtn)
+				{
+					setSexIndex = CommonConstants.SEX_MAN;
+        			controller.vcm.drawActionRole(setCareerIndex*2);
+					for(var i:int=1;i<5;i++)
+		        	{
+		        		this["roleListCanvas"+i].graphics.clear();
+		        	}
+				}else
+				{
+					for(var j:int=1;j<5;j++)
+		        	{
+		        		Sprite(this["roleListCanvas"+j]).graphics.clear();
+		        	}
+	        		setSexIndex = CommonConstants.SEX_WOMAN;
+//        			controller.vcm.drawActionRole((setCareerIndex*2)+1);
+				}
+//				_selectedSex = e.currentTarget as Sprite;
+	        	setSelectRoleEffect(setCareerIndex);
+	        	controller.vcm.drawRole();
+	        }
+	        
+	        private function backRollOver(e:Event):void
+	        {
+	        	GameTip.setTip(LangLoad.FANHUI1,SendRoleInfo0);
+	        }
+	        private function musicBtnHandle(e:MouseEvent):void
+			{
+				if(_gameSetShareObject.data.group[6]==1)
+				{
+					_gameSetShareObject.data.group[6]=0;
+					trace("++++++++++"+Game.instance.rootSWF+"++++++++++");
+					Game.instance.rootSWF.hideMusic();
+				}else{
+					_gameSetShareObject.data.group[6]=1;
+					if(_gameSetShareObject.data.group[7]==1)
+					{
+						trace("--------------"+Game.instance.rootSWF+"--------------");
+						Game.instance.rootSWF.showMusic();
+					}
+				}
+				SystemSetData.getInstance().setMusicBtnState(Boolean(_gameSetShareObject.data.group[6]));
+			}
+	        private function initText():void
+	        {
+	        	format.font = Game.textFormat.font;
+	        	format.leading = 2;
+	        	format.align = TextFormatAlign.LEFT;
+	        	
+				inputFormat.font = FontText.SONG_TI;
+				inputFormat.size = 16;
+				inputFormat.align = TextFormatAlign.CENTER;
+				
+				countryFormat.font = FontText.KAI_TI;
+				countryFormat.size = 15;
+				countryFormat.align = TextFormatAlign.CENTER;
+				countryFormat.color = 0xffffff;
+				countryFormat.bold = true;
+				
+				careerFormat.font = FontText.SONG_TI;
+				careerFormat.size = 14;
+				careerFormat.bold = true;
+				careerFormat.leading = 5;
+				
+				//名字输入框
+	        	_inputNameBg.x = 405;
+				_inputNameBg.y = 505;
+//				_inputNameBg.alpha = 0.6;
+	        	_inputNameBg.width = 178;
+	        	_inputNameBg.height = 34;
+	        	addChild(_inputNameBg);
+	        	
+	        	//随机组合名字按钮
+	        	_randomName.width = 25;
+	        	_randomName.height = 25;
+	        	_randomName.x = _inputNameBg.x + _inputNameBg.width - _randomName.width - 5;
+	        	_randomName.y = _inputNameBg.y + (_inputNameBg.height - _randomName.height)/2;
+	        	_randomName.upState(SkinClass.randomNameUpSkin);
+	        	_randomName.downState(SkinClass.randomNameDownSkin);
+	        	_randomName.overState(SkinClass.randomNameOverSkin);
+	        	_randomName.addEventListener(MouseEvent.CLICK,setName);
+	        	_randomName.addEventListener(MouseEvent.MOUSE_UP,nameOut);
+	        	_randomName.addEventListener(MouseEvent.MOUSE_MOVE,nameOver);
+	        	_randomName.addEventListener(MouseEvent.ROLL_OUT,nameOut);
+				_randomName.refresh();
+	        	addChild(_randomName);
+	        	
+	        	//输入框玩家名字的各种效果
+	        	NameText.textColor = 0xffffff;
+				NameText.width = 128;
+				NameText.height = 22;
+				NameText.x = 430;
+				NameText.y = 510;
+				NameText.type = TextFieldType.INPUT; 
+				NameText.filters = [Filters.glow()];
+				NameText.maxChars = 6;
+				NameText.defaultTextFormat = inputFormat;
+				NameText.text=defaultString;
+				NameText.addEventListener(FocusEvent.FOCUS_IN,focusIn);
+				NameText.addEventListener(FocusEvent.FOCUS_OUT,focusOut);
+				addChild(NameText);
+				
+				//点击角色后，职业介绍的文字
+				_info1.x = roleListCanvas1.x;
+				_info1.y = roleListCanvas1.y - 25;
+				_info1.setText(LangLoad.LISHI,LangLoad.LISHITIP);
+				
+				_info2.x = roleListCanvas2.x;
+				_info2.y = roleListCanvas2.y - 25;
+				_info2.setText(LangLoad.CIKE,LangLoad.CIKETIP);
+				
+				_info3.x = roleListCanvas3.x;
+				_info3.y = roleListCanvas3.y - 25;
+				_info3.setText(LangLoad.HUANLEI,LangLoad.HUANLEITIP);
+				
+				_info4.x = roleListCanvas4.x;
+				_info4.y = roleListCanvas4.y - 25;
+				_info4.setText(LangLoad.TIANSHI,LangLoad.TIANSHITIP);
+	        }
+	        private var _num:int
+	        private function setName(e:MouseEvent):void
+			{
+				if(getTimer() - _num > 300)
+				{
+					_num = getTimer();
+					controller.sendRandomNameMessage();
+				}
+			}
+			private function nameOver(e:MouseEvent):void
+			{
+				_randomName.filters = [_randomEffect];
+				GameTip.setTip(LangLoad.DIANWO,_randomName);
+			}
+			private function nameOut(e:MouseEvent):void
+			{
+				_randomName.filters = null;
+				GameTip.hide();
+			}
+			//鼠标掠过人物显示tip
+			private function roleRollOver(e:MouseEvent):void
+			{
+				switch(e.currentTarget)
+				{
+					case roleListCanvas1:
+						GameTip.setTip(LangLoad.LISHI1+CommonConstants.CAREERINFO[0],roleListCanvas1);
+					break;
+					case roleListCanvas2:
+						GameTip.setTip(LangLoad.CIKE1+CommonConstants.CAREERINFO[1],roleListCanvas2);
+					break;
+					case roleListCanvas3:
+						GameTip.setTip(LangLoad.HUANLEI1+CommonConstants.CAREERINFO[2],roleListCanvas3);
+					break;
+					case roleListCanvas4:
+						GameTip.setTip(LangLoad.TIANSHI1+CommonConstants.CAREERINFO[3],roleListCanvas4);
+					break;
+				}
+				GameTip.x = this.mouseX + 153;
+				GameTip.y = this.mouseY + 114;
+			}
+			private function randomCountryRollOver(e:MouseEvent):void
+			{
+				GameTip.setTip(LangLoad.TINGTIAN,randomCountryTxt);
+			}
+			private function roleRollOut(e:MouseEvent):void
+			{
+				GameTip.hide();
+			}
+	         //选中界面上的角色
+	        private function selectRole(e:MouseEvent):void
+	        {
+	        	if (_selectedRole == e.currentTarget)
+	        	{
+	        		return;
+	        	}
+    			if(_lastInfo)
+    			{
+    				removeChild(_lastInfo);
+    			}
+    			if(selectRoleList)
+    			{
+    				selectRoleList.filters = null;
+	        		selectRoleList.transform.colorTransform = grayTrans;
+	     		}
+	        	selectRoleList = e.currentTarget as Sprite;
+	        	selectRoleList.transform.colorTransform = colorTrans;
+	        	
+	        	_selectedRole = e.currentTarget as Sprite;
+	        	setSelectRoleEffect(setCareerIndex);
+	        	controller.vcm.drawActionRole(_index);
+	        }
+	        //更改性别调用
+//	        private function setSex(e:Event):void
+//	        {
+//	        	if (_selectedSex == e.currentTarget) return;
+//	        	if(e.currentTarget == man)
+//	        	{
+//        			woman.selected=false;
+//        			woman.mouseEnabled = true;
+//        			man.selected = true;
+//        			man.mouseEnabled = false;
+//        			for(var i:int=1;i<5;i++)
+//		        	{
+//		        		this["roleListCanvas"+i].graphics.clear();
+//		        	}
+//	        		setSexIndex = CommonConstants.SEX_MAN;
+//        			controller.vcm.drawActionRole(setCareerIndex*2);
+//	        	}else{
+//        			man.selected=false;
+//        			man.mouseEnabled = true;
+//        			woman.selected=true;
+//        			woman.mouseEnabled = false;
+//	        		for(var j:int=1;j<5;j++)
+//		        	{
+//		        		Sprite(this["roleListCanvas"+j]).graphics.clear();
+//		        	}
+//	        		setSexIndex = CommonConstants.SEX_WOMAN;
+//        			controller.vcm.drawActionRole((setCareerIndex*2)+1);
+//	        	}
+//	        	_selectedSex = e.currentTarget as Sprite;
+//	        	controller.vcm.drawRole();
+//	        }
+	        
+	        private function countryEvent(e:Event):void
+	        {
+	        	switch(e.currentTarget)
+				{
+					case eastCuic:
+						setCountryData(0);
+					break;
+					case southCuic:
+						setCountryData(1);
+					break;
+					case northCuic:
+						setCountryData(2);
+					break;
+					case randomCuic:
+						setCountryData(-1);
+					break;
+				}
+	        }
+	        
+			//设置界面选择的国家
+			public function setCountryData(num:int):void
+			{
+				setCountryIndex = num;
+				switch(num)
+				{
+					case 0:
+						eastCountry.selected = true;
+						southCountry.selected = false;
+						northCountry.selected = false;
+						random.selected = false;
+						countryInformation.text=LangLoad.COUNTRY_EAST;
+						countryInformation.visible=true;
+					break;
+					case 1:
+						eastCountry.selected = false;
+						southCountry.selected = true;
+						northCountry.selected = false;
+						random.selected = false;
+						countryInformation.text=LangLoad.COUNTRY_SOUTH;
+						countryInformation.visible=true;
+					break;
+					case 2:
+						eastCountry.selected = false;
+						southCountry.selected = false;
+						northCountry.selected = true;
+						random.selected = false;
+						countryInformation.text=LangLoad.COUNTRY_NORTH
+						countryInformation.visible=true;
+					break;
+					case -1:
+						eastCountry.selected = false;
+						southCountry.selected = false;
+						northCountry.selected = false;
+						random.selected = true;
+						countryInformation.text="";
+					break;
+				}
+			}
+			public function setCareer(num:int):void
+			{
+				setCareerIndex = num;
+			}
+			
+			public function setSelectRoleEffect(occuIndex:int):void
+	        {
+	        	var con:Sprite = this["roleListCanvas"+(occuIndex + 1)];
+	        	con.transform.colorTransform = colorTrans;
+	        	selectRoleList = con;
+	        	if (_lastInfo && contains(_lastInfo))
+	        	{
+	        		removeChild(_lastInfo);
+	        	}
+    			_lastInfo = this["_info"+(occuIndex + 1)];
+				addChild(_lastInfo);
+	        	_selectRoleEffect.x = (200>> 1) + con.x;
+	        	_selectRoleEffect.y = (290>> 1) + con.y;
+	        	_selectRoleEffect.gotoAndPlay(1);
+	        	addChildAt(_selectRoleEffect,1);
+	        }
+	        private function focusIn(e:FocusEvent):void
+	        {
+	        	if(NameText.text == LangLoad.DIAN)
+	        	{
+	        		NameText.text = "";
+	        	}
+	        	NameText.textColor = 0xffffff;
+	        }
+	        private function focusOut(e:FocusEvent):void
+	        {
+	        	Application.application.stage.focus = NameText;
+	        }
+			private function onEnter(e:KeyboardEvent):void
+			{
+				if(e.keyCode==Keyboard.ENTER)
+				{
+					controller.sendRoleInfoMessage();
+				}	
+			}
+			private function SendInfo(e:Event):void
+			{
+				if(hasSend == false)
+				{
+					controller.sendRoleInfoMessage();
+				}
+			}
+			private function backToSelectRole(e:Event):void
+			{
+				controller.backSelectRole();
+			}
+			public function frameUpdate(frameNum:int):void
+			{
+				if(_blurType == 0)
+				{
+					_blurScope += 2;
+					if(_blurScope>20)
+					{
+						_blurType = 1
+					}
+				}
+				else
+				{
+					_blurScope -= 2;
+					if(_blurScope<5)
+					{
+						_blurType = 0;
+					}
+				}
+				_selectedEffect.blurX = _blurScope;
+				_selectedEffect.blurY = _blurScope;
+				if (NameText.text == "" || NameText.text == LangLoad.DIAN)
+				{
+					_inputNameBg.filters = [_selectedEffect];
+					SendRoleInfo.filters = null;
+				}else{
+					SendRoleInfo.filters = [_selectedEffect];
+					_inputNameBg.filters = null;
+				}
+				
+				if(_blurType1 == 0)
+				{
+					_blurScope1 += 1;
+					if(_blurScope1>20)
+					{
+						_blurType1 = 1
+					}
+				}
+				else
+				{
+					_blurScope1 -= 1;
+					if(_blurScope1<5)
+					{
+						_blurType1 = 0;
+					}
+				}
+				_selectRoleGlow.blurX = _blurScope1;
+				_selectRoleGlow.blurY = _blurScope1;
+				if(selectRoleList)
+				selectRoleList.filters = [_selectRoleGlow];
+			}
+			public function remove():void
+			{
+				SendRoleInfo.mouseEnabled = true;
+				SendRoleInfo.removeEventListener(MouseEvent.CLICK,SendInfo);
+				SendRoleInfo0.removeEventListener(MouseEvent.CLICK,backToSelectRole);
+				this.removeEventListener(KeyboardEvent.KEY_DOWN,onEnter);
+				NameText.removeEventListener(FocusEvent.FOCUS_IN,focusIn);
+				NameText.removeEventListener(FocusEvent.FOCUS_OUT,focusOut);
+				roleListCanvas1.removeEventListener(MouseEvent.CLICK,selectRole);
+				roleListCanvas1.removeEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+				roleListCanvas1.removeEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+				roleListCanvas2.removeEventListener(MouseEvent.CLICK,selectRole);
+				roleListCanvas2.removeEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+				roleListCanvas2.removeEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+				roleListCanvas3.removeEventListener(MouseEvent.CLICK,selectRole);
+				roleListCanvas3.removeEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+				roleListCanvas3.removeEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+				roleListCanvas4.removeEventListener(MouseEvent.CLICK,selectRole);
+				roleListCanvas4.removeEventListener(MouseEvent.MOUSE_MOVE,roleRollOver);
+				roleListCanvas4.removeEventListener(MouseEvent.ROLL_OUT,roleRollOut);
+				
+				 nancikeBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+		 		 nvcikeBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+				 nanhuanleiBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+				 nvhuanleiBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+				 nantianshiBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+				 nvtianshiBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+				 nanlishiBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+				 nvlishiBtn.removeEventListener(MouseEvent.CLICK,onClickHead);
+			
+				controller.release();
+				controller = null;
+			}
+			public function release():void
+			{
+				remove();
+			}
+			/**
+			 * 实现UIc类
+			 */
+			public function setController(control:UIcFather):void
+			{
+				controller = control as RoleCreateUIc;
+				controller.sendRandomNameMessage();
+				if (RoleListvcm.roleListNum > 0)
+				{
+					SendRoleInfo0.enabled = true;
+				}else{
+					SendRoleInfo0.enabled = false;
+				}
+			}
+			
+			]]>
+	</mx:Script>
+</mx:UIComponent>

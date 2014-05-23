@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="60" height="32" creationComplete="group1_creationCompleteHandler(event)" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import sceneModule.view.chat.vo.WhisperChatObjectInfoVO;
+			
+			import style.Skin_CrotaChatShowButton;
+			
+			public var curPromptedInfo:WhisperChatObjectInfoVO;
+			public function onSetPromptedInfo():void{
+				var l:int = SystemDataModel.whisperObjList.length;
+				for(var i:int=0;i<l;i++){
+					if(!SystemDataModel.whisperObjList[i].readFlag){
+						if(!ppImg.visible)ppImg.visible = true;
+						curPromptedInfo = SystemDataModel.whisperObjList[i] as WhisperChatObjectInfoVO;
+						return;
+					}
+				}
+				if(ppImg.visible)ppImg.visible = false;
+			}
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				onSetPromptedInfo();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<util:CommonButton skinClass="style.Skin_CrotaChatShowButton" id="ppImg"/>
+</s:Group>

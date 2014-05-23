@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ServerConfig>
+
+	<!-- HTTP Server -->
+	<httpServerIP>192.168.1.109</httpServerIP>
+	<httpServerPort>11008</httpServerPort>
+	
+	<!-- Socket Server 211.99.203.188 123.125.171.172-->
+	<!--110.45.220.57-->
+	<socketServerIp>192.168.1.253</socketServerIp>
+	<socketServerPort>11009</socketServerPort>
+	
+	<!-- 聊天服务配置 -->
+	<chatSocketServerIp>192.168.1.253</chatSocketServerIp>
+	<chatSocketServerPort>11010</chatSocketServerPort>
+	
+	<!-- languageVersion -->
+	<languageVersion>zh_CN</languageVersion>
+	
+	
+	<!-- 注册请求url -->
+	<regRequestURL>http://192.168.1.251:11008/register</regRequestURL>
+	
+	<!-- 获取验证码url -->
+	<getValidateCodeURL>http://192.168.1.251:11008/validateCode</getValidateCodeURL>
+	
+</ServerConfig>

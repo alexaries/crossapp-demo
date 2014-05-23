@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="130" height="25" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="hovered" />
+		<s:State name="selected" />
+	</s:states>
+	<mx:Image source='assets/ui/commonBtn1.png' includeIn="normal"/>
+	<mx:Image source='assets/ui/commonBtn2.png' includeIn="hovered,selected"/>
+	<component:CrotaBasicLabel text="{data.matrixName}" styleName="RANKINGFORMAT1" textAlign="center" width="89" y="5"/>
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','mpnC_qyz')}" visible="{data.isEnableFlag}" styleName="PETTEXTFORAMT" textAlign="left" x="86" y="6"/>
+	
+</s:ItemRenderer>

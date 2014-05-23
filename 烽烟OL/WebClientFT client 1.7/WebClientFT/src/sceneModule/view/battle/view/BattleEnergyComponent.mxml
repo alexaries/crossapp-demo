@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="195" height="38">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			private const MAX_LEN:int = 159;
+			
+			public function setCurEnergy(curEn:int,maxEn:int,changeEn:int):void{
+				if(curEn > maxEn){
+					energyImg.width = MAX_LEN;
+				}else if(curEn <=0 || maxEn <=0){
+					energyImg.width = 0;
+				}else{
+					energyImg.width = MAX_LEN * (curEn/maxEn);
+				}
+				
+				var changeLen:int = MAX_LEN * ((curEn+changeEn)/maxEn);
+				if(MAX_LEN < changeLen){
+					changeLen = MAX_LEN;
+				}
+				
+				TweenLite.to(energyImg,1,{width:changeLen});
+			}
+		]]>
+	</fx:Script>
+	<mx:Image source='assets/battle/energyBg.png'/>
+	<mx:Image source='assets/battle/energyLab.png' x="4" y="2"/>
+	<mx:Image id="energyImg" source='assets/battle/energyImg.png' maintainAspectRatio="false" width="0" x="32" y="11"/>
+</s:Group>

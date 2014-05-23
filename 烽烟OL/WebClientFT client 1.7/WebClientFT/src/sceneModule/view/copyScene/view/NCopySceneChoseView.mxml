@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+					xmlns:s="library://ns.adobe.com/flex/spark"  
+					xmlns:mx="library://ns.adobe.com/flex/mx" 
+					width="1250" height="650" 
+					xmlns:win="managers.*" 
+					creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import managers.WindowManager;
+			import sceneModule.view.copyScene.view.BitmapButton;
+			
+			public static const NAME:String = "sceneModule.view.copyScene.view.NCopySceneChoseView";
+			
+			private var _exit_btn:BitmapButton;
+			
+			private function init():void{
+				_exit_btn = new BitmapButton('btn_res', 'btn_backcity_nomal', 'btn_backcity_over', 'btn_backcity_down');
+				_exit_btn.x = 1024;
+				_exit_btn.y = 525;
+				btn_contain.addChild(_exit_btn);
+			}
+			public function get exit_btn():BitmapButton{
+				return _exit_btn;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:Group width="100%" height="100%">
+		<mx:Image id="img_bg" x="140" y="80"/>
+		<s:Group id="icon_contain" x="-4" y="-4"/>
+		<!--<util:CommonButton skinClass="style.Skin_CrotaCloseButton111" id="clokeBtn" x="973" y="3"/>-->
+		<mx:UIComponent id="btn_contain"/>
+	</s:Group>
+</win:BaseWindow>

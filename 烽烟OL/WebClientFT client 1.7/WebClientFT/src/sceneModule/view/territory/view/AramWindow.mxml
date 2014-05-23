@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="init()"
+	height="540"
+	width="827"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:view="sceneModule.view.territory.view.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.display.Bitmap;
+			import model.SystemDataModel;
+			import mx.controls.Image;
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			import sceneModule.view.territory.event.RefreshTerritoryListInfoEvent;
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			import util.xtrace;
+			
+			public static const NAME:String = "sceneModule.view.territory.view.AramWindow";
+			public var icons:Array;
+			public var bg_bitmap:Bitmap;
+			
+			private function init():void {
+				petList.selectedIndex == -1
+				setButtonAndLabelEnable();
+				setRewardTime();
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_aram', 'aram_bg');
+			}
+			
+			public function setButtonAndLabelEnable():void {
+				if (petList.selectedIndex == -1) { //选择了人物
+					if (SystemDataModel.aramInfoVo.roleRunningFlag) {
+						ter_tile.visible = true;
+						stBtn.visible = false;
+						nowBtn.visible = true;
+						showPromptCB.visible = true;
+						reward_tile10.visible = true;
+//						rb1.enabled=false;
+//						rb2.enabled=false;
+//						rb3.enabled=false;
+//						rb4.enabled=false;
+					} else {
+						ter_tile.visible = false;
+						stBtn.visible = true;
+						nowBtn.visible = false;
+						showPromptCB.visible = false;
+						reward_tile10.visible = false;
+//						rb1.enabled=true;
+//						rb2.enabled=true;
+//						rb3.enabled=true;
+//						rb4.enabled=true;
+					}
+				} else { //选择了宠物
+					if (petList.selectedItem.runningFlag) {
+						ter_tile.visible = true;
+						stBtn.visible = false;
+						nowBtn.visible = true;
+						showPromptCB.visible = true;
+						reward_tile10.visible = true;
+//						rb1.enabled=false;
+//						rb2.enabled=false;
+//						rb3.enabled=false;
+//						rb4.enabled=false;
+					} else {
+						ter_tile.visible = false;
+						stBtn.visible = true;
+						nowBtn.visible = false;
+						showPromptCB.visible = false;
+						reward_tile10.visible = false;
+//						rb1.enabled=true;
+//						rb2.enabled=true;
+//						rb3.enabled=true;
+//						rb4.enabled=true;
+					}
+				}
+			}
+			
+			private var timer:Timer;
+			private var delay:int = 1000;
+			
+			private function setRewardTime():void {
+				if (!timer) {
+					timer = new Timer(delay);
+					timer.addEventListener(TimerEvent.TIMER, onTimer);
+					timer.start();
+				} else if (!timer.running) {
+					timer.start();
+				}
+			}
+			
+			private function onTimer(evt:TimerEvent):void {
+				if (petList.selectedIndex == -1) {
+					SystemDataModel.aramInfoVo.roleRunTime = SystemDataModel.aramInfoVo.roleRunTime - 1;
+					if (SystemDataModel.aramInfoVo.roleRunTime == 0) {
+						this.dispatchEvent(new RefreshTerritoryListInfoEvent(RefreshTerritoryListInfoEvent.REFRESHTERRITORYLISTINFOEVENT));
+					}
+				} else {
+					petList.selectedItem.remainTime = petList.selectedItem.remainTime - 1;
+					if (petList.selectedItem.remainTime == 0) {
+						this.dispatchEvent(new RefreshTerritoryListInfoEvent(RefreshTerritoryListInfoEvent.REFRESHTERRITORYLISTINFOEVENT));
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="no1" />
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%"
+		width="100%">
+		<mx:Image id="img_bg"
+			x="0"
+			y="0" />
+			
+		<view:AramMySelfComponent id="mySelf"
+			x="71"
+			y="102" />
+		
+		<s:List dataProvider="{SystemDataModel.aramInfoVo.petAramInfo}"
+			height="305"
+			id="petList"
+			itemRenderer="sceneModule.view.territory.view.AramItemRender"
+			skinClass="style.Skin_CrotaBasicList"
+			width="132"
+			x="38"
+			y="164">
+			<s:layout>
+				<s:TileLayout horizontalGap="24"
+					requestedColumnCount="2"
+					requestedRowCount="5"
+					verticalGap="19" />
+			</s:layout>
+		</s:List>
+		<component:CrotaBasicLabel color="0xFFFFF"
+			id="ter_tile"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{petList.selectedIndex == -1 ? (SystemDataModel.aramInfoVo.roleRunningFlag ? (SystemDataModel.aramInfoVo.roleRunTime > 0 ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xlsy')+ByteArrayUtil.formateTimeToString2(SystemDataModel.aramInfoVo.roleRunTime*1000)): '') : '' ) : (petList.selectedItem.runningFlag ? (petList.selectedItem.remainTime > 0 ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xlsy')+ByteArrayUtil.formateTimeToString2(petList.selectedItem.remainTime*1000)): '') : '')}"
+			width="264"
+			x="232"
+			y="156" />
+		<component:CrotaBasicLabel color="0xFFFFF"
+			id="reward_tile0"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{petList.selectedIndex == -1?SystemDataModel.aramInfoVo.roleRunningFlag?CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_khd'):CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xgms'): petList.selectedItem.runningFlag?CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_khd'):CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xgms')}"
+			width="289"
+			x="222"
+			y="178" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile1"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{petList.selectedIndex == -1 ? ( CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_8hd')+SystemDataModel.roleInfo.level*600*8+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy')) : ( CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_8hd')+petList.selectedItem.petLevel*600*8+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy'))}"
+			width="289"
+			x="270"
+			y="223" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile2"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{petList.selectedIndex == -1 ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_12hd')+SystemDataModel.roleInfo.level*600*12+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy')) : (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_12hd')+petList.selectedItem.petLevel*600*12+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy'))}"
+			width="289"
+			x="270"
+			y="258" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile3"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{petList.selectedIndex == -1 ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_16hd')+SystemDataModel.roleInfo.level*600*16+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy')) : (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_16hd')+petList.selectedItem.petLevel*600*16+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy'))}"
+			width="289"
+			x="270"
+			y="295" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile4"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{petList.selectedIndex == -1 ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_24hd')+SystemDataModel.roleInfo.level*600*24+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy')) : (CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_24hd')+petList.selectedItem.petLevel*600*24+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy'))}"
+			width="289"
+			x="270"
+			y="330" />
+		<component:CrotaBasicLabel color="0xFF9900"
+			height="40"
+			id="reward_tile5"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xlzj')}"
+			textAlign="left"
+			width="300"
+			x="316"
+			y="96" />
+		<component:CrotaBasicLabel color="0xFF9900"
+			id="reward_tile6"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_jjtip')}"
+			width="289"
+			x="226"
+			y="369" />
+		<component:CrotaBasicLabel color="0xFFFFF"
+			id="reward_tile7"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xh')+(SystemDataModel.aramInfoVo.goldreq)+CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_zjs')+(SystemDataModel.aramInfoVo.expbound)+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy')}"
+			width="289"
+			x="226"
+			y="401" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile8"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_jrhk')+(SystemDataModel.aramInfoVo.sptimes)+CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_ci')}"
+			width="289"
+			x="226"
+			y="432" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile9"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="（VIP）"
+			visible="{SystemDataModel.roleInfo.roletype==1?true:false}"
+			width="45"
+			x="516"
+			y="418" />
+		<component:CrotaBasicLabel color="0x000000"
+			id="reward_tile10"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_gbts')}"
+			width="100"
+			x="538"
+			y="208" />
+		<component:CrotaBasicCheckBox id="showPromptCB"
+			visible="{petList.selectedIndex == -1 ? SystemDataModel.aramInfoVo.roleRunningFlag : petList.selectedItem.runningFlag}"
+			x="513"
+			y="207" />
+		<s:RadioButton y="217"
+			enabled="{SystemDataModel.isPracbool}"
+			group="{cardtype}"
+			height="21"
+			id="rb1"
+			label="no1"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="227" />
+		<s:RadioButton y="252"
+			enabled="{SystemDataModel.isPracbool}"
+			group="{cardtype}"
+			height="21"
+			id="rb2"
+			label="no2"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="227" />
+		<s:RadioButton y="287"
+			enabled="{SystemDataModel.isPracbool}"
+			group="{cardtype}"
+			height="21"
+			id="rb3"
+			label="no3"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="227" />
+		<s:RadioButton y="322"
+			enabled="{SystemDataModel.isPracbool}"
+			group="{cardtype}"
+			height="21"
+			id="rb4"
+			label="no4"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="227" />
+		<util:CommonButton id="dishiBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_jjxl')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			x="528"
+			y="370" />
+		<util:CommonButton id="nowBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_jsxl')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			width="100"
+			x="529"
+			y="157" />
+		<util:CommonButton id="stBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_ksxl')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			x="528"
+			y="262" />
+		<util:CommonButton id="clokeBtn"
+			skinClass="style.Skin_CrotaCloseButton111"
+			x="649"
+			y="18" />
+	</s:SkinnableContainer>
+</win:BaseWindow>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+		alpha.disabled="0.5">
+	
+	<fx:Metadata>
+		[HostComponent("spark.components.Button")]
+	</fx:Metadata>
+	
+	<s:states>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
+	</s:states>
+	
+	
+	<s:BitmapImage includeIn="up" x="0" y="0" source="@Embed('assets/ui_n/mainui_email_up.png')" id="bitmapimage1"/>
+	<s:BitmapImage includeIn="over" x="0" y="0" source="@Embed('assets/ui_n/mainui_email_over.png')" id="bitmapimage2"/>
+	<s:BitmapImage includeIn="down" x="0" y="0" source="@Embed('assets/ui_n/mainui_email_down.png')" id="bitmapimage3"/>
+	<s:BitmapImage includeIn="disabled" x="0" y="0" source="@Embed('assets/ui_n/mainui_email_up.png')" id="bitmapimage4"/>
+	
+	
+</s:Skin>

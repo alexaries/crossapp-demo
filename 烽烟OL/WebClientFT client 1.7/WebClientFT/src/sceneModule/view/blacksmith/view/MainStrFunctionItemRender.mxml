@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strComp:CrotaBasicStrengItemRender  xmlns:fx="http://ns.adobe.com/mxml/2009" 
+												  xmlns:s="library://ns.adobe.com/flex/spark" 
+												  xmlns:mx="library://ns.adobe.com/flex/mx"
+												  creationComplete="init()"
+												  xmlns:strComp="sceneModule.view.blacksmith.view.*"
+												  width="90" height="29" buttonMode="true" useHandCursor="true"
+												  autoDrawBackground="false">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.GlowFilter;
+			private function init():void
+			{
+				labe.filters = [new GlowFilter(0x34332d,0.7,2,2,5,1)];
+				//				labe.text. 
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Label id="labe" text="{data.name}" width="100%" textAlign="center" verticalAlign="middle" color="#F0F0EB" fontSize="16" x="0" y="7" fontWeight="bold"/>
+	
+</strComp:CrotaBasicStrengItemRender >

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="862" height="460" 
+				xmlns:win="managers.*"
+				 creationComplete="basewindow1_creationCompleteHandler(event)"
+				xmlns:view="sceneModule.view.pet.view.*" xmlns:component="component.*" xmlns:view1="sceneModule.view.zhanxing.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.packageVo.PackageItem;
+			import sceneModule.view.zhanxing.command.ZhanXingMessage;
+			import sceneModule.view.zhanxing.vo.XingYunBasicInfoVO;
+			import sceneModule.view.zhanxing.vo.XingYunPackInfoVO;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.zhanxing.view.FuWenWindow";
+			
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// source="{WebClient.host+'assets/zhanxing/fwBg.png'}"
+				CommonTools.make_bitmap(fuwenImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_zhanxing","fuwen_bg");
+
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="fuwenImg"  />
+	<s:List id="pList" 
+			skinClass="style.Skin_CrotaBasicList" 
+			dataProvider="{SystemDataModel.zhanxingInfo.ropInfoList}"
+			x="75" y="98" 
+			itemRenderer="sceneModule.view.zhanxing.view.FuWenRoleOrPetItemRender"
+			width="129" height="357">
+		<s:layout>
+			<s:TileLayout requestedRowCount="11" requestedColumnCount="1" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:List id="xyList" dragEnabled="false" width="338" height="278" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.zhanxingInfo.dataCollection}" itemRenderer="sceneModule.view.zhanxing.view.BodyOrPackXYItemRender" x="540" y="112">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="5" requestedRowCount="4" horizontalGap="13" verticalGap="12"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="899" y="25"/>
+	<util:CommonButton id="cBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','fwW_ljtb')}" x="746" y="400"/>
+	<util:CommonButton id="hcBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','fwW_yjhc')}" x="554" y="400"/>
+	<view1:BodyOrPackXYItemRender data="{pList.selectedItem.xyBody2}" _bodyPos="2" _roleOrPetId="{pList.selectedItem.rpId}" id="body2" x="311" y="127"/>
+	<view1:BodyOrPackXYItemRender data="{pList.selectedItem.xyBody1}" _bodyPos="1" _roleOrPetId="{pList.selectedItem.rpId}" id="body1" x="215" y="203"/>
+	<view1:BodyOrPackXYItemRender data="{pList.selectedItem.xyBody3}" _bodyPos="3" _roleOrPetId="{pList.selectedItem.rpId}" id="body3" x="409" y="204"/>
+	<view1:BodyOrPackXYItemRender data="{pList.selectedItem.xyBody4}" _bodyPos="4" _roleOrPetId="{pList.selectedItem.rpId}" id="body4" x="409" y="289"/>
+	<view1:BodyOrPackXYItemRender data="{pList.selectedItem.xyBody5}" _bodyPos="5" _roleOrPetId="{pList.selectedItem.rpId}" id="body5" x="215" y="289"/>
+	<view1:BodyOrPackXYItemRender data="{pList.selectedItem.xyBody6}" _bodyPos="6" _roleOrPetId="{pList.selectedItem.rpId}" id="body6" x="311" y="366"/>
+</win:BaseWindow>

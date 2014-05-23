@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   creationComplete="initApp();" addedToStage="application1_addedToStageHandler(event)"
+			   backgroundColor="#000000" fontFamily="宋体"
+			   minWidth="1000" minHeight="570"
+			   xmlns:loader="loader.*"
+			   xmlns:component="component.*" 
+			   xmlns:view="sceneModule.view.pack.view.*" 
+			   xmlns:local="*" frameRate="48" preloader="loader.RPreloader2"
+			   preinitialize="preInit()">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import com.flashdynamix.utils.SWFProfiler;
+			
+			import managers.WindowManager;
+			
+			import model.SystemDataModel;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.ResizeEvent;
+			
+			[Bindable]
+			private var application:Object = FlexGlobals.topLevelApplication;
+			
+			public static var MY_SIGN_INFO_STR:String = "mySignInfo";
+			
+			private function preInit():void{
+				setMySign();
+			}
+			private function setMySign():void{
+				mySo = SharedObject.getLocal(MY_SIGN_INFO_STR);
+//				Alert.show("初始化SO："+mySo.data.savedSignValue);
+//				Alert.show("初始化COOKIE："+ExternalInterface.call("getCookie",WebClient.MY_SIGN_INFO_STR));
+				//mySo.data.savedSignValue = "user_id=xxx&server_id=dz2&cm=n&timetamp=1343302891&ly=1&sign=7105771E7FE5BA6DBCEE564FE789E9D4";
+				var signInfoStr:String = "";
+				if(ExternalInterface.available){
+					try{
+						//var tempStr:String = ExternalInterface.call("parent.location.search");
+						var tempStr:String = ExternalInterface.call("getInfo");
+						if(tempStr.length>0){
+							signInfoStr = tempStr.substr(1);
+						}
+					}catch(err:Error){
+					}
+				}
+				//设置so同时设置cookie，so处理不同浏览器，cookie处理相同浏览器，两个一起设置用来修正可能取不值的情况
+				if(signInfoStr.length>0){
+					clearValue();
+					saveValue(signInfoStr);
+					if(ExternalInterface.available){
+						ExternalInterface.call("setCookie",MY_SIGN_INFO_STR,signInfoStr,0);
+						ExternalInterface.call("reUrl");
+					}
+				}
+			}
+			
+			private var mySo:SharedObject;
+			private function saveValue(signValue:String):void {
+				mySo.data.savedSignValue = signValue;
+				
+				var flushStatus:String = null;
+				try {
+					flushStatus = mySo.flush();
+				} catch (error:Error) {
+					trace("Error...Could not write SharedObject to disk\n");
+				}
+				if (flushStatus != null) {
+					switch (flushStatus) {
+						case SharedObjectFlushStatus.PENDING:
+							mySo.addEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
+							break;
+						case SharedObjectFlushStatus.FLUSHED:
+							trace("Value flushed to disk.\n");
+							break;
+					}
+				}
+			}
+			private function onFlushStatus(event:NetStatusEvent):void {
+				switch (event.info.code) {
+					case "SharedObject.Flush.Success":
+						trace("User granted permission -- value saved.\n");
+						break;
+					case "SharedObject.Flush.Failed":
+						trace("User denied permission -- value not saved.\n");
+						break;
+				}
+				mySo.removeEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
+			}
+			private function clearValue():void {
+				delete mySo.data.savedSignValue;
+			}
+			/**
+			 * 初始化应用
+			 * 监听键盘事件
+			 */
+			private function initApp():void{
+//				var url:URLRequest = new URLRequest("javascript:window.location.search='123456'");
+//				navigateToURL(url, '_self');
+				
+				getHost();
+				addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
+				addEventListener(KeyboardEvent.KEY_UP,onKeyUp);
+				
+				//去除拖拽的x号按钮
+				var mgr:IStyleManager2  = FlexGlobals.topLevelApplication.styleManager;
+				var selector:String = "mx.managers.DragManager";
+				var decl:CSSStyleDeclaration = mgr.getStyleDeclaration(selector);
+				if (!decl)
+					decl = new CSSStyleDeclaration(selector);
+				decl.setStyle("rejectCursor", Sprite);
+				mgr.setStyleDeclaration(selector, decl, false);
+				
+				FlexGlobals.topLevelApplication.addEventListener(ResizeEvent.RESIZE,onResizeApplication);
+			}
+			private function onResizeApplication(evt:ResizeEvent):void{
+				WindowManager.onResize();
+				onSceneResize();
+			}
+			private function onSceneResize():void{
+				//todo wordscene
+				return;
+				RPBELevel.setBgFrame(false);
+				if(SceneHelper.getInstance().myScene){
+					if(SceneHelper.getInstance().myScene.sceneView.width%2 ==0){
+						SceneHelper.getInstance().myScene.sceneView.width = scene.width;
+					}else{
+						SceneHelper.getInstance().myScene.sceneView.width = scene.width+1;
+					}
+					
+					SceneHelper.getInstance().myScene.sceneView.height = scene.height;
+				}
+			}
+			/**
+			 * keyCode 键盘shift键
+			 */
+			private function onKeyDown(evt:KeyboardEvent):void{
+				if(evt.keyCode == 16){
+					SystemDataModel.shiftKeyDown = true;
+				}
+			}
+			
+			/**h
+			 * keyCode 键盘shift键
+			 */
+			private function onKeyUp(evt:KeyboardEvent):void{
+				if(evt.keyCode == 16){
+					SystemDataModel.shiftKeyDown = false;
+				}
+			}
+			[Bindable]
+			public static var host:String='';
+			public static var title:String='';
+			public static function getHost():void{
+				var confObj:Object={};
+				if(ExternalInterface.available){
+					try {
+						confObj = ExternalInterface.call("agents");
+						if(confObj){
+							//host = String(confObj.host);
+							title = String(confObj.webTitle);
+						}
+					} catch(e:Error) {
+						trace(e);
+					}
+				}
+			}
+
+			protected function application1_addedToStageHandler(event:Event):void
+			{
+				//SWFProfiler.init(FlexGlobals.topLevelApplication.stage,this);
+			}
+
+		]]>
+	</fx:Script>
+	<!--样式表文件-->
+	<fx:Style source="css/global_css.css"/>
+	<fx:Style source="css/textFormat_css.css"/>
+	<fx:Style source="css/TextFormatJT.css"/>
+	<fx:Style>
+		.customAccordionHeadStyles {
+			skin: ClassReference("skin.Skin_CrotaBasicAccordion");
+			textRollOverColor: white;
+			textSelectedColor: white;
+			fontSize: 14;
+			textAlign: center;
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<local:ApplicationContext id="appContext" contextView="{this}"/>
+	</fx:Declarations>
+	<!--场景层，此层用于PBE-->
+	<mx:UIComponent id="scene" width="{application.width}" height="{application.height}"/>
+	<!--模块UI层,此层用于各模块显示-->
+	<local:SceneLayer id="sceneLayer"/>
+	<!--弹出框显示层-->
+	<local:PopUpWindowLayer id="popUpWindowLayer"/>
+	<!-- 提示层 -->
+	<mx:UIComponent 
+		id="ui_alert"
+	    mouseEnabled="false"
+	    mouseChildren="false"
+	/>
+	<!--切换场景遮罩层 -->
+	<local:SwitchMaskLayer id="switch_mask" />
+	<!--加载条-->
+	<loader:ProgressBarControl id="proBar" visible="false"/>
+	<!--版本号文本框-->
+	<component:CrotaBasicLabel id="versionLab" visible="false" mouseEnabled="false" x="450" y="0" color="#ff0000" fontSize="12"/>
+	<view:MainMenuEquipmentTooltip id="toolTipComp" visible="false"/>
+	<local:GuidLayer id="guidLayer"/>
+</s:Application>

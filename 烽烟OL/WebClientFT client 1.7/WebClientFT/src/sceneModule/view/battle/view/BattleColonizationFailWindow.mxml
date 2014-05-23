@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="175"
+	width="341"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.chat.vo.WhisperChatObjectInfoVO;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			public static var NAME:String = "sceneModule.view.battle.view.BattleColonizationFailWindow";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+			}
+			
+			//获取装备图标路径
+			public function setEquipmentUrl(s:String, t:int):String {
+				if (t == 0) {
+					return '';
+				} else {
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+			}
+			
+			private function getURL(pos:int):String{
+				return SystemDataModel.battleInfoVo.battleSettlementArr.length > pos ? 
+							setEquipmentUrl(SystemDataModel.battleInfoVo.battleSettlementArr[0].icon,SystemDataModel.battleInfoVo.battleSettlementArr[pos].type) :
+							null;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%"
+		width="100%">
+		<mx:Image bottom="0"
+			source='assets/battle/coloFailBg.png' />
+		<mx:Image height="42"
+			id="equipImg"
+			source="{getURL(0)}"
+			width="42"
+			x="86"
+			y="61" />
+		<mx:Image height="42"
+			id="equipImg0"
+			source="{getURL(1)}}"
+			width="42"
+			x="154"
+			y="61" />
+		<mx:Image height="42"
+			id="equipImg1"
+			source="{getURL(2)}}"
+			width="42"
+			x="224"
+			y="61" />
+		<util:CommonButton id="submitBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			x="136"
+			y="130" />
+	</s:SkinnableContainer>
+</win:BaseWindow>

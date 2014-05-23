@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="256" height="328" 
+		 xmlns:view="sceneModule.view.pack.view.*" 
+		 xmlns:component="component.*" xmlns:view1="sceneModule.view.role.view.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import spark.filters.GlowFilter;
+			//职业中文名
+			public function getJobWord(profession:int):String{
+				var r:String = null;
+				switch (profession) 
+				{
+					case 1:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zs');
+						break;
+					case 2:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fashi');
+						break;
+					case 3:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_yx');
+						break;
+					case 4:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nzs');
+						break;
+					case 5:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nfashi');
+						break;
+					case 6:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nyx');
+						break;
+					
+					default:
+						r = "error job"
+				}
+				return r;
+			}
+			
+			public function getJobImg(profession:int):String{
+				var r:String = null;
+				return "assets/role/char" + profession + ".png"
+			}
+			
+			public function set role_data(role_obj:Object):void{
+				l_name.text = role_obj.nickname;
+				l_lv.text = getJobWord(role_obj.profession) + "  Lv." + role_obj.level;
+				img_role.source = getJobImg(role_obj.profession);
+			}
+			public function set equip_data(obj:Object):void{
+				var len:int = obj.length;
+				for(var i:int = 0; i < len; i++){
+					this['comp_pos_' + i].data = obj.getItemAt(i);
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image 
+		id="img_role" 
+		x="20" y="25"
+		/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT13bebebe"
+		x="0" y="10"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('role','nmrsC_mz')}"
+		width="100%"
+		textAlign="center"
+		id="l_name"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12a18c70"
+		x="0" y="28"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')}"
+		width="100%"
+		id="l_lv" textAlign="center"/>
+	<s:Group x="10">
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_0"
+			_rolePos="2" 
+			x="16" y="68"/>
+		<view1:MainRoleEquipmentItemRender 
+			id="comp_pos_1"
+			_rolePos="5" 
+			x="198" y="68"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_2"
+			_rolePos="0" 
+			x="16" y="116"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_3"
+			_rolePos="3" 
+			x="198" y="116"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_4"
+			_rolePos="1" 
+			x="16" y="164"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_5"
+			_rolePos="4" 
+			x="198" y="164"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_6"
+			_rolePos="6" 
+			x="16" y="212"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_7"
+			_rolePos="7" 
+			x="198" y="212"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_8"
+			_rolePos="8" 
+			x="16" y="260"/>
+		<view1:MainRoleEquipmentItemRender
+			id="comp_pos_9"
+			_rolePos="9" 
+			x="198" y="260"/>
+		</s:Group>
+</s:Group>

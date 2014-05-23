@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.text.TextField;
+			
+			import model.SystemDataModel;
+			
+			[Bindable]
+			private var _cur_Num:int;
+			//最大值
+			[Bindable]
+			private var _max_Num:int;
+			//文本框
+	
+			private var bgUrl:String;
+			public var Obj:int;
+//			private var textField:TextField = new TextField();
+			
+		   [Embed(source="/embed/role/redRes.png",scaleGridTop='5',scaleGridLeft='15',scaleGridRight='88',scaleGridBottom='6')]
+			[Bindable]
+			private var redResObj:Class;
+			[Embed(source="/embed/role/blueRes.png",scaleGridTop='5',scaleGridLeft='15',scaleGridRight='88',scaleGridBottom='6')]
+			[Bindable]
+			private var blueResObj:Class;  
+			
+			[Embed(source="/embed/role/energyBg.png",scaleGridTop='5',scaleGridLeft='15',scaleGridRight='101',scaleGridBottom='6')]
+			[Bindable]
+			private var energyBgObj:Class;
+			
+			[Embed(source="/embed/role/redBg.png",scaleGridTop='5',scaleGridLeft='15',scaleGridRight='101',scaleGridBottom='6')]
+			[Bindable]
+			private var redBgObj:Class;
+			
+			[Embed(source="/embed/role/blueBg.png",scaleGridTop='5',scaleGridLeft='15',scaleGridRight='88',scaleGridBottom='6')]
+			[Bindable]
+			private var blueBgObj:Class;
+			
+			[Embed(source="/embed/role/experienceBg.png",scaleGridTop='5',scaleGridLeft='15',scaleGridRight='88',scaleGridBottom='6')]
+			[Bindable]
+			private var experienceBgObj:Class;
+			
+			[Embed(source="/embed/ui/exp.png",scaleGridTop='1',scaleGridLeft='3',scaleGridRight='5',scaleGridBottom='3')]
+			[Bindable]
+			private var expObj:Class;
+			
+			[Embed(source="/embed/ui/bossxue.png",scaleGridTop='10',scaleGridLeft='50',scaleGridRight='784',scaleGridBottom='18')]
+			[Bindable]
+			private var bossxue:Class;
+			
+			[Embed(source="/embed/mainui/hp.png")]
+			[Bindable]
+			private var main_ui_hp:Class;
+			
+			[Embed(source="/embed/mainui/active.png")]
+			[Bindable]
+			private var main_ui_active:Class;
+			
+			private var _base_width:int;
+			//是否需要显示文字
+			//private var showText:Boolean = true;
+//			public function set objNum(objCount:Object):void{
+////				obj.min = hp;
+////				obj.max = masHp;
+////				_cur_Num =objCount.hp;
+////				_max_Num =objCount.masHp;
+////				drawImage();
+//			}
+			
+						
+			public function set cur_Num(hp:int):void{
+				_cur_Num = hp;
+				drawImage();
+			
+			}
+			public function set max_Num(masHp:int):void{
+				_max_Num =masHp;
+				drawImage();
+			}
+//			public function set _showText(value:Boolean):void{
+//				showText = value;
+//				if(showText){
+//				addNumShow();
+//				}
+//			}
+		    public function set _X(x:Number):void{
+				redRes.x =x;
+		    }
+			public function set _Y(y:Number):void{
+				redRes.y =y;
+			}
+			public function set _bgUrl(s:String):void{
+					redBack.source=s;
+			}
+			public function set _bgWidth(i:int):void{
+					_base_width = i;
+				    redBack.width=i;
+			}
+			public function set _lable(b:Boolean):void{
+				    text.visible=b;
+			}
+			
+			public function set show_bg(b:Boolean):void{
+				if(!b){
+					this.removeElement(redBack);
+				}
+			}
+			
+			public function set _Obj(Obj:int):void{
+				text.visible = true;
+				redRes.visible = true;
+				redBack.visible = true;
+				switch(Obj){
+					case 0:
+						redRes.source = redResObj;
+						redRes.visible = false;
+						redBack.visible = false;
+						break;
+					case 1:
+						redRes.source=blueResObj;
+						break;
+					case 2:
+						redRes.source = energyBgObj;
+						redBack.visible = false;
+						break;
+					case 3:
+						redRes.source=redBgObj;
+						break;
+					case 4:
+						redRes.source=blueBgObj;   
+						break;
+					case 5:
+						redRes.source=experienceBgObj;
+						break;
+					case 6:
+					redRes.source=expObj;
+						break;
+					case 7:
+						redRes.source=bossxue;
+						break
+					case 8:
+						redRes.source=main_ui_hp;
+						text.visible = false;
+						break;
+					case 9:
+						redRes.source=main_ui_active;
+						text.visible = false;
+						break;
+				}	
+			}
+			//添加文本
+		
+			private function drawImage():void{
+					redRes.width=(_cur_Num / _max_Num) * _base_width;
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:Image id="redBack" maintainAspectRatio="false" width="100%" y="3"/>	
+	<mx:Image id="redRes" maintainAspectRatio="false" y="3"/>
+	<component:CrotaBasicLabel 
+		id="text"			 
+		text="{_cur_Num+'/'+_max_Num}"
+		styleName="MAINMENUROLEFONT12bebebe"
+	 	y="4" height="11" width="100%" textAlign="center"
+	/>
+</s:Group>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+    ADOBE SYSTEMS INCORPORATED
+    Copyright 2008 Adobe Systems Incorporated
+    All Rights Reserved.
+
+    NOTICE: Adobe permits you to use, modify, and distribute this file
+    in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default wireframe skin class for the Spark VScrollBar component. 
+        Skin classes in the wireframe package are useful for using as a simple base for a custom skin.
+        
+       @see spark.components.VScrollBar
+
+      @langversion 3.0
+      @playerversion Flash 10
+      @playerversion AIR 1.5
+      @productversion Flex 4
+-->
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+    minWidth="11" minHeight="35" alpha.disabled="0.5" alpha.inactive="0.5" width="22">
+
+    <fx:Metadata>
+        /** 
+         * @copy spark.skins.spark.ApplicationSkin#hostComponent
+         */
+        [HostComponent("spark.components.VScrollBar")]
+    </fx:Metadata> 
+    
+    <s:states>
+        <s:State name="normal" />
+        <s:State name="disabled" />
+        <s:State name="inactive" />
+    </s:states>
+
+    <!--- The default skin class is VScrollBarTrackSkin. 
+          @copy spark.components.supportClasses.TrackBase#track-->
+    <s:Button id="track" top="17" bottom="17" width="11" skinClass="style.Skin_CrotaBasicVScrollBarBackground"
+             focusEnabled="false"  x.normal="6" height.inactive="51" height.disabled="51" top.normal="16" bottom.normal="10" width.normal="10"/>
+    
+    <!--- The default skin class is ScrollBarUpButtonSkin.
+          @copy spark.components.supportClasses.ScrollBarBase#decrementButton -->
+    <s:Button id="decrementButton" top="0" width="11" height="11" enabled.inactive="false"
+            skinClass="style.Skin_CrotaBasicVScrollBarDecrement" focusEnabled="false"  width.normal="22" height.normal="22"/>
+    
+    <!--- The default skin class is ScrollBarDownButtonSkin.
+          @copy spark.components.supportClasses.ScrollBarBase#incrementButton  -->
+    <s:Button id="incrementButton" bottom="0" width="11" height="11" enabled.inactive="false"
+            skinClass="style.Skin_CrotaBasicVScrollBarIncrement" focusEnabled="false"  width.normal="22" height.normal="22"/>
+    
+    <!--- The default skin class is VScrollBarThumbSkin.
+          @copy spark.components.supportClasses.TrackBase#thumb -->
+    <s:Button id="thumb" width="11" skinClass="style.Skin_CrotaBasicVScrollBarThumb" 
+            visible.inactive="false" focusEnabled="false"  width.normal="22" height.inactive="10" height.disabled="10"/>
+
+</s:Skin>

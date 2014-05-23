@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 width="481" height="118">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import spark.filters.GlowFilter;
+			
+			import util.CommonTools;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_levelUp","llBg_bg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<mx:Text id="tt" text="{SystemDataModel.roleInfo.level+CrotaResourceConfig.getInstance().getTextByModuleAndId('text_levelup','cilu_levelup')}" height="45" color="#ffff00" textAlign="center" fontSize="30" top="54" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" horizontalCenter="-13" verticalCenter="17" width="160">
+	</mx:Text>
+</s:Group>

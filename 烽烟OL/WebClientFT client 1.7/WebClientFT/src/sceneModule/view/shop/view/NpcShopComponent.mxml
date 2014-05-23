@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="998" height="440" 
+		 xmlns:view="sceneModule.view.pack.view.*"
+		   
+		   
+		 creationComplete="initApp();" xmlns:win="managers.*" 
+		 preinitialize="preInit();"
+		 xmlns:component="component.*" 
+		 xmlns:view1="sceneModule.view.task.view.*" 
+		 xmlns:view2="sceneModule.view.shop.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidClearEvent;
+			import event.GuidEventCenter;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.core.IUIComponent;
+			import mx.events.CollectionEvent;
+			import mx.events.ItemClickEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.taskVO.TaskInfoVo;
+			import sceneModule.view.pack.view.MainMenuEquipmentComponent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import style.Skin_CrotaPackRedButton;
+			
+			import util.CommonTools;
+			
+			public static var NAME:String = "sceneModule.view.shop.view.NpcShopComponent";
+			
+			private function preInit():void{
+				//npc_task_view.data = {npcid:SystemDataModel.tempId};
+			}
+			
+			private function initApp():void{
+				init_imgs();
+				
+				taskComp.taskList.addEventListener(IndexChangeEvent.CHANGE,onIndexChange);
+				taskComp.acceptBtn.addEventListener(MouseEvent.CLICK,onAcceptTask);
+				SystemDataModel.shopInfoVo.itemType = 0;
+			}
+			
+			
+			private function init_imgs():void{
+				CommonTools.make_bitmap(npc_shop_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_bg');
+				CommonTools.make_bitmap(img_shop_ico).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_ico');
+				CommonTools.make_bitmap(img_shop_title_word).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_word');
+				CommonTools.make_bitmap(img_shop_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_package_bg');
+				CommonTools.make_bitmap(img_small_face).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_small_face');
+			}
+			
+			private function onAcceptTask(evt:MouseEvent):void{
+				onCloseWin();
+			}
+			/**
+			 * onIndexChange
+			 */
+			private function onIndexChange(evt:IndexChangeEvent):void{
+				if((taskComp.taskList.selectedItem as TaskInfoVo).taskType != ProConst.ACCESSTASK){
+					onCloseWin();
+				}
+				
+			}
+			/**
+			 * 关闭窗口
+			 */
+			private function onCloseWin():void{
+				taskComp.taskList.removeEventListener(IndexChangeEvent.CHANGE,onIndexChange);
+				taskComp.acceptBtn.removeEventListener(MouseEvent.CLICK,onAcceptTask);
+				SystemDataModel.shopInfoVo.itemType = -1;
+				GuidEventCenter.getInstance().dispatchEvent(new GuidClearEvent(GuidClearEvent.NPC_SHOP_CLOSE));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+	</fx:Declarations>
+	<s:SkinnableContainer width="1000" height="483">
+		<mx:Image id="npc_shop_bg"  maintainAspectRatio="false"  source='assets/shop/mainShopBg.png' />
+		<!--<mx:Image  source='assets/shop/npcShopLeftBg.png'  x="80" y="70"/>-->
+		<mx:Image id="img_shop_ico" x="45" y="14"/>
+		<mx:Image id="img_shop_title_word" x="103" y="41"/>
+		
+		<view2:NpcShopItemComponent id="shopComp" x="101" y="68" width="503"/>
+		
+		<mx:Image id="img_shop_bg" x="610" y="70" source='assets/shop/mainBg.png'/>
+		<view:MainMenuEquipmentGroup id="equipGroup" x="611" y="70"/>
+		
+		<component:CrotaBasicLabel id="l_tip"
+										 styleName="MAINMENUROLEFONT12a18c70"
+										 x="728" y="415"
+										 text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_sjcs')}"
+										 textAlign="center"/>
+		<view1:TaskNpcInfoComponent id="taskComp" x="51" y="486" height="200" visible="false"/>
+		
+		<mx:Image id="img_small_face" x="713" y="414" source='assets/shop/small_face.png'/>
+		<util:CommonButton id="closeWinBtn" skinClass="style.Skin_CrotaCloseButton111" x="906" y="18" click="onCloseWin()"/>
+		<util:CommonButton id="openStrBtn" visible="false" skinClass="style.Skin_CrotaPackRedButton" label="铁匠铺" x="799" y="378"/>
+		<!--<view1:NTaskNpcView id="npc_task_view" x="0" y="449">
+		</view1:NTaskNpcView>-->
+	</s:SkinnableContainer>
+</win:BaseWindow>

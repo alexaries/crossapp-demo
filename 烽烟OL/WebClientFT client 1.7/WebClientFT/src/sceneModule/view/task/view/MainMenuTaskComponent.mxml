@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="849" height="513"
+		 xmlns:utilComp="util.*"
+		 xmlns:component="component.*"
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="init()" 
+		 xmlns:view="sceneModule.view.task.view.*" 
+		 styleName="MAINMENUROLEFONT12beadf7">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.task.event.MediatorRegisterTaskEvent;
+			
+			import util.CommonTools;
+			
+			private function init():void{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_task',
+						'ui_task_bg');
+				
+				this.dispatchEvent(new MediatorRegisterTaskEvent(MediatorRegisterTaskEvent.MEDIATORREGISTERTASKEVENT,this,true));
+			}
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','mmtC_dqrw')}"/>
+	</fx:Declarations>
+	<s:SkinnableContainer id="iContainer" width="100%" height="100%">
+		<!--<mx:Image source="assets/ntask/menu_task_bg.png" x="0" y="0"/>-->
+		<mx:Image id="img_bg"/>
+		<s:RadioButton 
+			group="{cardtype}" 
+			skinClass="style.Skin_CrotaTaskRadioButtonLeft" styleName="MAINMENUROLEFONT12e4e0b3" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','mmtC_dqrw')}"
+			value="cur_task"
+			x="18" y="83" width="78" height="30"/>
+		<s:RadioButton 
+			group="{cardtype}" 
+			skinClass="style.Skin_CrotaTaskRadioButtonMid" styleName="MAINMENUROLEFONT12e4e0b3" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','mmtC_kjrw')}" 
+			value="accept_task"
+			x="96" y="83" width="78" height="30"/>
+		<utilComp:CrotaTree 
+			id="myTree"
+			labelField="label" 
+			indentation="0"
+			disclosureClosedIcon="@Embed(source='/embed/role/addBtn1.png')"
+			disclosureOpenIcon="@Embed(source='/embed/role/reduceBtn1.png')"
+			showRoot="false"
+			 backgroundAlpha="0"
+			 styleName="MAINMENUROLEFONT12a18c70" useRollOver="false" 
+			x="43" y="127" width="270" height="298" 
+			itemRenderer="util.CrotaBasicBaseTreeItemRender"/>
+		<component:CrotaBasicLabel
+			id="l_task_name" 
+			styleName="TASK_MAIN_NAME"
+			x="364" y="97" fontWeight="bold"/>
+		<component:CrotaBasicLabel
+			id="l_target" 
+			styleName="MAINMENUROLEFONT12bebebe"
+			x="376" y="150" width="401" height="46"/>
+		<component:CrotaBasicLabel
+			id="l_des" 
+			styleName="MAINMENUROLEFONT12bebebe"
+			x="376" y="228" width="401" height="81"/>
+		<mx:Image id="img_price0"  x="369" y="347"/>
+		<mx:Image id="img_price1" x="435" y="347"/>
+		
+		
+		
+		<!--<component:CrotaBasicLabel
+			id="l_price" 
+			styleName="MAINMENUROLEFONT12a18c70"
+			x="550" y="335"/>-->
+		
+		<mx:Image id="img_g_money_ico"  x="657" y="359"/>
+		<component:CrotaBasicLabel
+			id="l_g_money"
+			text="12345678"
+			styleName="TASK_PRICE_NUMBER"
+			x="675" y="363"/>
+		<mx:Image id="img_r_money_ico"  x="710" y="361"/>
+		<component:CrotaBasicLabel
+			id="l_r_money"
+			text="12345678"
+			styleName="TASK_PRICE_NUMBER"
+			x="733" y="363"/>
+		<mx:Image id="img_r_exp_ico"  x="604" y="359"/>
+		<component:CrotaBasicLabel
+			id="l_r_exp"
+			text="12345678"
+			styleName="TASK_PRIVE_EXP"
+			x="625" y="363"/>
+		<utilComp:CommonButton id="btn_func" 
+				  visible="false"
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','mmtC_fqrw')}"
+				  y="397" x="602"/>
+		<utilComp:CommonButton id="btn_trac" 
+				  visible="false"
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','mmtC_zzrw')}"
+				  y="397" x="698"/>
+	</s:SkinnableContainer>
+	<utilComp:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="790" y="6"/>
+</s:Group>

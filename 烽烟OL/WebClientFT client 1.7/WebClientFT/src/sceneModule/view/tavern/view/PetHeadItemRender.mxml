@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:util="sceneModule.view.pet.view.*"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				 autoDrawBackground="false"
+				 width="55" height="55">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import sceneModule.view.tavern.event.WOWItemRenderEvent;
+			
+			public static var DRAGNAME:String = "petFromPetList";
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.dispatchEvent(new WOWItemRenderEvent(WOWItemRenderEvent.WOWINFOCOMP_EVENT,this,true));
+			}
+			
+
+		]]>
+	</fx:Script>
+	
+	<mx:Image id="petImg"  source="{ProConst.getImageSource(data.type,data.icon)}"  x="5" y="5"/>
+	
+</s:ItemRenderer>

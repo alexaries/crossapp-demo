@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" mouseChildren="false"
+		 xmlns:s="library://ns.adobe.com/flex/spark" implements="mx.core.IToolTip"
+		 width="185" height="231"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp();" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.IToolTip;
+			
+			import sceneModule.model.vo.skillVo.SkillBasicInfoVo;
+			
+			import style.Skin_CrotaMainMenuHotelSkinnableContainer;
+			[Bindable]
+			private var dataInfo:SkillBasicInfoVo;
+			
+			private function initApp():void{
+				//				proList.scroller.setStyle("verticalScrollPolicy",false);
+				//				suitList.scroller.setStyle("verticalScrollPolicy",false);
+			}
+			
+			/**
+			 * IToolTip的set get方法
+			 */
+			public function get text():String
+			{
+				return null;
+			}
+			
+			public function set text(value:String):void
+			{
+				
+			}
+			public function set curDataInfo(value:SkillBasicInfoVo):void{
+				dataInfo = value;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		<mx:Image source='assets/skill/skillBg.png'/>
+		<component:CrotaBasicLabel text="{dataInfo.releasePreEnergy}" x="45" styleName="MAINMENUROLEFONT12bebebe" y="160" textAlign="center" width="95"/>
+		<mx:Text selectable="false" text="{dataInfo.skillDes}" width="152" styleName="MAINMENUROLEFONT12bebebe" x="21" y="68" height="102"/>
+		<component:CrotaBasicLabel text="{dataInfo.skillName}" styleName="MAINMENUROLEFONT12bebebe" textAlign="left" x="10" y="17" width="168"/>
+		<!--<component:CrotaBasicLabel text="{'LV:'+dataInfo.skillLevel}" x="17" styleName="MAINMENUROLEFONT12bebebe" y="17" textAlign="left"/>-->
+	</s:SkinnableContainer>	
+</s:Group>

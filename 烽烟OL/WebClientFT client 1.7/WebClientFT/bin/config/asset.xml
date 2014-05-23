@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="utf-8" ?>			
+<data>			
+	<!-- 預加載的素材 -->		
+	<enter_game>		
+		<asset_package id="friend" path="">	
+			<asset id="friend_levelup_bg" path="assets/nfriend/friend_alert_bg.png"/>
+			<asset id="union_alert_bg" path="assets/ncorps/union_alert.png"/>
+			<asset id="guide_tips_bg" path="assets/guid/tips_bg.png"/>
+		</asset_package>	
+		<!-- 即時加載進度條 -->	
+		<asset_package id="real_time_load" path="assets/real_time_load/">
+			<asset id="real_time_load_bar" path="realtime_load_bar.png"/>
+			<asset id="real_time_load_bar_bg" path="realtime_load_bar_bg.png"/>
+		</asset_package>	
+		<!--通用素材-->	
+		<asset_package id="common_res" path="assets/comRes/">	
+		    <asset id="coin_img" path="coin.png"/>	
+		    <asset id="cry_img" path="crystal.png"/>	
+		    <asset id="com_img" path="commonBg.png"/>	
+		    <asset id="com1_img" path="commonBg1.png"/>	
+			<asset id="npt_task_ico_exp" path="npc_task_price_exp.png" />
+		</asset_package>	
+		<!-- 新手指引素材 -->	
+		<asset_package id="guide" path="assets/guid/">	
+		    <asset id="guide_point" path="guide_pointer.png"/>	
+		    <asset id="guide_move_point" path="go_point.swf" type="1"/>	
+		    <asset id="guide_move_point_left" path="go_point_left.swf" type="1"/>	
+		</asset_package>	
+		<!--任務資源-->	
+		<asset_package id="Task_PreRes" path="assets/swf/">	
+		    <asset id="Task_complete_swf" type="1" path="taskComplete.swf"/>	
+		    <asset id="Task_accept_swf" type="1" path="accessTask.swf"/>	
+		</asset_package>	
+		<!--強化動畫資源-->	
+		<asset_package id="Strengthen_aniRes" path="assets/blacksmith/">	
+		    <asset id="str_suc_swf" type="1" path="str_suc.swf"/>	
+		    <asset id="str_fail_swf" type="1" path="str_fail.swf"/>	
+		</asset_package>	
+		<!-- 按鈕資源 -->	
+		<asset_package id="btn_res" path="assets/btn/">	
+		    <asset id="btn_backcity_nomal" path="btn_back_city_nomal.png"/>	
+		    <asset id="btn_backcity_down" path="btn_back_city_down.png"/>	
+		    <asset id="btn_backcity_over" path="btn_back_city_over.png"/>	
+		</asset_package>	
+		<!--新創建角色-->	
+		<asset_package id="ui_nrole" path="assets/nrole/" des="加載創建角色資源">	
+		    <asset id="create_bg" path="createRoleBg.png"/>	
+		    <asset id="roleResPos1" path="roleResPos1.png"/>	
+		    <asset id="roleResPos2" path="roleResPos2.png"/>	
+		    <asset id="roleResPos3" path="roleResPos3.png"/>	
+		    <asset id="roleResPos4" path="roleResPos4.png"/>	
+		    <asset id="roleResPos5" path="roleResPos5.png"/>	
+		    <asset id="roleResPos6" path="roleResPos6.png"/>	
+		    <asset id="roleInfo_bg" path="roleInfoBg.png"/>	
+		    <asset id="roleInfoRes1" path="roleInfoRes1.png"/>	
+		    <asset id="roleInfoRes2" path="roleInfoRes2.png"/>	
+		    <asset id="roleInfoRes3" path="roleInfoRes3.png"/>	
+		    <asset id="roleInfoRes4" path="roleInfoRes4.png"/>	
+		    <asset id="roleInfoRes5" path="roleInfoRes5.png"/>	
+		    <asset id="roleInfoRes6" path="roleInfoRes6.png"/>	
+		    <asset id="roleEffRes1" path="roleEffRes1.png"/>	
+		    <asset id="roleEffRes2" path="roleEffRes2.png"/>	
+		    <asset id="roleEffRes3" path="roleEffRes3.png"/>	
+		    <asset id="roleEffRes4" path="roleEffRes4.png"/>	
+		    <asset id="roleEffRes5" path="roleEffRes5.png"/>	
+		    <asset id="roleEffRes6" path="roleEffRes6.png"/>	
+		    <asset id="eBtn1" path="enterGameBtn1.png"/>	
+		    <asset id="eBtn2" path="enterGameBtn2.png"/>	
+		    <asset id="eBtn3" path="enterGameBtn3.png"/>	
+		    <asset id="eBtn4" path="enterGameBtn4.png"/>	
+		    <asset id="cBtn1" path="cancelBtn1.png"/>	
+		    <asset id="cBtn2" path="cancelBtn2.png"/>	
+		    <asset id="cBtn3" path="cancelBtn3.png"/>	
+		    <asset id="cBtn4" path="cancelBtn4.png"/>	
+			<asset id="roleRes1" type="1" path="roleRes1.swf"/>
+			<asset id="roleRes2" type="1" path="roleRes2.swf"/>
+			<asset id="roleRes3" type="1" path="roleRes3.swf"/>
+			<asset id="roleRes4" type="1" path="roleRes4.swf"/>
+			<asset id="roleRes5" type="1" path="roleRes5.swf"/>
+			<asset id="roleRes6" type="1" path="roleRes6.swf"/>
+		</asset_package>	
+		<!-- 領地資源 -->	
+		<asset_package id="ldbtn_res" path="assets/btn/">	
+		    <asset id="btn_ld_nomal" path="ldbtn1.png"/>	
+		    <asset id="btn_ld_down" path="ldbtn2.png"/>	
+		    <asset id="btn_ld_over" path="ldbtn3.png"/>	
+		    <asset id="btn_ld_disable" path="ldbtn4.png"/>	
+		    <asset id="btn_esc_nomal" path="overBattle1.png"/>	
+		    <asset id="btn_esc_down" path="overBattle3.png"/>	
+		    <asset id="btn_esc_over" path="overBattle2.png"/>	
+		    <asset id="btn_esc_disable" path="overBattle4.png"/>	
+		</asset_package>	
+	</enter_game>		
+
+	<!-- 即時加載的素材 -->		
+	<real_time>		
+		<!-- 世界地圖介面 -->	
+		<asset_package id="word_map" path="assets/word_map/" des="加載世界地圖資源">	
+			<asset id="word_map_bg" path="word_map_bg.jpg"/>
+			<asset id="word_ico_nomal_1000" path="icos/map_1000_nomal.png"/>
+			<asset id="word_ico_selected_1000" path="icos/map_1000_selected.png"/>
+			<asset id="word_ico_nomal_1100" path="icos/map_1100_nomal.png"/>
+			<asset id="word_ico_selected_1100" path="icos/map_1100_selected.png"/>
+			<asset id="word_ico_nomal_1200" path="icos/map_1200_nomal.png"/>
+			<asset id="word_ico_selected_1200" path="icos/map_1200_selected.png"/>
+			<asset id="word_ico_nomal_1300" path="icos/map_1300_nomal.png"/>
+			<asset id="word_ico_selected_1300" path="icos/map_1300_selected.png"/>
+		</asset_package>	
+		<!-- 軍團介面 -->	
+		<asset_package id="ui_union" path="assets/ncorps/" des="加載軍團資源">	
+			<asset id="union_bg" path="union_bg.png"/>
+			<asset id="union_item_list_bg" path="union_list.png"/>
+			<asset id="union_item_list_no_bg" path="unlin_list_no.png"/>
+			<asset id="union_keji_item_border" path="keji/chose_frame.png"/>
+			<asset id="union_create_crop_bg" path="createcrops.png"/>
+			<asset id="union_change_announ_bg" path="cropsupdategg.png"/>
+			<asset id="union_change_bugle_bg" path="updatecorps.png"/>
+			<asset id="union_emblem_bg" path="union_emblem.png"/>
+			<asset id="union_keji_bg" path="union_keji.png"/>
+			<asset id="union_member_list_bg" path="union_member.png"/>
+			<asset id="union_request_list_bg" path="request_list.png"/>
+			<asset id="union_progress_bar_bg" path="union_pro_bg.png"/>
+			<asset id="union_progress_bar" path="union_pro_bar.png"/>
+			<asset id="union_chose_bg" path="union_chose_bg.png"/>
+			<asset id="union_guangming_btn_disable" path="guangming_btn_disable.png"/>
+			<asset id="union_guangming_btn_down" path="guangming_btn_down.png"/>
+			<asset id="union_guangming_btn_over" path="guangming_btn_over.png"/>
+			<asset id="union_guangming_btn_up" path="guangming_btn_up.png"/>
+			<asset id="union_heian_btn_disable" path="haian_btn_disable.png"/>
+			<asset id="union_heian_btn_down" path="haian_btn_down.png"/>
+			<asset id="union_heian_btn_over" path="haian_btn_over.png"/>
+			<asset id="union_heian_btn_up" path="haian_btn_up.png"/>
+		</asset_package>	
+		<!-- 好友介面 -->	
+		<asset_package id="ui_friend" path="assets/nfriend/" des="加載好友資源">	
+			<asset id="friend_bg" path="friend_bg.png"/>
+			<asset id="friend_add_friend_bg" path="add_friend_bg.png"/>
+			<asset id="friend_change_friend_bg" path="change_state_bg.png"/>
+			<asset id="friend_alert_bg" path="friend_alert_bg.png"/>
+		</asset_package>	
+
+		<!--升級特效-->	
+		<asset_package id="ui_levelUp" path="assets/levelUp/" des="加載升級特效資源">	
+		    <asset id="fun_bg" path="funBg.png"/>	
+			<asset id="llBg_bg" path="levelupBg.png"/>
+		</asset_package>	
+
+		<!-- 郵件介面 -->	
+		<asset_package id="ui_mail" path="assets/" des="加載郵件資源">	
+			<asset id="mainMailBg" path="mail/mainMailBg.png"/>
+			<asset id="mailInfoBg" path="mail/mailInfoBg.png"/>
+			<asset id="writeMailBg" path="mail/writeMailBg.png"/>
+			<asset id="imgTopLayer" path="hotel/imgTopLayer.png"/>
+			<asset id="mail_unread_ico" path="mail/unread.png"/>
+			<asset id="mail_readed_ico" path="mail/read.png"/>
+		</asset_package>	
+
+		<!-- 克洛塔介面 -->	
+		<asset_package id="ui_pata" path="assets/pata/" des="加載克洛塔資源">	
+			<asset id="pt_bg" path="ptBg.png"/>
+			<asset id="pt1_bg" path="pt1.png"/>
+			<asset id="pt2_bg" path="pt2.png"/>
+			<asset id="open_img" path="open.png"/>
+			<asset id="clock_img" path="clock.png"/>
+			<asset id="lt_img" path="lt.png"/>
+		</asset_package>	
+
+		<!--私聊介面-->	
+		<asset_package id="ui_whisper" path="assets/chat/" des="加載私聊資源">	
+		    <asset id="whisper_bg" path="whisperWindowBg.png"/>	
+		    <asset id="pp_img" path="PP.png"/>	
+		    <asset id="sl_img" path="mainOneToOneItemRenderSelectedBg.png"/>	
+		    <asset id="bg_img" path="mainOneToOneItemRenderCommonBg.png"/>	
+		    <asset id="pp_swf" type="1" path="pp.swf"/>	
+		</asset_package>	
+		<!--背包介面-->	
+		<asset_package id="ui_package" path="assets/pack/" des="加載背包資源">	
+		    <asset id="pack_bg" path="mainPackageBg.png"/>	
+		</asset_package>	
+		<!--戰鬥勝利結算介面-->	
+		<asset_package id="ui_battle_suc" path="assets/battle/" des="加載戰鬥勝利資源">	
+		    <asset id="suc_img" path="battleSucImg.png"/>	
+		    <asset id="flip_bg" path="battleFlipBg.png"/>	
+		    <asset id="flip_swf" type="1" path="flipComp.swf"/>	
+		    <asset id="flip_effect_swf" type="1" path="flipComp1.swf"/>	
+		    <asset id="flip_time_swf" type="1" path="TimerAnimation.swf"/>	
+		</asset_package>	
+		<!--角色介面背景-->	
+		<asset_package id="ui_role" path="assets/role/" des="加載角色資源">	
+		    <asset id="role_bg" path="mainRoleBg.png"/>	
+		</asset_package>	
+		<!--角色資訊介面-->	
+		<asset_package id="ui_bg_role" path="assets/nrole/" des="加載角色資訊背景">	
+		    <asset id="role_info_bg" path="lookrole.png"/>	
+		     <asset id="role_bj_bg" path="role_bg.png"/>	
+		</asset_package>	
+        <!--主菜單介面-->			
+		<asset_package id="ui_mainMenu" path="assets/mainMenu/" des="加載菜單資源">	
+		    <asset id="mainMenuBg" path="mainMenuBg.png"/>	
+		     <asset id="role_bg" path="role_bg.png"/>	
+		      <asset id="pack_bg" path="mainPackageBg.png"/>	
+		</asset_package>	
+		<!--新手引導資源介面-->	
+		<asset_package id="ui_yd_10004" path="assets/guideImage/" des="加載新手引導10004資源">	
+		    <asset id="10004" path="10004.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10029" path="assets/guideImage/" des="加載新手引導10029資源">	
+		    <asset id="10029" path="10029.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10036" path="assets/guideImage/" des="加載新手引導10036資源">	
+		    <asset id="10036" path="10036.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10262" path="assets/guideImage/" des="加載新手引導10262資源">	
+		    <asset id="10262" path="10262.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10264" path="assets/guideImage/" des="加載新手引導10264資源">	
+		    <asset id="10264" path="10264.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10267" path="assets/guideImage/" des="加載新手引導10267資源">	
+		    <asset id="10267" path="10267.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10268" path="assets/guideImage/" des="加載新手引導10268資源">	
+		    <asset id="10268" path="10268.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10271" path="assets/guideImage/" des="加載新手引導10271資源">	
+		    <asset id="10271" path="10271.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10272" path="assets/guideImage/" des="加載新手引導10272資源">	
+		    <asset id="10272" path="10272.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10273" path="assets/guideImage/" des="加載新手引導10273資源">	
+		    <asset id="10273" path="10273.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10274" path="assets/guideImage/" des="加載新手引導10274資源">	
+		    <asset id="10274" path="10274.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10275" path="assets/guideImage/" des="加載新手引導10275資源">	
+		    <asset id="10275" path="10275.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10276" path="assets/guideImage/" des="加載新手引導10276資源">	
+		    <asset id="10276" path="10276.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10277" path="assets/guideImage/" des="加載新手引導10277資源">	
+		    <asset id="10277" path="10277.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10278" path="assets/guideImage/" des="加載新手引導10278資源">	
+		    <asset id="10278" path="10278.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10279" path="assets/guideImage/" des="加載新手引導10279資源">	
+		    <asset id="10279" path="10279.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_20246" path="assets/guideImage/" des="加載新手引導20246資源">	
+		    <asset id="20246" path="20246.jpg"/>	
+		</asset_package>	
+		<asset_package id="ui_yd_10280" path="assets/guideImage/" des="加載新手引導10280資源">	
+		    <asset id="10280" path="10280.jpg"/>	
+		</asset_package>
+		<asset_package id="ui_yd_10010" path="assets/guideImage/" des="加载新手引导10010资源">
+		    <asset id="10010" path="10010.jpg"/>
+		</asset_package>
+		<asset_package id="ui_yd_10031" path="assets/guideImage/" des="加载新手引导10031资源">
+		    <asset id="10031" path="10031.jpg"/>
+		</asset_package>
+
+		<!-- 商店介面 -->	
+		<asset_package id="ui_npcshop" path="assets/shop/" des="加載商店介面">	
+		    <asset id="npc_shop_bg" path="mainShopBg.png"/>	
+		    <asset id="npc_shop_package_bg" path="mainBg.png"/>	
+		    <asset id="npc_shop_small_face" path="small_face.png"/>	
+		    <asset id="npc_shop_shop_bg" path="npcShopTabItemBg.png"/>	
+		    <asset id="npc_shop_item_bg_nomal" path="shop_item_bg_nomal.png"/>	
+		    <asset id="npc_shop_item_bg_over" path="shop_item_bg_over.png"/>	
+		    <asset id="npc_shop_sell_bg" path="npcShopSellBg.png"/>	
+		    <asset id="npc_ico_wuqi" path="wuqi_ico.png"/>	
+		    <asset id="npc_word_wuqi" path="wuqi_word.png"/>	
+		    <asset id="npc_ico_zhuangbei" path="zhuangbei_ico.png"/>	
+		    <asset id="npc_word_zhuangbei" path="zhuangbei_word.png"/>	
+		    <asset id="npc_ico_daoju" path="daoju_ico.png"/>	
+		    <asset id="npc_word_daoju" path="daoju_word.png"/>	
+		</asset_package>	
+		<!--排行介面-->	
+		<asset_package id="ui_ranking" path="assets/ranking/" des="加載排行介面">	
+		    <asset id="rank_bg" path="rankingBg.png"/>	
+		    <asset id="cor_bat_tit" path="corps_battle_ranking_title.png"/>	
+		    <asset id="cor_lev_tit" path="corps_level_ranking_title.png"/>	
+		    <asset id="role_bat_tit" path="role_battle_ranking_title.png"/>	
+		    <asset id="role_lev_tit" path="role_level_ranking_title.png"/>	
+		</asset_package>	
+		<!-- npc任務介面 -->	
+		<asset_package id="ui_npc_task" path="assets/ntask/" des="加載NPC任務介面">	
+		    <asset id="npc_task_bg" path="npc_task_bg.png"/>	
+		    <asset id="npc_task_ico_accept" path="ico_accept.png"/>	
+		    <asset id="npc_task_ico_complete" path="ico_complete.png"/>	
+		    <asset id="npc_task_ico_running" path="ico_runing.png"/>	
+		    <asset id="npc_task_ico_price" path="task_price_ico.png"/>	
+		</asset_package>	
+		<!--我的領地介面資源-->	
+		<asset_package id="ui_territory" path="assets/territory/" des="加載我的領地資源">	
+		    <asset id='territory_bg' path='territoryBg.jpg'/>	
+		    <asset id='terBuild_1' path='terBuild1.png'/>	
+		    <asset id='terBuild_2' path='terBuild2.png'/>	
+		    <asset id='terBuild_3' path='terBuild3.png'/>	
+		    <asset id='terBuild_4' path='terBuild4.png'/>	
+		    <asset id='terBuild_5' path='terBuild5.png'/>	
+		</asset_package>	
+		<!--煉金介面資源-->	
+		<asset_package id="ui_lianjin" path="assets/territory/" des="加載煉金介面資源">	
+		    <asset id="lian_jin_bg" path="lianjinBg.png"/>	
+		</asset_package>	
+		<!--軍營介面資源-->	
+		<asset_package id="ui_aram" path="assets/territory/" des="加載軍營介面資源">	
+		    <asset id="aram_bg" path="aramBg.png"/>	
+		</asset_package>	
+		<!-- 委託任務介面 -->	
+		<asset_package id="ui_weituo_task" path="assets/ntask/" des="加載委託任務介面">	
+		    <asset id="weituo_task_bg" path="weituo_task_bg.png"/>	
+		</asset_package>	
+		<!--強化介面-->	
+		<asset_package id="ui_strengthen" path="assets/blacksmith/" des="加載強化介面">	
+		     <asset id="strengthen_bg" path="mainStrengthenBg.png"/>	
+		     <asset id="strengthen_role_img" path="roleImg.png"/>	
+		     <asset id="strengthen_main_bg" path="mainStrFun.png"/>	
+		     <asset id="strengthencomp_bg" path="strengthenBg.png"/>	
+		     <asset id="xiangqian_bg" path="xiangqianBg.png"/>	
+		      <asset id="hecheng_bg" path="heChengBg.png"/>	
+		      <asset id="zhuanyi_bg" path="zhuanyiBg.png"/>	
+		     	
+		</asset_package>	
+		<!-- 任務介面 -->	
+		<asset_package id="ui_task" path="assets/ntask/" des="加載任務介面">	
+		    <asset id="ui_task_bg" path="menu_task_bg.png"/>	
+		    <asset id="ui_task_add_btn" path="task_add_btn.png"/>	
+		    <asset id="ui_task_reduce_btn" path="task_reduce_btn.png"/>	
+		    <asset id="ui_task_list_light" path="task_list_light.png"/>	
+		</asset_package>	
+		<!--加載寵物介面資源-->	
+		<asset_package id="ui_pet" path="assets/pet/" des="加載寵物介面資源">	
+		    <asset id="pet_bg" path="petBg.png"/>	
+		    <asset id="pet_info_bg" path="petInfoBg.png"/>	
+		    <asset id="pet_matrix_bg" path="matrixBg.png"/>	
+		    <asset id="pet_topLayer_bg" path="petTopLayer.png"/>	
+		    <asset id="pet_di_bg" path="di.png"/>	
+		    <asset id="pet_skillTips_bg" path="petSkillTips.png"/>	
+		    <asset id="pet_tips_bg" path="petTooltipBg.png"/>	
+		    <asset id="pet_tavern" path="PetTavernbg.png"/>	
+		    <asset id="pet_tavernXy" path="TavernXingYunbg.png"/>	
+		    <asset id="pet_tavernPart" path="PetTavPartbg.png"/>	
+		    <asset id="pet_prop_bg" path="petProBg.png"/>	
+		    <asset id="pet_peiyangs_bg" path="petPeiBg.png"/>	
+		     <asset id="pet_buzhen_bg" path="petBuBg.png"/>	
+		     <asset id="pet_chuancheng_bg" path="petCcBg.png"/>	
+		     <asset id="pet_tujian_bg" path="petJianBg.png"/>	
+		    	
+		</asset_package>	
+		<!--加載競技介面資源-->	
+		<asset_package id="ui_jingji" path="assets/jingji/" des="加載競技介面資源">	
+		    <asset id="jingji_bg" path="jjBg.png"/>	
+		    <asset id="jj_info_bg" path="jjInfoBg.png"/>	
+		    <asset id="jj_tips_bg" path="jjInfoTips.png"/>	
+		</asset_package>	
+		<!--加載官爵介面資源-->	
+		<asset_package id="ui_guanjue" path="assets/guanjue/" des="加載官爵介面資源">	
+		    <asset id="guanjue_bg" path="guanjuebg.png"/>	
+		    <asset id="shengWang_bg" path="shengwangBg.png"/>	
+		    <asset id="shengItemBg_bg" path="shengItemBg.png"/>	
+		</asset_package>	
+		<!--加載神格介面資源-->	
+		<asset_package id="ui_shengdi" path="assets/sd/" des="加載神格介面資源">	
+		    <asset id="shengdi_bg" path="shenDiBg.png"/>	
+		    <asset id="sgBtn1_bg" path="sgBtn1.png"/>	
+		    <asset id="sgBtn4_bg" path="sgBtn4.png"/>	
+		</asset_package>	
+
+		<!--加載日程表介面資源-->	
+		<asset_package id="ui_calendar" path="assets/Image/CalendarReward/" des="加載日程表資源">	
+		    <asset id="calendar_bg" path="calendarImg.png"/>	
+		</asset_package>	
+		<!--加載守護目標介面資源-->	
+		<asset_package id="ui_targetTask" path="assets/gaji/" des="加載守護目標資源">	
+		    <asset id="targetTask_Bg" path="targetBg.png"/>	
+		    <asset id="dayTarget_Bg" path="dayTargetBg.png"/>	
+		    <asset id="suc_Bg" path="suc.png"/>	
+		    <asset id="noSuc_Bg" path="noSuc.png"/>	
+		    <asset id="obtainImg_Bg" path="obtainImg.png"/>	
+		</asset_package>	
+		<!--加載占星介面資源-->	
+		<asset_package id="ui_zhanxing" path="assets/zhanxing/" des="加載占星介面資源">	
+		    <asset id="jifeng_bg" path="jifengBg.png"/>	
+		    <asset id="jifengpart_bg" path="jifengPart.png"/>	
+		    <asset id="zhanxing_bg" path="zxBg.png"/>	
+		    <asset id="fuwen_bg" path="fwBg.png"/>	
+		    <asset id="xyBg_bg" path="xyBg.png"/>	
+		</asset_package>	
+		<!--技能介面-->	
+		<asset_package id="ui_skill" path="assets/skill/" des="加載技能介面資源">	
+		    <asset id="skill_bg" path="mainSkillBg.png"/>	
+		</asset_package>	
+		<!--殖民特權-->	
+		<asset_package id="ui_coloMan_TeQuan" path="assets/coloMan/" des="加載殖民特權介面資源">	
+		    <asset id="anthoer_capture" path="anthoerCapture.png"/>	
+		    <asset id="ui_colonize" path="colonize.png"/>	
+		    <asset id="no_capture" path="noCapture.png"/>	
+		    <asset id="self_capture" path="selfCapture.png"/>	
+		    <asset id="zhi_min_item" path="zhiminItem.png"/>	
+		    <asset id="colroFuben_Bg" path="coloFuBenImg.png"/>	
+		    <asset id="colroTop_Bg" path="coloFuBenImgTop.png"/>	
+		</asset_package>	
+		<!--VIP-->	
+		<asset_package id="ui_vip" path="assets/vipImg/" des="加載VIP介面資源">	
+		    <asset id="vip_bg" path="vipBg.png"/>	
+		    <asset id="vip_progres" path="vipProgres.png"/>	
+		    <asset id="vip_item" path="vipItemRender.png"/>	
+		</asset_package>	
+		<!--祈禱-->	
+		<asset_package id="ui_pray" path="assets/pray/" des="加載祈禱介面資源">	
+		    <asset id="pray_bg" path="prayImg.png"/>	
+		</asset_package>	
+		<!--殖民獎金-->	
+		<asset_package id="ui_colo_jiangjin" path="assets/reward/" des="加載殖民獎金介面資源">	
+		    <asset id="jiangjin_bg" path="rewardBg.png"/>	
+		</asset_package>	
+		<!--殖民管理-->	
+		<asset_package id="ui_coloman" path="assets/coloMan/" des="加載殖民管理介面資源">	
+		    <asset id="coloman_bg" path="coloManBg.png"/>	
+		</asset_package>	
+		<!--每日獎勵或線上獎勵-->	
+		<asset_package id="ui_day_reward" path="assets/reward/" des="加載獎勵介面資源">	
+		    <asset id="dy_reward_bg" path="rewardDay.png"/>	
+		    <asset id="dy_reward_item_bg" path="rewardDayBg.png"/>	
+		</asset_package>	
+		<!--多人組隊-->	
+		<asset_package id="ui_group" path="assets/group/" des="?? ???">	
+		    <asset id="drzd_bg" path="drzd_bg.png"/>	
+		    <asset id="zdtr_bg" path="zdtr_bg.png"/>	
+		    <asset id="drzd_info_bg" path="drzd_info_bg.png"/>	
+		    <asset id="hchl" path="hchl.png"/>	
+		    <asset id="djty" path="djty.png"/>	
+		    <asset id="hdkj" path="hdkj.png"/>	
+		    <asset id="zdtr_info_bg" path="zdtr_info_bg.png"/>	
+		    <asset id="zd_green" path="zd_green.png"/>	
+		    <asset id="pInfo" path="pInfo.png"/>	
+		    <asset id="gBorder" path="gBorder.png"/>	
+		    <asset id="hdkj_nomal" path="hdkj1.png"/>	
+		    <asset id="hdkj_down" path="hdkj3.png"/>	
+		    <asset id="hdkj_over" path="hdkj2.png"/>	
+		    <asset id="hdkj_disable" path="hdkj4.png"/>	
+		    <asset id="hchl_nomal" path="hchl1.png"/>	
+		    <asset id="hchl_down" path="hchl3.png"/>	
+		    <asset id="hchl_over" path="hchl2.png"/>	
+		    <asset id="hchl_disable" path="hchl4.png"/>	
+		    <asset id="djty_nomal" path="djty1.png"/>	
+		    <asset id="djty_down" path="djty3.png"/>	
+		    <asset id="djty_over" path="djty2.png"/>	
+		    <asset id="djty_disable" path="djty4.png"/>	
+		    <asset id="ti_nomal" path="ti1.png"/>	
+		    <asset id="ti_down" path="ti3.png"/>	
+		    <asset id="ti_over" path="ti2.png"/>	
+		    <asset id="ti_disable" path="ti4.png"/>	
+		</asset_package>	
+		<!--軍團領地-->	
+		<asset_package id="ui_lingdi" path="assets/groupBattle/" des="加載軍團領地介面資源">	
+		    <asset id="ld_groupcitybg" path="groupCityBg.png"/>	
+		    <asset id="ld_citybg" path="cityBg.png"/>	
+		    <asset id="ld_ldbg" path="lingdibg.png"/>	
+		    <asset id="ld_xybg" path="xuyuanbg.png"/>	
+		</asset_package>	
+		<!--商城介面-->	
+		<asset_package id="ui_mall" path="assets/nshop/" des="加載商城介面資源">	
+		    <asset id="item_bg_up" path="shop_item_bg_nomal.png"/>	
+		    <asset id="ico_cuxiao" path="ico_cuxiao.png"/>	
+		    <asset id="ico_hot" path="ico_hot.png"/>	
+		    <asset id="ico_tejia" path="ico_tejia.png"/>	
+		    <asset id="btn_put_money_disable" path="btn_putmoney_disable.png"/>	
+		    <asset id="btn_put_money_down" path="btn_putmoney_down.png"/>	
+		    <asset id="btn_put_money_over" path="btn_putmoney_over.png"/>	
+		    <asset id="btn_put_money_up" path="btn_putmoney_up.png"/>	
+		    <asset id="mall_bg" path="mall_bg.png"/>	
+		    <asset id="btn_pre_nomal" path="btn_pre_nomal.png"/>	
+		    <asset id="btn_pre_disable" path="btn_pre_disable.png"/>	
+		    <asset id="btn_next_nomal" path="btn_next_nomal.png"/>	
+		    <asset id="btn_next_disable" path="btn_next_disable.png"/>	
+		    <asset id="btn_common_disable" path="commonBtn_disable.png"/>	
+		    <asset id="btn_common_down" path="commonBtn_down.png"/>	
+		    <asset id="btn_common_over" path="commonBtn_over.png"/>	
+		    <asset id="btn_common_up" path="commonBtn_up.png"/>	
+		    <asset id="btn_close_down" path="close_down.png"/>	
+		    <asset id="btn_close_over" path="close_over.png"/>	
+		    <asset id="btn_close_up" path="close_up.png"/>	
+		    <asset id="zp_bg" path="zpBg.png"/>	
+		</asset_package>	
+		<!-- 地圖 -->	
+
+		<asset_package id="map_scene_1500" path="assets/map/tasidiluo/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1300" path="assets/map/sailashite/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		    <asset id="11" path="11.png"/>	
+		    <asset id="12" path="12.png"/>	
+		    <asset id="13" path="13.png"/>	
+		    <asset id="14" path="14.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1200" path="assets/map/wangcheng/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		    <asset id="11" path="11.png"/>	
+		    <asset id="12" path="12.png"/>	
+		    <asset id="13" path="13.png"/>	
+		    <asset id="14" path="14.png"/>	
+		</asset_package>	
+
+		<asset_package id="map_scene_1100" path="assets/map/leigezhen/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		    <asset id="11" path="11.png"/>	
+		    <asset id="12" path="12.png"/>	
+		    <asset id="13" path="13.png"/>	
+		    <asset id="14" path="14.png"/>	
+		    <asset id="15" path="15.png"/>	
+		    <asset id="16" path="16.png"/>	
+		    <asset id="17" path="17.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1000" path="assets/map/keluocun/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1600" path="assets/map/buduokebuluo/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1700" path="assets/map/molandiyu/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1400" path="assets/map/shabuxizhen/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		    <asset id="11" path="11.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_1800" path="assets/map/zhongshenzhiyu/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>	
+		    <asset id="1" path="1.png"/>	
+		    <asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		</asset_package>	
+		<asset_package id="map_scene_0" path="assets/map/word/" des="加載區域地圖">	
+		    <asset id="map_bg" path="bg.jpg"/>
+			<asset id="map_top" path="top.png"/>
+			<asset id="map_down" path="beijing.png"/>
+		    <asset id="1" path="1.png"/>
+			<asset id="2" path="2.png"/>	
+		    <asset id="3" path="3.png"/>	
+		    <asset id="4" path="4.png"/>	
+		    <asset id="5" path="5.png"/>	
+		    <asset id="6" path="6.png"/>	
+		    <asset id="7" path="7.png"/>	
+		    <asset id="8" path="8.png"/>	
+		    <asset id="9" path="9.png"/>	
+		    <asset id="10" path="10.png"/>	
+		    <asset id="11" path="11.png"/>	
+		    <asset id="12" path="12.png"/>	
+		    <asset id="13" path="13.png"/>	
+		    <asset id="14" path="14.png"/>	
+		    <asset id="15" path="15.png"/>	
+		    <asset id="16" path="16.png"/>	
+		    <asset id="17" path="17.png"/>	
+			<asset id="18" path="18.png"/>
+			<asset id="19" path="19.png"/>
+			<asset id="20" path="20.png"/>
+			<asset id="21" path="21.png"/>
+			<asset id="22" path="22.png"/>
+			<asset id="23" path="23.png"/>
+			<asset id="24" path="24.png"/>
+			<asset id="25" path="25.png"/>
+			<asset id="26" path="26.png"/>
+			<asset id="27" path="27.png"/>
+			<asset id="28" path="28.png"/>
+			<asset id="29" path="29.png"/>
+			<asset id="30" path="30.png"/>
+			<asset id="31" path="31.png"/>
+			<asset id="32" path="32.png"/>
+			<asset id="33" path="33.png"/>
+			<asset id="34" path="34.png"/>
+			<asset id="35" path="35.png"/>
+			<asset id="36" path="36.png"/>
+			<asset id="37" path="37.png"/>
+			<asset id="38" path="38.png"/>
+			<asset id="39" path="39.png"/>
+			<asset id="40" path="40.png"/>
+		</asset_package>	
+		<asset_package id="map_scene_base" path="assets/map/" des="加載區域地圖">	
+		    <asset id="word_bg" path="map_bg.png"/>	
+		    <asset id="chose_color_bg" path="change_color_bg.png"/>	
+		    <asset id="exit_btn_disable" path="exit_btn_disable.png"/>	
+		    <asset id="exit_btn_down" path="exit_btn_down.png"/>	
+		    <asset id="exit_btn_over" path="exit_btn_over.png"/>	
+		    <asset id="exit_btn_up" path="exit_btn_up.png"/>	
+		    <asset id="to_word_btn_disable" path="to_word_btn_disable.png"/>	
+		    <asset id="to_word_btn_down" path="to_word_btn_down.png"/>	
+		    <asset id="to_word_btn_over" path="to_word_btn_over.png"/>	
+		    <asset id="to_word_btn_up" path="to_word_btn_up.png"/>	
+		    <asset id="change_color_disable" path="change_color_btn_disable.png"/>	
+		    <asset id="change_color_over" path="change_color_btn_over.png"/>	
+		    <asset id="change_color_up" path="change_color_btn_up.png"/>	
+		    <asset id="map_tip_bg" path="tips2.png"/>	
+		    <asset id="instance_tip_bg" path="tips.png"/>	
+		</asset_package>	
+		<asset_package id="zhanyi" path="assets/zhanyi/" des="加载战役素材">	
+		    <asset id="zhanyi_down_bg" path="bg.png"/>
+		    <asset id="zhanyi_top_bg" path="top.png"/>
+		    <asset id="left_up" path="leftup.png"/>
+		    <asset id="left_down" path="leftdown.png"/>
+		    <asset id="left_over" path="leftover.png"/>
+		    <asset id="left_dis" path="leftdis.png"/>
+		    <asset id="right_up" path="rightup.png"/>
+		    <asset id="right_down" path="rightdown.png"/>
+		    <asset id="right_over" path="rightover.png"/>
+		    <asset id="right_dis" path="rightdis.png"/>
+		    <asset id="close_up" path="close11.png"/>
+		    <asset id="close_over" path="close12.png"/>
+		    <asset id="close_down" path="close13.png"/>
+		    <asset id="jiantou" path="jiantou.png"/>
+		    <asset id="level_bg_1" path="1.png"/>
+		    <asset id="level_bg_2" path="2.png"/>
+		    <asset id="level_bg_3" path="2.png"/>
+		    <asset id="1_1ds" path="1/1ds.png"/>
+		    <asset id="1_1over" path="1/1over.png"/>
+		    <asset id="1_1up" path="1/1up.png"/>
+		</asset_package>
+	</real_time>		
+	<!-- 臨時加載素材 -->		
+	<tmp>		
+		<asset id="npc_img_100001" path="assets/ntask/img/100001.png" />	
+		<asset id="npc_img_100002" path="assets/ntask/img/100002.png" />	
+		<asset id="npc_img_100003" path="assets/ntask/img/100003.png" />	
+		<asset id="npc_img_100004" path="assets/ntask/img/100004.png" />	
+		<asset id="npc_img_100005" path="assets/ntask/img/100005.png" />	
+		<asset id="npc_img_100006" path="assets/ntask/img/100006.png" />	
+		<asset id="npc_img_100007" path="assets/ntask/img/100007.png" />	
+		<asset id="npc_img_110001" path="assets/ntask/img/110001.png" />	
+		<asset id="npc_img_110002" path="assets/ntask/img/110002.png" />	
+		<asset id="npc_img_110003" path="assets/ntask/img/110003.png" />	
+		<asset id="npc_img_110004" path="assets/ntask/img/110004.png" />	
+		<asset id="npc_img_110005" path="assets/ntask/img/110005.png" />	
+		<asset id="npc_img_110006" path="assets/ntask/img/110006.png" />	
+		<asset id="npc_img_110007" path="assets/ntask/img/110007.png" />	
+		<asset id="npc_img_110008" path="assets/ntask/img/110008.png" />	
+		<asset id="npc_img_110009" path="assets/ntask/img/110009.png" />	
+		<asset id="npc_img_110010" path="assets/ntask/img/110010.png" />	
+		<asset id="npc_img_110011" path="assets/ntask/img/110011.png" />	
+		<asset id="npc_img_110012" path="assets/ntask/img/110012.png" />	
+		<asset id="npc_img_110013" path="assets/ntask/img/110013.png" />	
+		<asset id="npc_img_110014" path="assets/ntask/img/110014.png" />	
+		<asset id="npc_img_130001" path="assets/ntask/img/130001.png" />	
+		<asset id="npc_img_130002" path="assets/ntask/img/130002.png" />	
+		<asset id="npc_img_130003" path="assets/ntask/img/130003.png" />	
+		<asset id="npc_img_130004" path="assets/ntask/img/130004.png" />	
+		<asset id="npc_img_130005" path="assets/ntask/img/130005.png" />	
+		<asset id="npc_img_130006" path="assets/ntask/img/130006.png" />	
+		<asset id="npc_img_130007" path="assets/ntask/img/130007.png" />	
+		<asset id="npc_img_130008" path="assets/ntask/img/130008.png" />	
+		<asset id="npc_img_130009" path="assets/ntask/img/130009.png" />	
+		<asset id="npc_img_130010" path="assets/ntask/img/130010.png" />	
+		<asset id="npc_img_130011" path="assets/ntask/img/130011.png" />	
+		<asset id="npc_img_130012" path="assets/ntask/img/130012.png" />	
+		<asset id="npc_img_130013" path="assets/ntask/img/130013.png" />	
+		<asset id="npc_img_130014" path="assets/ntask/img/130014.png" />	
+		<asset id="npc_img_130015" path="assets/ntask/img/130015.png" />	
+		<asset id="npc_img_140001" path="assets/ntask/img/140001.png" />	
+		<asset id="npc_img_140002" path="assets/ntask/img/140002.png" />	
+		<asset id="npc_img_140003" path="assets/ntask/img/140003.png" />	
+		<asset id="npc_img_140004" path="assets/ntask/img/140004.png" />	
+		<asset id="npc_img_140005" path="assets/ntask/img/140005.png" />	
+		<asset id="npc_img_150000" path="assets/ntask/img/150000.png" />	
+		<asset id="npc_img_150001" path="assets/ntask/img/150001.png" />	
+		<asset id="npc_img_150003" path="assets/ntask/img/150003.png" />	
+
+		<asset id="npc_img_160000" path="assets/ntask/img/160000.png" />	
+		<asset id="npc_img_160001" path="assets/ntask/img/160001.png" />	
+		<asset id="npc_img_160002" path="assets/ntask/img/160002.png" />	
+		<asset id="npc_img_160003" path="assets/ntask/img/160003.png" />	
+
+		<asset id="npc_img_170000" path="assets/ntask/img/170000.png" />	
+		<asset id="npc_img_170001" path="assets/ntask/img/170001.png" />	
+		<asset id="npc_img_170002" path="assets/ntask/img/170002.png" />	
+		<asset id="npc_img_170003" path="assets/ntask/img/170003.png" />	
+		<asset id="npc_img_170004" path="assets/ntask/img/170004.png" />	
+
+		<asset id="npc_img_180000" path="assets/ntask/img/180000.png" />	
+		<asset id="npc_img_180001" path="assets/ntask/img/180001.png" />	
+
+		<asset id="npc_img_190000" path="assets/ntask/img/190000.png" />	
+		<asset id="npc_img_190001" path="assets/ntask/img/190001.png" />	
+		<asset id="npc_img_190002" path="assets/ntask/img/190002.png" />	
+	</tmp>		
+</data>			

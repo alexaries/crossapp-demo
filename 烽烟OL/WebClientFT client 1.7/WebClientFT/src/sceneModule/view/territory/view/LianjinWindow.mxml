@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 世界地图界面 -->
+<win:BaseWindow creationComplete="init()"
+	height="458"
+	width="668"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.controls.Image;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.territory.event.RefreshTerritoryListInfoEvent;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.territory.view.LianjinWindow";
+			public var icons:Array;
+			public var bg_bitmap:Bitmap;
+			
+			private var timer:Timer;
+			private var delay:int = 1000;
+			public var surTime:int;
+			
+			private function init():void {
+				icons = [];
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_lianjin', 'lian_jin_bg');
+			}
+			
+			private function setRewardTime(times:int):void {
+				surTime = times;
+				if (times > 0) {
+					if (!timer) {
+						timer = new Timer(delay);
+						timer.addEventListener(TimerEvent.TIMER, onTimer);
+						timer.start();
+					} else if (!timer.running) {
+						timer.start();
+					}
+				} else {
+					reward_tile.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('territory', 'ljW_sysj');
+					this.dispatchEvent(new RefreshTerritoryListInfoEvent(RefreshTerritoryListInfoEvent.REFRESHTERRITORYLISTINFOEVENT));
+				}
+			}
+			
+			private function onTimer(evt:TimerEvent):void {
+				surTime = surTime - 1;
+				
+				if (surTime < 0) {
+					timer.stop();
+					timer.reset();
+					reward_tile.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('territory', 'ljW_sysj');
+					this.dispatchEvent(new RefreshTerritoryListInfoEvent(RefreshTerritoryListInfoEvent.REFRESHTERRITORYLISTINFOEVENT));
+				} else {
+					reward_tile.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('territory', 'tWM_xlsy') + ByteArrayUtil.formateTimeToString2(surTime * 1000)
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="no1" />
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%"
+		width="100%">
+		<mx:Image id="img_bg"/>
+		<component:CrotaBasicLabel color="0xFFFFF"
+			id="reward_tile"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{SystemDataModel.lianjinInfoVo.runningFlag ? setRewardTime(SystemDataModel.lianjinInfoVo.remainTime) : ''}"
+			visible="{SystemDataModel.lianjinInfoVo.runningFlag}"
+			width="329"
+			x="45"
+			y="131" />
+		<component:CrotaBasicLabel color="0xFFFFF"
+			id="reward_tile0"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{SystemDataModel.lianjinInfoVo.runningFlag ?CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_hdjb'):CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_xgms')}"
+			width="337"
+			x="100"
+			y="150" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile1"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_8hd')+SystemDataModel.roleInfo.level*300*8+CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')}"
+			width="289"
+			x="100"
+			y="184" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile2"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_12hd')+SystemDataModel.roleInfo.level*300*12+CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')}"
+			width="289"
+			x="100"
+			y="219" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile3"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_16hd')+SystemDataModel.roleInfo.level*300*16+CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')}"
+			width="289"
+			x="100"
+			y="256" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile4"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_24hd')+SystemDataModel.roleInfo.level*300*24+CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')}"
+			width="289"
+			x="100"
+			y="292" />
+		<component:CrotaBasicLabel color="0xFF9900"
+			height="40"
+			id="reward_tile5"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_zjjb')}"
+			textAlign="left"
+			width="300"
+			x="154"
+			y="84" />
+		<component:CrotaBasicLabel color="0xFF9900"
+			id="reward_tile6"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_dstip')}"
+			textAlign="left"
+			width="390"
+			x="100"
+			y="326" />
+		<component:CrotaBasicLabel color="0xFFFFF"
+			id="reward_tile7"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_xh')+(SystemDataModel.lianjinInfoVo.goldreq)+CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_sds')+(SystemDataModel.lianjinInfoVo.coinbound)+CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')}"
+			textAlign="left"
+			width="390"
+			x="100"
+			y="345" />
+		<component:CrotaBasicLabel color="0xFFFFFF"
+			id="reward_tile8"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_hkds')+(SystemDataModel.lianjinInfoVo.sptimes)+CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_ci')}"
+			textAlign="left"
+			width="390"
+			x="100"
+			y="364" />
+		<component:CrotaBasicLabel color="0x000000"
+			id="reward_tile10"
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','tWM_gbts')}"
+			width="100"
+			x="405"
+			y="246" />
+		<component:CrotaBasicCheckBox id="showPromptCB"
+			x="380"
+			y="242" />
+		<s:RadioButton y="179"
+			group="{cardtype}"
+			height="21"
+			id="rb1"
+			label="no1"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="55" />
+		<s:RadioButton y="215"
+			group="{cardtype}"
+			height="21"
+			id="rb2"
+			label="no2"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="55" />
+		<s:RadioButton y="251"
+			group="{cardtype}"
+			height="21"
+			id="rb3"
+			label="no3"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="55" />
+		<s:RadioButton y="287"
+			group="{cardtype}"
+			height="21"
+			id="rb4"
+			label="no4"
+			skinClass="style.Skin_CrotaRadioButton"
+			styleName="EQUIPMENTTEXTFORMAT"
+			textAlpha="0"
+			width="45"
+			x="55" />
+		<util:CommonButton id="clokeBtn"
+			skinClass="style.Skin_CrotaCloseButton111"
+			x="506"
+			y="26" />
+		<util:CommonButton id="dishiBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_dscj')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			x="380"
+			y="270" />
+		<util:CommonButton id="nowBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_ljwc')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			visible="{SystemDataModel.lianjinInfoVo.runningFlag}"
+			x="380"
+			y="147" />
+		<util:CommonButton id="stBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('territory','ljW_kswj')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			visible="{!SystemDataModel.lianjinInfoVo.runningFlag}"
+			x="380"
+			y="199" />
+	</s:SkinnableContainer>
+</win:BaseWindow>

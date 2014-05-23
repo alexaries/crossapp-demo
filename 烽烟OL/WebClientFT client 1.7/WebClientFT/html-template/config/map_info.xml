@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<map id="1000" posx="620" posy="130" level="0" name="新手村" des="Lv1-Lv10"/>
+	<map id="1100" posx="620" posy="230" level="0" name="雷格镇" des="Lv10-Lv20"/>
+	<map id="1200" posx="450" posy="230" level="0" name="王城塞拉恩特" des="Lv20-Lv30"/>
+	<map id="1300" posx="410" posy="170" level="0" name="皇宫" des="Lv25-Lv30" />
+	<map id="1400" posx="410" posy="170" level="0" name="皇宫2" des="Lv25-Lv30" />
+	<map id="1500" posx="410" posy="170" level="0" name="皇宫3" des="Lv25-Lv30" />
+	<map id="1600" posx="410" posy="170" level="0" name="皇宫4" des="Lv25-Lv30" />
+	<map id="1700" posx="410" posy="170" level="0" name="皇宫5" des="Lv25-Lv30" />
+	<map id="1800" posx="410" posy="170" level="0" name="皇宫6" des="Lv25-Lv30" />
+</data>

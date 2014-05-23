@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<item id="1000" img="1_1"  posx="10" posy="20" />
+	<item id="1001" img="1_1"  posx="10" posy="100" />
+	<item id="1002" img="1_1"  posx="100" posy="300" />
+	<item id="1003" img="1_1"  posx="200" posy="20" />
+	<item id="1004" img="1_1"  posx="10" posy="200" />
+	<item id="1005" img="1_1"  posx="300" posy="300" />
+
+	<item id="1100" img="1_1"  posx="10" posy="20" />
+	<item id="1101" img="1_1"  posx="10" posy="100" />
+	<item id="1102" img="1_1"  posx="100" posy="300" />
+	<item id="1103" img="1_1"  posx="200" posy="20" />
+	<item id="1104" img="1_1"  posx="10" posy="200" />
+	<item id="1105" img="1_1"  posx="300" posy="300" />
+
+	<item id="1200" img="1_1"  posx="10" posy="20" />
+	<item id="1201" img="1_1"  posx="10" posy="100" />
+	<item id="1202" img="1_1"  posx="100" posy="300" />
+	<item id="1203" img="1_1"  posx="200" posy="20" />
+	<item id="1204" img="1_1"  posx="10" posy="200" />
+	<item id="1205" img="1_1"  posx="300" posy="300" />
+</data>

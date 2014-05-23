@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group creationComplete="group1_creationCompleteHandler(event)"
+	height="349"
+	preinitialize="group1_preinitializeHandler(event)"
+	width="629"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:ui="sceneModule.view.ui.*"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.pet.event.MediatorRegisterPetEvent;
+			import sceneModule.view.pet.vo.PetInfoVO;
+			import sceneModule.view.pet.vo.PetSkillInfoVO;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+			import style.Skin_CrotaCommonButton4;
+			import style.Skin_CrotaPackRedButton;
+			import style.Skin_CrotaPetTuJianRadioButtonLeft;
+			import style.Skin_CrotaSmallButton;
+			
+			import util.CommonTools;
+			
+			public function getLabelDes(man:int):String {
+				var str:String = '';
+				if (man != 0) {
+					str = " + <font color='#26C900'>" + man + "</font>";
+				}
+				return str;
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				this.dispatchEvent(new MediatorRegisterPetEvent(MediatorRegisterPetEvent.MR_PET_INFO, this, true));
+				
+				CommonTools.make_bitmap(petTuJianBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet", "pet_tujian_bg");
+				trBtn.enabled = false;
+			}
+			
+			protected function group1_preinitializeHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','ptjC_fyl')}" />
+	</fx:Declarations>
+	<mx:Image id="petTuJianBg" />
+	<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+		text="{SystemDataModel.otherPetInfoVo.petName==null?'':SystemDataModel.otherPetInfoVo.petName}"
+		textAlign="center"
+		width="107"
+		x="38"
+		y="17" />
+	<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+		text="{SystemDataModel.otherPetInfoVo.curHun+'/'+SystemDataModel.otherPetInfoVo.maxHun}"
+		textAlign="left"
+		width="86"
+		x="247"
+		y="19" />
+	<component:CrotaBasicLabel styleName="RANKINGFORMAT1"
+		text="{SystemDataModel.otherPetInfoVo.reqCoin}"
+		textAlign="left"
+		width="86"
+		x="101"
+		y="315" />
+	<ui:RedAndBludComponent _bgUrl='assets/role/blueBackground.png'
+		_bgWidth="103"
+		_Obj="2"
+		cur_Num="{SystemDataModel.ptjListInfo.sjPro>=100?100:SystemDataModel.ptjListInfo.sjPro}"
+		height="11"
+		id="comp_jingli"
+		max_Num="{100}"
+		x="450"
+		y="30" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.petLevel}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="66"
+		x="212"
+		y="52" />
+	<component:CrotaBasicText htmlText="{ProConst.getPetQuality(SystemDataModel.otherPetInfoVo.curQuality)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="66"
+		x="212"
+		y="79" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.skillName}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="66"
+		x="212"
+		y="108" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.texing}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="66"
+		x="212"
+		y="137" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.basePhyAttack+getLabelDes(SystemDataModel.otherPetInfoVo.manualPhyAttack)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="67"
+		x="70"
+		y="217" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseSpeed+getLabelDes(SystemDataModel.otherPetInfoVo.manualSpeed)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="68"
+		x="70"
+		y="240" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.basePhyDefense+getLabelDes(SystemDataModel.otherPetInfoVo.manualPhyDefense)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="106"
+		x="70"
+		y="263" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseHitRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualHitRate)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="97"
+		x="70"
+		y="286" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseMagicAttack+getLabelDes(SystemDataModel.otherPetInfoVo.manualMagicAttack)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="67"
+		x="213"
+		y="217" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseCritRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualCritRate)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="59"
+		x="213"
+		y="240" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseMagicDefense+getLabelDes(SystemDataModel.otherPetInfoVo.manualMagicDefense)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="68"
+		x="213"
+		y="263" />
+	<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseDodgeRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualDodgeRate)}"
+		styleName="RANKINGFORMAT1"
+		textAlign="left"
+		width="69"
+		x="213"
+		y="286" />
+	<!--
+		 <component:CrotaBasicText
+		 htmlText="{SystemDataModel.otherPetInfoVo.baseBlock+getLabelDes(SystemDataModel.otherPetInfoVo.manualBlock)}"
+		 styleName="RANKINGFORMAT1"
+		 x="63" y="282" width="97" textAlign="left"/>
+		 <component:CrotaBasicText
+		 htmlText="{SystemDataModel.otherPetInfoVo.liliang}"
+		 styleName="RANKINGFORMAT1"
+		 x="212" y="138" width="66" textAlign="left"/>
+		 <component:CrotaBasicText
+		 htmlText="{SystemDataModel.otherPetInfoVo.naili}"
+		 styleName="RANKINGFORMAT1"
+		 x="212" y="174" width="67" textAlign="left"/>
+		 <component:CrotaBasicText
+		 htmlText="{SystemDataModel.otherPetInfoVo.minjie}"
+		 styleName="RANKINGFORMAT1"
+		 x="212" y="192" width="69" textAlign="left"/>
+		 <component:CrotaBasicText
+		 htmlText="{SystemDataModel.otherPetInfoVo.zhili}"
+		 styleName="RANKINGFORMAT1"
+		 x="212" y="156" width="60" textAlign="left"/>
+
+
+
+	-->
+	<util:CommonButton enabled="{petList.selectedItem.viewFlag}"
+		id="trBtn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','ptjC_zh')}"
+		skinClass="style.Skin_CrotaPackRedButton"
+		x="207"
+		y="304" />
+	<s:RadioButton group="{cardtype}"
+		height="70"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','ptjC_fyl')}"
+		skinClass="style.Skin_CrotaPetTuJianRadioButtonLeft"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		toolTip=""
+		width="30"
+		x="592"
+		y="24" />
+	<s:RadioButton group="{cardtype}"
+		height="70"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','ptjC_wgl')}"
+		skinClass="style.Skin_CrotaPetTuJianRadioButtonMG"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		toolTip=""
+		width="30"
+		x="592"
+		y="94" />
+	<s:RadioButton group="{cardtype}"
+		height="70"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','ptjC_mgl')}"
+		skinClass="style.Skin_CrotaPetTuJianRadioButtonWG"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		toolTip=""
+		width="30"
+		x="592"
+		y="164" />
+	<s:List dataProvider="{SystemDataModel.ptjListInfo.sjListPet}"
+		height="257"
+		id="petList"
+		itemRenderer="sceneModule.view.pet.view.PetTuJianItemRender"
+		skinClass="style.Skin_CrotaBasicList"
+		width="256"
+		x="328"
+		y="52">
+		<s:layout>
+			<s:TileLayout horizontalGap="0"
+				requestedColumnCount="1"
+				requestedRowCount="10" />
+		</s:layout>
+	</s:List>
+	<util:CommonButton enabled="{SystemDataModel.ptjListInfo.curPage>1}"
+		id="pre_btn"
+		skinClass="style.Skin_CrotaBasicPreButton"
+		x="408"
+		y="317" />
+	<component:CrotaBasicLabel id="page_info"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{SystemDataModel.ptjListInfo.curPage+'/'+SystemDataModel.ptjListInfo.maxPage}"
+		textAlign="center"
+		width="38"
+		x="436"
+		y="317" />
+	<util:CommonButton enabled="{SystemDataModel.ptjListInfo.maxPage>SystemDataModel.ptjListInfo.curPage}"
+		id="next_btn"
+		skinClass="style.Skin_CrotaBasicNextButton"
+		x="484"
+		y="317" />
+	<mx:Image source="{ProConst.getPetImage(SystemDataModel.otherPetInfoVo.icon)}"
+		x="23"
+		y="37" />
+</s:Group>

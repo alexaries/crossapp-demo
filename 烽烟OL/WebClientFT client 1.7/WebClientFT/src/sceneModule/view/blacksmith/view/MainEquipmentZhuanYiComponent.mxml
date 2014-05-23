@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="42" height="42" 
+		  autoDrawBackground="false" mouseDown="itemrenderer1_mouseDownHandler(event)"
+		 xmlns:component="component.*" creationComplete="initApp();">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.managers.DragManager;
+			
+			import sceneModule.model.vo.shopVo.MainShopInfoVo;
+			import sceneModule.view.blacksmith.event.ZhuanYiEvent;
+			
+			[Bindable]
+			public var mainShopInfoVo:MainShopInfoVo;
+			
+			//拖拽源来自Package
+			public static var  FROMPACKAGE:String = "fromPackage";
+			
+//			public static var fromZhuanYi:String="fromZhuanYi";
+			[Bindable]
+			public var posImageUrl:String;
+			
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+			public function get _data():Object{
+				return super.data;
+			}
+			
+			
+			public function setEquipmentUrl(s:String,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+			
+			}
+			
+			private function initApp():void{
+				dispatchEvent(new ZhuanYiEvent(ZhuanYiEvent.SHUXINGZHUANYIDRAGEVENT,this,true));
+			}
+			
+
+			public function itemrenderer1_mouseDownHandler(evt:MouseEvent):void
+			{
+				if(data && data.id){
+					var iu:IUIComponent=evt.currentTarget as IUIComponent;
+					var ds:DragSource=new DragSource();
+					ds.addData(data, MainEquipmentZhuanYiComponent.FROMPACKAGE);
+					var dragProxy:Image = new Image();
+					dragProxy.width = 42;
+					dragProxy.height = 42;
+					dragProxy.source = equipImg.source;
+					DragManager.doDrag(iu, ds, evt,dragProxy); // 开始拖动这个物体
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		<mx:Image visible="false" source='assets/ui/skillImageBg.png' width="42" height="42"/>
+		<mx:Image visible="false" id="beijing" source="@Embed('/embed/copyScene/copyscene1.png')" x="0" y="0" height="42" width="42"/>
+		<mx:Image id="equipImg" source="{setEquipmentUrl(data.icon,data.type)}" width="100%" height="100%"/>
+		<component:CrotaBasicLabel id="iLabel" textAlign="center" y="30" fontSize="10" styleName="ROLEINFOTEXTFORMAT" width="42"/>
+</s:ItemRenderer>

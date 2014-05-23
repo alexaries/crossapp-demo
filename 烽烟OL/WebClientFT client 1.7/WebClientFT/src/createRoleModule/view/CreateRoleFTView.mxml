@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="1000" height="650">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<mx:UIComponent id="roleLayer"/>
+	<!--<mx:Image source="roleResPos1.png" x="658" y="142"/>
+	<mx:Image source="roleResPos2.png" x="343" y="81"/>
+	<mx:Image source="roleResPos3.png" x="-55" y="178"/>
+	<mx:Image source="roleResPos4.png" x="506" y="127"/>
+	<mx:Image source="roleResPos5.png" x="204" y="181"/>
+	<mx:Image source="roleResPos6.png" x="111" y="75"/>-->
+</s:Group>

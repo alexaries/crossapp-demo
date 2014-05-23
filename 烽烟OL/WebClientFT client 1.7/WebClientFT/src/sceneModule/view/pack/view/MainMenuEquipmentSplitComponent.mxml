@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="176" xmlns:component="component.*" creationComplete="initApp()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			
+			import spark.events.TextOperationEvent;
+			
+			import util.ByteArrayUtil;
+
+			[Bindable]
+			private var remainPoint:int;
+			[Bindable]
+			public var addLiLiangNum:int;
+			private const LILIANG:String = "liliang";
+			//拆分的最大值
+			private var maxNum:int;
+			
+			public function set _maxNum(value:int):void{
+				maxNum = value;
+			}
+//			public function get _splitNum():int{
+//				return int(splitNum.text);
+//			}
+			public function minNum():void{
+				if(numSpinner.value>maxNum){
+					numSpinner.value=Number(maxNum);
+				}
+			}
+			private function initApp():void{
+				numSpinner.textDisplay.addEventListener(TextOperationEvent.CHANGE,onChanging);
+			}
+			private function onChanging(evt:TextOperationEvent):void{
+				var numStr:String = ByteArrayUtil.LTrim0(numSpinner.textDisplay.text);
+				if(int(numStr)<1){
+					numSpinner.textDisplay.text = "1";
+					numSpinner.value = 1;
+				}
+				else if(int(numStr)>maxNum){
+					numSpinner.textDisplay.text = maxNum.toString();
+					numSpinner.value=maxNum;
+				}else{
+					numSpinner.textDisplay.text = numStr;
+					numSpinner.value = int(numStr);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+		
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="408" height="152">
+		<mx:Image source='assets/pack/split.png' width="408" height="152"/>
+		<component:CrotaBasicLabel id="zhafen" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmesC_srcf')}" styleName="RICHEDITABLETEXT" x="123" y="32"/>
+		<util:CommonButton id="ensureBtn" skinClass="style.Skin_CrotaSmallButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" styleName="RICHEDITABLETEXT" x="105" y="100"/>
+		<util:CommonButton id="cancelBtn" skinClass="style.Skin_CrotaSmallButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" styleName="RICHEDITABLETEXT" x="245" y="100"/>
+	<!--	<s:Spinner  value="1" minimum="1" maximum="9999" stepSize="1" x="260" y="68" width="17"/>-->
+		<s:NumericStepper id="numSpinner" minimum="1" maximum="9999" value="1" stepSize="1" x="183" y="67" width="77" skinClass="style.Skin_CrotaBasicNumericStepperButton" maxChars="2" change="minNum()"/>
+		<!--<component:CrotaBasicTextInput id="splitNum" restrict="0-9" text="{numSpinner.value}" x="183" y="67" height="25" width="59"/>-->
+	</s:SkinnableContainer>
+		
+</s:Group>

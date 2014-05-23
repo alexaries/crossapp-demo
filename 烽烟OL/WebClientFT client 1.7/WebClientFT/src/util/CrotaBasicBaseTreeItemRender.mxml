@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXTreeItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:component="component.*" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" 
+					  autoDrawBackground="false"
+					  creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import mx.events.FlexEvent;
+			import mx.events.StateChangeEvent;
+			
+			import resource.AssetCenter;
+			
+			import util.CommonTools;
+			private function init():void{
+				this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,state_change);
+				state_change();
+				this.addEventListener(FlexEvent.DATA_CHANGE, data_change);
+				this.addEventListener(Event.ADDED_TO_STAGE, add_to_stage);
+			}
+			private function state_change(e:StateChangeEvent = null):void{
+				switch(this.currentState){
+					case 'normal':
+						to_nomal();
+						break;
+					case 'hovered':
+					case 'selected':
+						if(0 == data.id){
+							to_nomal();
+						}
+						else{
+							to_selected();
+						}
+						break;
+				}
+			}
+			private function to_nomal():void{
+				labelField.styleName = "MAINMENUROLEFONT12bebebe";
+				util.CommonTools.make_bitmap(img_hi).bitmapData = null;
+			}
+			private function to_selected():void{
+				labelField.styleName = "MAINMENUROLEFONT12a18c70";
+				util.CommonTools.make_bitmap(img_hi).bitmapData = 
+					resource.AssetCenter.getInstance().get_img_form_pacakge('ui_task','ui_task_list_light');
+			}
+			private function data_change(e:mx.events.FlexEvent):void {
+				if (null == data) {
+					return;
+				}
+				if(0 == data.id){
+					labelField.x = 0;
+				}
+				else{
+					labelField.x = 40;
+				}
+			}
+			private function add_to_stage(e:Event):void{
+				if (null == data) {
+					return;
+				}
+				if(0 == data.id){
+					labelField.x = 0;
+				}
+				else{
+					labelField.x = 40;
+				}
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />            
+		<s:State name="hovered" />
+		<s:State name="selected" />
+	</s:states>
+	<mx:Image id="img_hi" y="2"/>
+	<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle">
+		<s:Group id="disclosureGroup">
+			<s:BitmapImage source="{treeListData.disclosureIcon}" visible="{treeListData.hasChildren}" />
+		</s:Group>
+		<component:CrotaBasicLabel
+			id="labelField" 
+			text="{treeListData.label}" 
+			styleName="MAINMENUROLEFONT12bebebe"/>
+	</s:HGroup>
+</s:MXTreeItemRenderer>

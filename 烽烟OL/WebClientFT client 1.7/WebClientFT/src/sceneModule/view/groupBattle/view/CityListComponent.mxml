@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 width="739" height="498">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import util.CommonTools;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_lingdi","ld_citybg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<s:List id="cityList"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.groupBattleInfo.cityList}"
+			itemRenderer="sceneModule.view.groupBattle.view.CityItemRender"
+			x="10" y="10" width="729" height="488">
+		<s:layout>
+			<s:TileLayout verticalGap="8" horizontalGap="16"/>
+		</s:layout>
+	</s:List>
+</s:Group>

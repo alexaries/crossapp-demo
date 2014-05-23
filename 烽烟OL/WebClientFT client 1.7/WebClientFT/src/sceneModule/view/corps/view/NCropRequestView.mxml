@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*"
+		 width="822" height="353"  x="70" y="-24"
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.MediatorRegisterCorpsEvent;
+			
+			import util.CommonTools;
+			private function init():void {
+				this.dispatchEvent(new MediatorRegisterCorpsEvent(MediatorRegisterCorpsEvent.MR_CORPS_REQUEST,this,true));
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_request_list_bg');
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!--<mx:Image source="assets/ncorps/request_list.png"  x="0" y="0"/>-->
+	<mx:Image id="img_bg"/>
+	
+	<s:List id="request_list"
+			skinClass="style.Skin_CrotaBasicList"
+			itemRenderer="sceneModule.view.corps.view.CorpsMembersAndAppliItemRender" 
+			x="41" y="82">
+		<s:layout>
+			<s:TileLayout verticalGap="0"/>
+		</s:layout>
+	</s:List>
+	
+	<!-- 查找 -->
+	<component:CrotaChatTextInput 
+		id="search_text" x="590" y="27" width="114"
+		changing="CommonTools.onMailContentChange(event)"
+		maxChars="16"/>
+	<util:CommonButton id="search_btn"
+			  x="721" y="21" width="60"
+			  skinClass="style.Skin_CrotaCommonButton3" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncmv_cz')}"/>
+	<component:CrotaChatTextInput 
+		id="level_request" x="430" y="27" width="30"
+		changing="CommonTools.onMailContentChange(event)"
+		maxChars="16"/>
+	<util:CommonButton id="levelReqBtn"
+			  x="480" y="21" width="84"
+			  skinClass="style.Skin_CrotaCommonButton3" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncrv_szdj')}"/>
+	
+	<!-- 页数信息 -->
+	<component:CrotaBasicLabel id="page_info"
+									 styleName="MAINMENUROLEFONT12a18c70"
+									 x="407" y="313"
+									 text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_ys')}"
+									 textAlign="center" width="38"/>
+	<util:CommonButton id="pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  y="310" x="390"/>
+	<util:CommonButton id="next_btn"
+			  x="445" y="310"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	
+	<util:CommonButton id="btn_back"
+			  x="691" y="322"
+			  skinClass="style.Skin_CrotaCommonButton3" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncmM_fhlb')}"/>
+</s:Group>

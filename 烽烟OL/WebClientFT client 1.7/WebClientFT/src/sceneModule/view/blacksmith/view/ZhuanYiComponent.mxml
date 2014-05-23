@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="525" height="368" 
+		 xmlns:win="managers.*"
+		 preinitialize="basewindow1_preinitializeHandler(event)"
+		 creationComplete="basewindow1_creationCompleteHandler(event)"
+		 xmlns:view="sceneModule.view.blacksmith.view.*"
+		 xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import mediator.TaskGuideMediator;
+			
+			import model.GuideInfo;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.blacksmith.event.ZhuanYiEvent;
+			
+			import util.CommonTools;
+			import util.DelayExcuter;
+
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				new DelayExcuter(TaskGuideMediator.MAIN_PLAYER_DELAY, GuidEventCenter.getInstance().dispatchEvent, [new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_ZHUNBEI_QIANGHUA)]);
+
+				dispatchEvent(new ZhuanYiEvent(ZhuanYiEvent.SHUXINGZHUANYIEVENT,this,true));
+//				source="assets/blacksmith/zhuanyiBg.png"
+				CommonTools.make_bitmap(zhuanyibg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_strengthen","zhuanyi_bg");
+			}
+
+
+			protected function basewindow1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="zhuanyibg"  width="211" height="333" source='assets/blacksmith/zhuanyiBg.png'   x="55" y="-1"/>
+	<mx:Image id="strenBg" source='assets/blacksmith/strengthenBg.png'   x="273" y="-1"/>
+	<s:List id="equipmentChangeProp" dragEnabled="true" width="190" height="277" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.strPackageInfo.itemEquipInfoList}" itemRenderer="sceneModule.view.blacksmith.view.ZhuanYiItemRender" x="293" y="19">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="4" requestedRowCount="6" horizontalGap="1" verticalGap="1"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  y="299" x="319" enabled="{SystemDataModel.strPackageInfo.curPage>1}"/>
+	<component:CrotaBasicLabel id="page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="347" y="299"
+							   text="{SystemDataModel.strPackageInfo.curPage+'/'+SystemDataModel.strPackageInfo.maxPage}"
+							   textAlign="center" width="38"/>
+	<util:CommonButton id="next_btn"
+			  x="395" y="299" enabled="{SystemDataModel.strPackageInfo.maxPage>SystemDataModel.strPackageInfo.curPage}"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	<component:CrotaBasicLabel id="equipA"  styleName="MAINMENUROLEFONT12a18c70" width="70"   x="148" y="115"/>
+	<component:CrotaBasicLabel id="equip1"  styleName="MAINMENUROLEFONT12a18c70" width="70"   x="82" y="96"/>
+	<component:CrotaBasicLabel id="equipB"  styleName="MAINMENUROLEFONT12a18c70"  width="70" x="148" y="149"/>
+	<component:CrotaBasicLabel id="equip2"  styleName="MAINMENUROLEFONT12a18c70"  width="70" x="184" y="96"/>
+	<component:CrotaBasicLabel id="xiaohaoLabel" styleName="MAINMENUROLEFONT12a18c70"   width="70" x="148" y="183"/>
+	<component:CrotaBasicLabel id="jinbiLabel" styleName="MAINMENUROLEFONT12a18c70"   width="70" x="148" y="217"/>
+	<component:CrotaBasicLabel id="needCoin" visible="false" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','zyC_jbbz')}" color="#ff0000" fontSize="12"  x="395" y="285" width="67"/>
+	<util:CommonButton id="changePropBtn" enabled="false"  skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_sxzy')}" x="110" y="275"/>
+
+	<view:MainEquipmentZhuanYiComponent id="s1" x="87" y="43" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	
+	<view:MainEquipmentZhuanYiComponent id="s2" x="190" y="43" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	
+</win:BaseWindow>

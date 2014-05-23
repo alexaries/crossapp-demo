@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="709" height="441" 
+				creationComplete="initApp()" 
+				xmlns:view="sceneModule.view.mainMenu.view.*" 
+				xmlns:view1="sceneModule.view.friend.view.*" 
+				xmlns:view2="sceneModule.view.mail.view.*" 
+				xmlns:view3="sceneModule.view.systemSetting.view.*" 
+				xmlns:view4="sceneModule.view.role.view.*" 
+				xmlns:event="sceneModule.view.skill.event.*" 
+				xmlns:view5="sceneModule.view.skill.view.*" 
+				xmlns:family="sceneModule.view.family.*" 
+				xmlns:view6="sceneModule.view.family.view.*" 
+				xmlns:view7="sceneModule.view.task.view.*" 
+				xmlns:view8="sceneModule.view.corps.view.*" 
+				xmlns:view9="sceneModule.view.ranking.view.*" 
+				xmlns:win="managers.*"
+				xmlns:view10="sceneModule.view.pet.view.*" xmlns:view11="sceneModule.view.blacksmith.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.event.GetRoleItemInPackageResponseEvent;
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import util.CommonTools;
+			
+			public static var NAME:String = "sceneModule.view.blacksmith.view.MainStrFunctionComponent";
+			
+			[Bindable]
+			private var funArr:ArrayCollection =new ArrayCollection(  
+				[{name:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qh')},  
+					{name:CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','msFC_bsxq')},
+					{name:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_hc')},
+					{name:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_sxzy')},
+//					{name:"洗炼"},
+//					{name:"神佑"},
+					]);  
+			public var bg_bitmap:Bitmap;
+			private function initApp():void{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+//				bg_bitmap = new Bitmap();
+//				mainBg.source = bg_bitmap;
+//				bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_mainMenu","mainMenuBg");
+				CommonTools.make_bitmap(mainBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_strengthen","strengthen_main_bg");
+//				source="assets/blacksmith/mainStrFun.png"
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:SkinnableContainer width="100%" height="100%">
+		<!--左侧菜单项-->
+		<mx:Image id="mainBg" />
+		
+		<s:List 
+			id="funList" 
+			selectedIndex="0" 
+			width="95" height="296" 
+			skinClass="style.Skin_CrotaBasicList" 
+			itemRenderer="sceneModule.view.blacksmith.view.MainStrFunctionItemRender" 
+			dataProvider="{funArr}" 
+			x="105" y="75">
+			<s:layout>
+				<s:TileLayout horizontalGap="0" verticalAlign="bottom" requestedColumnCount="1" requestedRowCount="5" verticalGap="3" />
+			</s:layout>
+		</s:List>
+		
+		<mx:ViewStack id="viewStack" x="170" width="525" height="368" y="57">
+			<!--强化-->
+			<mx:VBox width="100%" height="100%">
+				<view11:StrengthenComponent id="qhComp"/>
+			</mx:VBox>
+			<!--宝石镶嵌-->
+			<mx:VBox width="100%" height="100%">
+				<view11:XiangQianComponent id="xqComp"/>
+			</mx:VBox>
+			<!--合成-->
+			<mx:VBox width="100%" height="100%">
+				<view11:HeChengComponent id="hcComp"/>
+			</mx:VBox>
+			<!--属性转移-->
+			<mx:VBox width="100%" height="100%">
+				<view11:ZhuanYiComponent id="zyComp"/>
+			</mx:VBox>
+			<!--洗练-->
+			<mx:VBox width="100%" height="100%">
+				<view11:XiLianComponent id="xlComp"/>
+			</mx:VBox>
+			<!--神佑-->
+			<mx:VBox width="100%" height="100%">
+				<view11:ShenYouComponent id="syComp"/>
+			</mx:VBox>
+		</mx:ViewStack>
+		
+		<util:CommonButton id="closeWinBtn" skinClass="style.Skin_CrotaCloseButton111" x="657" y="18"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

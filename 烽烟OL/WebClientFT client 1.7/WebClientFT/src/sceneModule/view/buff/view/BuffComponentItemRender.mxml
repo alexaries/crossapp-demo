@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+			    width="22" height="22" autoDrawBackground="false" creationComplete="initApp();">
+<fx:Script>
+	<![CDATA[
+		import model.ProConst;
+		
+		import mx.events.EffectEvent;
+		
+		import sceneModule.model.vo.buffVO.BuffInfoVO;
+		
+		import spark.effects.Fade;
+		/**
+		 * initApp
+		 */
+		private const TIMEFRE:int = 1000;
+		private var timer:Timer = new Timer(TIMEFRE);;
+		
+		[Bindable]
+		private var buffInfoVo:BuffInfoVO;
+		private function initApp():void{
+			
+			timer.addEventListener(TimerEvent.TIMER,onTimer);
+		}
+		
+		public function set curBuffInfo(value:BuffInfoVO):void{
+			buffInfoVo = value;
+			if(buffInfoVo.timeAndCountFlag == 1 && !timer.running){
+				timer.start();
+			}
+		}
+		
+		public function get curCompBuffInfo():BuffInfoVO{
+			return buffInfoVo;
+		}
+		override public function set data(value:Object):void{
+			super.data = value;
+		}
+		/**
+		 * 边框变红
+		 */
+		private function setBorderChangeColor():void{
+			
+		}
+		/**
+		 * 变化为正常状态
+		 */
+		private function setBorderCommonState():void{
+			
+		}
+		private function onTimer(evt:TimerEvent):void{
+			if(buffInfoVo.timeAndCountFlag == 1){
+				buffInfoVo.timeOrCount -= 1;
+				if(buffInfoVo.timeOrCount <= 15){
+					//开始淡入淡出
+					onFadeEffect();
+				}
+			}
+		}
+		private var fade1:Fade = new Fade();
+		private function onFadeEffect():void{
+			fade1.target = this;
+			fade1.duration = 1000;
+			fade1.alphaFrom = 1;
+			fade1.alphaTo = 0;
+			fade1.play();
+			fade1.addEventListener(EffectEvent.EFFECT_END,onFadeHideEnd);
+		}
+		private function onFadeHideEnd(evt:EffectEvent):void{
+			fade1.stop();
+			fade1.removeEventListener(EffectEvent.EFFECT_END,onFadeHideEnd);
+			onFadeShowEffect();
+		}
+		private var fade:Fade = new Fade();
+		private function onFadeShowEffect():void{
+			
+			fade.target = this;
+			fade.duration = 1000;
+			fade.alphaFrom = 0;
+			fade.alphaTo = 1;
+			fade.play();
+			fade.addEventListener(EffectEvent.EFFECT_END,onFadeShowEnd);
+		}
+		private function onFadeShowEnd(evt:EffectEvent):void{
+			fade.stop();
+			fade.removeEventListener(EffectEvent.EFFECT_END,onFadeShowEnd);
+			onFadeEffect();
+		}
+		
+		public function setEquipmentUrl(s:String,t:int):String{
+			if(t == 0){
+				return '';
+			}else{
+				var url:String = ProConst.getImageResUrl(t);
+				url += (s + '.png');
+				return url
+			}
+			
+		}
+	]]>
+</fx:Script>
+<mx:Image id="buffImg" source="{setEquipmentUrl(buffInfoVo.icon.toString(),buffInfoVo.type)}" width="22" height="22"/>	
+</s:ItemRenderer>

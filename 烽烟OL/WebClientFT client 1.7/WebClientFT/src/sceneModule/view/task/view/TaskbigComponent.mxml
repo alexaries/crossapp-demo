@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" xmlns:component="component.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="230" height="95" x="137" y="122">
+		<mx:Image source='assets/transcript/copy.png' maintainAspectRatio="false"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','TA_xry')}" x="25" y="35" styleName="ROLETEXT"/>
+	</s:SkinnableContainer>
+</s:Group>

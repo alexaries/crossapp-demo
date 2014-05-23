@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer height="100" width="100%">
+		<s:List id="teamList" dragEnabled="false" width="100%" height="100%" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.teamCollection}" itemRenderer="sceneModule.view.roleInfo.view.RoleInfoShowComponent" x="1" y="0">
+			<s:layout>
+				<s:TileLayout requestedRowCount="1"/>
+			</s:layout>
+		</s:List>
+	</s:SkinnableContainer>	
+</s:Group>

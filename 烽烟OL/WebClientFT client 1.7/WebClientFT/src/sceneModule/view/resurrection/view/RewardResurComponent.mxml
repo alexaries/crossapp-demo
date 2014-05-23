@@ -1,0 +1,18 @@
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"      
+				xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="340" height="150" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			public static const NAME:String = "sceneModule.view.resurrection.view.RewardResurComponent";
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image source='assets/reward/rewardResurBg.png'/>
+		<component:CrotaBasicLabel text="是否花费10钻复活宠物" x="41" y="37" styleName="RANKINGFORMAT1" width="139"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCommonButton2" id="subBtn" x="22" y="63" label="确定" height="40" width="77"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCommonButton2" id="cancelBtn" label="取消" height="40" width="77" x="105" y="63"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

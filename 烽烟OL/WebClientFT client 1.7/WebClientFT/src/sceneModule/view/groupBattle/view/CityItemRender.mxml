@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="228" height="156"
+				autoDrawBackground="false" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.groupBattle.command.GroupBattleMessage;
+			
+			public static const BASE_PATH:String = "assets/ncorps/junhui/";
+		]]>
+	</fx:Script>
+	
+	<s:Button id="obBtn" 
+			  label="{data.btnState == 0 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','cir_zz') : (data.btnState == 1 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','cir_bmzz') : CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','cir_zzz'))}" 
+			  skinClass="style.Skin_CrotaPackRedButton" 
+			  click="{GroupBattleMessage.getInstance().onPK(data.cityId)}"
+			  x="150" y="16" width="65"/>
+	<component:CrotaBasicLabel
+		id="l_name"
+		text="{data.lzName}"
+		width="126" y="76"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="68"/>
+	<component:CrotaBasicLabel
+		id="t_name"
+		text="{data.tzName}"
+		width="126" y="118"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="68"/>
+	<mx:Image source="{data.lzIcon == 0 ? '' : BASE_PATH+data.lzIcon+'.png'}" width="42" height="42" x="180" y="63"/>
+	<mx:Image source="{data.tzIcon == 0 ? '' : BASE_PATH+data.tzIcon+'.png'}" width="42" height="42" x="180" y="107"/>
+</s:ItemRenderer>

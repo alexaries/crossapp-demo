@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="120" height="13" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			private function getProperDes(curProper:int,maxProper:int):String{
+				var proStr:String;
+				if(curProper == -2)return '';
+				if(curProper == -1){
+					proStr += 0;
+				}else{
+					proStr += curProper;
+				}
+				if(maxProper != -1){
+					proStr += " (+"+maxProper+")";
+				}
+				return proStr;
+			}
+			
+			private function getColor(e:Boolean):uint{
+				if(e){
+					return 0x00ff66;
+				}
+				return 0x999999;
+			}
+		]]>
+	</fx:Script>
+	<component:CrotaBasicLabel text="{data.properName+' '}" color="{getColor(data.enable)}"/>
+	<component:CrotaBasicLabel text="{getProperDes(data.curProper,data.maxProper)}" x="31" styleName="TOOLTIPTEXTFORMAT7" y="0"/>
+</s:ItemRenderer>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 mouseEnabled="false"
+		  x="73" y="6"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			
+			import spark.filters.GlowFilter;
+			
+			import style.Skin_CrotaCommonButton2;
+			public var curObj:Object;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="261" height="139" >
+		<mx:Image source='assets/ncorps/union_rise.png'/>
+		<component:CrotaBasicChatTextArea  borderStyle="none"  id="iTextArea"  rollOver="this.iTextArea.setFocus();" editable="false" 
+										  selectable="false" focusEnabled="false" focusAlpha="0" top="55" wordWrap="false" height="30" width="222" backgroundAlpha="0.0" 
+										  styleName="SKILLINFOTEXTFORMAT" x="16" textAlign="center" />
+		<mx:Label id="profession0"  text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('sysOpe','soWM_jtsq')}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" 
+				  textAlign="center" fontSize="12" fontWeight="bold" width="65" x="91" y="11" color="#17F906"/>
+		<mx:Label id="subBtn" mouseChildren="false" useHandCursor="true" buttonMode="true" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" 
+				  textAlign="center" fontSize="12" fontWeight="bold" width="50" x="43" y="100" textDecoration="underline" color="#17F906"  text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('sysOpe','soWM_js')}" />
+		<mx:Label  id="canBtn" mouseChildren="false" useHandCursor="true" buttonMode="true" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" 
+				   textAlign="center" fontSize="12" fontWeight="bold" width="50" x="162" y="100" textDecoration="underline" color="#17F906"  text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('sysOpe','soWM_jj')}" />
+	</s:SkinnableContainer>
+</s:Group>

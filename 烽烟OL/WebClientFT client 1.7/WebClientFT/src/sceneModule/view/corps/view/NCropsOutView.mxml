@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group creationComplete="init()"
+	height="353"
+	width="822"
+	x="70"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	y="-24">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			import sceneModule.view.corps.event.MediatorRegisterCorpsEvent;
+			import util.CommonTools;
+			
+//			source="{WebClient.host+'assets/ncorps/union_list.png'}"
+			private function init():void {
+				this.dispatchEvent(new MediatorRegisterCorpsEvent(MediatorRegisterCorpsEvent.MR_CORPS_OUT, this, true));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source='assets/ncorps/union_list.png'
+		x="-1"
+		y="1" />
+	<mx:Image id="img_bg"
+		x="-1"
+		y="1" />
+	<!-- 查找 -->
+	<component:CrotaChatTextInput changing="CommonTools.onMailContentChange(event)"
+		id="search_text"
+		maxChars="16"
+		width="114"
+		x="590"
+		y="17" />
+	<util:CommonButton id="search_btn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncmv_cz')}"
+		skinClass="style.Skin_CrotaCommonButton3"
+		width="60"
+		x="731"
+		y="7" />
+	<s:List id="union_list"
+		itemRenderer="sceneModule.view.corps.view.CorpsListItemRenderComponent"
+		skinClass="style.Skin_CrotaBasicList"
+		x="22"
+		y="60">
+		<s:layout>
+			<s:TileLayout verticalGap="1" />
+		</s:layout>
+	</s:List>
+	<component:CrotaBasicLabel id="page_info1"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{union_list.selectedItem.levReq}"
+		textAlign="center"
+		width="52"
+		x="177"
+		y="333" />
+	<!-- 页数信息 -->
+	<component:CrotaBasicLabel id="page_info"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_ys')}"
+		textAlign="center"
+		width="38"
+		x="387"
+		y="323" />
+	<util:CommonButton id="pre_btn"
+		skinClass="style.Skin_CrotaBasicPreButton"
+		x="369"
+		y="320" />
+	<util:CommonButton id="next_btn"
+		skinClass="style.Skin_CrotaBasicNextButton"
+		x="424"
+		y="320" />
+	<util:CommonButton id="createBtn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncoM_cjjt')}"
+		skinClass="style.Skin_CrotaCommonButton3"
+		x="676"
+		y="312" />
+	<util:CommonButton id="change_bord_btn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncoM_xggg')}"
+		skinClass="style.Skin_CrotaCommonButton3"
+		x="573"
+		y="312" />
+	<util:CommonButton id="union_achieve"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncov_jtcj')}"
+		skinClass="style.Skin_CrotaCommonButton3"
+		x="676"
+		y="311" />
+</s:Group>

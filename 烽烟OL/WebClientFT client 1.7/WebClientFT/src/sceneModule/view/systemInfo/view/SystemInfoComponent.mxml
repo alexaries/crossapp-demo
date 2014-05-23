@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="250" height="100" 
+		 xmlns:component="component.*" mouseChildren="false" mouseEnabled="false"
+		 creationComplete="group1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getTimer;
+			
+			import mx.events.FlexEvent;
+			
+			//存放系统消息 6条数据
+			public var systemInfoArr:Array = new Array();
+			
+			private const TIMEFRE:int = 1000;
+			private var timer:Timer;
+			
+			public function onInsertSystemInfo(message:String):void{
+				var obj:Object = new Object();
+				obj.msg = message;
+				obj.startTime = getTimer();
+				systemInfoArr.push(obj);
+				if(systemInfoArr.length > 6){
+					systemInfoArr.shift();
+				}
+				if(!timer.running){
+					timer.start();
+				}
+			}
+			//组织信息添加到系统信息框
+			private function setSystemInfoToShowComp():void{
+				var system_info:String='';
+				var l:int = systemInfoArr.length;
+				for(var i:int=0;i<l;i++){
+					if(getTimer() - systemInfoArr[l-i-1].startTime <= 6000){
+						system_info += systemInfoArr[l-i-1].msg+"<br>";
+					}
+				}
+				iTextArea.htmlText = system_info;
+				if(systemInfoArr.length == 0)timer.stop();
+			}
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				timer = new Timer(TIMEFRE);
+				timer.addEventListener(TimerEvent.TIMER,onTimer);
+			}
+			
+			private function onTimer(evt:TimerEvent):void{
+				setSystemInfoToShowComp();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<component:CrotaBasicChatTextArea  borderStyle="none" id="iTextArea" horizontalScrollPolicy="off" verticalScrollPolicy="off" editable="false" selectable="false" height="100%" width="100%" backgroundAlpha="0.0" styleName="SKILLINFOTEXTFORMAT"/>
+</s:Group>

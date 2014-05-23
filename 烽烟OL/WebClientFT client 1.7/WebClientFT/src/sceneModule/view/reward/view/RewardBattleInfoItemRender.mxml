@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" width="605" height="85" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.reward.event.MediatorRegisterRewardBattleEvent;
+			import sceneModule.view.reward.vo.RewardBattleRoleInfoVO;
+			
+			import style.Skin_CrotaCommonButton;
+			import style.Skin_CrotaPackRedButton;
+			
+			private function onSucOrFailInfoStr(arr:ArrayCollection,bR:Boolean = true):String{
+				var str:String;
+				if(bR){
+					str = CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rdogIR_fycg')+"：";
+				}else{
+					str = CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rdogIR_bwsb')+"：";
+				}
+				var l:int = arr.length;
+				for(var i:int=0;i<l;i++){
+					var rewardBattleInfoVo:RewardBattleRoleInfoVO = arr[i];
+					
+					str += "<u><a href='event:"+rewardBattleInfoVo.roleId+"?"+rewardBattleInfoVo.roleName+"'><font color='#92d050'>"+rewardBattleInfoVo.roleName+"</font></a></u> ";
+				}
+				return str;
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				dispatchEvent(new MediatorRegisterRewardBattleEvent(MediatorRegisterRewardBattleEvent.MEDIATORREGISTERREWARDBATTLEEVENT,this,true));
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Text htmlText="{data.battleName}" textAlign="center" color="#ffff00" fontSize="16" fontWeight="bold" width="89" x="20" y="15"/>
+	<mx:Text htmlText="{data.battleResult ? CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rdogIR_fycg') : CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rdogIR_bwsb')}" textAlign="center" color="#ffff00" fontSize="16" fontWeight="bold" width="89" height="25" x="20" y="46"/>
+	<!--<util:CommonButton skinClass="style.Skin_CrotaCommonButton" width="89" height="25" styleName="RICHEDITABLETEXT" label="{data.battleName}" x="26" y="15"/>
+	<util:CommonButton id="iBtn" skinClass="style.Skin_CrotaCommonButton" width="89" height="25" styleName="RICHEDITABLETEXT" label="{data.battleResult ? '防御成功' : '保卫失败'}" x="26" y="46"/>-->
+	<mx:Text id="lb" rollOver="focusManager.deactivate()"
+			 rollOut="focusManager.activate()" styleName="RICHEDITABLETEXT" htmlText="{onSucOrFailInfoStr(data.sucRoleInfoArr,true)}" x="124" y="15"/>
+	<mx:Text id="lb0" rollOver="focusManager.deactivate()"
+			 rollOut="focusManager.activate()" styleName="RICHEDITABLETEXT" htmlText="{onSucOrFailInfoStr(data.failRoleInfoArr,false)}" x="124" y="45"/>
+	<component:CrotaBasicLabel text="{data.refreshTime}" styleName="RANKINGFORMAT1" x="429" y="22" width="167" textAlign="right"/>
+</s:ItemRenderer>

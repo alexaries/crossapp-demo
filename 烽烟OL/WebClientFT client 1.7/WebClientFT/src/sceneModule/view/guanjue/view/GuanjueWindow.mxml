@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"  
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:win="managers.*"
+	width="891" height="551"
+	creationComplete="init()" 
+	xmlns:component="component.*" 
+	xmlns:view="sceneModule.view.guanjue.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import mediator.TaskGuideMediator;
+			
+			import model.GuideInfo;
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.controls.Image;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.CommonTools;
+			import util.DelayExcuter;
+			
+			public static const NAME:String = "sceneModule.view.guanjue.view.GuanjueWindow";
+			
+			private function init():void{
+//				source="assets/guanjue/guanjuebg.png"
+				CommonTools.make_bitmap(img_gj).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_guanjue","guanjue_bg");
+				if(lingquBtn.enabled)
+				{
+//					new DelayExcuter(TaskGuideMediator.MAIN_PLAYER_DELAY, GuidEventCenter.getInstance().dispatchEvent, [new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_GET_FENGLU)]);
+				}
+			}
+			
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="img_gj"     x="-30" y="-20"/>
+	
+	<mx:Image source="{ProConst.getJobSquareHeadImg(SystemDataModel.roleInfo.profession)}" x="89" y="115"/>
+	
+	<s:List id="currProp"  selectedIndex="0"  width="181" height="132" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.guanjue.view.AddPropItemRender" dataProvider="{SystemDataModel.guanJueInfo.adddq}" x="141" y="312">
+		<s:layout>
+			<s:TileLayout  verticalAlign="bottom"    requestedColumnCount="2" requestedRowCount="4" verticalGap="7" horizontalGap="2" />
+		</s:layout>
+	</s:List>
+	
+	<s:List id="nextProp"  selectedIndex="0"  width="181" height="108" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.guanjue.view.AddXiaJiPropItemRender" dataProvider="{SystemDataModel.guanJueInfo.addxj}" x="401" y="339">
+		<s:layout>
+			<s:TileLayout  verticalAlign="bottom"    requestedColumnCount="2" requestedRowCount="4"  verticalGap="7" horizontalGap="2" />
+		</s:layout>
+	</s:List>
+	
+		<component:CrotaBasicChatTextArea id="con1"
+										  htmlText="{SystemDataModel.guanJueInfo.tempStr}"
+									  borderStyle="none"   rollOver="this.con1.setFocus();" 
+									  selectable="false" verticalScrollPolicy="off"   editable="false"  backgroundAlpha="0.0" styleName="MAINMENUROLEFONT12a18c70"
+									  focusEnabled="false" focusAlpha="0" wordWrap="true"   height="341" x="595" y="129"  width="165"/>
+	
+		<component:CrotaBasicLabel id="roleName" 
+								   text="{SystemDataModel.roleInfo.nickname}" 
+								   styleName="MAINMENUROLEFONT12a18c70" x="206" y="114" textAlign="center" 
+								   width="120" height="23" verticalAlign="middle"/>
+		<component:CrotaBasicLabel 
+								   text="{'（'+SystemDataModel.guanJueInfo.currentJuewei+'）'}" 
+								   styleName="MAINMENUROLEFONT12a18c70" x="303" y="114" textAlign="left" 
+								   width="149" verticalAlign="middle" height="23"/>
+	
+		<component:CrotaBasicLabel id="currentJuewei"
+								   text="{SystemDataModel.guanJueInfo.currentJuewei}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="147" y="203" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_dqjw')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								    fontSize="13"
+								   verticalAlign="middle"
+								   x="73" y="201" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_dqww')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="73" y="228" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_dqjl')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="73" y="257" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_xjjw')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="329" y="202" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_sxww')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="329" y="230" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_xzdj')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="329" y="257" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_dqjl')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="329" y="286" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_sxzj')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="329" y="339" 
+								   width="73" height="17"/>
+	
+		<component:CrotaBasicLabel id="nextJuewei"
+								    text="{SystemDataModel.guanJueInfo.nextJuewei}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="406" y="203" 
+								   width="100" height="17"/>
+		
+		<component:CrotaBasicLabel id="currentJinbi"
+								    text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')+SystemDataModel.guanJueInfo.currentJinbi}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="150" y="259" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel id="currentDouqi"
+ 									text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_dq')+SystemDataModel.guanJueInfo.currentDouqi}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="149" y="287" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_sxzj')}"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   textAlign="center"
+								   fontSize="13"
+								   verticalAlign="middle"
+								   x="73" y="314" 
+								   width="73" height="17"/>
+		<component:CrotaBasicLabel id="nextJinbi"
+								    text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jb')+SystemDataModel.guanJueInfo.nextJinbi}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="406" y="287" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel id="cWeiwang"
+								    text="{SystemDataModel.guanJueInfo.weiwang}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="147" y="230" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel id="nextWeiwang"
+								    text="{SystemDataModel.guanJueInfo.nextWeiwang}"
+								   styleName="MAINMENUROLEFONT12bebebe"
+								   color="{SystemDataModel.guanJueInfo.isjw?0x61B152:0x990000}"
+								   textAlign="center"
+								   x="406" y="230" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel 
+								    text="{SystemDataModel.guanJueInfo.level}"
+								   styleName="MAINMENUROLEFONT12bebebe"
+								   color="{SystemDataModel.roleInfo.level>=SystemDataModel.guanJueInfo.level?0x61B152:0x990000}"
+								   textAlign="center"
+								   x="406" y="259" 
+								   width="100" height="17"/>
+		<component:CrotaBasicLabel id="nextDouqi"
+								    text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_dq')+SystemDataModel.guanJueInfo.nextDouqi}"
+								   styleName="MAINMENUROLEFONT12F0E68C"
+								   textAlign="center"
+								   x="406" y="315" 
+								   width="100" height="17"/>
+		
+		<util:CommonButton id="pre_btn" 
+				  skinClass="style.Skin_CrotaBasicPreButton"
+				  x="617" y="467" enabled="{SystemDataModel.guanJueInfo.curpage>1}"/>
+		<component:CrotaBasicLabel id="page_info"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   x="655" y="467"
+								   text="{SystemDataModel.guanJueInfo.curpage+'/'+SystemDataModel.guanJueInfo.totalpage}"
+								   textAlign="center" width="38" height="17"/>
+		<util:CommonButton id="next_btn"
+				  x="706" y="467" enabled="{SystemDataModel.guanJueInfo.totalpage>SystemDataModel.guanJueInfo.curpage}"
+				  skinClass="style.Skin_CrotaBasicNextButton"/>
+		
+	
+	<util:CommonButton id="lingquBtn" width="73" height="35" x="145" y="446" 
+			  skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_lqfl')}"
+			   enabled="{SystemDataModel.guanJueInfo.hasGetSalary?true:false}"/>
+	
+	
+	<util:CommonButton id="sjBtn" width="73" height="35" enabled="{SystemDataModel.guanJueInfo.isjw?true:false}" 
+			  skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_sj')}" x="400" y="446" />
+	
+	<util:CommonButton  id="jxBtn" width="73" height="30"  
+						skinClass="style.Skin_CrotaPackRedButton"  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','gjW_jx')}" x="442" y="112"/>
+
+	<util:CommonButton 
+		skinClass="style.Skin_CrotaCloseButton111" 
+		id="clokeBtn" 
+		x="757" y="48"/>
+	
+</win:BaseWindow>

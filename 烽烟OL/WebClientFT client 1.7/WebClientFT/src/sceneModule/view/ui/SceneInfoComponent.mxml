@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" mouseChildren="false" mouseEnabled="false"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="56" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import spark.filters.GlowFilter;
+			private function getStr(str:String,type:int):String{
+				var dStr:String = '';
+				if(str != ''){
+					if(type == 0){
+						dStr = '<font color="#00FF66">'+CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jt')+':'+'</font><font color="#ffff00">' + str + '</font>';
+					}else{
+						dStr = '<font color="#00FF66">'+CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','csiC_zmjf')+'</font><font color="#ffff00">' + str + '</font>';
+					}
+				}
+				return dStr;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Text id="profession" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{getStr(SystemDataModel.sceneCorpsName,0)}" textAlign="center" fontSize="16" fontWeight="bold" width="400" x="0" y="6"/>
+	<mx:Text id="profession0" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{getStr(SystemDataModel.rewardCorpsName,1)}" textAlign="center" color="#00FF66" fontSize="16" fontWeight="bold" width="400" x="0" y="29"/>
+</s:Group>

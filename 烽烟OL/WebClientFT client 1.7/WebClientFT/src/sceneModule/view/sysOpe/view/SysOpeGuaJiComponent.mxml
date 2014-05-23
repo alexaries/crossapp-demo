@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*"
+		 x="73" y="6"
+		 xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.gaAndsd.event.GuaJiCancelEvent;
+			import sceneModule.view.jingji.command.JingJiMessage;
+			
+			import spark.filters.GlowFilter;
+			
+			import util.ByteArrayUtil;
+			[Bindable]
+			public var expCount:int;
+			
+			[Bindable]
+			public var gjTime:int;
+			
+			public function setCurGuaJiInfo(exp:int,time:int):void{
+				 expCount = exp;
+				 gjTime = time;
+			}
+			
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="261" height="139" >
+		<mx:Image source='assets/ncorps/union_rise.png'/>
+		<mx:Label id="anBtn0"  mouseChildren="false" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_guaji','sogjc_hdjy')+expCount+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_jy')}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" textAlign="left" fontSize="12" width="171" x="64" y="54" color="#ffffff"/>
+		<mx:Label id="anBtn1"  mouseChildren="false" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_guaji','sogjc_gjsj')+ByteArrayUtil.formateTimeToString2(gjTime*1000)}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" textAlign="left" fontSize="12" width="171" x="64" y="76" color="#ffffff"/>
+		<mx:Label id="profession0" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_guaji','sogjc_gjz')}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" textAlign="center" fontSize="12" fontWeight="bold" width="126" x="57" y="11" color="#ffffff"/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="237" y="2"/>
+	</s:SkinnableContainer>
+</s:Group>

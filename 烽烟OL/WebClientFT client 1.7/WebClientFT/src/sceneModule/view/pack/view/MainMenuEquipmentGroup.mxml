@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group creationComplete="initApp()"
+	height="331"
+	width="303"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.DragSource;
+			import mx.core.FlexGlobals;
+			import mx.core.IUIComponent;
+			import mx.events.CollectionEvent;
+			import mx.events.DragEvent;
+			import mx.events.FlexMouseEvent;
+			import mx.events.ItemClickEvent;
+			import mx.managers.DragManager;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.itemsVo.AttributeVo;
+			import sceneModule.model.vo.itemsVo.PackgeInfoVo;
+			import sceneModule.model.vo.packageVo.PackageItem;
+			
+			import style.Skin_CrotaCommonButton2;
+			import style.Skin_CrotaPackRedButton;
+			import style.Skin_CrotaPackRadioButtonDaoJu;
+			import style.Skin_CrotaPackRadioButtonRenWu;
+			import util.CommonTools;
+			//每行装备数
+			private const COLUMNCOUNT:int = 6;
+			//每列装备数
+			private const ROWCOUNT:int = 5;
+			
+			[Bindable]
+			private var dataCollection:ArrayCollection;
+			
+			public var bg_bitmap:Bitmap;
+			public var coin_bitmap:Bitmap;
+			public var cys_bitmap:Bitmap;
+			
+			private function initApp():void {
+				
+				bg_bitmap = new Bitmap();
+//				pack_bg.source = bg_bitmap;
+				
+				coin_bitmap = new Bitmap();
+				coin.source = coin_bitmap;
+				
+				cys_bitmap = new Bitmap();
+				crystal.source = cys_bitmap;
+				
+//				bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_mainMenu", "pack_bg");
+//				CommonTools.make_bitmap(pack_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_package","pack_bg");
+				coin_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("common_res", "coin_img");
+				cys_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("common_res", "cry_img");
+//				daoju.selected=true;
+				//初始化背包背景数据
+				initEquipBackground();
+				//出售装备信息
+				setEquipInfo();
+			}
+			
+			//初始化装备栏背景
+			private function initEquipBackground():void {
+				
+				//每页总共的格子数
+				var tile_count:int = COLUMNCOUNT * ROWCOUNT;
+				var tileArrayCollection:ArrayCollection = new ArrayCollection();
+				for (var i:int = 0; i < tile_count; i++) {
+					var packageInfo:PackageItem = new PackageItem();
+					//格子的位置 从0开始
+					packageInfo.position = i;
+					//设置格子的状态
+					packageInfo.tileState = 1;
+					tileArrayCollection.addItem(packageInfo);
+				}
+				dataCollection = tileArrayCollection;
+			}
+			
+			//设置每个格子的数据信息
+			public function setEquipInfo():void {
+//				trace("function setEquipInfo")
+				//先把原来的数据清理掉
+				var dl:int = dataCollection.length;
+				var l:int = SystemDataModel.packageinfoVo.packageInfoColl.length;
+				for (var di:int = 0; di < dl; di++) {
+//					trace("清:" + l,di);
+					if (l == 0) {
+						dataCollection[di].position = di;
+						dataCollection[di].id = 0;
+						dataCollection[di].stack = 0;
+						dataCollection[di].icon = 0;
+						dataCollection[di].type = 0;
+						if (di < SystemDataModel.packageinfoVo.canUseTileCount) {
+							dataCollection[di].tileState = 1; //1激活
+						} else {
+							dataCollection[di].tileState = 0; //-1代未激活
+						}
+					} else {
+						for (var i:int = 0; i < l; i++) {
+							if (dataCollection[di].position == SystemDataModel.packageinfoVo.packageInfoColl[i].position) {
+								dataCollection[di].tileState = 1;
+								break;
+							} else if (i == l - 1) {
+								dataCollection[di].position = di;
+								dataCollection[di].id = 0;
+								dataCollection[di].stack = 0;
+								dataCollection[di].icon = 0;
+								dataCollection[di].type = 0;
+								if (di < SystemDataModel.packageinfoVo.canUseTileCount) {
+									dataCollection[di].tileState = 1; //1激活
+								} else {
+									dataCollection[di].tileState = 0; //-1代未激活
+								}
+							}
+						}
+					}
+				}
+				//赋值
+				for (var i1:int = 0; i1 < l; i1++) {
+					var packageItem:PackageItem = SystemDataModel.packageinfoVo.packageInfoColl[i1];
+					var index:int = packageItem.position;
+//					dataCollection[index] = packageItem;
+					
+					dataCollection[index].id = packageItem.id; //物品的id
+					dataCollection[index].position = packageItem.position; //物品的位置
+					dataCollection[index].type = packageItem.type; //物品的类型
+					dataCollection[index].name = packageItem.name; //物品的名称
+					dataCollection[index].prefixNmae = packageItem.prefixNmae; //物品的前缀名称
+					dataCollection[index].suffixName = packageItem.suffixName; //物品的后缀名称
+					dataCollection[index].bindType = packageItem.bindType; //物品的绑定类型
+					dataCollection[index].isBound = packageItem.isBound; //是否绑定
+					dataCollection[index].description = packageItem.description; //物品描述
+					dataCollection[index].professionRequire = packageItem.professionRequire; //职业限制
+					dataCollection[index].canInjection = packageItem.canInjection; //可否注魂
+					dataCollection[index].bodyType = packageItem.bodyType; //装备位置
+					dataCollection[index].weaponType = packageItem.weaponType; //武器类型
+					dataCollection[index].nowQuality = packageItem.nowQuality; //当前品质
+					dataCollection[index].baseAttack = packageItem.baseAttack; //基础攻击
+					dataCollection[index].extAttack = packageItem.extAttack; //附加攻击
+					dataCollection[index].attackType = packageItem.attackType; //攻击类型
+					dataCollection[index].baseSpeed = packageItem.baseSpeed; //武器速度
+					dataCollection[index].levelRequire = packageItem.levelRequire; //等级限制
+					dataCollection[index].baseStr = packageItem.baseStr; //基础力量
+					dataCollection[index].extStr = packageItem.extStr; //附加力量
+					dataCollection[index].baseVit = packageItem.baseVit; //基础耐力
+					dataCollection[index].extVit = packageItem.extVit; //附加耐力
+					dataCollection[index].baseDex = packageItem.baseDex; //基础敏捷
+					dataCollection[index].extDex = packageItem.extDex; //附加敏捷
+					dataCollection[index].baseWis = packageItem.baseWis; //基础智力
+					dataCollection[index].extWis = packageItem.extWis; //附加智力
+					dataCollection[index].basePhysicalAttack = packageItem.basePhysicalAttack; //基础物理攻击附加
+					dataCollection[index].extPhysicalAttack = packageItem.extPhysicalAttack; //附加物理攻击附加
+					dataCollection[index].baseMagicAttack = packageItem.baseMagicAttack; //基础魔法攻击附加
+					dataCollection[index].extMagicAttack = packageItem.extMagicAttack; //附加魔法攻击附加
+					dataCollection[index].basePhysicalDefense = packageItem.basePhysicalDefense; //基础物理防御附加
+					dataCollection[index].extPhysicalDefense = packageItem.extPhysicalDefense; //附加魔法防御附加
+					dataCollection[index].baseMagicDefense = packageItem.baseMagicDefense; //基础魔法攻击附加
+					dataCollection[index].extMagicDefense = packageItem.extMagicDefense; //附加魔法攻击附加
+					dataCollection[index].baseHpAdditional = packageItem.baseHpAdditional; //基础HP附加
+					dataCollection[index].extHpAdditional = packageItem.extHpAdditional; //附加HP附加
+					dataCollection[index].baseHitAdditional = packageItem.baseHitAdditional; //基础命中附加
+					dataCollection[index].extHitAdditional = packageItem.extHitAdditional; //附加命中附加
+					dataCollection[index].baseCritAdditional = packageItem.baseCritAdditional; //基础暴击附加
+					dataCollection[index].extCritAdditional = packageItem.extCritAdditional; //附加暴击附加
+					dataCollection[index].baseDodgeAdditional = packageItem.baseDodgeAdditional; //基础闪避附加
+					dataCollection[index].extDodgeAdditional = packageItem.extDodgeAdditional; //附加闪避附加
+					dataCollection[index].baseSpeedAdditional = packageItem.baseSpeedAdditional; //基础速度附加
+					dataCollection[index].extSpeedAdditional = packageItem.extSpeedAdditional; //附加速度附加
+					dataCollection[index].equipEffect = packageItem.equipEffect; //装备特效
+					dataCollection[index].devilEffect = packageItem.devilEffect; //附魔特效
+					dataCollection[index].suiteEffect = packageItem.suiteEffect; //套装特效
+					dataCollection[index].buyingRateCoin = packageItem.buyingRateCoin; //交易价格
+					dataCollection[index].baseDurability = packageItem.baseDurability; //基础耐久
+					dataCollection[index].nowDurability = packageItem.nowDurability; //当前耐久
+					dataCollection[index].baseDefense = packageItem.baseDefense; //基础防御
+					dataCollection[index].extDefense = packageItem.extDefense; //附加防御
+					dataCollection[index].stack = packageItem.stack; //物品的层叠数
+					dataCollection[index].starLevel = packageItem.starLevel; //物品的星级
+					dataCollection[index].icon = packageItem.icon; //物品的图标
+					dataCollection[index].templateId = packageItem.templateId; //物品的模板ID
+					dataCollection[index].itemPage = packageItem.itemPage; //物品类型
+					dataCollection[index].xqItemId1 = packageItem.xqItemId1; //镶嵌位置1处的物品id
+					dataCollection[index].xqDes1 = packageItem.xqDes1; //插槽一处的描述
+					dataCollection[index].xqItemId2 = packageItem.xqItemId2; //镶嵌位置2处的物品id
+					dataCollection[index].xqDes2 = packageItem.xqDes2; //插槽二处的描述
+					dataCollection[index].xqItemId3 = packageItem.xqItemId3; //镶嵌位置3处的物品id
+					dataCollection[index].xqDes3 = packageItem.xqDes3; //插槽三处的描述
+					dataCollection[index].xqItemId4 = packageItem.xqItemId4; //镶嵌位置4处的物品id
+					dataCollection[index].xqDes4 = packageItem.xqDes4; //插槽四处的描述
+					dataCollection[index].baseBlock = packageItem.baseBlock; //基础抗暴
+					dataCollection[index].SuiteInfo.suitename = packageItem.SuiteInfo.suitename; //套装名称
+					dataCollection[index].SuiteInfo.nowcnt = packageItem.SuiteInfo.nowcnt; //套装当前数量
+					dataCollection[index].SuiteInfo.maxcnt = packageItem.SuiteInfo.maxcnt; //套装总件数
+					dataCollection[index].SuiteInfo.suiteeffctArr.source = packageItem.SuiteInfo.suiteeffctArr.toArray(); //效果列表SuiteEffectInfoVO
+//					trace("赋:" + i1,packageItem.itemPage);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" />
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%"
+		width="100%">
+		<!--<mx:Image id="pack_bg" />-->
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="消耗品"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			visible="false"
+			width="70"
+			x="78"
+			y="60" />
+		<s:RadioButton group="{cardtype}"
+			height="30"
+			label="材料"
+			skinClass="style.Skin_CrotaPackRadioButtonRight"
+			styleName="EQUIPMENTTEXTFORMAT"
+			visible="false"
+			width="70"
+			x="148"
+			y="60" />
+		<s:List dataProvider="{dataCollection}"
+			dragEnabled="false"
+			height="230"
+			id="equipment"
+			itemRenderer="sceneModule.view.pack.view.MainMenuEquipmentItemRender"
+			skinClass="style.Skin_CrotaBasicList"
+			width="270"
+			x="14"
+			y="13">
+			<s:layout>
+				<s:TileLayout horizontalGap="1"
+					requestedColumnCount="6"
+					requestedRowCount="5"
+					verticalGap="1" />
+			</s:layout>
+		</s:List>
+		<component:CrotaChatTextInput2 enabled="false"
+			height="22"
+			id="dText"
+			styleName="ROLEINFOTEXTFORMAT"
+			text="{SystemDataModel.roleInfo.gold}"
+			textAlign="right"
+			width="87"
+			x="38"
+			y="303" />
+		<component:CrotaChatTextInput2 enabled="false"
+			height="22"
+			id="cText"
+			styleName="ROLEINFOTEXTFORMAT"
+			text="{CommonTools.setMoneyCurrencyFormatter(SystemDataModel.roleInfo.coin)}"
+			textAlign="right"
+			width="91"
+			x="38"
+			y="272" />
+		<mx:Image height="14"
+			id="crystal"
+			width="19"
+			x="31"
+			y="308" />
+		<mx:Image height="21"
+			id="coin"
+			width="17"
+			x="31"
+			y="274" />
+		<!--<util:CommonButton id="openBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeG_dkck')}" visible="{SystemDataModel.roleInfo.roletype >=3}" x="132" y="278"/>-->
+		<!--<util:CommonButton id="openStrBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeG_tjp')}" x="132" y="278"/>-->
+		<util:CommonButton id="iBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeG_zlbl')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			x="161"
+			y="278" />
+		<util:CommonButton enabled="{SystemDataModel.packageinfoVo.curPage>1}"
+			id="pre_btn"
+			skinClass="style.Skin_CrotaBasicPreButton"
+			x="99"
+			y="250" />
+		<component:CrotaBasicLabel id="page_info"
+			styleName="MAINMENUROLEFONT12a18c70"
+			text="{SystemDataModel.packageinfoVo.curPage+'/'+SystemDataModel.packageinfoVo.maxPage}"
+			textAlign="center"
+			width="38"
+			x="127"
+			y="254" />
+		<util:CommonButton enabled="{SystemDataModel.packageinfoVo.maxPage>SystemDataModel.packageinfoVo.curPage}"
+			id="next_btn"
+			skinClass="style.Skin_CrotaBasicNextButton"
+			x="175"
+			y="250" />
+		<s:RadioButton group="{cardtype}"
+			height="70"
+			id="daoju"
+			skinClass="style.Skin_CrotaPackRadioButtonDaoJu"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="28"
+			x="281"
+			y="23" />
+		<s:RadioButton group="{cardtype}"
+			height="70"
+			id="renwu"
+			skinClass="style.Skin_CrotaPackRadioButtonRenWu"
+			styleName="EQUIPMENTTEXTFORMAT"
+			width="28"
+			x="281"
+			y="93" />
+	</s:SkinnableContainer>
+</s:Group>

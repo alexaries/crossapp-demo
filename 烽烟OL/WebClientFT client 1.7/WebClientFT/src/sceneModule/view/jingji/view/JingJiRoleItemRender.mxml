@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" 
+				width="120" height="65" 
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import mediator.TaskGuideMediator;
+			
+			import model.GuideInfo;
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.controls.Menu;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.chat.event.MainOpenWhisperWindowEvent;
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.friend.command.FriendMessage;
+			import sceneModule.view.friend.event.NFriendEvent;
+			import sceneModule.view.jingji.command.JingJiMessage;
+			import sceneModule.view.jingji.event.JingJiBattleEvent;
+			
+			import style.Skin_CrotaJingJiBattleButton;
+			
+			import util.CommonTools;
+			import util.DelayExcuter;
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_jingji","jj_info_bg");
+				this.addEventListener(MouseEvent.CLICK, on_item_click);
+				this.addEventListener(FlexEvent.HIDE,onHideHandler);
+			}
+			
+			private function onHideHandler(evt:FlexEvent):void{
+				this.removeEventListener(MouseEvent.CLICK, on_item_click);
+				this.removeEventListener(FlexEvent.HIDE,onHideHandler);
+			}
+			
+			private var myMenu:Menu;
+			private function on_item_click(e:MouseEvent):void {
+				var arr:Array = null;
+				arr = new Array([CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jwhy')]);
+				myMenu = Menu.createMenu(null,getItemMenuData(arr), false);
+				//				myMenu.width = 80;
+				myMenu.labelField = 'label';
+				myMenu.addEventListener(MenuEvent.ITEM_CLICK,onMenuItemClick);
+				myMenu.show(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
+			}
+			
+			private function getItemMenuData(itemArr:Array):Array {
+				var l:int = itemArr.length;
+				var itemMenuData:Array = new Array();
+				for(var i:int=0;i<l;i++){
+					var menuItem:Object = new Object();
+					menuItem.label = itemArr[i];
+					itemMenuData.push(menuItem);
+				}
+				return itemMenuData;
+			}
+			
+			private function onMenuItemClick(e:MenuEvent):void{
+				myMenu.removeEventListener(MenuEvent.ITEM_CLICK,onMenuItemClick);
+				var event_str:String = null;
+				switch (e.label) 
+				{
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl'):
+						NCropMessage.getInstance().request_see_other(data.bId);
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl'):
+						JingJiMessage.getInstance().event_dispatcher.dispatchEvent(new MainOpenWhisperWindowEvent(MainOpenWhisperWindowEvent.MAINOPENWHISPERWINDOWEVENT,data.bId,data.bName));
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jwhy'):
+						FriendMessage.getInstance().requese_add_friend(1, data.bName);
+						break;
+					default:
+				}
+			}
+
+
+			protected function battleBtn_clickHandler(evt:MouseEvent):void
+			{
+				JingJiMessage.getInstance().event_dispatcher.dispatchEvent(new JingJiBattleEvent(JingJiBattleEvent.JINGJIBATTLE,data.bId,true));
+				evt.stopPropagation();
+
+			}
+			
+			private function getRoleImg(p:int):String{
+				var url:String="assets/pet/petWarriorImg.png";
+				switch(p){
+					case ProConst.PROFESSIONREQUIRE2:
+						url = "assets/pet/petWarriorImg.png";
+						break;
+					case ProConst.PROFESSIONREQUIRE3:
+						url = "assets/pet/petMageImg.png";
+						break;
+					case ProConst.PROFESSIONREQUIRE4:
+						url = "assets/pet/petPastorImg.png";
+						break;
+					case ProConst.PROFESSIONREQUIRE5:
+						url = "assets/pet/petRangerImg.png";
+						break;
+				}
+				return url;
+			}
+			private var tips:JingJiRoleToolTip;
+			private function onMouseOver(evt:MouseEvent):void{
+				if(tips == null){
+					tips = new JingJiRoleToolTip();
+				}
+				FlexGlobals.topLevelApplication.addElement(tips);
+				tips.roleName.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjrir_mc')+data.bName;
+				tips.roleLev.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjrir_dj')+data.bLevel;
+				tips.rolePre.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjrir_pm')+data.bRank;
+				onMouseMove();
+			}
+			
+			private function onMouseMove(evt:MouseEvent=null):void{
+				if(tips){
+					tips.x = FlexGlobals.topLevelApplication.mouseX + 5;
+					tips.y = FlexGlobals.topLevelApplication.mouseY + 5;
+				}
+			}
+			
+			private function onMouseOut(evt:MouseEvent):void{
+//				if(this.contains(tips)){
+					FlexGlobals.topLevelApplication.removeElement(tips);
+//				}
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="bg"/>
+	<mx:Image source="{getRoleImg(data.profession)}" width="55" height="55" x="6" y="6" mouseOver="onMouseOver(event)" mouseOut="onMouseOut(event)" mouseMove="onMouseMove(event)"/>
+	<component:CrotaBasicLabel id="iLabel1" text="{data.bRank}" fontSize="14" fontWeight="bold" color="#ffff00" textAlign="center" x="76" y="43" width="34"/>
+	<!--<component:CrotaBasicLabel id="iLabel2" text="{data.bName+'Lv.'+data.bLevel}" fontSize="12" color="#ffff00" styleName="RANKINGFORMAT1" textAlign="left" x="45" y="8" width="149"/>-->
+	<util:CommonButton id="battleBtn" skinClass="style.Skin_CrotaJingJiBattleButton" x="69" y="5" click="battleBtn_clickHandler(event)"/>
+</s:ItemRenderer>

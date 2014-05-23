@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				autoDrawBackground="false" width="46" height="75" creationComplete="initApp();" xmlns:view="sceneModule.view.mainMenu.view.*" xmlns:event="sceneModule.view.skill.event.*" xmlns:view1="sceneModule.view.skill.view.*" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.controls.Image;
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.core.UIComponent;
+			import mx.managers.DragManager;
+			
+			import sceneModule.view.skill.event.MediatorRegisterSkillEvent;
+			
+			import style.Skin_CrotaSkillComponentAnthorSkinnableContainer;
+			import style.Skin_CrotaSkillComponentSkinnableContainer;
+			
+			import util.CommonTools;
+			
+			public static const FROMSKILLLIST:String = "fromSkillList";
+			
+			private function initApp():void{
+				this.dispatchEvent(new MediatorRegisterSkillEvent(MediatorRegisterSkillEvent.MEDIATORREGISTER_SKILLITEMRENDER,this,true));
+			}
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+			private function getSkillTileBgImg(status:int,type:int,icon:int):String{
+				var imgUrl:String = ProConst.getImageResUrl(type);
+				imgUrl += (icon + ".png");
+				return imgUrl;
+			}
+			
+			private function getImageFilterByStatus(status:int):Array{
+				if(status == 0){
+					return new Array();
+				}
+				return new Array(CommonTools.changeColorFilter());
+			}
+			
+			private function getSkillLevelImg(s:int,l:int):String{
+				if(s != 0){
+					return '';
+				}
+				return 'assets/skill/lv'+l+'.png';
+			}
+		]]>
+	</fx:Script>
+	<mx:Image id="skillImg" buttonMode="true" useHandCursor="true" filters="{getImageFilterByStatus(data.skillStatus)}" source="{getSkillTileBgImg(data.skillStatus,data.type,data.icon)}" x="2" y="2"/>
+	<mx:Image id="fengImg" mouseEnabled="false" mouseChildren="false" source='assets/skill/skillFeng.png' visible="{data.skillStatus != 0}" x="8" y="8"/>
+	<mx:Image mouseEnabled="false" mouseChildren="false" source="{getSkillLevelImg(data.skillStatus,data.skillLevel)}" x="2" y="2"/>
+	<component:CrotaBasicLabel text="{'Lv.'+data.skillLevel}" visible="{data.skillStatus == 0}" textAlign="right" x="0" y="30" fontSize="10" styleName="ROLEINFOTEXTFORMAT" width="42"/>
+	<util:CommonButton id="iBtn" visible="{data.skillStatus == 0}" skinClass="style.Skin_CrotaCommonButton1" label="Up" fontFamily="宋体" fontStyle="normal" x="-5" y="44"/>
+</s:ItemRenderer>

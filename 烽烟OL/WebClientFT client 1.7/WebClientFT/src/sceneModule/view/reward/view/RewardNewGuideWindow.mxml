@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="218" height="100" 
+				xmlns:view="sceneModule.view.pack.view.*"
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				xmlns:win="managers.*" xmlns:component="component.*" xmlns:util="util.*" >
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import style.Skin_CrotaCloseButton111;
+			import style.Skin_CrotaCommonButton;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String="sceneModule.view.reward.view.RewardNewGuideWindow";
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+//				CommonTools.make_bitmap(rewardBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_day_reward', 'dy_reward_bg');
+//				source="{WebClient.host+'assets/reward/newReward.png'}"
+				trace();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image id="rewardBg" source="assets/reward/newReward.png"  />
+		<component:CrotaChatTextInputLoginbar x="64" y="33" id="numTxt" restrict="0-9a-zA-Z_^ " width="139" height="25" styleName="REGISTERTEXTINPUTTEXTFORMAT"/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="193" y="3"/>
+		<util:CommonButton id="obAllReBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rdogIR_lq')}" x="71" y="65"/>
+	</s:SkinnableContainer>
+	
+</win:BaseWindow>

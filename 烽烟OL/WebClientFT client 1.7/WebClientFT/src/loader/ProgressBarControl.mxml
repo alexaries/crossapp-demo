@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%" 
+		 creationComplete="initApp()"
+		 xmlns:ui="sceneModule.view.ui.*"
+		 xmlns:loader="loader.*"
+		 xmlns:component="component.*"
+		 xmlns:local="*"
+		 addedToStage="addToStage()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import style.Skin_CrotaAlpheBackGroudsLog;
+			
+			private var rpl:RPL;
+			
+			private function initApp():void{
+				iSwfComponent.addEventListener(Event.COMPLETE,onComplete);
+				
+			    rpl = new RPL();
+				this.iUICom.addChild(rpl);
+			}
+			
+			public var mc:MovieClip;
+			private function onComplete(evt:Event):void{
+				mc = iSwfComponent.content as MovieClip;
+			}
+			
+			private function addToStage():void {
+				resetpos();
+				stage.addEventListener(Event.RESIZE, resetpos);
+			}
+			
+			private function resetpos(e:Event = null):void {
+				if (rpl) {
+					rpl.x = (stage.stageWidth - rpl.width) / 2;
+					rpl.y = (stage.stageHeight - rpl.height) / 2;
+				}
+			}
+
+			protected function iSwfComponent_creationCompleteHandler(event:FlexEvent):void
+			{
+				mc = iSwfComponent.content as MovieClip;
+			}
+			public function setDefaultVisible():void{
+				if(iUICom.visible){
+					iUICom.visible = false;
+				}
+				
+				if(fileProLab.visible){
+					fileProLab.visible = false;
+				}
+				
+				if(proBar.visible){
+					proBar.visible = false;
+				}
+				
+				if(iSwfComponent.visible){
+					iSwfComponent.visible = false;
+				}
+			}
+			
+			public function setLoadProgressInfo(per:Number,firstLoad:Boolean = false,proStr:String='%',countRate:String = ""):void{
+				if(firstLoad){
+					if(!proBar.visible){
+						proBar.visible = true;
+					}
+					
+					if(!iSwfComponent.visible){
+						iSwfComponent.visible = true;
+					}
+					proBar.fileProLab.text = Number(per * 100).toFixed(2)+proStr+"  " +countRate;
+				}else{
+					if(!iUICom.visible){
+						iUICom.visible = true;
+					}
+					if(!fileProLab.visible){
+						fileProLab.visible = true;
+					}
+					if(rpl){
+						rpl.gotoAndStop(int(per*60));
+					}
+					if(proStr == '%'){
+						
+					}else{
+						
+					}
+					fileProLab.text = Number(per * 100).toFixed(2)+proStr+" " +countRate;
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<mx:UIComponent id="iUICom">
+	</mx:UIComponent>
+	<component:CrotaBasicLabel id="fileProLab" color="#ffffff" textAlign="right" x="{this.width/2 + 130}" y="{this.height/2 + 95}" width="206"/>
+	<ui:LoadProgressComponent visible="false" id="proBar" x="{this.width/2 - 250}" y="{this.height/2 -20}"/>
+	<mx:SWFLoader visible="false" id="iSwfComponent" creationComplete="iSwfComponent_creationCompleteHandler(event)" source="@Embed(source='/embed/swf/loadProcess.swf')" x="{this.width/2 - 100}" y="{this.height/2 - 100}"/>
+</mx:Canvas>

@@ -1,0 +1,37 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+mx|VScrollBar{
+	trackSkin: Embed(source="/embed/ScrollBar/background.png");
+	thumbUpSkin: Embed(source="/embed/ScrollBar/thumb.png",
+		scaleGridTop="9",scaleGridBottom="55",scaleGridLeft="7",scaleGridRight="14");
+	thumbOverSkin: Embed(source="/embed/ScrollBar/thumb.png",
+		scaleGridTop="9",scaleGridBottom="55",scaleGridLeft="7",scaleGridRight="14");
+	thumbDownSkin: Embed(source="/embed/ScrollBar/thumb.png",
+		scaleGridTop="9",scaleGridBottom="55",scaleGridLeft="7",scaleGridRight="14");
+	downArrowSkin: ClassReference(null);
+	upArrowSkin: ClassReference(null);
+	thumbIcon: Embed(source="/embed/ScrollBar/thumbLayer.png");
+}
+
+mx|Menu{
+	backgroundAlpha: 0.8;
+	rollOverColor: #697E65;
+	selectionColor: #8AA470;
+	fontSize: 12;
+	color: #ffcc66;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #181D0E;
+	alternatingItemColors: #080C00, #080C00;
+	borderColor: #5C6A59;
+	borderStyle: solid;
+	borderThickness: 1; 
+	mouseDownEffect: btnDown;
+	fontSize:12;
+}
+global {
+	modalTransparencyBlur: 0;
+	modalTransparency: 0.0;
+	modalTransparencyColor: black;
+	modalTransparencyDuration: 500;
+}

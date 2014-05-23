@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp();" width="158" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import flash.events.Event;
+			import flash.events.MouseEvent;
+			import flash.events.TextEvent;
+			import flash.filters.GlowFilter;
+			import flash.geom.Rectangle;
+			import flash.text.StyleSheet;
+			import flash.text.TextField;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.UITextField;
+			import mx.events.CollectionEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.taskVO.TaskMainTrackingInfoVo;
+			import sceneModule.model.vo.taskVO.TaskTrackingInfoVo;
+			import sceneModule.view.task.command.TaskMessage;
+			import sceneModule.view.task.event.NTaskEvent;
+			
+			import util.xtrace; 
+			
+			public static const LINE_HEIGHT:int = 14;
+			public static const V_W:int = 158;
+			
+			private function handleCard(event:ItemClickEvent):void {
+				setTaskTrackingData();
+			}
+			private function initApp():void{
+				var css:StyleSheet = new StyleSheet();
+				var str_css:String = ".tlink{fontSize:12;color:#ffff00;textDecoration:underline}";
+				str_css += ".tword{fontSize:12;color:#ffffff}";
+				str_css += ".cur_task_name{fontSize:12;color:#ffff00}";
+				str_css += ".tover{fontSize:12;color:#008B00}";
+				str_css += ".taccpetable{fontSize:12;color:#FFFFFF;textDecoration:underline}";
+				str_css += ".levelok{fontSize:12;color:#FFFFFF}";
+				str_css += ".levelfail{fontSize:12;color:#FF0000}";
+				css.parseCSS(str_css);
+				taskTxt.styleSheet = css;
+				
+				taskTxt.selectable = false;
+				
+				var growFilte:GlowFilter = new GlowFilter(ProConst.BORDER_COLOR,0.7,2,2,5,1);			
+				var arr:Array = [growFilte];
+				taskTxt.filters =arr;
+				
+				var curList:Array = TaskMessage.getInstance().trac_cur_tasks;
+				var acceptableList:Array = TaskMessage.getInstance().trac_accepted_tasks;
+				if (null == curList || curList.length <= 0) {
+					//没有当前任务,切换到可接
+					cardtype.selectedValue = "acceptable";
+				}
+				if (null == acceptableList || acceptableList.length <= 0) {
+					//没有可接任务,切换到当前
+					cardtype.selectedValue = "cur";
+				}
+				
+				setTaskTrackingData();
+				//this.addEventListener(FlexEvent.CREATION_COMPLETE, setTaskTrackingData);
+				TaskMessage.getInstance().addEventListener(NTaskEvent.NTaskEvent_REFRESH_TRAC, setTaskTrackingData);
+				GuidEventCenter.getInstance().addEventListener(NTaskEvent.NTaskEvent_CHANGE_TRAC_CUR, change_to_cur);
+				GuidEventCenter.getInstance().addEventListener(NTaskEvent.NTaskEvent_CHANGE_TRAC_ACCEPT, change_to_accept);
+			}
+			
+			private function on_link(e:TextEvent):void{
+				trace(e);
+			}
+			
+			private function change_to_cur(e:NTaskEvent):void {
+				cardtype.selectedValue = "cur";
+				setTaskTrackingData();
+			}
+			
+			private function change_to_accept(e:NTaskEvent):void {
+				cardtype.selectedValue = "acceptable";
+				setTaskTrackingData();
+			}
+			
+			/**
+			 * 组织任务追踪的字符串格式
+			 */
+			private function setTaskTrackingData(e:Event = null):void {
+				var taskStr:String = '';
+				if(cardtype.selectedValue == "cur"){
+					taskStr = TaskMessage.getInstance().get_cur_trac_list();
+				}
+				else {
+					taskStr = TaskMessage.getInstance().get_acceptable_trac_list();
+				}
+				xtrace("任务追踪:",taskStr);
+				taskTxt.htmlText = taskStr;
+				
+				taskTxt.validateNow();
+				
+				//检测位置
+				var fix_x:int = this.x;
+				if(cardtype.selectedValue == "cur"){
+					//检测当前任务
+					for each (var cur_item:Array in TaskMessage.getInstance().trac_cur_pos) 
+					{
+						var cur_task_name:String = cur_item[1];
+						var cur_task_pos:Array = get_pos(cur_task_name);
+						var s_pos:Array = cur_item[2];
+						s_pos[0] = cur_task_pos[0];
+						s_pos[1] = cur_task_pos[1];
+					}
+				}
+				else {
+					//检测当前任务
+					for each (var a_item:Array in TaskMessage.getInstance().trac_accepted_pos) 
+					{
+						var a_task_name:String = a_item[1];
+						var a_task_pos:Array = get_pos(a_task_name);
+						var a_pos:Array = a_item[2];
+						a_pos[0] = a_task_pos[0];
+						a_pos[1] = a_task_pos[1];
+					}
+				}
+			}
+			private function get_pos(t_str:String):Array{
+				var r:Array = [0,0];
+				var t_num:int = taskTxt.numChildren;
+				var base_y:int = 0;
+				for (var i:int = 0; i < t_num; i++) 
+				{
+					var t_child:UITextField = taskTxt.getChildAt(i) as UITextField;
+					if(null  != t_child){
+						t_child.validateNow();
+						var t_index:int = t_child.text.indexOf(t_str);
+						if ( -1 == t_index) {
+							r[0] = 1;
+							base_y += t_child.textHeight;
+						}
+						else{
+							var t_l_index:int = t_child.getLineIndexOfChar(t_index);
+							r[0] = 1;
+							r[1] = this.y + base_y + LINE_HEIGHT * t_l_index;
+						}
+					}
+				}
+				return r;
+			}	
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="{}"
+							itemClick="handleCard(event);"/>
+	</fx:Declarations>
+	<s:SkinnableContainer 
+		id="roleListContainer" 
+		width="100%" height="100%" 
+		x="0" y="-3">
+		<s:RadioButton 
+			group="{cardtype}" 
+			width="73" height="27"
+			skinClass="style.Skin_CrotaYJTaskTracRadioButton" styleName="MAINMENUROLEFONT12bebebe" 
+			value="cur"
+			x="-8" y="-21"/>
+		<s:RadioButton 
+			group="{cardtype}" 
+			width="73" height="27"
+			skinClass="style.Skin_CrotaTaskTracRadioButton" styleName="MAINMENUROLEFONT12bebebe" 
+			value="acceptable"
+			x="80" y="-21"/>
+		<!--<component:CrotaBasicChatTextArea 
+			id="taskTxt" backgroundAlpha="0" borderStyle="none"
+			rollOver="focusManager.deactivate()"
+			rollOut="focusManager.activate()" 
+			focusAlpha="0"
+			fontSize="12" y="5" x="5" width="150" height="200"/>-->
+		<component:CrotaBasicChatTextArea  
+			borderStyle="none" id="taskTxt"  
+			rollOver="focusManager.deactivate()"
+			rollOut="focusManager.activate()"  
+			editable="false"
+			fontSize="12"
+			selectable="false" focusEnabled="false" focusAlpha="0" wordWrap="true" 
+			width="150" height="200" backgroundAlpha="0.0" 
+			y="5" x="-5"/>
+	</s:SkinnableContainer>
+</s:Group>

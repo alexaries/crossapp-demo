@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="525" height="368" xmlns:component="component.*" xmlns:view="sceneModule.view.blacksmith.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.event.MediatorRegisterItemEuipmentEvent;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				dispatchEvent(new MediatorRegisterItemEuipmentEvent(MediatorRegisterItemEuipmentEvent.MEDIATORREGISTERHECHENG,this,true));
+				CommonTools.make_bitmap(strengthenBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_strengthen","strengthencomp_bg");
+//				source="assets/blacksmith/strengthenBg.png"
+			}
+			
+			public function getThisBtnState(coin:int):Boolean{
+				if(coin>=int(req.text)){
+					return true;
+				}
+				return false;
+			}
+			
+			public function getColor(t:int):uint{
+				if(t>=(SystemDataModel.roleInfo.roletype+1)*20*60){
+					return 0xff0000;
+				}
+				return 0x00ff12;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="strengthenBg" x="261" y="-3" />
+	<mx:Image id="commonStrBg" source='assets/blacksmith/commonStrbg.png' x="46" y="-3" />
+	<mx:Image id="strengPartBg" source='assets/blacksmith/strengPartbg.png' x="72" y="27" />
+	<s:List id="equipment" dragEnabled="false" width="180" height="267" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.strPackageInfo.itemEquipInfoList}" itemRenderer="sceneModule.view.blacksmith.view.MainStrEquipmentItemRender" x="281" y="18">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="4" requestedRowCount="6" horizontalGap="1" verticalGap="1"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  y="301" x="323" enabled="{SystemDataModel.strPackageInfo.curPage>1}"/>
+	<component:CrotaBasicLabel id="page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="351" y="305"
+							   text="{SystemDataModel.strPackageInfo.curPage+'/'+SystemDataModel.strPackageInfo.maxPage}"
+							   textAlign="center" width="38"/>
+	<util:CommonButton id="next_btn"
+			  x="399" y="301" enabled="{SystemDataModel.strPackageInfo.maxPage>SystemDataModel.strPackageInfo.curPage}"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	<view:MainEquipmentComponent id="s1" x="131" y="45" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<component:CrotaBasicLabel id="lev" textAlign="left" x="151" y="173" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="63"/>
+	<component:CrotaBasicLabel id="eff" textAlign="left" x="151" y="204" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="97"/>
+	<component:CrotaBasicLabel visible="false" id="ti" text="{ByteArrayUtil.formateTimeToString2(SystemDataModel.strWinTime*1000)}" textAlign="left" x="398" y="237" fontSize="12" color="{getColor(SystemDataModel.strWinTime)}" width="63"/>
+	<component:CrotaBasicLabel id="req" textAlign="left" x="151" y="235" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="63"/>
+	<util:CommonButton id="sBtn" enabled="{getThisBtnState(SystemDataModel.roleInfo.coin)}" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qh')}" x="108" y="271"/>
+	<util:CommonButton id="cleanCD" visible="false" enabled="{SystemDataModel.strWinTime>(SystemDataModel.roleInfo.roletype+1)*20*60}" skinClass="style.Skin_CrotaPackRedButton" label="清除冷却时间" x="396" y="321" width="99"/>
+</s:Group>

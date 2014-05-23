@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" height="180" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%">	
+		<mx:Image source='assets/ui/talkBg.png'/>
+		<s:List id="taskList" dragEnabled="false" dropEnabled="false" width="469" height="104" dataProvider="{SystemDataModel.taskListNpc}" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.task.view.TaskListItemRender" styleName="ROLETEXT" x="18" y="23">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1" requestedRowCount="5"/>
+			</s:layout>
+		</s:List>
+		<component:CrotaBasicLabel id="iLabel" visible="false" styleName="MAINMENUROLEFONT129165ce" x="32" y="31"/>
+		<component:CrotaBasicLabel id="iDesLabel" styleName="MAINMENUROLEFONT129165ce" visible="false" x="85" y="31" width="394" height="66"/>
+		<util:CommonButton id="functionBtn" skinClass="style.Skin_CrotaCommonButton4" visible="false" x="192" y="86"/>
+		<util:CommonButton id="acceptBtn" skinClass="style.Skin_CrotaCommonButton4" visible="false" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnpV_jsrw')}" x="378" y="86"/>
+	</s:SkinnableContainer>
+</s:Group>

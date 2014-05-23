@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				     
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:win="managers.*" width="816" height="489" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.packageVo.PackageItem;
+			import sceneModule.view.chat.vo.WhisperChatObjectInfoVO;
+			
+			import spark.events.TextOperationEvent;
+			import spark.filters.GlowFilter;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			//每行装备数
+			private const COLUMNCOUNT:int=6;
+			//每列装备数
+			private const ROWCOUNT:int=5;
+			
+			[Bindable]
+			private var dataCollection:ArrayCollection;
+			
+			public static var NAME:String = "sceneModule.view.colonMan.view.MainColoManagerWindow";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(colomanBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_coloman","coloman_bg");
+				//初始化背包背景数据
+				initEquipBackground();
+				//出售装备信息
+				setEquipInfo();
+			}
+			//初始化装备栏背景
+			private function initEquipBackground():void{
+				
+				//每页总共的格子数
+				var tile_count:int = COLUMNCOUNT*ROWCOUNT;
+				var tileArrayCollection:ArrayCollection = new ArrayCollection();
+				for(var i:int=0;i<tile_count;i++){
+					var packageInfo:PackageItem = new PackageItem();
+					//格子的位置 从0开始
+					packageInfo.position = i;
+					//设置格子的状态
+					packageInfo.tileState = 1;
+					tileArrayCollection.addItem(packageInfo);
+				}
+				dataCollection = tileArrayCollection;
+			}
+			//设置每个格子的数据信息
+			public function setEquipInfo():void{
+//				trace("function setEquipInfo")
+				//先把原来的数据清理掉
+				var dl:int = dataCollection.length;
+				var l:int=SystemDataModel.cangKuInfoVo.packageInfoColl.length;
+				for(var di:int = 0;di<dl;di++){
+					//					trace("清:" + l,di);
+					if(l == 0){
+						dataCollection[di].position = di;
+						dataCollection[di].id = 0;
+						dataCollection[di].stack = 0;
+						dataCollection[di].icon = 0;
+						dataCollection[di].type = 0;
+						if(di<SystemDataModel.cangKuInfoVo.canUseTileCount){
+							dataCollection[di].tileState = 1;//1激活
+						}else{
+							dataCollection[di].tileState = 0;//-1代未激活
+						}
+					}else{
+						for(var i:int = 0;i<l;i++){
+							if(dataCollection[di].position == SystemDataModel.cangKuInfoVo.packageInfoColl[i].position){
+								dataCollection[di].tileState = 1;
+								break;
+							}else if(i == l-1){
+								dataCollection[di].position = di;
+								dataCollection[di].id = 0;
+								dataCollection[di].stack = 0;
+								dataCollection[di].icon = 0;
+								dataCollection[di].type = 0;
+								if(di<SystemDataModel.cangKuInfoVo.canUseTileCount){
+									dataCollection[di].tileState = 1;//1激活
+								}else{
+									dataCollection[di].tileState = 0;//-1代未激活
+								}
+							}
+						}
+					}						
+				}
+				//赋值
+				for(var i1:int=0;i1<l;i1++){
+					var packageItem:PackageItem = SystemDataModel.cangKuInfoVo.packageInfoColl[i1];
+					var index:int=packageItem.position;
+					//					dataCollection[index] = packageItem;
+					
+					dataCollection[index].id = packageItem.id;//物品的id
+					dataCollection[index].position = packageItem.position;//物品的位置
+					dataCollection[index].type=packageItem.type;//物品的类型
+					dataCollection[index].name=packageItem.name;//物品的名称
+					dataCollection[index].prefixNmae=packageItem.prefixNmae;//物品的前缀名称
+					dataCollection[index].suffixName=packageItem.suffixName;//物品的后缀名称
+					dataCollection[index].bindType=packageItem.bindType;//物品的绑定类型
+					dataCollection[index].isBound=packageItem.isBound;//是否绑定
+					dataCollection[index].description=packageItem.description;//物品描述
+					dataCollection[index].professionRequire=packageItem.professionRequire;//职业限制
+					dataCollection[index].canInjection=packageItem.canInjection;//可否注魂
+					dataCollection[index].bodyType=packageItem.bodyType;//装备位置
+					dataCollection[index].weaponType=packageItem.weaponType;//武器类型
+					dataCollection[index].nowQuality=packageItem.nowQuality;//当前品质
+					dataCollection[index].baseAttack=packageItem.baseAttack;//基础攻击
+					dataCollection[index].extAttack=packageItem.extAttack;//附加攻击
+					dataCollection[index].attackType=packageItem.attackType;//攻击类型
+					dataCollection[index].baseSpeed=packageItem.baseSpeed;//武器速度
+					dataCollection[index].levelRequire=packageItem.levelRequire;//等级限制
+					dataCollection[index].baseStr=packageItem.baseStr;//基础力量
+					dataCollection[index].extStr=packageItem.extStr;//附加力量
+					dataCollection[index].baseVit=packageItem.baseVit;//基础耐力
+					dataCollection[index].extVit=packageItem.extVit;//附加耐力
+					dataCollection[index].baseDex=packageItem.baseDex;//基础敏捷
+					dataCollection[index].extDex=packageItem.extDex;//附加敏捷
+					dataCollection[index].baseWis=packageItem.baseWis;//基础智力
+					dataCollection[index].extWis=packageItem.extWis;//附加智力
+					dataCollection[index].basePhysicalAttack=packageItem.basePhysicalAttack;//基础物理攻击附加
+					dataCollection[index].extPhysicalAttack=packageItem.extPhysicalAttack;//附加物理攻击附加
+					dataCollection[index].baseMagicAttack=packageItem.baseMagicAttack;//基础魔法攻击附加
+					dataCollection[index].extMagicAttack=packageItem.extMagicAttack;//附加魔法攻击附加
+					dataCollection[index].basePhysicalDefense=packageItem.basePhysicalDefense;//基础物理防御附加
+					dataCollection[index].extPhysicalDefense=packageItem.extPhysicalDefense;//附加魔法防御附加
+					dataCollection[index].baseMagicDefense=packageItem.baseMagicDefense;//基础魔法攻击附加
+					dataCollection[index].extMagicDefense=packageItem.extMagicDefense;//附加魔法攻击附加
+					dataCollection[index].baseHpAdditional=packageItem.baseHpAdditional;//基础HP附加
+					dataCollection[index].extHpAdditional=packageItem.extHpAdditional;//附加HP附加
+					dataCollection[index].baseHitAdditional=packageItem.baseHitAdditional;//基础命中附加
+					dataCollection[index].extHitAdditional=packageItem.extHitAdditional;//附加命中附加
+					dataCollection[index].baseCritAdditional=packageItem.baseCritAdditional;//基础暴击附加
+					dataCollection[index].extCritAdditional=packageItem.extCritAdditional;//附加暴击附加
+					dataCollection[index].baseDodgeAdditional=packageItem.baseDodgeAdditional;//基础闪避附加
+					dataCollection[index].extDodgeAdditional=packageItem.extDodgeAdditional;//附加闪避附加
+					dataCollection[index].baseSpeedAdditional=packageItem.baseSpeedAdditional;//基础速度附加
+					dataCollection[index].extSpeedAdditional=packageItem.extSpeedAdditional;//附加速度附加
+					dataCollection[index].equipEffect=packageItem.equipEffect;//装备特效
+					dataCollection[index].devilEffect=packageItem.devilEffect;//附魔特效
+					dataCollection[index].suiteEffect=packageItem.suiteEffect;//套装特效
+					dataCollection[index].buyingRateCoin=packageItem.buyingRateCoin;//交易价格
+					dataCollection[index].baseDurability=packageItem.baseDurability;//基础耐久
+					dataCollection[index].nowDurability=packageItem.nowDurability;//当前耐久
+					dataCollection[index].baseDefense=packageItem.baseDefense;//基础防御
+					dataCollection[index].extDefense=packageItem.extDefense;//附加防御
+					dataCollection[index].stack=packageItem.stack;//物品的层叠数
+					dataCollection[index].starLevel=packageItem.starLevel;//物品的星级
+					dataCollection[index].icon=packageItem.icon;//物品的图标
+					dataCollection[index].templateId=packageItem.templateId;//物品的模板ID
+					dataCollection[index].itemPage=packageItem.itemPage;//物品类型
+					//					trace("赋:" + i1,packageItem.itemPage);
+				}
+			}
+			
+			//获取装备图标路径
+			public function setEquipmentUrl(s:String,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+			
+			private function getStr(baseNum:int,addNum:int):String{
+				var dStr:String = '';
+				if(addNum == 0){
+					dStr = '<font color="#ffff00">' + baseNum + '</font>';
+				}else{
+					dStr = '<font color="#ffff00">' + baseNum + '</font><font color="#00FF66">+' + addNum + '</font>';
+				}
+				
+				return dStr;
+			}
+			
+			private function getImageFilterByStatus(status:int):Array{
+				if(status == 0){
+					return new Array(CommonTools.changeColorFilter());
+				}
+				return new Array();
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image id="colomanBg"/>
+		<s:List id="rewardList" width="200" height="260" selectedIndex="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? -1 : 0}" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.colonMan.view.MainColoManagerItemRender" dataProvider="{SystemDataModel.colonizationInfo.copyInfoArr}" x="22" y="113">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1" requestedRowCount="5" verticalGap="8" horizontalGap="0"/>
+			</s:layout>
+		</s:List>
+		<mx:Image id="elixir_li" 
+				  filters="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? new Array() : getImageFilterByStatus(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).liliang_info.status)}" 
+				  source='assets/Image/Props/110005.png' 
+				  x="242" y="368" width="42" height="42" buttonMode="true" useHandCursor="true"/>
+		<mx:Image id="elixir_min" 
+				  filters="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? new Array() : getImageFilterByStatus(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).minjie_info.status)}" 
+				  source='assets/Image/Props/110008.png' 
+				  x="296" y="368" width="42" height="42" buttonMode="true" useHandCursor="true"/>
+		<mx:Image id="elixir_zhi" 
+				  filters="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? new Array() : getImageFilterByStatus(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).zhili_info.status)}" 
+				  source='assets/Image/Props/110006.png' 
+				  x="350" y="368" width="42" height="42" buttonMode="true" useHandCursor="true"/>
+		<mx:Image id="elixir_jing" 
+				  filters="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? new Array() : getImageFilterByStatus(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).jingshen_info.status)}" 
+				  source='assets/Image/Props/110007.png' 
+				  x="404" y="368" width="42" height="42" buttonMode="true" useHandCursor="true"/>
+		<mx:Image id="elixir_nai" 
+				  filters="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? new Array() : getImageFilterByStatus(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).naili_info.status)}" 
+				  source='assets/Image/Props/110002.png' 
+				  x="458" y="368" width="42" height="42" buttonMode="true" useHandCursor="true"/>
+		<util:CommonButton id="buyAllBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcmW_gmsy')}" x="334" y="436"/>
+		<util:CommonButton id="obtainAllBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcmW_sqsy')}" x="603" y="368"/>
+		<util:CommonButton id="rewardBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcmW_zmjj')}" x="603" y="434"/>
+		<util:CommonButton id="pre_btn" 
+				  skinClass="style.Skin_CrotaBasicPreButton"
+				  y="381" x="78" enabled="{SystemDataModel.colonizationInfo.curPage>1}"/>
+		<component:CrotaBasicLabel id="page_info"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   x="106" y="381"
+								   text="{SystemDataModel.colonizationInfo.curPage+'/'+SystemDataModel.colonizationInfo.maxPage}"
+								   textAlign="center" width="38"/>
+		<util:CommonButton id="next_btn"
+				  x="154" y="381" enabled="{SystemDataModel.colonizationInfo.maxPage>SystemDataModel.colonizationInfo.curPage}"
+				  skinClass="style.Skin_CrotaBasicNextButton"/>
+		<util:CommonButton id="closeBtnWin" skinClass="style.Skin_CrotaCloseButton111" x="790" y="-3"/>
+		<mx:Text id="profession" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).li_liang,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_li_liang)}" textAlign="left" fontSize="12" width="48" x="331" y="146"/>
+		<mx:Text id="profession2" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).zhi_li,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_zhi_li)}" textAlign="left" fontSize="12" width="48" x="331" y="164"/>
+		<mx:Text id="profession3" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).ji_shen,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_ji_shen)}" textAlign="left" fontSize="12" width="48" x="331" y="182"/>
+		<mx:Text id="profession4" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).wu_gong,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_wu_gong)}" textAlign="left" fontSize="12" width="48" x="331" y="236"/>
+		<mx:Text id="profession5" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).mo_gong,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_mo_gong)}" textAlign="left" fontSize="12" width="48" x="331" y="253"/>
+		<mx:Text id="profession6" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).gong_su,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_gong_su)}" textAlign="left" fontSize="12" width="48" x="331" y="272"/>
+		<mx:Text id="profession7" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).bao_ji,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_bao_ji)}" textAlign="left" fontSize="12" width="48" x="331" y="290"/>
+		<mx:Text id="profession8" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).shan_bi,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_shan_bi)}" textAlign="left" fontSize="12" width="48" x="413" y="290"/>
+		<mx:Text id="profession9" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).ming_zhong,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_ming_zhong)}" textAlign="left" fontSize="12" width="48" x="413" y="272"/>
+		<mx:Text id="profession10" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).mo_fang,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_mo_fang)}" textAlign="left" fontSize="12" width="48" x="413" y="254"/>
+		<mx:Text id="profession11" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).wu_fang,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_wu_fang)}" textAlign="left" fontSize="12" width="48" x="413" y="236"/>
+		<mx:Text id="profession0" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).min_jie,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_min_jie)}" textAlign="left" fontSize="12" width="48" x="413" y="146"/>
+		<mx:Text id="profession1" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{SystemDataModel.colonizationInfo.copyInfoArr.length == 0 ? '' : getStr(SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).nai_li,SystemDataModel.colonizationInfo.copyInfoArr.getItemAt(rewardList.selectedIndex).add_nai_li)}" textAlign="left" fontSize="12" width="48" x="413" y="164"/>
+		
+		<s:List id="equipment" dragEnabled="false" width="270" height="230" skinClass="style.Skin_CrotaBasicList" dataProvider="{dataCollection}" itemRenderer="sceneModule.view.colonMan.view.ColonManEquipmentItemRender" x="521" y="132">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="6" requestedRowCount="5" horizontalGap="1" verticalGap="1"/>
+			</s:layout>
+		</s:List>
+	</s:SkinnableContainer>
+</win:BaseWindow>

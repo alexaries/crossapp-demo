@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="212" height="100" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source='assets/copyScene/zhiminTips.png'/>
+	<component:CrotaBasicLabel
+		styleName="ROLEINFOTEXTFORMAT"
+		id="l_juntuan_name"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','nfzmTT_tips')}"
+		x="11" y="10" width="192" height="64"/>
+</s:Group>

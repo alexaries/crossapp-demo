@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NPC任务控件 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="783" height="161"
+		 creationComplete="initApp()" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.CommonTools;
+			
+			[Bindable]
+			public var data:Object;
+			
+			private function initApp():void{
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- npc头像 -->
+	<mx:Image id="img_ncp" y="-30"/>
+	<component:CrotaBasicLabel
+		id="l_ncp_name" 
+		fontWeight="bold" textAlign="center"
+		styleName="TASK_NPC_NAMW"
+		width="130" bottom="4" />
+	<!-- 任务具体内容-->
+	<s:Group id="task_content"  x="124" y="15"/>
+	<component:CrotaBasicLabel
+		id="shopBtn" 
+		visible="{this.data.funType == ProConst.DAOJUDIAN || this.data.funType == ProConst.FANGJUDIAN || this.data.funType == ProConst.WUQIDIAN}"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnV_jrsd')}" useHandCursor="true" buttonMode="true"
+		fontSize="12" color="#ffd400"
+		x="194" y="140" textDecoration="underline"/>
+	<component:CrotaBasicLabel
+		id="htBtn" 
+		visible="{this.data.funType == 5}"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntnV_cwsd')}" useHandCursor="true" buttonMode="true"
+		fontSize="12" color="#ffd400"
+		x="194" y="140" textDecoration="underline"/>
+	<component:CrotaBasicLabel
+		id="closeBtn" 
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_gb')}" useHandCursor="true" buttonMode="true"
+		fontSize="12" color="#ffd400"
+		x="{this.data.funType == ProConst.DAOJUDIAN ? 480 : 480}" y="140" textDecoration="underline"/>
+</s:Group>

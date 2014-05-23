@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="init()"
+				width="173" height="418"  autoDrawBackground="false"
+				 xmlns:component="component.*" xmlns:util="util.*">
+	 
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.tavern.event.XingYunWOWItemRenderEvent;
+			
+			import util.CommonTools;
+			
+			private function init():void
+			{
+				this.dispatchEvent(new XingYunWOWItemRenderEvent(XingYunWOWItemRenderEvent.XINGYUNWOWINFOITEMRENDER_EVENT,this,true));
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<mx:Image source='assets/pet/PetTavPartbg.png' x="1" y="-3" />
+	<mx:Image id="img" source="{'assets/Image/petImg/'+(data.icon)+'.png'}" x="18" y="40" width="130" height="170" />
+	<mx:Image source="{'assets/pet/start'+(data.color+1)+'.png'}" x="64" y="173"/>
+	
+	
+	<component:CrotaBasicLabel textAlign="right" text="{'Lv.'+data.level}"   verticalAlign="middle" styleName="RANKINGFORMAT1" x="123" y="26" width="25" height="12"/>
+	
+	<component:CrotaBasicLabel textAlign="center" text="{data.wName}" color="{CommonTools.get_wowName_color(data.color)}" verticalAlign="middle" styleName="RANKINGFORMAT1" x="18" y="26" width="99" height="12"/>
+	<component:CrotaBasicLabel id="xyz" textAlign="center" text="{data.wGuYongXingYunZhi}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="75" y="196" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('tavern','wxyIR_xyz')}"  verticalAlign="middle" styleName="RANKINGFORMAT1" x="109" y="196" width="36" height="12"/>
+	
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wSkill}" 
+		color="0x76EE00" 
+		styleName="RANKINGFORMAT1"  
+		verticalAlign="middle" 
+		x="42" y="227" width="87" height="12"/>
+	<component:CrotaBasicLabel
+		textAlign="center" 
+		text="{data.wTexing}" 
+		color="0x76EE00"  
+		verticalAlign="middle" 
+		styleName="RANKINGFORMAT1" 
+		x="42" y="252" width="87" height="12"/>
+		
+		
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wWugong}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="42" y="277" width="36" height="12"/>
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wGongsu}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="42" y="301" width="36" height="12"/>
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wWufang}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="42" y="325" width="36" height="12"/>
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wMingzhong}" 
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="42" y="349" width="36" height="12"/>
+	
+		
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wMogong}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="118" y="277" width="36" height="12"/>
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wBaoji}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="118" y="301" width="36" height="12"/>
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wMofang}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="118" y="325" width="36" height="12"/>
+	<component:CrotaBasicLabel 
+		textAlign="center" 
+		text="{data.wShanbi}"  
+		verticalAlign="middle" 
+		styleName="MAINMENUROLEFONT12bebebe" 
+		x="118" y="349" width="36" height="12"/>
+
+	<!--<component:CrotaBasicLabel textAlign="center" text="{data.wSkill}" color="0x76EE00" styleName="RANKINGFORMAT1"  verticalAlign="middle"   x="43" y="230" width="74" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wTexing}" color="0x76EE00"  verticalAlign="middle" styleName="RANKINGFORMAT1" x="44" y="248" width="74" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wLiliang}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="264" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wZhili}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="123" y="263" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wNaili}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="284" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wMinjie}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="123" y="283" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wWugong}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="301" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wMogong}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="123" y="300" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wGongsu}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="319" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wBaoji}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="123" y="318" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wWufang}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="336" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wMofang}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="123" y="336" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wMingzhong}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="355" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wShanbi}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="123" y="356" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.wKaobao}"  verticalAlign="middle" styleName="MAINMENUROLEFONT12bebebe" x="40" y="373" width="36" height="12"/>-->
+	
+	<util:CommonButton id="employBtn" width="73" height="30" x="58" y="379" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('tavern','wIR_gy')}" />
+</s:ItemRenderer>
+

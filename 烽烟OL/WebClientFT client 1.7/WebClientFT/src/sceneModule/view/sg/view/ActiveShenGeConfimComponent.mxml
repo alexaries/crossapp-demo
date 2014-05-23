@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:win="managers.*"
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="120" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			public static var NAME:String = 'sceneModule.view.sg.view.ActiveShenGeConfimComponent';
+			[Bindable]
+			private var selfdata:Object = data;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source='assets/ncorps/union_alert.png' maintainAspectRatio="false" width="300" height="120"/>
+	<component:CrotaBasicLabel
+		id="l_msg" 
+		text="{(CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','asgCC_sfxh'))+selfdata.reqDQ+(CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','asgCC_dqzjh'))+'【'+selfdata.sgName+'】?'}"
+		styleName="MAINMENUROLEFONT12a18c70"
+		x="10" y="28" width="278" textAlign="center"/>
+	<component:CrotaBasicCheckBox x="96" y="50" id="showBox"/>
+	<component:CrotaBasicLabel
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','asgCC_bztx')}"
+		styleName="MAINMENUROLEFONT12a18c70"
+		x="126" y="55" width="167" textAlign="left"/>
+	<util:CommonButton id="rBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','asgCC_jh')}" 
+			  skinClass="style.Skin_CrotaCommonButton2"
+			  x="58" y="75"/>
+	<util:CommonButton id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','asgCC_qx')}" 
+			  skinClass="style.Skin_CrotaCommonButton2"
+			  x="155" y="75"/>
+</win:BaseWindow>

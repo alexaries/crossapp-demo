@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="388"
+	width="610"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaPackRedButton;
+			
+			import util.CommonTools;
+			public static const NAME:String = "sceneModule.view.copyScene.view.ColonizationBattleByCopySceneComponent";
+			
+			[Bindable]
+			private var selfdata:Object = data;
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+//				source="{WebClient.host+'assets/battle/coloBattleBg.png'}"
+				CommonTools.make_bitmap(colorBattBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_battle_suc', 'colorBatt_Bg');
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%"
+		width="100%">
+		<mx:Image id="colorBattBg" />
+		<mx:Image source="{'assets/battle/camp'+selfdata.camp+'.png'}"
+			x="310"
+			y="116" />
+		<util:CommonButton id="closeWin"
+			skinClass="style.Skin_CrotaCloseButton111"
+			x="537"
+			y="23" />
+		<util:CommonButton id="coloBtn"
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_ql')}"
+			skinClass="style.Skin_CrotaPackRedButton"
+			x="257"
+			y="331" />
+	</s:SkinnableContainer>
+</win:BaseWindow>

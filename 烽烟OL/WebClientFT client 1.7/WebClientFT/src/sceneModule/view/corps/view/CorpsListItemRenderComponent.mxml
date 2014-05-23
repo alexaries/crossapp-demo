@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<util:CrotaBasicBaseItemRender xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="790" height="49" xmlns:view="sceneModule.view.skill.view.*" xmlns:component="component.*" xmlns:util="util.*"
+				creationComplete="show_data()" >
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropsEvent;
+			import sceneModule.view.corps.mediator.NCorpsOutMediator;
+			
+			public static const BASE_PATH:String = "assets/ncorps/junhui/";
+
+			
+			private function show_data():void{
+				viewInfoBtn.addEventListener(MouseEvent.CLICK,view_info);
+				functionBtn.addEventListener(MouseEvent.CLICK,join_union);
+				this.addEventListener(FlexEvent.DATA_CHANGE,data_change);
+				
+				refresh_view();
+			}
+			
+			private function data_change(e:FlexEvent):void{
+				refresh_view();
+			}
+			
+			private function refresh_view():void{
+				union_name.text = data.corpsName;
+				union_leader.text = data.corpsChief;
+				union_level.text = 'Lv.'+data.corpsLevel;
+				union_member_num.text = data.curNum+'/'+data.maxNum;
+				if (data.is_in_union) {
+					if(NCorpsOutMediator.UNION_POS_LEADER == SystemDataModel.roleInfo.roleCorpsInfo.corpsPosition){
+						if (data.corpsName == SystemDataModel.roleInfo.roleCorpsInfo.corpsName) {
+							functionBtn.label = CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_sjjh');
+						}
+						else {
+							functionBtn.label = CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','clIRC_ljtf');
+						}
+					}
+					else {
+						functionBtn.label = CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_lxtz');
+					}
+				}
+				else{
+					functionBtn.label = data.onApplication?CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','clIRC_qxsq'):CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_sqjr');
+				}
+				img_junhui.SkillImage = BASE_PATH + data.corpsImg + ".png";
+			}
+			
+			private function view_info(e:MouseEvent):void{
+				this.dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_SHOW_UNIONT_INFO,data,true));
+			}
+			private function join_union(e:MouseEvent):void{
+				this.dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_JOIN_UNION,data,true));
+			}
+			
+		]]>
+	</fx:Script>
+	<view:ImageComponent id="img_junhui" x="19" y="4" width="42" height="42"/>
+	<component:CrotaBasicLabel id="union_name" 
+							   x="65" y="0" width="180" textAlign="center" 
+							   fontSize="12" color="{data.corpRunningFlag ? 0xffffff : 0xa18c70}"
+							   height="50" verticalAlign="middle"/>
+	<component:CrotaBasicLabel id="union_leader" 
+							   x="208" y="0" width="152" textAlign="center" 
+							   fontSize="12" color="{data.corpRunningFlag ? 0xffffff : 0xa18c70}"
+							   height="50" verticalAlign="middle"/>
+	<component:CrotaBasicLabel id="union_level" 
+							   x="367" y="0" width="106" textAlign="center" 
+							   fontSize="12" color="{data.corpRunningFlag ? 0xffffff : 0xa18c70}"
+							   height="50" verticalAlign="middle"/>
+	<component:CrotaBasicLabel id="union_member_num" 
+							   x="497" y="0" width="86" textAlign="center" 
+							   fontSize="12" color="{data.corpRunningFlag ? 0xffffff : 0xa18c70}"
+							   height="50" verticalAlign="middle"/>
+	<util:CommonButton id="viewInfoBtn" 
+			  skinClass="style.Skin_CrotaCommonButton3" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','clIRC_ck')}" 
+			  x="612" y="11" width="78"/>
+	<util:CommonButton id="functionBtn" 
+			  skinClass="style.Skin_CrotaCommonButton3"
+			  x="692" y="11" width="78"/>
+</util:CrotaBasicBaseItemRender>

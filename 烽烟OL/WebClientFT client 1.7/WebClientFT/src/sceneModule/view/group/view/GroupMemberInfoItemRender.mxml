@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="200" height="61"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*" xmlns:ui="sceneModule.view.ui.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.group.command.GroupMessage;
+			
+			import util.CommonTools;
+			private var posArr:Array = [new Point(38,3),new Point(38,19),new Point(38,36),new Point(21,3),new Point(21,19),new Point(21,36),new Point(4,3),new Point(4,19),new Point(4,36)];
+			
+			public function getPosX(p:int):int{
+				return (posArr[p-1] as Point).x;
+			}
+			
+			public function getPosY(p:int):int{
+				return (posArr[p-1] as Point).y;
+			}
+			
+			public function getTiBtnVisible(id:int,leaderFlag:Boolean):Boolean{
+				if(id != SystemDataModel.roleId && leaderFlag){
+					return true;
+				}
+				return false;
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bgImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","zdtr_info_bg");
+				CommonTools.make_bitmap(greenImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","zd_green");
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="bgImg"/>
+	<mx:Image id="greenImg" width="20" height="20" x="{getPosX(data.pos)}" y="{getPosY(data.pos)}"/>
+	<component:CrotaBasicLabel text="{'Lv.'+data.level}" styleName="RANKINGFORMAT1" x="66" y="24" width="103" textAlign="left"/>
+	<component:CrotaBasicLabel text="{data.roleName}" styleName="RANKINGFORMAT1" x="66" y="44" width="103" textAlign="left"/>
+	<ui:CrotaIIBasicBitmapButton id="tiBtn" 
+								 package_id="ui_group"
+								 visible="{getTiBtnVisible(data.roleId,SystemDataModel.mainGroupInfo.isLeader)}"
+								 x="156" y="20"
+								 click="{GroupMessage.getInstance().tiRen(data.roleId)}"
+								 nomal="ti_nomal" over="ti_over" down="ti_down" disable="ti_disable"/>
+</s:ItemRenderer>

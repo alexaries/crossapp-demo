@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				  creationComplete="basewindow1_creationCompleteHandler(event)"    
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:win="managers.*" width="713" height="500" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaLiJiZhiMinButton;
+			
+			import util.CommonTools;
+			
+			public static var NAME:String = 'sceneModule.view.colonMan.view.MainColoPrivilegeFuBenColoInfoWindow';
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// source="{WebClient.host+'assets/coloMan/coloFuBenImg.png'}"
+//				source="{WebClient.host+'assets/coloMan/coloFuBenImgTop.png'}"
+				CommonTools.make_bitmap(colorFubeImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'colroFuben_Bg');
+				CommonTools.make_bitmap(colorTopImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'colroTop_Bg');
+				
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image  id="colorFubeImg"  />
+		<mx:Image id="colorTopImg"  x="45" y="-20"/>
+		<component:CrotaBasicLabel id="page_info"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   x="385" y="378"
+								   textAlign="center" width="45"/>
+		<util:CommonButton id="closeBtnWin" skinClass="style.Skin_CrotaCloseButton111" x="642" y="24"/>
+		<component:CrotaBasicChatTextArea  borderStyle="none" id="iTextArea"  rollOver="this.iTextArea.setFocus();" editable="false" 
+										  selectable="false" 
+										  focusEnabled="false" focusAlpha="0" wordWrap="false" 
+										  height="300" width="518" backgroundAlpha="0.0" 
+										  styleName="SKILLINFOTEXTFORMAT" x="98" bottom="103"/>
+		<util:CommonButton id="lijiBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','csiC_ljzm')}" skinClass="style.Skin_CrotaPackRedButton" x="498" y="367"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

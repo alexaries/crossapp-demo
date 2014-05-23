@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" alpha.disabled="0.5" alpha.disabledAndSelected="0.5">
+	<fx:Metadata><![CDATA[
+		[HostComponent("spark.components.CheckBox")]
+	]]></fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+		<s:State name="upAndSelected"/>
+		<s:State name="overAndSelected"/>
+		<s:State name="downAndSelected"/>
+		<s:State name="disabledAndSelected"/>
+	</s:states>
+	<!--<s:Group id="group1" x="0" x.disabled="-1" x.disabledAndSelected="-1" x.down="-1" x.downAndSelected="0" x.over="-1" x.overAndSelected="-1" x.upAndSelected="-1" y="0" y.disabled="1" y.disabledAndSelected="1" y.down="1" y.downAndSelected="0" y.over="1" y.overAndSelected="1" y.up="1" y.upAndSelected="1">
+		<s:Rect height="12" height.disabled="16" height.disabledAndSelected="16" height.down="15" height.downAndSelected="15" height.over="16" height.overAndSelected="16" height.up="16" height.upAndSelected="16" id="rect2" width="12" width.disabled="16" width.disabledAndSelected="16" width.down="16" width.downAndSelected="16" width.over="16" width.overAndSelected="16" width.up="16" width.upAndSelected="16" x="0" x.disabled="0.5" x.disabledAndSelected="0.5" x.down="0.5" x.downAndSelected="0.5" x.over="0.5" x.overAndSelected="0.5" x.up="0.5" x.upAndSelected="0.5" y="1" y.disabled="0.5" y.disabledAndSelected="0.5" y.down="0.5" y.downAndSelected="0.5" y.over="0.5" y.overAndSelected="0.5" y.up="0.5" y.upAndSelected="0.5">
+			<s:stroke>
+				<s:SolidColorStroke color="0x5380D0"/>
+			</s:stroke>
+			<s:fill>
+				<s:SolidColor color="0xFFFFFF" color.down="0xDEEBFF" color.downAndSelected="0xDEEBFF" color.over="0xEBF4FF" color.overAndSelected="0xEBF4FF"/>
+			</s:fill>
+		</s:Rect>
+		<s:Rect height="12" height.down="15" height.downAndSelected="15" id="rect1" includeIn="downAndSelected, down" width="10" width.down="13" width.downAndSelected="13" x="1" x.down="2.5" x.downAndSelected="2.5" y="2" y.down="1.5" y.downAndSelected="1.5">
+			<s:stroke>
+				<s:LinearGradientStroke rotation="90">
+					<s:GradientEntry alpha="0.25" color="0x5380D0"/>
+					<s:GradientEntry alpha="0" color="0x5380D0"/>
+				</s:LinearGradientStroke>
+			</s:stroke>
+		</s:Rect>
+		<s:Path data="M 3 8 l 2 2 l 6 -7" height.disabledAndSelected="9.769" height.downAndSelected="8.929" height.overAndSelected="9.769" height.upAndSelected="9.769" id="path1" includeIn="upAndSelected, overAndSelected, downAndSelected, disabledAndSelected" width.disabledAndSelected="11.077" width.downAndSelected="11.077" width.overAndSelected="11.077" width.upAndSelected="11.077" x.disabledAndSelected="1.615" x.downAndSelected="1.615" x.overAndSelected="1.615" x.upAndSelected="1.615" y.disabledAndSelected="-0.692" y.downAndSelected="-0.786" y.overAndSelected="-0.692" y.upAndSelected="-0.692">
+			<s:stroke>
+				<s:SolidColorStroke caps="square" color="0x3D5D92" weight="2"/>
+			</s:stroke>
+		</s:Path>
+	</s:Group>-->
+	<!--<s:RichText color="0x2b4381" id="labelDisplay" text="(Label)" textAlign="start" verticalAlign="middle" x="0" y="3"></s:RichText>-->
+	<s:BitmapImage id="bitmapimage1" includeIn="up" source="@Embed('/embed/ui_n/无选择.png')" x="0" y="0"/>
+	<s:BitmapImage id="bitmapimage2" includeIn="over" source="@Embed('/embed/ui_n/无选择.png')" x="0" y="0"/>
+	<s:BitmapImage id="bitmapimage3" includeIn="down" source="@Embed('/embed/ui_n/无选择.png')" x="0" y="0"/>
+	<s:BitmapImage id="bitmapimage4" includeIn="disabled" source="@Embed('/embed/ui_n/无选择.png')" x="0" y="0"/>
+	<s:BitmapImage id="bitmapimage5" includeIn="upAndSelected" source="@Embed('/embed/ui_n/有选择.png')" x="0" y="0"/>
+	<s:BitmapImage id="bitmapimage6" includeIn="overAndSelected" source="@Embed('/embed/ui_n/有选择.png')" x="0" y="0"/>
+	<s:BitmapImage id="bitmapimage7" includeIn="downAndSelected" source="@Embed('/embed/ui_n/有选择.png')" x="0" y="0"/>
+	<s:BitmapImage includeIn="disabledAndSelected" x="0" y="0" source="@Embed('/embed/ui_n/有选择.png')" id="bitmapimage8"/>
+	<!--<s:transitions>
+		<s:Transition autoReverse="true" fromState="disabledAndSelected" toState="up">
+			<s:Parallel>
+				<s:Parallel target="{group1}">
+					<s:Move autoCenterTransform="true" duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{path1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{bitmapimage1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{bitmapimage8}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>-->
+</s:Skin>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="351" height="181" 
+		 xmlns:component="component.*"
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			
+			import managers.WindowManager;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			import util.CommonTools;
+			
+			private const GROUP_CREATE_NAME:int = 1;
+			
+			private var flag1:Boolean = true;
+			
+			
+			public static const NAME:String = "sceneModule.view.corps.view.ModifyCorpsAnnounComponent";
+			
+			private function init():void{
+				clokeBtn.addEventListener(MouseEvent.CLICK,on_close);
+				cancelBtn.addEventListener(MouseEvent.CLICK,on_close);
+				modifyBtn.addEventListener(MouseEvent.CLICK,on_change_gonggao);
+				this.addEventListener(Event.ADDED_TO_STAGE, init_view);
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_change_announ_bg');
+				
+				init_view();
+			}
+			
+			private function init_view(e:Event=null):void{
+				announTextArea.text = "";
+				on_changeing();
+			}
+			
+			private function on_close(e:MouseEvent=null):void{
+				WindowManager.closeWindow(NAME);
+			}
+			
+			private function on_change_gonggao(e:MouseEvent):void{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_ON_CHANGE_GONGGAO,{msg:announTextArea.text},true));
+			}
+			
+			private function on_changeing(e:TextOperationEvent = null):void{
+				if("" == announTextArea.text){
+					modifyBtn.enabled = false;
+				}
+				else{
+					modifyBtn.enabled = true;
+				}
+				if(null != e){
+					CommonTools.onMailContentChange(e);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		<!-- <mx:Image source="ncorps/cropsupdategg.png" x="0" y="0"/> -->
+		<mx:Image id="img_bg" />
+		<component:CrotaBasicTextArea 
+			id="announTextArea" 
+			styleName="SKILLINFOTEXTFORMAT" 
+			x="22" y="68" changing="on_changeing(event)" 
+			maxChars="100" width="309" height="55"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCloseButton111" id="clokeBtn" x="318" y="7"/>
+		<component:CrotaBasicLabel
+			 styleName="MAINMENUROLEFONT13b95c4e"
+			 x="10" y="130" width="100%" textAlign="center"
+			 text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','mcaC_tips')}"/>
+	</s:SkinnableContainer>
+	<util:CommonButton id="modifyBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" skinClass="style.Skin_CrotaCommonButton2" x="53" y="144"/>
+	<util:CommonButton id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_fh')}" skinClass="style.Skin_CrotaCommonButton2" x="180" y="144"/>
+</win:BaseWindow>

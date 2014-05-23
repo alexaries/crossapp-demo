@@ -1,0 +1,894 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>		
+<data>			
+	<module id="common">	
+		<info id="comm_qd" value="确定" />
+		<info id="comm_qx" value="取消" />
+		<info id="comm_fh" value="返回" />
+		<info id="comm_ji" value="级" />
+		<info id="comm_jy" value="经验" />
+		<info id="comm_qh" value="注魂" />
+		<info id="comm_hc" value="锻造" />
+		<info id="comm_sxzy" value="继承" />
+		<info id="comm_wu" value="无" />
+		<info id="comm_xz" value="卸下"/>
+	</module>			
+	<module id="sg">	
+		<info id="sgTT_yjh" value="已学会" />
+		<info id="sgTT_wjh" value="未学会" />
+		<info id="sgTT_djxq" value="学习等级" />
+		<info id="sgTT_xy" value="需缴纳" />
+		<info id="sgTT_dqz" value="两白银" />
+		<info id="sgTT_jhsg" value="学费" />
+		<info id="asgCC_sfxh" value="是否缴纳" />
+		<info id="asgCC_dqzjh" value="两白银学习" />
+		<info id="asgCC_bztx" value="别再提示了！" />
+		<info id="asgCC_jh" value="学习" />
+		<info id="asgCC_qx" value="取消" />
+	</module>		
+	<module id="battle">	
+		<info id="bfIRM_fdpz" value="翻牌要用" />
+		<info id="bfIRM_zhuan" value="元宝" />
+		<info id="bfIRM_isfan" value="确定要翻" />
+		<info id="bfIRM_xxts" value="系统消息" />
+		<info id="bfM_iszz" value="是否再次征战？" />
+		<info id="bfM_cxzz" value="重新征战" />
+		<info id="bfM_tcfb" value="返回城池" />
+		<info id="bfM_xt" value="系统" />
+		<info id="bcW_zmgl" value="殖民管理" />
+		<info id="bfSW_fhcj" value="返回城池" />
+		<info id="briTC_sm" value="兵力" />
+		<info id="briTC_nl" value="怒气" />
+		<info id="briTC_zt" value="状态" />
+	</module>		
+	<module id="blacksmith">	
+		<info id="hcCM_hhcg" value="锻造成功" />
+		<info id="hcCM_isdrop" value="确定扔掉物品吗" />
+		<info id="hcCM_sxjb" value="所需铜板" />
+		<info id="hcCM_qhdj" value="铸魂等级" />
+		<info id="msfCM_djbz2" value="等级还没到吖～2级就可以使用了!" />
+		<info id="msfCM_djbz11" value="等级还没到吖～11级就可以使用了!" />
+		<info id="1" value="等级还没到吖～21级就可以使用了!" />
+		<info id="msfCM_djbz30" value="等级还没到吖～30级就可以使用了!" />
+		<info id="msfCM_djbz14" value="等级还没到吖～14级就可以使用了!" />
+		<info id="sbM_djbz2" value="等级还没到吖～2级就可以使用了!" />
+		<info id="zyCM_xtzy" value="一样的装备可不能继承呦！" />
+		<info id="zyCM_lxzy" value="不同类型的装备可不能继承呦！" />
+		<info id="zyCM_zycg" value="恭喜！继承成功啦！" />
+		<info id="xqCM_sfj" value="是否将" />
+		<info id="xqCM_xqz" value="(宝石)镶嵌在" />
+		<info id="xqCM_iszc" value="是否卸下" />
+		<info id="xqCM_de" value="的" />
+		<info id="xqCM_xyxh" value=" 需要缴纳铜板:" />
+		<info id="hcC_zb" value="装备" />
+		<info id="hcC_bs" value="宝石" />
+		<info id="hcC_qc" value="铸魂等级和镶嵌中的宝石将会在锻造后被删除" />
+		<info id="hcC_hc" value="锻造" />
+		<info id="msEG_zlbb" value="整理背包" />
+		<info id="msFC_bsxq" value="宝石镶嵌" />
+		<info id="zyC_jbbz" value="铜板不足" />
+	</module>		
+	<module id="buff">	
+		<info id="bTT_sysj" value="剩余时间:" />
+		<info id="bTT_sysl" value="剩余数量:" />
+	</module>	
+
+	<module id="calendar">	
+		<info id="ciM_lqdes" value="恭喜！领取成功啦，物品已经放在您的背包中！" />
+		<info id="ciC_sd" value="10积分兑换" />
+		<info id="ciC_lsd" value="60积分兑换" />
+		<info id="ciC_bsd" value="80积分兑换" />
+		<info id="ciC_ybd" value="100积分兑换" />
+		<info id="ciC_ywc" value="已完成任务" />
+		<info id="ciC_wwc" value="未完成任务" />
+	</module>	
+
+	<module id="chat">	
+		<info id="cwM_ckzl" value="查看资料" />
+		<info id="cwM_jwhy" value="加为好友" />
+		<info id="cwM_sl" value="私聊" />
+		<info id="cwM_fzmc" value="复制名称" />
+		<info id="cwM_hmd" value="黑名单" />
+		<info id="cwM_zh" value="综合" />
+		<info id="cwM_sj" value="全服" />
+		<info id="cwM_dq" value="当前" />
+		<info id="cwM_jt" value="国家" />
+		<info id="cwM_gm" value="GM" />
+		<info id="cwM_tg" value="[系统消息]" />
+		<info id="cwM_sm" value="[系统消息]为了更多的玩家，请别再刷屏了哦！" />
+
+		<info id="mtotcWM_zy" value="兵种：" />
+
+		<info id="atbwC_ts" value="提示：" />
+		<info id="atbwC_xts" value="提示：不同兵种在战斗中会互相克制，请留意兵种的配合哦！" />
+		<info id="atbwC_sfj" value="是否将" />
+		<info id="atbwC_ishmd" value="加入黑名单？" />
+		<info id="atbwC_bzts" value="不再提示" />
+
+		<info id="mtotcW_hky" value="您还可以输入" />
+		<info id="mtotcW_gz" value="个字" />
+		<info id="mtotcW_hkyo" value="您还可以输入100个字" />
+		<info id="mtotcW_dj" value="等级" />
+		<info id="mtotcW_y" value="与" />
+		<info id="mtotcW_zzsl" value="正在私聊" />
+		<info id="mtotcW_fs" value="发送" />
+		<info id="mtotcW_schy" value="删除好友" />
+        <info id="mtotcW_jbxz" value="等级不足!7级才可以聊天呦!" />		
+		<info id="mtotcW_jtxz" value="国家聊天功能暂未开放!" />
+	</module>	
+
+
+	<module id="colonMan">	
+		<info id="cmeIRM_sfff" value="是否花费" />
+		<info id="cmeIRM_zktbb" value="元宝开通背包格子！" />
+
+		<info id="mcmWM_js" value="额外增加守卫武将50点精神，持续6个小时，左键点击后启动此功能，花费100元宝" />
+		<info id="mcmWM_ll" value="额外增加守卫武将50点力量，持续6个小时，左键点击后启动此功能，花费100元宝" />
+		<info id="mcmWM_mj" value="额外增加守卫武将50点敏捷，持续6个小时，左键点击后启动此功能，花费100元宝" />
+		<info id="mcmWM_nl" value="额外增加守卫武将50点耐力，持续6个小时，左键点击后启动此功能，花费100元宝" />
+		<info id="mcmWM_zl" value="额外增加守卫武将50点智力，持续6个小时，左键点击后启动此功能，花费100元宝" />
+		<info id="mcmWM_isll" value="是否花费100元宝购买力量药剂？" />
+		<info id="mcmWM_isjs" value="是否花费100元宝购买精神药剂？" />
+		<info id="mcmWM_ismj" value="是否花费100元宝购买敏捷药剂？" />
+		<info id="mcmWM_isnl" value="是否花费100元宝购买耐力药剂？" />
+		<info id="mcmWM_iszl" value="是否花费100元宝购买智力药剂？" />
+		<info id="mcmWM_iswb" value="购买所有药剂需要花费500元宝，是否购买？" />
+
+		<info id="mcpfbWM_djbz13" value="等级没到吖～13级就可以使用了!" />
+
+		<info id="cmeTT_dcjr" value="立即讨伐该封地，胜利了的话，地盘就是你的！" />
+
+		<info id="mcpfbIR_zmfb" value="封地名称" />
+		<info id="mcpfbIR_zmjt" value="归属国家" />
+		<info id="mcpfbIR_zmlz" value="封地太守" />
+
+		<info id="mcmW_gmsy" value="购买所有" />
+		<info id="mcmW_sqsy" value="拾取所有" />
+		<info id="mcmW_zmjj" value="封地收税" />
+
+	</module>	
+
+	<module id="copyScene">	
+		<info id="cbbcSC_ql" value="讨伐" />
+
+		<info id="cbbcSC_knsb" value="无法进入邪恶封地,需要先加入一个国家" />
+		<info id="cbbcSC_yxsb" value="无法进入地狱封地,需要先加入一个国家" />
+		<info id="cbbcSC_wfyx" value="当前国家等级不足,无法进入地狱封地" />
+		<info id="cbbcSC_djbz25" value="等级不够吖～25级才能使用!" />
+		<info id="cbbcSC_djbz36" value="等级不够吖～36级才能使用!" />
+		<info id="cbbcSC_sd" value="扫荡" />
+		<info id="cbbcSC_jtz" value="主公" />
+		<info id="cbbcSC_jtm" value="国家" />
+		<info id="cbbcSC_pt" value="普通" />
+		<info id="cbbcSC_kn" value="邪恶" />
+		<info id="cbbcSC_yx" value="地狱" />
+
+		<info id="nfzmTT_tips" value="立即讨伐该封地，胜利了的话，地盘就是你的！！" />
+	</module>	
+
+	<module id="corps">	
+		<info id="nceM_zcy" value="元宝,增加30个国家子民上线" />
+		<info id="nceM_dqjy" value="当前经验：" />
+		<info id="nceM_cgjh" value="成功修改国号" />
+		<info id="nceM_tips" value="提示:千万不要小瞧国家技能吖！切忌切忌！" />
+
+		<info id="ciC_ybd" value="100积分兑换" />
+		<info id="ciC_ywc" value="已完成任务" />
+		<info id="ciC_wwc" value="未完成任务" />
+
+		<info id="nckjM_kjmc" value="国家技能：" />
+		<info id="nckjM_kjdj" value="技能等级 : " />
+		<info id="nckjM_sjtj" value="升级要求 : " />
+		<info id="nckjM_dqjd" value="目前进度 : " />
+		<info id="nckjM_byx" value="国家等级不允许" />
+		<info id="nckjM_jxcg" value="捐献成功" />
+		<info id="nckjM_tips" value="提示:去完成国家任务，才能获得更多捐献点数！" />
+
+		<info id="ncmM_ssnr" value="请输入搜索内容" />
+		<info id="ncmM_isyj" value="是否要将主公位禅让给" />
+		<info id="ncmM_sfj" value="是否将" />
+		<info id="ncmM_tcjt" value="开除国籍" />
+		<info id="ncmM_islk" value="是否确认想脱离本国籍，如果离开本国籍，原有封地将全部失去！)" />
+		<info id="ncmM_fhlb" value="返回列表" />
+		<info id="ncmM_lkjt" value="脱离国籍" />
+
+		<info id="ncoM_swkf" value="该系统还没开放吖" />
+		<info id="ncoM_xggg" value="修改通告" />
+		<info id="ncoM_cgjt" value="落户请求书已提交完毕" />
+		<info id="ncoM_hcl" value="提示:讲武堂对你的帮助非常大！" />
+		<info id="ncoM_cgcj" value="揭竿起义成功！" />
+		<info id="ncoM_tips" value="提示:只有打下这个城池，你才有权使用城池的传送门！" />
+		<info id="ncoM_ishf" value="是否要花费100000铜板揭竿起义？" />
+		<info id="ncoM_jbbg" value="您拥有的铜板不足100000，无法揭竿起义！" />
+		<info id="ncoM_cjjt" value="创建国家" />
+		<info id="ncoM_cgxg" value="成功修改国家通告" />
+		<info id="ncoM_cgqx" value="成功取消落户申请" />
+
+		<info id="ciC_sjjh" value="升级帅旗" />
+		<info id="ciC_lxtz" value="联系主公" />
+		<info id="ciC_sqjr" value="申请落户" />
+
+		<info id="clIRC_ljtf" value="立即讨伐" />
+		<info id="clIRC_qxsq" value="取消申请" />
+		<info id="clIRC_ck" value="查看" />
+
+		<info id="cmIR_yl" value="丞相" />
+		<info id="cmIR_cm" value="大将军" />
+		<info id="cmIR_ys" value="大都督" />
+		<info id="cmIR_xb" value="新兵" />
+		<info id="cmIR_fsyj" value="发送邮件" />
+		<info id="cmIR_yjtz" value="主公禅位" />
+		<info id="cmIR_zx" value="在线" />
+
+		<info id="cmapIR_jj" value="拒绝" />
+		<info id="cmapIR_pz" value="批准" />
+
+		<info id="ctdC_jxjb" value="捐献铜板" />
+		<info id="ctdC_jxz" value="捐献元宝" />
+
+		<info id="ccC_sxjb" value="揭竿起义需要消耗100000铜板" />
+
+		<info id="mcaC_tips" value="提示：宝石是亲兵最重要的物品之一！" />
+
+		<info id="mcbC_tips" value="提示：讨伐封地必须是在自己的国家内！" />
+
+		<info id="nca_tips1" value="军旗的等级高了，就可以容纳更多子民！" />
+		<info id="nca_zdgb" value="秒后自动关闭" />
+
+		<info id="ncev_sjjd" value="升级进度" />
+		<info id="ncev_jttz" value="1000铜板接替主公" />
+		<info id="ncev_xgdq" value="修改国家帅旗" />
+		<info id="ncev_zjsx" value="元宝,增加30子民上限" />
+		<info id="ncev_jw" value="接位" />
+		<info id="ncev_xgjh" value="修改帅旗" />
+		<info id="ncev_csr" value="开国者" />
+		<info id="ncev_rq" value="日期" />
+		<info id="ncev_tz" value="主公" />
+
+		<info id="ncev_ys" value="页数" />
+
+		<info id="ncmv_cz" value="查找" />
+
+		<info id="ncrv_szdj" value="设置等级" />
+
+		<info id="ncov_jtcj" value="国家成就" />
+
+		<info id="ncrov_cy" value="子民" />
+		<info id="ncrov_jtxx" value="国家信息" />
+		<info id="ncrov_kj" value="国家技能" />
+		<info id="ncrov_sqlb" value="申请列表" />
+	</module>	
+
+	<module id="friend">	
+		<info id="mmfV_tjhy" value="添加好友" />
+		<info id="mmfV_xgxq" value="修改心情" />
+
+		<info id="nfIR_ckzl" value="查看个人资料" />
+		<info id="nfIR_yqjr" value="邀请加入本国" />
+		<info id="nfIR_jrh" value="加入黑名单" />
+		<info id="nfIR_nc" value="昵称" />
+		<info id="nfIR_ssjt" value="所属国家" />
+		<info id="nfIR_dqcj" value="当前城池" />
+		<info id="nfIR_xq" value="心情" />
+
+		<info id="nflua_gxyx" value="恭喜一下" />
+		<info id="nflua_bsyx" value="鄙视一下" />
+	</module>	
+
+	<module id="gaAndsd">	
+		<info id="gjTTM_hd" value="获得" />
+		<info id="gjTTM_zl" value="战力：" />
+
+		<info id="sdWM_sdls" value="扫荡次数不可以是0吖！" />
+
+		<info id="gjcC_zzmx" value="您正在挂机中,是否取消挂机?" />
+
+		<info id="gas_gjsj" value="挂机时间:" />
+		<info id="gas_mxz" value="挂机ing..." />
+
+		<info id="gas_jy" value="邪恶" />
+		<info id="gas_lxh" value="次,消耗" />
+		<info id="gas_hl" value="活力" />
+		<info id="gas_xhhl" value="消耗完剩餘活力" />
+
+		<info id="sogjc_ljgh" value="累计获得:" />
+		<info id="sogjc_mxsj" value="挂机时间:" />
+		<info id="sogjc_mxxxz" value="挂机ing..." />
+
+	</module>	
+
+	<module id="GameTopUI">	
+		<info id="gtuIR_lqwd" value="还没到时间领取!" />
+
+		<info id="gtuIR_ljlq" value="立即领取" />
+	</module>	
+
+	<module id="GM">	
+		<info id="gmC_bgms" value="BUG阐述" />
+	</module>	
+
+	<module id="guanjue">	
+		<info id="gjWM_gx" value="恭喜，您的官爵提升啦！" />
+		<info id="gjWM_jlcg" value="获取俸禄成功！" />
+		<info id="gjWM_ylq" value="已领取" />
+
+		<info id="swIR_sfgx" value="是否贡献" />
+		<info id="swIR_ljsw" value="元宝立即获得声望？" />
+		<info id="swIR_gxcg" value="贡献成功，威望增加" />
+		<info id="swIR_sjcg" value="上交成功，威望增加" />
+		<info id="swIR_yjgx" value="今天已经贡献" />
+		<info id="swIR_yxsj" value="今天已经上交" />
+
+		<info id="gjW_dqjw" value="当前爵位：" />
+		<info id="gjW_dqww" value="当前威望：" />
+		<info id="gjW_dqjl" value="当前俸禄：" />
+		<info id="gjW_xjjw" value="下级爵位：" />
+		<info id="gjW_sxww" value="所需威望：" />
+		<info id="gjW_xzdj" value="所需等级：" />
+		<info id="gjW_sxzj" value="属性增加：" />
+		<info id="gjW_jb" value="铜板 " />
+		<info id="gjW_dq" value="白银 " />
+		<info id="gjW_lqfl" value="领取俸禄" />
+		<info id="gjW_sj" value="升爵" />
+		<info id="gjW_jx" value="捐献" />
+
+		<info id="swIR_sl" value="数量:" />
+		<info id="swIR_jl" value="奖励:" />
+		<info id="swIR_ww" value="威望" />
+		<info id="swIR_sj" value="上交" />
+		<info id="swIR_gx" value="贡献" />
+	</module>	
+
+	<module id="jingji">	
+		<info id="jjCM_15kq" value="要15级才能使用这个功能吖！" />
+
+		<info id="jjWM_djbz" value="VIP等级不足！" />
+		<info id="jjWM_zjcs" value="元宝增加挑战次数！" />
+
+		<info id="jjjsW_sl" value="挑战胜利!" />
+		<info id="jjjsW_sb" value="挑战失败!" />
+
+		<info id="jjW_lqsj" value="领取时间:" />
+		<info id="jjW_zj" value="增加" />
+		<info id="jjp_sfsy" value="是否确定适用"/>
+		<info id="jjp_zxh" value="元宝清除CD"/>
+		<info id="jjrir_mc" value="名称:"/>
+		<info id="jjrir_dj" value="等级:"/>
+		<info id="jjrir_pm" value="排名:"/>
+	</module>	
+
+	<module id="mail">	
+		<info id="mmm_sjwk" value="收件者不能为空！" />
+		<info id="mmm_btwk" value="邮件标题不能为空！" />
+		<info id="mmm_qb" value="全部" />
+		<info id="mmm_wj" value="玩家" />
+		<info id="mmm_bc" value="保存" />
+		<info id="mmm_sre" value="您还可以输入200个字" />
+		<info id="mmm_myyj" value="您的邮箱里没有相关邮件!" />
+
+		<info id="mmm_scdy" value="删除当页" />
+		<info id="mmm_xjyj" value="新建邮件" />
+		<info id="mmm_fxyh" value="发新用户：" />
+		<info id="mmm_xhbt" value="邮件标题：" />
+		<info id="mmm_hf" value="回复" />
+		<info id="mmm_sc" value="删除" />
+		<info id="mmm_gb" value="关闭" />
+	</module>	
+
+	<module id="mainMenu">	
+		<info id="mm_dj" value="道具" />
+		<info id="mm_djqj" value="等级不够吖，7级以后才开放!" />
+		<info id="mm_djej" value="等级不够吖，12级以后才开放!" />
+		<info id="mm_grdj" value="个人等级" />
+	</module>	
+
+	<module id="nmall">	
+		<info id="nmIV_gm" value="购买" />
+		<info id="nmIV_zgm" value="元宝购买" />
+	</module>	
+
+	<module id="pack">	
+		<info id="mmeCM_ktbb" value="元宝开通背包！" />
+		<info id="mmeCM_sy" value="使用" />
+		<info id="mmeCM_dq" value="丢弃" />
+		<info id="mmeCM_zs" value="展示" />
+		<info id="mmeCM_qddq" value="你确定丢弃该物品？" />
+
+		<info id="mmeGM_rw" value="任务" />
+
+		<info id="mmebiT_sqbd" value="拾取绑定" />
+		<info id="mmebiT_zbbd" value="装备绑定" />
+		<info id="mmebiT_bbd" value="不绑定" />
+		<info id="mmebiT_bd" value="绑定" />
+		<info id="mmebiT_wbd" value="未绑定" />
+		<info id="mmebiT_mj" value="卖价：" />
+		<info id="mmebiT_cf" value="拆分" />
+		<info id="mmebiT_fzlj" value="复制链接" />
+
+		<info id="mmeG_dkck" value="打开仓库" />
+		<info id="mmeG_tjp" value="铁匠铺" />
+		<info id="mmeG_zlbl" value="整理背包" />
+
+		<info id="mmesC_srcf" value="请输入您要拆分的物品数量" />
+
+		<info id="mmeT_ll" value="1力量" />
+		<info id="mmeT_mj" value="2敏捷" />
+		<info id="mmeT_nl" value="3耐力" />
+		<info id="mmeT_zl" value="4智力" />
+		<info id="mmeT_kb" value="5抗暴" />
+		<info id="mmeT_hp" value="兵力" />
+		<info id="mmeT_gj" value="武力" />
+		<info id="mmeT_mg" value="谋略" />
+		<info id="mmeT_wf" value="防御" />
+		<info id="mmeT_mf" value="智力" />
+		<info id="mmeT_gs" value="攻速" />
+		<info id="mmeT_mz" value="命中" />
+		<info id="mmeT_bj" value="暴击" />
+		<info id="mmeT_sb" value="闪避" />
+		<info id="mmeT_wxz" value="无限制" />
+		<info id="mmeT_zs" value="战士" />
+		<info id="mmeT_fashi" value="法师" />
+		<info id="mmeT_ms" value="牧师" />
+		<info id="mmeT_yx" value="游侠" />
+		<info id="mmeT_xb" value="胸部" />
+		<info id="mmeT_tuib" value="腿部" />
+		<info id="mmeT_toub" value="头部" />
+		<info id="mmeT_shoub" value="手部" />
+		<info id="mmeT_jb" value="脚部" />
+		<info id="mmeT_jinb" value="颈部" />
+		<info id="mmeT_sz" value="手指" />
+		<info id="mmeT_jianb" value="肩部" />
+		<info id="mmeT_ds" value="单手" />
+		<info id="mmeT_ss" value="双手" />
+		<info id="mmeT_yj" value="药剂" />
+		<info id="mmeT_bs" value="宝石" />
+		<info id="mmeT_qt" value="其他" />
+		<info id="mmeT_rwwp" value="任务物品" />
+		<info id="mmeT_cl" value="材料" />
+		<info id="mmeT_xl" value="项链" />
+		<info id="mmeT_jz" value="戒指" />
+		<info id="mmeT_zs" value="主手" />
+		<info id="mmeT_fushou" value="副手" />
+		<info id="mmeT_sxdj" value="所需等级：" />
+		<info id="mmeT_lx" value="类型：" />
+		<info id="mmeT_nj" value="耐久：" />
+		<info id="mmeT_fy" value="防御：" />
+		<info id="mmeT_sm" value="说明：" />
+		<info id="mmeT_xqsx" value="宝石镶嵌属性" />
+		<info id="mmeT_fanji" value="反击" />
+		<info id="mmeT_pojia" value="破甲" />
+	</module>	
+
+	<module id="pet">	
+		<info id="mpiCM_qddq" value="确定丢弃" />
+
+		<info id="pCM_sx" value="属性" />
+		<info id="pCM_py" value="训练" />
+		<info id="pCM_bz" value="布阵" />
+		<info id="pCM_cc" value="继承" />
+		<info id="pCM_tj" value="图鉴" />
+		<info id="pCM_djbz10" value="等级不够吖!10级开放这个功能!" />
+		<info id="pCM_djbz4" value="等级不够吖!4级开放这个功能!" />
+
+		<info id="ptjC_fyl" value="防御类" />
+		<info id="ptjC_wgl" value="武力类" />
+		<info id="ptjC_mgl" value="谋略类" />
+
+		<info id="mpnC_qsr" value="请输入要修改的名称：" />
+		<info id="mpnC_bc8" value="不超过8个字" />
+		<info id="mpnC_cclb" value="兵团列表" />
+		<info id="mpnC_qyz" value="『启用』" />
+
+		<info id="ppyC_xl" value="训练" />
+		<info id="ppyC_wc" value="维持" />
+		<info id="ppyC_th" value="替换" />
+		<info id="ppyC_jb2000" value="铜板2000" />
+		<info id="ppyC_z2" value="2元宝" />
+		<info id="ppyC_z5" value="5元宝" />
+		<info id="ppyC_z10" value="10元宝" />
+
+		<info id="ppC_fh" value="重组" />
+		<info id="ppC_gm" value="改名" />
+        <info id="ppC_dq" value="丢弃" />		
+		<info id="psIR_sj" value="升级" />
+
+		<info id="ptjC_zh" value="召唤" />
+	</module>	
+
+	<module id="ranking">	
+		<info id="mmRC_grdj" value="个人等级" />
+		<info id="mmRC_grzl" value="个人战力" />
+		<info id="mmRC_jtdj" value="国家等级" />
+		<info id="mmRC_jtzl" value="国家战力" />
+		<info id="mmRC_wdpm" value="我的排名：" />
+
+		<info id="mmrsIR_nd" value="您的" />
+		<info id="mmrsIR_sdpf" value="所得评分为：" />
+	</module>	
+
+	<module id="reward">	
+		<info id="rdogIR_lqfl" value="领取俸禄：" />
+		<info id="rdogIR_tl" value="体力" />
+
+		<info id="rdogIR_lqcg" value="领取奖励成功！" />
+
+		<info id="rdogIR_lq" value="领取" />
+
+		<info id="rdogIR_fycg" value="防御成功" />
+		<info id="rdogIR_bwsb" value="保卫失败" />
+
+		<info id="rIR_djrq" value="敌军入侵" />
+		<info id="rIR_wrq" value="无入侵" />
+		<info id="rIR_tgcs" value="当日封地通关次数为：" />
+		<info id="rIR_c" value="次" />
+		<info id="rIR_czsr" value="当日城池总收入：" />
+		<info id="rIR_ss" value="税收：" />
+		<info id="rIR_lqjj" value="领取奖金" />
+
+		<info id="rrC_sffh" value="是否缴纳10元宝重组军团" />
+
+		<info id="rrC_lqsy" value="领取所有" />
+	</module>	
+
+	<module id="role">	
+		<info id="mriC_js" value="角色" />
+		<info id="mriC_sz" value="时装" />
+		<info id="mriC_cw" value="国家" />
+		<info id="mriC_zy" value="阵营" />
+		<info id="mriC_jjpm" value="经济排名" />
+
+		<info id="nmrsC_mz" value="名字" />
+	</module>	
+
+	<module id="roleInfo">	
+		<info id="rnsM_gjz" value="挂机ing..." />
+		<info id="rnsM_dqdj" value="当前等级为" />
+		<info id="rnsM_xyj" value="，下一级还需要" />
+		<info id="rnsM_dqjb" value="当前铜板:" />
+		<info id="rnsM_viphy" value="VIP会员等级为" />
+		<info id="rnsM_smz" value="生命值：" />
+		<info id="rnsM_hlz" value="每半小时恢复5点行动力!" />
+		<info id="rnsM_sses" value="每次恢复40点行动力需要缴纳20元宝" />
+		<info id="rnsM_hlyw" value="今天的行动力购买次数已用完" />
+		<info id="rnsM_sshl" value="每次恢复40点行动力需要" />
+		<info id="rnsM_zbz" value="您的元宝不足,请充值哦!" />
+
+		<info id="risC_cz" value="充值" />
+		<info id="risC_gj" value="挂机" />
+	</module>	
+
+	<module id="shop">	
+		<info id="nsIC_hg" value="回购" />
+		<info id="nsIC_gm" value="购买" />
+		<info id="nsIC_sjgm" value="提示:双击物品，即可成功购买" />
+		<info id="nsIC_sjhg" value="提示:双击物品，即可回购成功" />
+
+		<info id="rnsM_viphy" value="VIP会员等级为" />
+		<info id="rnsM_smz" value="兵力：" />
+		<info id="rnsM_hlz" value="行动力：" />
+		<info id="risC_cz" value="充值" />
+		<info id="risC_gj" value="挂机" />
+
+		<info id="nsIC_sjcs" value="提示:双击即可出售物品！" />
+	</module>	
+
+	<module id="skill">	
+		<info id="mmbsCM_xhwb" value="消耗500元宝开启该技能槽" />
+		<info id="mmbsCM_sfwb" value="是否缴纳500元宝开通技能槽！" />
+		<info id="mmbsCM_dy" value="第一技能" />
+		<info id="mmbsCM_de" value="第二技能" />
+		<info id="mmbsCM_ds" value="第三技能" />
+	</module>	
+
+	<module id="sysOpe">	
+		<info id="soWM_sqjr" value="申请加入您的国家" />
+		<info id="soWM_jtsq" value="申请落户" />
+		<info id="soWM_js" value="接受" />
+		<info id="soWM_jj" value="拒绝" />
+	</module>	
+
+	<module id="target">	
+		<info id="ttWM_1" value="第一天" />
+		<info id="ttWM_2" value="第二天" />
+		<info id="ttWM_3" value="第三天" />
+		<info id="ttWM_4" value="第四天" />
+		<info id="ttWM_5" value="第五天" />
+		<info id="ttWM_6" value="第六天" />
+		<info id="ttWM_7" value="第七天" />
+		<info id="ttWM_8" value="第八天" />
+		<info id="ttWM_9" value="第九天" />
+		<info id="ttWM_0" value="第十天" />
+
+		<info id="ttWM_rwjl" value="小提示:任务奖励..." />
+	</module>	
+
+	<module id="task">	
+		<info id="mmtM_zzrw" value="追踪任务" />
+		<info id="mmtM_fqzz" value="放弃任务" />
+		<info id="mmtM_sffq" value="是否确认放弃任务？" />
+
+		<info id="ntnM_kjs" value="（可接受）" />
+		<info id="ntnM_wwc" value="（未完成）" />
+		<info id="ntnM_kwc" value="（可完成）" />
+		<info id="ntnM_zhi" value="[支]" />
+		<info id="ntnM_zhu" value="[主]" />
+		<info id="ntnM_hdjl" value="获得奖励：" />
+		<info id="ntnM_jyz" value="经验值" />
+		<info id="ntnM_hd" value="好的" />
+		<info id="ntnM_wc" value="完成" />
+
+		<info id="tM_fbwf" value="封地内无法寻路..." />
+
+		<info id="tniM_des" value="防身的器具是闯荡三国必备的，您手头的铜板对于一件初级防具而言很充裕。" />
+		<info id="tniM_rwdh" value="任务对话" />
+		<info id="tniM_rwjl" value="任务奖励" />
+
+		<info id="mmtC_dqrw" value="当前任务" />
+		<info id="mmtC_kjrw" value="可接任务" />
+		<info id="mmtC_zzrw" value="追踪任务" />
+
+		<info id="ntniV_rwsm" value="任务说明" />
+
+		<info id="ntnpV_rwjl" value="[任务奖励]" />
+		<info id="ntnpV_jb" value="铜板：" />
+		<info id="ntnpV_z" value="元宝：" />
+		<info id="ntnpV_jy" value="经验：" />
+		<info id="ntnpV_jsrw" value="接受任务" />
+
+		<info id="ntntIV_tmnr" value="任务条目内容" />
+
+		<info id="ntnV_jrsd" value="进入商店" />
+		<info id="ntnV_cwsd" value="雇佣兵商店" />
+
+		<info id="TA_xry" value="小人魚穴洞" />
+
+		<info id="tC_yjrw" value="已接任务" />
+	</module>	
+
+	<module id="tavern">	
+		<info id="wtC_sxcg" value="刷新雇佣兵成功！" />
+		<info id="wtCM_xdcw" value="元宝查看新的雇佣兵？" />
+
+		<info id="wxyIR_xyzbz" value="声望值不足！" />
+
+		<info id="wIR_gy" value="雇佣" />
+
+		<info id="wtC_xyzdh" value="声望值兑换" />
+		<info id="wtC_ljsx" value="立即刷新" />
+
+		<info id="wTT_tx" value="特性" />
+		<info id="wTT_jn" value="技能" />
+
+		<info id="wxyIR_xyz" value="声望值" />
+	</module>	
+
+	<module id="territory">	
+		<info id="aWM_sf80" value="是否花费80元宝提前完成双修，获得" />
+		<info id="aWM_sf120" value="是否花费120元宝提前完成双修，获得" />
+		<info id="aWM_sf160" value="是否花费160元宝提前完成双修，获得" />
+		<info id="aWM_sf240" value="是否花费240元宝提前完成双修，获得" />
+		<info id="aWM_wfjs" value="您的元宝不足或可用次数为0，无法提前完成双修！" />
+		<info id="aWM_yks" value="已开始双修" />
+		<info id="aWM_csyw" value="今日双修次数已用完，无法提前完成" />
+		<info id="aWM_zbz" value="您的元宝不足，无法提前完成双修" />
+		<info id="aWM_dbz" value="您的元宝不足並且今日次数已用完" />
+
+		<info id="lWM_yks" value="已开始扛麻袋" />
+		<info id="lWM_sf80" value="是否缴纳80元宝找人帮你扛麻袋，获得" />
+		<info id="lWM_sf120" value="是否缴纳120元宝找人帮你扛麻袋，获得" />
+		<info id="lWM_sf160" value="是否缴纳160元宝找人帮你扛麻袋，获得" />
+		<info id="lWM_sf240" value="是否缴纳240元宝找人帮你扛麻袋，获得" />
+		<info id="lWM_wfwj" value="您的元宝不足或者剩余次数为0，无法立即停止扛麻袋" />
+		<info id="lWM_wfds" value="今日次数已用完，无法偷走麻袋" />
+		<info id="lWM_zhd" value="元宝，获得" />
+		<info id="lWM_zbz" value="您的元宝不足，无法偷走麻袋" />
+		<info id="lWM_dbz" value="您的元宝不足並且今日次数已用完" />
+
+		<info id="tWM_sxdj" value=" 所需等级:" />
+		<info id="tWM_bz16" value="等级不足!角色16级开放该功能!" />
+
+		<info id="tWM_xlsy" value="双修剩余时间：" />
+		<info id="tWM_khd" value="点击提前完成双休可直接获得经验" />
+		<info id="tWM_xgms" value="找更多人双修，可增加更多经验" />
+		<info id="tWM_8hd" value="8小时/获得" />
+		<info id="tWM_12hd" value="12小时/获得" />
+		<info id="tWM_16hd" value="16小时/获得" />
+		<info id="tWM_24hd" value="24小时/获得" />
+		<info id="tWM_jjtip" value="提前完成双修：快速获得经验" />
+		<info id="tWM_xlzj" value="可通过双修来增加亲兵的经验。" />
+		<info id="tWM_xh" value="消耗" />
+		<info id="tWM_zjs" value="元宝提前完成双修，获得" />
+		<info id="tWM_jrhk" value="今日还可以提前完成" />
+		<info id="tWM_ci" value="次" />
+		<info id="tWM_gbts" value="关闭消费提示" />
+		<info id="tWM_jjxl" value="提前完成" />
+		<info id="tWM_jsxl" value="提前完成双修" />
+		<info id="tWM_ksxl" value="开始双修" />
+
+		<info id="ljW_sysj" value="剩余时间：00:00:00" />
+		<info id="ljW_hdjb" value="点击招人帮忙，立即获得金币" />
+		<info id="ljW_xgms" value="选择不同麻袋，可提高收益哦" />
+		<info id="ljW_zjjb" value="可通过扛麻袋来增加自己的铜板收益。" />
+		<info id="ljW_dstip" value="偷走麻袋：可立即获得铜板" />
+		<info id="ljW_sds" value="元宝贿赂看守，偷走麻袋获得" />
+		<info id="ljW_hkds" value="今日还可以偷麻袋" />
+		<info id="ljW_dscj" value="偷麻袋" />
+		<info id="ljW_ljwc" value="招人帮忙" />
+		<info id="ljW_kswj" value="开始干活" />
+	</module>	
+
+	<module id="ui">	
+		<info id="nplM_djxl" value="点击后将自动寻路到这里" />
+
+		<info id="csiC_dqgw" value="当前怪物数量：" />
+		<info id="csiC_zmjt" value="所属国家:" />
+		<info id="csiC_zmjf" value="本地太守:" />
+		<info id="csiC_ljzm" value="立即讨伐" />
+		<info id="csiC_ge" value="个" />
+
+		<info id="gWL_wzdl" value="我知道了" />
+
+		<info id="lpC_zyjj" value="资源加载中" />
+
+		<info id="ljW_hkds" value="今日还可以偷麻袋" />
+		<info id="ljW_dscj" value="偷麻袋" />
+		<info id="ljW_ljwc" value="招人帮忙" />
+		<info id="ljW_kswj" value="开始干活" />
+	</module>	
+
+	<module id="wordmap">	
+		<info id="smM_cs" value="（城池）" />
+		<info id="smM_ssjt" value="所属国家 ：" />
+		<info id="smM_mrsy" value="每日收税 ：" />
+		<info id="smM_ghcs" value="个锻造石" />
+		<info id="smM_ssjf" value="本地太守 ：" />
+		<info id="smM_tgjl" value="通关奖励：每通关" />
+		<info id="smM_chd" value="次可获得1个锻造石" />
+		<info id="smM_jrsy" value="今日收税 ：" />
+	</module>	
+
+	<module id="zhanxing">	
+		<info id="bpxyIR_jts" value="将吸纳" />
+		<info id="bpxyIR_jhd" value="将获得" />
+
+		<info id="zxWM_mz" value="蒋干" />
+		<info id="zxWM_tz" value="鲁肃" />
+		<info id="zxWM_yz" value="徐庶" />
+		<info id="zxWM_hj" value="司马懿" />
+		<info id="zxWM_sm" value="诸葛亮" />
+		<info id="zxWM_tbfy" value="锦囊费用" />
+
+		<info id="fwW_ljtb" value="立即求计" />
+		<info id="fwW_yjhc" value="一鍵合成" />
+		<info id="hccC_ts" value="吸纳" />
+		<info id="jfeIR_jf" value="声望值" />
+		<info id="jfeIR_dh" value="兑换" />
+
+		<info id="xyTT_ms" value="描述:" />
+		<info id="xyTT_jy" value="经验:" />
+		<info id="xyTT_jg" value="价格:" />
+
+		<info id="zxW_yjtb" value="一键求计" />
+		<info id="zxW_yjsq" value="一键拾取" />
+		<info id="zxW_yjmc" value="一键卖出" />
+		<info id="zxW_fwbb" value="锦囊背包" />
+		<info id="zxW_mzbx" value="蒋干" />
+		<info id="zxW_tzbx" value="鲁肃" />
+		<info id="zxW_yzbx" value="徐庶" />
+		<info id="zxW_jzbx" value="司马懿" />
+		<info id="zxW_smbx" value="诸葛亮" />
+		<info id="zxW_jfdh" value="声望兑换" />
+
+		<info id="spv_npcshop" value="NPC-商店" />
+		<info id="spv_wttj" value="问题提交" />
+	</module>	
+
+	<module id="service">	
+		<info id="css_fwqzd" value="网络中断了哦，请刷新浏览器重新登录！" />
+	</module>	
+
+	<module id="commontool">	
+		<info id="ct_tip1" value="国家拥有专属的技能" />
+		<info id="ct_tip2" value="帅旗等级越高,国家子民就可以更多！" />
+		<info id="ct_tip3" value="大家都为国家做捐献,国家就越来越强大！" />
+		<info id="ct_tip4" value="国家等级越高，大家能占领的城池就越多！" />
+
+		<info id="ct_tian" value="天" />
+		<info id="ct_shi" value="时" />
+		<info id="ct_fen" value="分" />
+		<info id="ct_miao" value="秒" />
+		<info id="ct_tips" value="提示 : " />
+	</module>	
+
+	<module id="pray">	
+		<info id="pW_zc" value="元宝/次" />
+		<info id="pW_qd" value="盗墓" />
+		<info id="pW_lqsj" value="冷却时间：" />
+		<info id="pW_sm" value="周二、周五中午10点~15点盗墓奖励数值翻倍" />
+		<info id="pWM_zbz" value="您的元宝不足，请充值后继续盗墓！" />
+	</module>	
+
+	<module id="resource">	
+		<info id="ac_jzfb" value="加载封地资源" />
+		<info id="ac_jzsc" value="加载素材" />
+
+		<info id="mmeT_pojia" value="消耗品" />
+	</module>	
+
+	<module id="model">	
+		<info id="pc_xhp" value="消耗品" />
+		<info id="pc_yx" value="粗糙的" />
+		<info id="pc_jl" value="普通的" />
+		<info id="pc_ss" value="优秀的" />
+		<info id="pc_cs" value="完美的" />
+		<info id="pc_nt" value="传说的" />
+	</module>	
+
+	<module id="logonModule">	
+		<info id="lpM_sxllq" value="请刷新浏览器重新进入" />
+		<info id="lpM_ljfwq" value="链接服务器中，请稍候..." />
+	</module>	
+
+	<module id="loader">	
+		<info id="uilpbv_zyjz" value="资源加载中" />
+	</module>	
+
+	<module id="createRoleModule">	
+		<info id="crV_zyjs" value="兵种介绍" />
+	</module>	
+	<module id="group">	
+		<info id="gr_lkdw" value="离开队伍" />
+		<info id="gr_kszd" value="开始战斗" />
+		<info id="gr_jr" value="加入" />
+		<info id="gr_zjdjxz" value="点击选择" />
+	</module>	
+	<module id="ui_main_game">	
+	    <info id="umg_ph" value="排行榜"/>	
+	    <info id="umg_yj" value="邮件"/>	
+	    <info id="umg_soundon" value="声音"/>	
+	    <info id="umg_soundoff" value="静音"/>	
+	    <info id="umg_hide" value="清屏"/>	
+	    <info id="umg_show" value="显示"/>	
+	</module>	
+	<module id="text_mail">	
+	    <info id="tm_hot" value="热卖"/>	
+	    <info id="tm_sy" value="所有"/>	
+	    <info id="tm_qh" value="铸魂"/>	
+	    <info id="tm_cw" value="军团"/>	
+	    <info id="tm_yj" value="原价:"/>	
+	    <info id="tm_xj" value="现价:"/>	
+	</module>	
+	<module id="text_pata">	
+	    <info id="ptwm_hf" value="花费"/>	
+	    <info id="ptwm_hfdes" value="元宝刷新八卦阵,回到1层.今日还可刷新"/>	
+	    <info id="ptwm_ci" value="次"/>	
+	    <info id="ptwm_sfhf" value="是否花费"/>	
+	    <info id="ptwm_sfhfdes" value="元宝刷新八卦阵"/>	
+	    <info id="ppw_di" value="第"/>	
+	    <info id="ppw_ceng" value="层"/>	
+	    <info id="ppw_kstz" value="开始冲阵"/>	
+	    <info id="ppw_sx" value="刷新"/>	
+	    <info id="ppw_zdpt" value="自动冲阵"/>	
+	</module>	
+	<module id="text_gr_bat">	
+	    <info id="cir_zz" value="讨伐"/><!--征戰-->	
+	    <info id="cir_bmzz" value="报名讨伐"/><!--報名征戰-->	
+	    <info id="cir_zzz" value="讨伐中"/><!--征戰中-->	
+	    <info id="gbic_di" value="第"/>	
+	    <info id="gbic_djlj" value="轮结束时间"/>	
+	    <info id="pbic_jf" value="积分:"/>	
+	    <info id="pbic_cz" value="参战"/>	
+	    <info id="gcc_ssld" value="所属城池"/><!--所屬領地-->	
+	    <info id="gcc_czlb" value="城池列表"/><!--城鎮列表-->	
+	    <info id="gcc_jtxy" value="求雨"/><!--軍團許願-->	
+	    <info id="ldc_lqjl" value="领取奖励"/><!--領取獎勵-->	
+	    <info id="xyc_sy" value="使用"/><!--使用-->	
+	</module>	
+	<module id="text_guaji">	
+	    <info id="sogjc_gjz" value="挂机中..."/>	
+	    <info id="sogjc_gjsj" value="挂机时间:"/>	
+	    <info id="sogjc_hdjy" value="获得经验:"/>	
+	</module>	
+	<module id="text_levelup">	
+	    <info id="cilu_levelup" value="级"/>	
+	</module>	
+</data>		

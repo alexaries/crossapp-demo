@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group creationComplete="init()"
+	height="353"
+	width="822"
+	x="70"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	y="-24">
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.MediatorRegisterCorpsEvent;
+			
+			import util.CommonTools;
+			
+			private function init():void {
+				this.dispatchEvent(new MediatorRegisterCorpsEvent(MediatorRegisterCorpsEvent.MR_CORPS_KEJI, this, true));
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_keji_bg');
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- <mx:Image source="assets/ncorps/union_keji.png" /> -->
+	<mx:Image id="img_bg"
+		x="-1"
+		y="1" />
+	<component:CrotaBasicLabel height="142"
+		id="l_des"
+		styleName="MAINMENUROLEFONT12a18c70"
+		textAlign="left"
+		width="312"
+		x="451"
+		y="143" />
+	<s:List id="technologyList"
+		itemRenderer="sceneModule.view.corps.view.CorpsTechnologyItemRender"
+		skinClass="style.Skin_CrotaBasicList"
+		x="10"
+		y="14">
+		<s:layout>
+			<s:TileLayout horizontalGap="0"
+				requestedColumnCount="4"
+				verticalGap="0" />
+		</s:layout>
+	</s:List>
+	<!-- 页数信息 -->
+	<component:CrotaBasicLabel id="page_info"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_ys')}"
+		textAlign="center"
+		width="38"
+		x="193"
+		y="332" />
+	<util:CommonButton id="pre_btn"
+		skinClass="style.Skin_CrotaBasicPreButton"
+		x="175"
+		y="329" />
+	<util:CommonButton id="next_btn"
+		skinClass="style.Skin_CrotaBasicNextButton"
+		x="230"
+		y="329" />
+	<mx:Image id="img_selected_icon"
+		x="453"
+		y="22" />
+	<mx:Image id="wkq_icon"
+		mouseChildren="false"
+		mouseEnabled="false"
+		source='assets/ncorps/weikaiqi.png'
+		visible="false"
+		x="464"
+		y="38" />
+	<component:CrotaBasicLabel id="l_name"
+		styleName="MAINMENUROLEFONT12a18c70"
+		textAlign="left"
+		x="569"
+		y="49" />
+	<component:CrotaBasicLabel id="l_level"
+		styleName="MAINMENUROLEFONT12a18c70"
+		textAlign="left"
+		x="569"
+		y="84" />
+	<component:CrotaBasicLabel id="l_request_level"
+		styleName="MAINMENUROLEFONT12a18c70"
+		textAlign="left"
+		visible="false"
+		x="569"
+		y="89" />
+	<component:CrotaBasicLabel id="l_progress"
+		styleName="MAINMENUROLEFONT12a18c70"
+		textAlign="left"
+		visible="false"
+		x="569"
+		y="114" />
+	<!--<util:CommonButton id="btn_money"
+		 x="485" y="316"
+		 skinClass="style.Skin_CrotaCommonButton3"
+		 label="捐献金币"/>
+		 <util:CommonButton id="btn_default"
+		 x="681" y="316"
+		 skinClass="style.Skin_CrotaCommonButton3"
+		 label="默认捐献"/>-->
+</s:Group>

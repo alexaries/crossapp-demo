@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group creationComplete="group1_creationCompleteHandler(event)"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import util.ByteArrayUtil;
+			
+			private const TIMECONST:int = 1000;
+			private var timer:Timer;
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void {
+				timer = new Timer(TIMECONST);
+				timer.addEventListener(TimerEvent.TIMER, onTimer);
+			}
+			
+			public function onSetTime(t:int):void {
+				if (t > 0) {
+					SystemDataModel.strWinTime = t;
+					if (!timer.running) {
+						timer.start();
+					}
+				} else {
+					SystemDataModel.strWinTime = 0;
+					timer.stop();
+				}
+			}
+			
+			private function onTimer(evt:TimerEvent):void {
+				SystemDataModel.strWinTime -= 1;
+				if (SystemDataModel.strWinTime <= 0) {
+					timer.stop();
+				}
+			}
+			
+			public function getColor(t:int):uint {
+				if (t >= (SystemDataModel.roleInfo.roletype + 1) * 20 * 60 + int(SystemDataModel.roleInfo.level * 0.5)) {
+					return 0xff0000;
+				}
+				return 0x00ff12;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<util:CommonButton buttonMode="true"
+		id="openStrBtn"
+		skinClass="style.Skin_CrotaQiangHuaButton"
+		useHandCursor="true" />
+	<component:CrotaBasicLabel color="{getColor(SystemDataModel.strWinTime)}"
+		fontSize="12"
+		id="time_tile"
+		text="{ByteArrayUtil.formateTimeToString2(SystemDataModel.strWinTime*1000)}"
+		textAlign="center"
+		visible="false"
+		width="71"
+		x="2"
+		y="62" />
+</s:Group>

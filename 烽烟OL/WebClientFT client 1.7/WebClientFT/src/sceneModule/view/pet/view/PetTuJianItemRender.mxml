@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="240" height="29">
+	<fx:Script>
+		<![CDATA[
+			private function getColor(quly:int,flag:Boolean):uint{
+				if(flag){
+					switch(quly){
+						case 0:
+							return 0x6fca26;
+							break;
+						case 1:
+							return 0x2b50de;
+							break;
+						case 2:
+							return 0xc526ca;
+							break;
+						case 3:
+							return 0xf5b300;
+							break;
+						case 4:
+							return 0xef7700;
+							break;
+						case 5:
+							return 0xe02a0f;
+							break;
+					}
+					return 0xffffff;
+				}else{
+					return 0x666666;
+				}
+				return 0xffffff;
+			}
+		]]>
+	</fx:Script>
+	<s:Label visible="{!data.viewFlag}" text="NEW!" fontSize="12" color="#ff0000" y="5" fontWeight="bold"/>
+	<s:Label text="{'Lv.'+data.petLevel+'   '+data.petName}" fontSize="12" color="{getColor(data.quality,data.viewFlag)}" width="180" x="30" y="19"/>
+	<mx:Image source="{'assets/pet/start'+(data.quality+1)+'.png'}" x="170" y="17"/>
+</s:ItemRenderer>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" width="760" height="36" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import util.CommonTools;
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(vipBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_vip","vip_item");
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="vipBg"/>
+	<component:CrotaBasicLabel text="{data.funcname}" fontSize="14" color="#ffffff" textAlign="center" width="130" x="0" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip1cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="130" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip2cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="193" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip3cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="256" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip4cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="319" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip5cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="382" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip6cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="445" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip7cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="508" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip8cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="571" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip9cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="634" y="18"/>
+	<component:CrotaBasicLabel text="{data.vip10cnt}" fontSize="14" fontWeight="bold" color="#ffffff" textAlign="center" width="63" x="697" y="18"/>
+</s:ItemRenderer>

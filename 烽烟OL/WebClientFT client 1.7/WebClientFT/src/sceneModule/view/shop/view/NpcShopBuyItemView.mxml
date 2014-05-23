@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="342" height="150" xmlns:component="component.*" creationComplete="initApp()">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import sceneModule.model.vo.itemsVo.PackgeInfoVo;
+			import sceneModule.model.vo.packageVo.PackageItem;
+			import sceneModule.model.vo.shopVo.MainShopInfoVo;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaBasicNumericStepperButton;
+			import style.Skin_CrotaShopBuyItemBackage;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			[Bindable]
+			public var packageItem:PackageItem;
+			
+			[Bindable]
+			private var buyItemNum:int;
+			
+			public function setBuyItemNum(value:int):void{
+				buyItemNum = value;
+			}
+			
+			public function getBuyItemNum():int{
+				return buyItemNum;
+			}
+			
+			public function setCurObjData(value:PackageItem):void{
+				packageItem = value;
+			}
+			public function setEquipmentUrl(s:int,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+			private function initApp():void{
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:SkinnableContainer width="100%" height="100%" skinClass="style.Skin_CrotaShopBuyItemBackage">
+		<!--<mx:Image width="342" height="150" source="assets/ui/12334.jpg"/>-->
+		<mx:Image source="@Embed('assets/ui/buyItem2.png')" width="48" height="48" x="40" y="41" maintainAspectRatio="false"/>
+		<mx:Image x="44" y="45" id="imgItemIcon" width="40" height="40" source="{setEquipmentUrl(packageItem.icon,packageItem.type)}"/>
+		<component:CrotaBasicLabel text="{packageItem.name}" x="38" y="17" styleName="MAINMENUROLEFONT13a18c70"/>
+		<component:CrotaBasicLabel text="商品单价：" x="139" y="36" styleName="MAINMENUROLEFONT13a18c70"/>
+		<mx:Image x="212" y="74" width="17" height="17" id="goldIcon" source='assets/ui/coin.png'/>
+		<component:CrotaBasicLabel id="everyPrice" text="{packageItem.buyingRateCoin}" x="238" y="37" styleName="MAINMENUROLEFONT13a18c70"/>
+		<component:CrotaBasicLabel id="buyNum" x="238" y="57" text="{buyItemNum}" styleName="MAINMENUROLEFONT13a18c70"/>
+		<component:CrotaBasicLabel text="商品数量：" x="139" y="56" styleName="MAINMENUROLEFONT13a18c70"/>
+		<component:CrotaBasicLabel text="商品总价：" x="139" y="76" styleName="MAINMENUROLEFONT13a18c70"/>
+		<mx:Image x="212" y="34" width="17" height="17" id="goldIconCount" source='assets/ui/coin.png'/>
+		<component:CrotaBasicLabel text="{buyItemNum*packageItem.buyingRateCoin}" x="238" y="77" styleName="MAINMENUROLEFONT13a18c70" id="CommodityPrice"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCommonButton4" id="subBtn" label="购买" x="50" y="98" width="103" height="47"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCommonButton4" id="canBtn" label="取消" x="188" y="98" width="103" height="47"/>
+	</s:SkinnableContainer>
+</s:Group>

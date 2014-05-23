@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="200" height="30" creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*" fontWeight="normal">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+			}
+			
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:HGroup horizontalAlign="left" gap="1" >
+		<component:CrotaBasicLabel  text="{data.desc}"
+								   color="#61B152"
+								   x="5" y="58" fontSize="12" 
+								   textAlign="left" width="130" height="27"/>
+		<component:CrotaBasicLabel  text="{'（'+data.now+'/'+data.total+'）'}"
+								   color="#61B152"
+								   x="5" y="58" fontSize="12" 
+								   textAlign="left" width="50" height="25" />
+		<component:CrotaBasicLabel  text="{'+'+data.activity}"
+									color="#61B152"
+									x="5" y="58" fontSize="12" 
+									textAlign="left" width="22" height="23" />
+	</s:HGroup>
+	
+	
+</s:ItemRenderer>

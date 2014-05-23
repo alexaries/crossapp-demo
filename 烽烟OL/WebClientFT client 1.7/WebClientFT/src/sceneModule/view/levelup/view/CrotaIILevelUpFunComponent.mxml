@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="75" height="90">
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			
+			import mx.events.FlexEvent;
+			
+			import sceneModule.view.levelup.vo.LevelUpEffectVO;
+			
+			import spark.effects.Fade;
+			import spark.filters.GlowFilter;
+			
+			import util.DelayExcuter;
+			
+			private var _levInfo:LevelUpEffectVO;
+			
+			public function set levInfo(value:LevelUpEffectVO):void{
+				_levInfo = value;
+				tt.text = _levInfo.name;
+				img.source = 'assets/Image/levelImg/'+value.imgUrl;
+			}
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				if(_levInfo){
+					var fade:Fade = new Fade();
+					fade.alphaFrom = 0;
+					fade.alphaTo = 1;
+					fade.duration = 1000;
+					fade.target = this;
+					fade.play();
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="img" width="100%" height="{this.height-25}" maintainAspectRatio="false"/>
+	<mx:Text id="tt" height="24" fontWeight="bold" color="#ffff00" textAlign="center" fontSize="12" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" width="100%" x="0" y="60">
+	</mx:Text>
+</s:Group>

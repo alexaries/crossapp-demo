@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  width="164" height="52" autoDrawBackground="false"
+					  creationComplete="initApp();"
+					  xmlns:component="component.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import flash.events.MouseEvent;
+			import flash.utils.setTimeout;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.core.DragSource;
+			import mx.core.FlexGlobals;
+			import mx.events.ToolTipEvent;
+			import mx.managers.DragManager;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.shop.event.NShopEvent;
+			import sceneModule.view.shop.event.RegisterMediatorShopItemEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaSkillComponentAnthorSkinnableContainer;
+			import style.Skin_CrotaSkillComponentSkinnableContainer;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			import util.DelayExcuter;
+			import util.xtrace;
+			
+			private const NEWITEM:int = 1;
+			private const HOSTITEM:int = 2;//热卖
+			private const PAYITEM:int = 3;//特价
+			private const NUMITEM:int = 4;//限量
+			
+			public static const DOUBLE_CLICK_TIME:int = 300;
+			
+			/**
+			 * tip item
+			 */
+			private var _tip:MainShopItemTip = new MainShopItemTip;
+			
+			private var _is_double_click:Boolean;
+			private var _is_mouse_down:Boolean;
+			
+			
+			private function initApp():void {
+				this.dispatchEvent(new RegisterMediatorShopItemEvent(RegisterMediatorShopItemEvent.MEDIATORREGISTERSHOPITEM,this,true));
+				_is_double_click = false;
+				_is_mouse_down = false;
+				//this.addEventListener(MouseEvent.DOUBLE_CLICK, on_doouble_click);
+				this.addEventListener(MouseEvent.CLICK, on_click);
+				this.addEventListener(MouseEvent.ROLL_OVER,on_over);
+				this.addEventListener(MouseEvent.ROLL_OUT,on_out);
+				this.addEventListener(Event.ADDED_TO_STAGE,init_view);
+				this.addEventListener(MouseEvent.MOUSE_DOWN, icon_mouse_down);
+				//imgItemIcon.addEventListener(MouseEvent.MOUSE_DOWN, icon_mouse_down);
+				if (stage) {
+					stage.addEventListener(MouseEvent.MOUSE_UP, on_mouse_up);
+				}
+				else {
+					this.addEventListener(Event.ADDED_TO_STAGE, add_to_stage);
+				}
+				init_view();
+			}
+			
+			private function add_to_stage(e:Event):void {
+				stage.addEventListener(MouseEvent.MOUSE_UP, on_mouse_up);
+			}
+			
+			private function on_mouse_up(e:MouseEvent):void {
+				_is_mouse_down = false;
+			}
+			
+			private function check_drog(e:MouseEvent):void {
+				xtrace("check drog ",_is_mouse_down);
+				if (_is_mouse_down) {
+					_is_mouse_down = false;
+					this.dispatchEvent(new NShopEvent(NShopEvent.NShopEvent_ITEM_DROP, { view:this,img_view:imgItemIcon,mouse_event:e }, true));
+				}
+			}
+			
+			private function on_click(e:MouseEvent):void {
+				xtrace("on_click ", _is_double_click);
+				if (_is_double_click) {
+					_is_double_click = false;
+					on_doouble_click();
+				}
+				else {
+					_is_double_click = true;
+					setTimeout(reset_double, DOUBLE_CLICK_TIME);
+				}
+			}
+			
+			private function reset_double():void {
+				xtrace("reset_double ");
+				_is_double_click = false;
+			}
+			
+			private function icon_mouse_down(e:MouseEvent):void {
+				//this.dispatchEvent(new NShopEvent(NShopEvent.NShopEvent_ITEM_DROP, { view:this,img_view:imgItemIcon,mouse_event:e }, true));
+				xtrace("mouse down");
+				_is_mouse_down = true;
+				new DelayExcuter(DOUBLE_CLICK_TIME, check_drog, [e]);
+			}
+			
+			private function init_view(e:Event = null):void{
+				//img_bg.source = "assets/shop/shop_item_bg_nomal.png";
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_item_bg_nomal');
+					
+				CommonTools.make_bitmap(coin).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('common_res', 'coin_img');
+			}
+			
+			private function on_doouble_click(e:MouseEvent = null):void{
+				this.dispatchEvent(new NShopEvent(NShopEvent.NShopEvent_ITEM_DOUBLE_CLICK, data, true));
+			}
+			
+			private function on_over(e:MouseEvent):void{
+				//img_bg.source = "assets/shop/shop_item_bg_over.png";
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_item_bg_over');
+			}
+			
+			private function on_out(e:MouseEvent):void{
+				//img_bg.source = "assets/shop/shop_item_bg_nomal.png";
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_item_bg_nomal');
+			}
+			
+			/**
+			 * 实例化ToolTip
+			 */
+			private function onTooltipCreate(event:ToolTipEvent):void
+			{
+				_tip.data = this.data;
+				event.toolTip=_tip;
+			}
+			
+			
+			public function setEquipmentUrl(s:int,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+
+		]]> 
+	</fx:Script>
+	<!--<s:SkinnableContainer 
+		id="iContainer" 
+		skinClass="style.Skin_CrotaSkillComponentSkinnableContainer" 
+		width="100%" height="100%">-->
+		<!--<mx:Image
+			id="img_bg" 
+			source="assets/shop/shop_item_bg_nomal.png"/>-->
+		<mx:Image id="img_bg" />
+			
+		<mx:Image 
+			id="imgItemIcon"
+			x="10" y="8" width="40" height="40"
+			source="{setEquipmentUrl(data.icon,data.type)}"/>
+		
+		<component:CrotaBasicLabel 
+			id="lbItemName"
+			styleName="MAINMENUROLEFONT12a18c70"
+			x="57" y="8" 
+			text="{data.name}"/>
+	<component:CrotaBasicLabel 
+		id="l_num"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{data.stack == 1 ? '' : data.stack}" x="8" y="40" textAlign="right" width="40"/>
+	<mx:Image
+		id="coin"
+		width="17" height="21" x="82" y="31"/>
+	
+	<component:CrotaBasicLabel 
+		id="l_money"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{CommonTools.setMoneyCurrencyFormatter(data.buyingRateCoin)}" textAlign="left" x="100" y="37"/>
+	
+	<!--</s:SkinnableContainer>-->	
+</s:ItemRenderer>

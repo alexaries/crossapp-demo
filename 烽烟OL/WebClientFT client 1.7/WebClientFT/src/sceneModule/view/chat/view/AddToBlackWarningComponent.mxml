@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"      
+				xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="257" height="328" xmlns:component="component.*" creationComplete="initApp()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaMainMenuHotelSkinnableContainer;
+			public static const NAME:String = "sceneModule.view.chat.view.AddToBlackWarningComponent";
+			
+			[Embed(source="/embed/hotel/hotelInfoBg.png",scaleGridTop='29',scaleGridBottom='30',scaleGridLeft='54',scaleGridRight='200')]
+			[Bindable]
+			private var obj:Class;
+			
+			[Bindable]
+			private var selfdata:Object = data;
+			
+			private function initApp():void{
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="240" height="177" skinClass="style.Skin_CrotaMainMenuHotelSkinnableContainer">
+		<mx:Image x="12" y="-24" width="54" height="57" source='assets/hotel/warning.png'/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','atbwC_ts')}" styleName="MAINMENUROLEFONT13b95c4e" x="72" y="12"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','atbwC_xts')}" styleName="MAINMENUROLEFONT13b95c4e2" x="26" y="110"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','atbwC_bzts')}" styleName="MAINMENUROLEFONT13b95c4e2" x="106" y="156"/>
+		<mx:Image x="10" y="42" width="220" height="61" source="{obj}" maintainAspectRatio="false"/>
+		<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaCommonButton5" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" x="15" y="115" width="93" height="42"/>
+		<util:CommonButton id="cancelBtn" skinClass="style.Skin_CrotaCommonButton5" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" x="126" y="115" width="93" height="42"/>
+		<s:TextArea skinClass="style.Skin_CrotaBasicShowInfoTextArea" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','atbwC_sfj')+selfdata.name+CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','atbwC_ishmd')}" textAlign="center" styleName="MAINMENUROLEFONT13b95c4e2" height="48" width="206" x="17" y="53" selectable="false" editable="false" verticalAlign="middle"/>
+		<component:CrotaBasicCheckBoxCreate id="addBlackShowFlag" selected="{SystemDataModel.addBlackFlag}" x="81" y="153"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

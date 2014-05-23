@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			private var timer:Timer;
+			private const frameTime:int = 2500;
+			//公示信息集合
+			private var infoArr:Array = new Array();
+			//当前显示的信息索引值
+			private var curShowIndex:int = 0;
+			public function set setShowTextArr(arr:Array):void{
+				infoArr = arr;	
+				if(infoArr.length !=0){
+					startTime();
+				}
+			}
+			private function startTime():void{
+				timer = new Timer(frameTime);
+				timer.addEventListener(TimerEvent.TIMER,onTimer);
+				timer.start();
+			}
+			private function onTimer(evt:TimerEvent):void{
+				if(infoArr.length-1 > curShowIndex){
+					curShowIndex ++;
+				}else{
+					curShowIndex = 0;
+				}
+				iTxt.text = infoArr[curShowIndex];
+			}
+		]]>
+	</fx:Script>
+	<component:CrotaBasicLabelLog id="iTxt" width="100%" color="#CCCC33" fontSize="14" height="100%" textAlign="center"/>
+</s:Group>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group height="105"
+	width="269"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:roleInfo="sceneModule.view.roleInfo.*"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:ui="sceneModule.view.ui.*"
+	xmlns:view="sceneModule.view.roleInfo.view.*"
+    creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import model.ProConst;
+			import model.SystemDataModel;
+			import util.Logging;
+			import wordscene.event.PlusEvent;
+			import wordscene.WordSceneSprite;
+			
+			import resource.CrotaResourceConfig;
+			
+			import spark.filters.GlowFilter;
+			
+			private function init():void {
+				WordSceneSprite.getInstance().addEventListener(PlusEvent.PlusEvent_ResetPKAble, checkpkable);
+			}
+			
+			private function ispkable():Boolean {
+				Logging.log("检测是否可pk other", SystemDataModel.otherInfo.campid, "self", WordSceneSprite.getInstance().playerCoutainSp.hearo._hearoVo.campid);
+				return 0 != SystemDataModel.otherInfo.campid && SystemDataModel.otherInfo.campid != WordSceneSprite.getInstance().playerCoutainSp.hearo._hearoVo.campid;
+			}
+			
+			private function checkpkable(e:Event):void {
+				pkBtn.visible = ispkable();
+			}
+			
+			[Bindable]
+			private var addFriendsStr:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('chat', 'cwM_jwhy') + "<u>";
+			
+			[Bindable]
+			private var viewInfoStr:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('chat', 'cwM_ckzl') + "<u>";
+			
+			[Bindable]
+			private var chatStr:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('chat', 'cwM_sl') + "<u>";
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer height="100%"
+		width="100%">
+		<mx:Image source='assets/role/OtherRoleBg.png' />
+		<component:CrotaBasicLabel id="l_level"
+			styleName="MAINMENUROLEFONTFFFFFF"
+			text="{SystemDataModel.otherInfo.nickname}"
+			x="100"
+			y="29" />
+		<component:CrotaBasicLabel height="20"
+			styleName="MAINMENUROLEFONTFFFFFF"
+			text="{SystemDataModel.otherInfo.level}"
+			width="30"
+			x="42"
+			y="84" />
+		<component:CrotaBasicLabel height="20"
+			id="l_vip"
+			styleName="MAINMENUROLEFONTFF0000"
+			text="{SystemDataModel.otherInfo.roletype}"
+			width="30"
+			x="76"
+			y="90" />
+		<mx:Image height="60"
+			source="{ProConst.getJobImg(SystemDataModel.otherInfo.profession)}"
+			width="60"
+			x="37"
+			y="24" />
+		<mx:Text buttonMode="true"
+			color="#17F906"
+			filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}"
+			fontSize="12"
+			fontWeight="bold"
+			htmlText="{addFriendsStr}"
+			id="friendBtn"
+			mouseChildren="false"
+			selectable="false"
+			textAlign="left"
+			useHandCursor="true"
+			width="57"
+			x="196"
+			y="66" />
+		<mx:Text buttonMode="true"
+			color="#17F906"
+			filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}"
+			fontSize="12"
+			fontWeight="bold"
+			htmlText="{viewInfoStr}"
+			id="viewInfoBtn"
+			mouseChildren="false"
+			selectable="false"
+			textAlign="left"
+			useHandCursor="true"
+			width="57"
+			x="94"
+			y="66" />
+		<mx:Text buttonMode="true"
+			color="#17F906"
+			filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}"
+			fontSize="12"
+			fontWeight="bold"
+			htmlText="{chatStr}"
+			id="chatBtn"
+			mouseChildren="false"
+			selectable="false"
+			textAlign="left"
+			useHandCursor="true"
+			width="46"
+			x="151"
+			y="66" />
+		<mx:Text buttonMode="true"
+			color="#17F906"
+			filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}"
+			fontSize="12"
+			fontWeight="bold"
+			htmlText="pk"
+			id="pkBtn"
+			mouseChildren="false"
+			selectable="false"
+			textAlign="left"
+			useHandCursor="true"
+			width="46"
+			x="151"
+			y="86" />
+	</s:SkinnableContainer>
+</s:Group>

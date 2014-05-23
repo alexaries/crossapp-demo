@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="348" height="191" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.events.FlexMouseEvent;
+			
+			import style.Skin_CrotaBasicTextAreaCommon;
+			import style.Skin_CrotaSmallButton;	
+			
+			public static const NAME:String = "sceneModule.view.popupWin.PopUpWindow";
+			[Embed(source="/embed/hotel/hotelInfoBg.png",scaleGridTop='29',scaleGridBottom='30',scaleGridLeft='54',scaleGridRight='200')]
+			[Bindable]
+			private var obj:Class;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaMainMenuHotelSkinnableContainer" width="100%" height="100%">
+		<!--<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaSmallButton" x="280" width="68" height="29" y="181" styleName="CREATEROLEBUTTON"/>
+		<util:CommonButton id="cancelBtn" skinClass="style.Skin_CrotaSmallButton" x="400" width="68" height="29" y="181" styleName="CREATEROLEBUTTON"/>-->
+		
+		<!--<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaCommonButton5" label="确定" x="251" y="181" width="93" height="42"/>
+		<util:CommonButton id="cancelBtn" skinClass="style.Skin_CrotaCommonButton5"  label="取消" x="439" y="181" width="93" height="42"/>-->
+		<mx:Image x="17" y="38" width="315" height="114" source="{obj}" maintainAspectRatio="false"/>
+		<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaCommonButton5"  label="确定" x="56" y="148" width="93" height="42"/>
+		<util:CommonButton id="cancelBtn" skinClass="style.Skin_CrotaCommonButton5"  label="取消" x="196" y="148" width="93" height="42"/>
+		<mx:Image x="20" y="-26" width="54" height="57" source='assets/hotel/warning.png'/>
+		<component:CrotaBasicLabel id="titleLabel" horizontalCenter="19" y="11" width="222" styleName="CREATEROLEBUTTON" textAlign="left"/>
+		<component:CrotaBasicLabel id="popInfo" x="26" y="50" width="297" height="91" styleName="CREATEROLEBUTTON"/>
+		
+	</s:SkinnableContainer>
+	<!--<mx:Image id="roleImage" source="assets/role/roleImage1.png" width="300" height="353"/>-->
+</s:Group>

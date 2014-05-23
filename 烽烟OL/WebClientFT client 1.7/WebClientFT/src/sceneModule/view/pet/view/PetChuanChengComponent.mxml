@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="629" height="349" xmlns:component="component.*" xmlns:ui="sceneModule.view.ui.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.pet.event.MediatorRegisterPetEvent;
+			import sceneModule.view.pet.vo.PetInfoVO;
+			import sceneModule.view.pet.vo.PetSkillInfoVO;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+			import style.Skin_CrotaCommonButton4;
+			import style.Skin_CrotaPackRedButton;
+			import style.Skin_CrotaSmallButton;
+			
+			import util.CommonTools;
+			
+			public function getLabelDes(man:int):String{
+				var str:String='';
+				if(man!=0){
+					str = " + <font color='#26C900'>"+man+"</font>";
+				}
+				return str;
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.dispatchEvent(new MediatorRegisterPetEvent(MediatorRegisterPetEvent.MR_PET_INFO,this,true));
+				CommonTools.make_bitmap(petChuanChengBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet","pet_chuancheng_bg");
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="no1"/>
+	</fx:Declarations>
+	<mx:Image id="petChuanChengBg" />
+	<mx:Image 
+		id="petImg1" 
+		source="{ProConst.getImageSource(iComBoBox.selectedItem.type,iComBoBox.selectedItem.icon)}" 
+		x="394" y="63"/>
+	<mx:Image 
+		id="petImg" 
+		source="{ProConst.getImageSource(SystemDataModel.otherPetInfoVo.type,SystemDataModel.otherPetInfoVo.icon)}" 
+		x="57" y="62"/>
+	<s:ComboBox 
+		id="iComBoBox" 
+		skinClass="style.Skin_CrotaBasicComBOX" 
+		x="420" y="30" 
+		dataProvider="{SystemDataModel.bjcList}" 
+		labelField="petName" 
+		selectedIndex="0" color="#ff0000"/>
+	<component:CrotaBasicLabel 
+		text="{SystemDataModel.otherPetInfoVo.petName==null?'':SystemDataModel.otherPetInfoVo.petName}" 
+		styleName="RANKINGFORMAT1" 
+		x="54" y="30" width="172" textAlign="center"/>
+	
+		
+	<!-- 左 -->
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.petLevel}" 
+		styleName="RANKINGFORMAT1" 
+		x="154" y="83" width="60" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.extendExp}" 
+		styleName="RANKINGFORMAT1" 
+		x="194" y="102" width="60" textAlign="left"/>
+		
+	
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.basePhyAttack+getLabelDes(SystemDataModel.otherPetInfoVo.manualPhyAttack)}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="142" width="67" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseSpeed+getLabelDes(SystemDataModel.otherPetInfoVo.manualSpeed)}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="166" width="68" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.basePhyDefense+getLabelDes(SystemDataModel.otherPetInfoVo.manualPhyDefense)}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="190" width="106" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseHitRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualHitRate)}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="214" width="97" textAlign="left"/>
+		
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseMagicAttack+getLabelDes(SystemDataModel.otherPetInfoVo.manualMagicAttack)}" 
+		styleName="RANKINGFORMAT1" 
+		x="182" y="142" width="67" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseCritRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualCritRate)}" 
+		styleName="RANKINGFORMAT1" 
+		x="182" y="166" width="59" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseMagicDefense+getLabelDes(SystemDataModel.otherPetInfoVo.manualMagicDefense)}" 
+		styleName="RANKINGFORMAT1" 
+		x="182" y="190" width="68" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseDodgeRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualDodgeRate)}" 
+		styleName="RANKINGFORMAT1" 
+		x="182" y="214" width="69" textAlign="left"/>
+		
+	<!--
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.baseBlock+getLabelDes(SystemDataModel.otherPetInfoVo.manualBlock)}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="259" width="97" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.liliang}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="136" width="66" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.naili}" 
+		styleName="RANKINGFORMAT1" 
+		x="74" y="154" width="67" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.minjie}" 
+		styleName="RANKINGFORMAT1" 
+		x="178" y="154" width="69" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.zhili}" 
+		styleName="RANKINGFORMAT1" 
+		x="178" y="136" width="60" textAlign="left"/>
+	-->
+	<!-- 右 -->
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.petLevel}" 
+		styleName="RANKINGFORMAT1" 
+		x="489" y="83" width="60" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{SystemDataModel.otherPetInfoVo.extendExp}" 
+		styleName="RANKINGFORMAT1" 
+		x="527" y="101" width="60" textAlign="left"/>
+	
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.basePhyAttack+getLabelDes(iComBoBox.selectedItem.manualPhyAttack)}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="142" width="67" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseSpeed+getLabelDes(iComBoBox.selectedItem.manualSpeed)}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="166" width="68" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.basePhyDefense+getLabelDes(iComBoBox.selectedItem.manualPhyDefense)}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="190" width="106" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseHitRate+getLabelDes(iComBoBox.selectedItem.manualHitRate)}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="214" width="97" textAlign="left"/>
+		
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseMagicAttack+getLabelDes(iComBoBox.selectedItem.manualMagicAttack)}" 
+		styleName="RANKINGFORMAT1" 
+		x="518" y="142" width="67" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseCritRate+getLabelDes(iComBoBox.selectedItem.manualCritRate)}" 
+		styleName="RANKINGFORMAT1" 
+		x="518" y="166" width="59" textAlign="left"/>
+		<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseMagicDefense+getLabelDes(iComBoBox.selectedItem.manualMagicDefense)}" 
+		styleName="RANKINGFORMAT1" 
+		x="518" y="190" width="68" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseDodgeRate+getLabelDes(iComBoBox.selectedItem.manualDodgeRate)}" 
+		styleName="RANKINGFORMAT1" 
+		x="518" y="214" width="69" textAlign="left"/>
+	<!--
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.baseBlock+getLabelDes(iComBoBox.selectedItem.manualBlock)}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="260" width="97" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.reqCoin}" 
+		styleName="RANKINGFORMAT1" 
+		x="333" y="297" width="97" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.liliang}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="137" width="66" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.naili}" 
+		styleName="RANKINGFORMAT1" 
+		x="409" y="155" 
+		width="67" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.minjie}" 
+		styleName="RANKINGFORMAT1" 
+		x="513" y="155" width="69" textAlign="left"/>
+	<component:CrotaBasicText 
+		htmlText="{iComBoBox.selectedItem.zhili}" 
+		styleName="RANKINGFORMAT1" 
+		x="513" y="137" width="60" textAlign="left"/>
+
+	-->
+	<util:CommonButton 
+		id="trBtn" 
+		skinClass="style.Skin_CrotaPackRedButton" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pet','pCM_cc')}" 
+		x="505" y="295"/>
+</s:Group>

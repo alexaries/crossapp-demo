@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" width="380" height="24" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.controls.Menu;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.chat.event.MainOpenWhisperWindowEvent;
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.friend.command.FriendMessage;
+			import sceneModule.view.friend.event.NFriendEvent;
+			import sceneModule.view.jingji.command.JingJiMessage;
+			
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				iTxt1.addEventListener(TextEvent.LINK,onTextLink);
+			}
+			private var roleId:int;
+			private var roleName:String;
+			private function onTextLink(evt:TextEvent):void{
+				var tempP:Array;
+				if(evt.text.indexOf("?")>=0){
+					tempP = evt.text.split("?");
+					if(tempP.length == 2){
+						roleId = tempP[0];
+						roleName = tempP[1];
+					}
+				}
+				if(roleId != SystemDataModel.roleId){
+					on_item_click();
+				}
+			}
+			private var myMenu:Menu;
+			private function on_item_click():void {
+				var arr:Array = null;
+				arr = new Array([CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jwhy')]);
+				myMenu = Menu.createMenu(null,getItemMenuData(arr), false);
+				//				myMenu.width = 80;
+				myMenu.labelField = 'label';
+				myMenu.addEventListener(MenuEvent.ITEM_CLICK,onMenuItemClick);
+				myMenu.show(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
+			}
+			
+			private function getItemMenuData(itemArr:Array):Array {
+				var l:int = itemArr.length;
+				var itemMenuData:Array = new Array();
+				for(var i:int=0;i<l;i++){
+					var menuItem:Object = new Object();
+					menuItem.label = itemArr[i];
+					itemMenuData.push(menuItem);
+				}
+				return itemMenuData;
+			}
+			
+			private function onMenuItemClick(e:MenuEvent):void{
+				myMenu.removeEventListener(MenuEvent.ITEM_CLICK,onMenuItemClick);
+				var event_str:String = null;
+				switch (e.label) 
+				{
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl'):
+						NCropMessage.getInstance().request_see_other(roleId);
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl'):
+						JingJiMessage.getInstance().event_dispatcher.dispatchEvent(new MainOpenWhisperWindowEvent(MainOpenWhisperWindowEvent.MAINOPENWHISPERWINDOWEVENT,roleId,roleName));
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jwhy'):
+						FriendMessage.getInstance().requese_add_friend(1, roleName);
+						break;
+					default:
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<component:CrotaBasicChatTextArea 
+		id="iTxt1" htmlText="{data.desBat}"
+		fontSize="12" color="#ffff00" 
+		borderStyle="none" rollOver="this.iTxt1.setFocus();" editable="false"
+		selectable="false" focusEnabled="false" focusAlpha="0" wordWrap="false" backgroundAlpha="0.0"
+		width="380" textAlign="left" y="2"/>
+	
+</s:ItemRenderer>

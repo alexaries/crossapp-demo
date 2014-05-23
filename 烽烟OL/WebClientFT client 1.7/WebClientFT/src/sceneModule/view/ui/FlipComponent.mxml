@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp()">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			//总页数
+			[Bindable]
+			private var _pageCount:int;
+			//当前页数
+			[Bindable]
+			private var _curPage:int = 1;
+			//是否需要刷新数据
+			private var refreshFlag:Boolean = false;
+			//每次最多显示的页数号个数
+			private const maxPage:int = 10;
+			//onAppleMenuShow数据源
+			[Bindable]
+			private var dataCollection:ArrayCollection = new ArrayCollection();
+			private function initApp():void{
+				
+			}
+			/**
+			 * 设置当前页
+			 */
+			public function set curPage(value:int):void{
+				_curPage = value;
+			}
+			/**
+			 * 获取当前页数
+			 */
+			public function get curPage():int{
+				return _curPage;
+			}
+			
+			/**
+			 * 总页数
+			 */
+			public function set pageCount(value:int):void{
+				if(_pageCount == value){
+					
+				}else{
+					_pageCount = value;
+					setAppleMenuDataProvider(1,10);
+				}
+				
+			}
+			/**
+			 * 组织菜单数据源
+			 */
+			private var start:int;
+			private var end:int;
+			private function setAppleMenuDataProvider(startIndex:int,endIndex:int):void{
+				if(_curPage >= _pageCount){
+					_curPage = _pageCount;
+				}
+				if(endIndex > _pageCount){
+					endIndex = _pageCount;
+				}
+				//现有数据源的长度
+				var l:int = dataCollection.length;
+			    //应该显示数据的长度
+				var rl:int = endIndex - startIndex + 1;
+				if(l<rl){
+					//需要添加对象的个数
+					var add_len:int = rl - l;
+					setCurData(startIndex,l);
+					//添加不存在的对象
+					for(var ai:int=0;ai<add_len;ai++){
+						var obj:Object = new Object();
+						obj.label = endIndex - (add_len - ai - 1);
+						dataCollection.addItem(obj);
+					}
+				}else if(l == rl){
+					//对已经存在的直接赋值
+//					for(var i:int=0;i<l;i++){
+//						dataCollection[i].label = startIndex + i;
+//					}
+					setCurData(startIndex,l);
+				}else if(l > rl){
+					//需要把多余的删除
+					var rem_len:int = l - rl;
+					while(rem_len --){
+						dataCollection.removeItemAt(dataCollection.length - 1);
+					}
+					//从新赋值
+					var new_len:int = dataCollection.length;
+//					for(var i:int=0;i<new_len;i++){
+//						dataCollection[i].label = startIndex + i;
+//					}
+					setCurData(startIndex,new_len);
+				}
+			}
+			/**
+			 * 对已经存在的直接赋值
+			 */
+			private function setCurData(sIndex:int,cl:int):void{
+				for(var i:int=0;i<cl;i++){
+					dataCollection[i].label = sIndex + i;
+				}
+			}
+			/**
+			 * 翻页
+			 * 
+			 */
+			private function onChangePage():void{
+				_curPage = onAppleMenuShow.selectedIndex + 1;
+				sendPageChangeEvent();
+			}
+			/**
+			 * 首页
+			 */
+			private function onFirstPage():void{
+				var nowPage:int = _curPage / maxPage;
+				if(1 != nowPage){
+					refreshFlag = true;
+				}
+				_curPage = 1;
+				sendPageChangeEvent();
+				if(refreshFlag){
+					setAppleMenuDataProvider(1,maxPage);
+					refreshFlag = false;
+				}
+			}
+			/**
+			 * 尾页
+			 */
+			private function onLastPage():void{
+				if((_pageCount / maxPage) != (_curPage / maxPage)){
+					refreshFlag = true;
+				}
+				_curPage = _pageCount;
+				sendPageChangeEvent();
+				if(refreshFlag){
+					var s:int = _pageCount / maxPage;
+					setAppleMenuDataProvider(s * maxPage + 1,s * maxPage + maxPage);
+					refreshFlag = false;
+				}				
+			}
+			/**
+			 * 上一页
+			 */
+			private function onPrePage():void{
+				if(_curPage % 10 == 1){
+					refreshFlag = true;
+				}
+				if(_curPage != 1){
+					_curPage -= 1;
+					sendPageChangeEvent();
+					if(refreshFlag){
+						setAppleMenuDataProvider(_curPage - 9,_curPage);
+						refreshFlag = false;
+					}
+				}
+			}
+			/**
+			 * 下一页
+			 */
+			private function onNextPage():void{
+				if(_curPage % 10 == 0){
+					refreshFlag = true;
+				}
+				if(_curPage != _pageCount){
+					_curPage += 1;
+					sendPageChangeEvent();
+					if(refreshFlag){
+						setAppleMenuDataProvider(_curPage,_curPage+9);
+						refreshFlag = false;
+					}
+				}
+			}
+			/**
+			 * 发送页数改变事件
+			 */
+			private function sendPageChangeEvent():void{
+				dispatchEvent(new FlipComponentEvent(FlipComponentEvent.FLIPCOMPONENTEVENT,_curPage));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup>
+		<s:Label id="firstLab" text="首页" visible="{_curPage != 1}" click="onFirstPage()"/>
+		<s:Label id="preLab" text="上一页" visible="{_curPage != 1}" click="onPrePage()"/>
+		<!--苹果式菜单-->
+		<s:TabBar id="onAppleMenuShow" height="10" change="onChangePage()" styleName="RICHEDITABLETEXT" dataProvider="{dataCollection}" selectedIndex="{(_curPage % 10) == 0 ? _curPage : (_curPage % 10 -1)}">
+			<!--<s:dataProvider>
+			<s:ArrayCollection>
+			<fx:Object label=""/>
+			<fx:Object label=""/>
+			</s:ArrayCollection>
+			</s:dataProvider>-->
+		</s:TabBar>
+		<s:Label id="nextLab" text="下一页" visible="{_curPage != _pageCount}" click="onNextPage()"/>
+		<s:Label id="lastLab" text="尾页" visible="{_curPage != _pageCount}" click="onLastPage()"/>
+		<s:Label id="countPage" text="{'共'+_pageCount+'页'}"/>
+	</s:HGroup>
+</s:Group>

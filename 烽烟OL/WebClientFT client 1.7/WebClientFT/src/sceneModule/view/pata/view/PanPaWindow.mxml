@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="888" height="515" 
+				xmlns:view="sceneModule.view.pack.view.*"
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				xmlns:win="managers.*" xmlns:component="component.*" xmlns:util="util.*" xmlns:view1="sceneModule.view.pata.view.*" >
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.vip.VIPdataChangeEvent;
+			import sceneModule.view.vip.command.VIPmessage;
+			
+			import util.CommonTools;
+			
+			[Bindable]
+			public var txt_content:String='';
+			
+			public static const NAME:String = "sceneModule.view.pata.view.PanPaWindow";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(vipBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pata","pt_bg");
+				CommonTools.make_bitmap(pt1Img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pata","pt1_bg");
+				CommonTools.make_bitmap(pt2Img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pata","pt2_bg");
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="vipBg" y="-17"/>
+	<mx:Image id="pt1Img" x="553" y="79"/>
+	<mx:Image id="pt2Img" visible="false" x="547" y="77"/>
+	<view1:PanPaLeftComponent id="iLeftComp" x="95" y="69"/>
+	
+	<component:CrotaBasicLabel id="iLab1" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_pata','ppw_di')+SystemDataModel.panPaInfoVo.curLev+CrotaResourceConfig.getInstance().getTextByModuleAndId('text_pata','ppw_ceng')}" fontSize="12" color="#ffffff" textAlign="center" x="633" y="143"/>
+	<component:CrotaBasicLabel id="iLab2" text="{SystemDataModel.panPaInfoVo.curMonster}" fontSize="12" color="#ffffff" textAlign="center" x="633" y="184"/>
+	<component:CrotaBasicLabel id="iLab3" text="{SystemDataModel.panPaInfoVo.obtainItem}" fontSize="12" color="#ffffff" textAlign="left" x="633" y="232" width="113" height="152"/>
+	<mx:TextArea visible="false" borderStyle="none" id="iTextArea"  rollOver="this.iTextArea.setFocus();" editable="false"
+				 selectable="false" focusEnabled="false" focusAlpha="0" wordWrap="false" height="262" width="205" backgroundAlpha="0.0" 
+				 styleName="SKILLINFOTEXTFORMAT" htmlText="{txt_content}" x="563" bottom="85"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="807" y="4"/>
+	<util:CommonButton id="submit" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_pata','ppw_kstz')}" skinClass="style.Skin_CrotaPackRedButton" x="582" y="412"/>
+	<util:CommonButton id="refreshBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_pata','ppw_sx')}" enabled="{SystemDataModel.panPaInfoVo.reCount>0}" skinClass="style.Skin_CrotaPackRedButton" x="678" y="412"/>
+	<util:CommonButton id="autoBtn" visible="false" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_pata','ppw_zdpt')}" skinClass="style.Skin_CrotaPackRedButton" x="561" y="412"/>
+</win:BaseWindow>

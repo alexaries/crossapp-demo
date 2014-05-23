@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="1000" height="650" xmlns:component="component.*" xmlns:util="util.*" xmlns:ui="sceneModule.view.ui.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flashx.textLayout.operations.InsertTextOperation;
+			
+			import spark.events.TextOperationEvent;
+			
+			//标志位  确定按钮是否可以操作
+			[Bindable]
+			private var submitIsCanClick:Boolean = false;
+			
+			public var workType:int;
+			/**
+			 * 姓名输入事件
+			 * 
+			 */ 
+			protected function onRoleNameChangeing(evt:TextOperationEvent):void
+			{
+				if((evt.operation as InsertTextOperation)==null)
+				{
+					return;
+				}
+				
+				var input:String=(evt.operation as InsertTextOperation).text;
+				
+				if((__getStringBytesLength(roleName.text,"gb2312") + __getStringBytesLength(input,'gb2312')) > roleName.maxChars)
+				{
+					evt.preventDefault();
+				}
+			}
+			/**
+			 * 获取该字符串的字节数 
+			 */ 
+			private function __getStringBytesLength(str:String,charSet:String):int
+			{
+				var bytes:ByteArray = new ByteArray();
+				
+				bytes.writeMultiByte(str, charSet);
+				
+				bytes.position = 0;
+				return bytes.length;
+				
+			}
+			
+			/**
+			 * 昵称输入框改变事件，处理确定按钮是否可以点击
+			 */
+			private function onRoleNameChange():void{
+				if(roleName.text.toString().length<2 || roleName.text.toString().length>16){
+					trace("昵称长度为2-16");
+					submitIsCanClick = false;
+				}else{
+					submitIsCanClick = true;
+				}
+			}
+			private var _mc:MovieClip;
+			public function addMovieClipToSprite(mc:MovieClip):void{
+				_mc = mc;
+				roleLayer.addChild(_mc);
+				_mc.x = 302;
+				_mc.y = 100;
+			}
+			
+			public function set _subBtnCanClick(value:Boolean):void{
+				submitIsCanClick = value;
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:Image id="bg"/>
+	<mx:Image id="roleImg" x="302" y="100"/>
+	<mx:UIComponent id="roleLayer"/>
+	<mx:Image id="infoBg" x="710" y="70"/>
+	<component:CrotaChatTextInputLoginbar height="24" id="roleName" changing="onRoleNameChangeing(event)" change="onRoleNameChange()" x="444" y="517" styleName="REGISTERTEXTINPUTTEXTFORMAT" maxChars="16" restrict = "^ "/>
+	<!--<util:CommonButton id="radomName" x="617" y="514" skinClass="style.Skin_CrotaDiceButton" width="27" height="27"/>-->
+	<ui:CrotaIIBasicBitmapButton id="submit"
+								 package_id="ui_nrole" set_disable="{!submitIsCanClick}" 
+								 x="330" y="569"
+								 nomal="eBtn1" over="eBtn2" down="eBtn3" disable="eBtn4"/>
+	<ui:CrotaIIBasicBitmapButton id="cancel"
+								 package_id="ui_nrole" 
+								 x="527" y="568"
+								 nomal="cBtn1" over="cBtn2" down="cBtn3" disable="cBtn4"/>
+</s:Group>

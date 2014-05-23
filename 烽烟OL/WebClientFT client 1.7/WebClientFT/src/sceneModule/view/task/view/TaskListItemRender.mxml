@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" buttonMode="true" useHandCursor="true" mouseChildren="false">
+	<fx:Script>
+		<![CDATA[
+			private function getTaskTitle(s:String):String{
+				var tName:String = "";
+				tName = "<u>"+s+"</u>";
+				return tName;
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:SWFLoader source="{'../assets/swf/smallPoint.swf'}" y="7"/>
+	<mx:Text htmlText="{getTaskTitle(data.taskname)}" x="20" styleName="TASKTITLE"/>
+</s:ItemRenderer>

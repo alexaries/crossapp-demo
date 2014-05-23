@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="init()"
+				width="248" height="79"  autoDrawBackground="false"
+				 xmlns:component="component.*" xmlns:util="util.*">
+	 
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.zhanxing.event.JiFengItemRenderEvent;
+			
+			import util.CommonTools;
+
+			
+			private function init():void
+			{
+				this.dispatchEvent(new JiFengItemRenderEvent(JiFengItemRenderEvent.JIFENGITEMRENDER_EVENT,this,true));
+				CommonTools.make_bitmap(jifengpart).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_zhanxing","jifengpart_bg");
+//				source="assets/zhanxing/jifengPart.png"
+//				source="{WebClient.host+'assets/zhanxing/jifengPart.png'}"
+			}
+			
+			public function getImageURL(t:int,s:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:Image id="jifengpart"   x="1" y="-3" />
+	<mx:Image source="{getImageURL(data.xingYun.type,data.xingYun.icon)}" x="17" y="9" />
+	<component:CrotaBasicLabel textAlign="left" text="{data.xingYun.xyName}" color="{CommonTools.get_equipement_color(data.xingYun.quality)}"  styleName="RANKINGFORMAT1"  verticalAlign="middle"   x="81" y="29" width="74" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.jifengValue}"  verticalAlign="middle" styleName="RANKINGFORMAT1" x="166" y="30" width="60" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','jfeIR_jf')}"  verticalAlign="middle" styleName="RANKINGFORMAT1" x="204" y="28" width="34" height="12"/>
+	<component:CrotaBasicLabel textAlign="left" text="{data.xingYun.xyDesc}"  verticalAlign="middle" styleName="RANKINGFORMAT1" x="81" y="49" width="74" height="12"/>
+	<util:CommonButton id="exchaBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','jfeIR_dh')}" skinClass="style.Skin_CrotaCommonButton1"  x="182" y="40"/>	
+</s:ItemRenderer>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow
+		xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*" 
+		  creationComplete="init()"
+		   width="550" height="470"
+		 xmlns:win="managers.*" xmlns:util="util.*"
+		  >
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			import resource.AssetCenter;
+			import sceneModule.view.zhanxing.event.JiFengItemRenderEvent;
+			import util.CommonTools;
+
+			public static const NAME:String = "sceneModule.view.zhanxing.view.JiFengExchangeComponent";
+			
+			private function init():void
+			{
+				this.dispatchEvent(new JiFengItemRenderEvent(JiFengItemRenderEvent.JIFENG_EVENT,this,true));
+//				source="{WebClient.host+'assets/zhanxing/jifengBg.png'}"
+				CommonTools.make_bitmap(jifengBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_zhanxing","jifeng_bg");
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		<mx:Image id="jifengBg"     x="0" y="-33"/>
+		<s:List   selectedIndex="0" skinClass="style.Skin_CrotaBasicList" 
+				itemRenderer="sceneModule.view.zhanxing.view.JiFengExchangeItemRender" 
+				dataProvider="{SystemDataModel.jifengInfo.exchInfo}" width="515" height="354" x="84" y="69">
+			<s:layout>
+				<s:TileLayout horizontalGap="7" requestedColumnCount="2" requestedRowCount="4"  verticalGap="2" />
+			</s:layout>
+		</s:List>
+	
+	<util:CommonButton id="pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  x="287" y="393" enabled="{SystemDataModel.jifengInfo.curpage>1}"/>
+	<component:CrotaBasicLabel id="page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="309" y="397"
+							   text="{SystemDataModel.jifengInfo.curpage+'/'+SystemDataModel.jifengInfo.totalpage}"
+							   textAlign="center" width="38" height="17"/>
+	<util:CommonButton id="next_btn"
+			  x="353" y="393" enabled="{SystemDataModel.jifengInfo.totalpage>SystemDataModel.jifengInfo.curpage}"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	<component:CrotaBasicLabel textAlign="center" text="{SystemDataModel.jifengInfo.jiFengTotal}"  verticalAlign="middle" styleName="RANKINGFORMAT1" x="138" y="438" width="60" height="12"/>
+
+	<util:CommonButton 
+		skinClass="style.Skin_CrotaCloseButton111" 
+		id="closeBtn" 
+		x="581" y="18"/>
+</win:BaseWindow>
+

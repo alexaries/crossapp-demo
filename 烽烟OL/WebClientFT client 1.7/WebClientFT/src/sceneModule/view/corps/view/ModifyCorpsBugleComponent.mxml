@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="391" height="137" xmlns:component="component.*"
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import flash.events.MouseEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.corps.view.ModifyCorpsBugleComponent";
+			
+			
+			private function init():void{
+				init_view();
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_change_bugle_bg');
+				
+				this.addEventListener(Event.ADDED_TO_STAGE,init_view);
+				clokeBtn.addEventListener(MouseEvent.CLICK,on_close);
+				cancelBtn.addEventListener(MouseEvent.CLICK,on_close);
+				modifyBtn.addEventListener(MouseEvent.CLICK,on_change);
+			}
+			
+			private function on_close(e:MouseEvent):void{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_REMOVE_CHANGE_JUNHAO,null,true));
+			}
+			private function on_change(e:MouseEvent):void{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_ON_CHANGE_JUNHAO,{msg:bugleName.text},true));
+			}
+			
+			private function init_view(e:Event = null):void{
+				bugleName.text = "";
+				validateName();
+			}
+			
+			
+			private function validateName():void{
+				if(bugleName.text == ""){
+					modifyBtn.enabled = false;
+				}
+				else{
+					modifyBtn.enabled = true;
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		<!-- <mx:Image source="ncorps/updatecorps.png"/> -->
+		<mx:Image id="img_bg" x="3" y="4"/>
+		<component:CrotaChatTextInput 
+			id="bugleName" styleName="SKILLINFOTEXTFORMAT" x="131" y="69" 
+			change="validateName()"
+			maxChars="1" width="235" height="28"/>
+    	<util:CommonButton 
+			skinClass="style.Skin_CrotaCloseButton111" 
+			id="clokeBtn" 
+			x="360" y="8"/>
+		<component:CrotaBasicLabel
+			styleName="MAINMENUROLEFONT13b95c4e"
+			x="0" y="90" width="100%" textAlign="center"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','mcbC_tips')}"/>
+		<util:CommonButton 
+			id="modifyBtn" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" 
+			skinClass="style.Skin_CrotaCommonButton3" 
+			x="66" y="108"/>
+		<util:CommonButton 
+			id="cancelBtn" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" 
+			skinClass="style.Skin_CrotaCommonButton3" 
+			x="219" y="108" fontSize="10"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

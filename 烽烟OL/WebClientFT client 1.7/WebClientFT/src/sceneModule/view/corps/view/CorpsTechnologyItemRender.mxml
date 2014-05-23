@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="104" height="104"
+			    creationComplete="show_data()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.controls.Menu;
+			import mx.core.FlexGlobals;
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			import mx.events.StateChangeEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			import util.CommonTools;
+			import util.xtrace;
+			
+			public static const BASE_PATH:String = "assets/ncorps/keji/";
+			
+			private function show_data():void{
+				this.addEventListener(FlexEvent.DATA_CHANGE, data_change);
+				this.addEventListener(MouseEvent.CLICK, on_item_click);
+				this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE,state_change);
+				
+				refresh_view();
+				change_state(this.currentState);
+			}
+			
+			private function change_state(state:String):void {
+//				if (!data.isenable) {
+//					CommonTools.make_bitmap(img_border).bitmapData = null;
+//					return;
+//				}
+				switch(state){
+					case "normal":
+						//img_border.source = null;
+						CommonTools.make_bitmap(img_border).bitmapData = null;
+						break;
+					case "hovered":
+					case "selected":
+						//img_border.source = "assets/ncorps/keji/chose_frame.png";
+						CommonTools.make_bitmap(img_border).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_keji_item_border');
+						break;
+					default:
+						//img_border.source = null;
+						CommonTools.make_bitmap(img_border).bitmapData = null;
+				}
+			}
+			
+			private function state_change(e:StateChangeEvent):void {
+				change_state(e.newState);
+			}
+			
+			private function on_item_click(e:MouseEvent):void {
+//				if (data.isenable) {
+				this.dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_ON_CLICK_KEJI_ITEM,data,true));
+//				}
+			}
+			
+			private function data_change(e:FlexEvent):void{
+				refresh_view();
+			}
+			
+			private function refresh_view():void{
+				img_icon.source = BASE_PATH +  data.technologyImg + ".png";
+//				if (data.isenable) {
+//					img_icon.filters = null;
+//				}
+//				else {
+//					img_icon.filters = [CommonTools.changeColorFilter()];
+//				}
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+	<mx:Image id="img_icon" x="2" y="2"/>
+	<mx:Image 
+		source='assets/ncorps/weikaiqi.png' 
+		mouseEnabled="false" mouseChildren="false"
+		visible="{!data.isenable}"/>
+	<mx:Image id="img_border" x="2" y="2"/>
+</s:ItemRenderer>

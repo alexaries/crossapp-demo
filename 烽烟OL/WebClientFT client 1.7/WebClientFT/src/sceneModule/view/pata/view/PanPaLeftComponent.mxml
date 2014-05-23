@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="320" height="384">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.core.FlexGlobals;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.pata.command.PaTaMessage;
+			private const MAXBLOCK:int = 100;
+			
+			public function onAddMapLayer():void{
+				if((100 - SystemDataModel.panPaInfoVo.curLev) <=2){
+					//创建一副地图 此时角色移动背景不移动
+					addMapLayer(0,SystemDataModel.panPaInfoVo.curLev-1);
+				}else{
+					//创建两份
+					if(SystemDataModel.panPaInfoVo.curLev%2==0){
+						addMapLayer(100,SystemDataModel.panPaInfoVo.curLev-2);
+						addMapLayer(-284,SystemDataModel.panPaInfoVo.curLev+3);
+					}else{
+						addMapLayer(0,SystemDataModel.panPaInfoVo.curLev-1);
+						addMapLayer(-384,SystemDataModel.panPaInfoVo.curLev+3);
+					}
+				}
+				addRoleToMap();
+			}
+			
+			private function addMapLayer(y:int=0,stLev:int=0):void{
+				var _mapLayer:MapLayer = new MapLayer();
+				_mapLayer.y = y;
+				_mapLayer.x = 106;
+				_mapLayer.bg_bitmap = AssetCenter.getInstance().get_img_form_pacakge("ui_pata","lt_img");
+				_mapLayer.onAddBlockToMapLayer(stLev,MAXBLOCK);
+				mapLayer.addChild(_mapLayer);
+			}
+			
+			private function addRoleToMap():void{
+				var mc:MovieClip = AssetCenter.getInstance().get_mc_form_pacakge('word_map', 'word_map_std');
+				mc.y = 180;
+				if(SystemDataModel.panPaInfoVo.curLev%2==0){
+					mc.x = 0;
+				}else{
+					mc.x = 195;
+				}
+				
+				roleLayer.addChild(mc);
+			}
+			
+			private function addRoleToLeft():void{
+				if(roleLayer.getChildAt(0)){
+					roleLayer.removeChildAt(0);
+				}
+				var mc:MovieClip = AssetCenter.getInstance().get_mc_form_pacakge('word_map', 'word_map_move_l');
+				mc.y = 180;
+				mc.x = 195;
+				roleLayer.addChild(mc);
+			}
+			
+			private function addRoleToRight():void{
+				if(roleLayer.getChildAt(0)){
+					roleLayer.removeChildAt(0);
+				}
+				var mc:MovieClip = AssetCenter.getInstance().get_mc_form_pacakge('word_map', 'word_map_move');
+				mc.y = 180;
+				mc.x = 0;
+				roleLayer.addChild(mc);
+			}
+			
+			private function addRoleStand():void{
+				if(roleLayer.getChildAt(0)){
+					roleLayer.removeChildAt(0);
+				}
+				var mc:MovieClip = AssetCenter.getInstance().get_mc_form_pacakge('word_map', 'word_map_std');
+				mc.y = 180;
+				mc.x = roleToPosX;
+				roleLayer.addChild(mc);
+				PaTaMessage.getInstance().onStartBattle(PaTaMessage.getInstance().resData);
+			}
+			
+			private var toPosY0:int;
+			private var toPosY1:int;
+			private var roleChangeNum:int;
+			private var roleToPosX:int;
+			public function onMoveMapLayerAndRole():void{
+				this.addEventListener(Event.ENTER_FRAME,onEnterFrame);
+				if(SystemDataModel.panPaInfoVo.curLev%2==0){
+					toPosY0 = 200;
+					toPosY1 = -184;
+				}else{
+					toPosY0 = 100;
+					toPosY1 = -284;
+				}
+				if(SystemDataModel.panPaInfoVo.curLev%2==0){
+					roleToPosX = 195;
+					roleChangeNum = 8;
+					addRoleToRight();
+				}else{
+					roleToPosX = 0;
+					roleChangeNum = -8;
+					addRoleToLeft();
+				}
+			}
+			private var inFlag:Boolean;
+			private function onEnterFrame(evt:Event):void{
+				var l:int = mapLayer.numChildren;
+				for(var i:int=0;i<l;i++){
+					if((i==0 && mapLayer.getChildAt(i).y < toPosY0) || (i == 1 && mapLayer.getChildAt(i).y < toPosY1)){
+						mapLayer.getChildAt(i).y += 4;
+					}else{
+						inFlag = true;
+						if((roleChangeNum>0 && roleLayer.getChildAt(0).x>=roleToPosX) || (roleChangeNum<0 && roleLayer.getChildAt(0).x<=roleToPosX)){
+							this.removeEventListener(Event.ENTER_FRAME,onEnterFrame);
+							addRoleStand();
+							inFlag = false;
+							break;
+						}
+					}
+				}
+				if((roleChangeNum>0 && roleLayer.getChildAt(0).x<roleToPosX) || (roleChangeNum<0 && roleLayer.getChildAt(0).x>roleToPosX)){
+					roleLayer.getChildAt(0).x += roleChangeNum;
+				}else{
+					if(inFlag){
+						this.removeEventListener(Event.ENTER_FRAME,onEnterFrame);
+						addRoleStand();
+						inFlag = false;
+					}
+				}
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:UIComponent mask="{ImgMask}" id="mapLayer"/>
+	<s:Group width="320" height="384" top="0" id="ImgMask" >
+		
+		<s:Rect left="0" top="0" right="0" bottom="0" radiusX="20" radiusY="20">
+			
+			<s:fill>
+				
+				<s:SolidColor alpha="0"/>
+				
+			</s:fill>
+			
+		</s:Rect>
+		
+	</s:Group>
+	<mx:UIComponent width="320" height="384" id="roleLayer"/>
+</s:Group>

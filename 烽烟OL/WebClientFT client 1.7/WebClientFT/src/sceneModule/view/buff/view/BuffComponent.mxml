@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp();">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.CollectionEvent;
+			
+			import sceneModule.model.vo.buffVO.BuffInfoVO;
+//			private var dataCollection:ArrayCollection;
+			private var buffList:ArrayCollection = new ArrayCollection();
+			private var dic:Dictionary = new Dictionary();
+			
+			private var buffTooltip:BuffTooltip = new BuffTooltip();
+			private function initApp():void{
+				FlexGlobals.topLevelApplication.addElement(buffTooltip);
+				buffTooltip.visible = false;
+//				dataCollection = SystemDataModel.buffListArr;
+//				dataCollection.addEventListener(CollectionEvent.COLLECTION_CHANGE,onDataChange);
+			}
+			
+			public function onDataChange(dataCollection:ArrayCollection):void{
+				var ol:int = buffList.length;
+				var nl:int = dataCollection.length;
+				var removeArr:ArrayCollection = new ArrayCollection();
+				if(nl == 0){
+					//删除现在所有的buff
+					buffList.removeAll();
+					iHbox.removeAllChildren();
+				}else{
+					for(var oi:int=0;oi<ol;oi++){
+						for(var ni:int=0;ni<nl;ni++){
+							if(dataCollection[ni].buffId == buffList[oi].buffId){
+								buffList[oi] = dataCollection[ni];
+								break;
+							}else if(ni == nl-1){
+								removeArr.addItem(oi);
+								//说明此buff消失
+//								onDesBuffComp(oi);
+							}
+						}
+					}
+				}
+				var rl:int = removeArr.length;
+				for(var r_i:int=0;r_i<rl;r_i++){
+					if(removeArr.length >= r_i){
+						onDesBuffComp(removeArr[r_i]);
+					}
+				}
+				
+				//添加新buff
+				var new_l:int = dataCollection.length;
+				for(var new_i:int=0;new_i<new_l;new_i++){
+					var o_l:int = buffList.length;
+					if(o_l == 0){
+						//新添加的buff
+						buffList.addItem(dataCollection[new_i]);
+						onAddBuffComp(dataCollection[new_i]);
+						continue;
+						
+					}
+					for(var o_i:int=0;o_i<o_l;o_i++){
+						if(buffList[o_i].buffId == dataCollection[new_i].buffId){
+							buffList[o_i] = dataCollection[new_i];
+							(dic[dataCollection[new_i].buffId] as BuffComponentItemRender).curBuffInfo = dataCollection[new_i] as BuffInfoVO;
+							break;
+						}else if(o_i == o_l-1){
+							//新添加的buff
+							buffList.addItem(dataCollection[new_i]);
+							onAddBuffComp(dataCollection[new_i]);
+						}
+					}
+				}
+			}
+			
+			private function onAddBuffComp(buffInfo:BuffInfoVO):void{
+				var comp:BuffComponentItemRender = new BuffComponentItemRender();
+				iHbox.addChild(comp);
+				comp.curBuffInfo = buffInfo;
+				comp.addEventListener(MouseEvent.MOUSE_OVER,onMouseOver);
+				comp.addEventListener(MouseEvent.MOUSE_OUT,onMouseOut);
+				dic[buffInfo.buffId] = comp;
+			}
+			private function onMouseOver(evt:MouseEvent):void{
+				if(!buffTooltip.visible){
+					buffTooltip.visible = true;
+					buffTooltip.curDataInfo = (evt.currentTarget as BuffComponentItemRender).curCompBuffInfo;
+					buffTooltip.x = FlexGlobals.topLevelApplication.mouseX + 10;
+					buffTooltip.y = FlexGlobals.topLevelApplication.mouseY + 10;
+				}
+			}
+			private function onMouseOut(evt:MouseEvent):void{
+				buffTooltip.visible = false;
+			}
+			private function onDesBuffComp(index:int):void{
+				if(dic.hasOwnProperty(buffList[index].buffId)){
+					iHbox.removeChild(dic[buffList[index].buffId]);
+					dic[buffList[index].buffId] = null;
+					buffList.removeItemAt(index);
+					
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:HBox id="iHbox" width="130" height="24" horizontalGap="2"/>
+</s:Group>

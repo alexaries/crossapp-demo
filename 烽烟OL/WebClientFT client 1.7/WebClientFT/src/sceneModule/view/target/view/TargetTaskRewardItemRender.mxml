@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="42" height="42"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import sceneModule.event.MediatorRegisterItemEuipmentEvent;
+			/**
+			 * 物品的层叠数
+			 */
+			private function getItemStack(value:int):String{
+				var itemStack:String = "";
+				if(value > 1){
+					itemStack = value.toString();
+				}
+				return itemStack;
+			}
+			//获取装备图标路径
+			public function setEquipmentUrl(rtype:int,s:String,t:int):String{
+				var url:String = '';
+				switch(rtype){
+					case 0:
+						//物品
+						if(t != 0){
+							url = ProConst.getImageResUrl(t);
+							url += (s + '.png');
+						}
+						break;
+					case 1:
+						//金币
+						url = 'assets/battle/coin.png';
+						break;
+					case 2:
+						//钻
+						url = 'assets/Image/Reward/zuan.png';
+						break;
+					case 3:
+						//体力
+						url = 'assets/Image/Reward/tili.png';
+						break;
+					case 4:
+						url= 'assset/gaji/experience.png';
+				}
+				return url;
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				dispatchEvent(new MediatorRegisterItemEuipmentEvent(MediatorRegisterItemEuipmentEvent.MEDIATORREGISTERCOMMISSIONITEMEUIPMENT,this,true));
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="equipImg" source="{setEquipmentUrl(data.rewardType,data.icon,data.type)}" width="100%" height="100%"/>
+	<component:CrotaBasicLabel mouseChildren="false" mouseEnabled="false" text="{getItemStack(data.stack)}" textAlign="center" x="0" y="30" fontSize="10" styleName="ROLEINFOTEXTFORMAT" width="42"/>
+	
+</s:ItemRenderer>

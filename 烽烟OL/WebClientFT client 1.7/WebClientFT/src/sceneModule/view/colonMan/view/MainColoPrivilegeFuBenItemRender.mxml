@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				
+				buttonMode="true" useHandCursor="true"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*" height="125" width="148">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.colonMan.event.MediatorRegisterColonManItemEuipmentEvent;
+			
+			import util.CommonTools;
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				dispatchEvent(new MediatorRegisterColonManItemEuipmentEvent(MediatorRegisterColonManItemEuipmentEvent.MEDIATORREGISTERCOLOPRIVILEGE,this,true));
+				CommonTools.make_bitmap(zhiminImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'zhi_min_item');
+				CommonTools.make_bitmap(antho).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'anthoer_capture');
+				CommonTools.make_bitmap(no).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'no_capture');
+				CommonTools.make_bitmap(sel).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'self_capture');
+			}
+
+		]]>
+	</fx:Script>
+	
+	<mx:Image id="zhiminImg" width="100%" height="100%" maintainAspectRatio="false"/>
+	<mx:Image id="antho" visible="{data.coloType == 2?true:false}" maintainAspectRatio="false"  x="43" y="-7"/>
+	<mx:Image id="no" visible="{data.coloType == 0?true:false}" maintainAspectRatio="false"  x="43" y="-7"/>
+	<mx:Image id="sel" visible="{data.coloType == 1?true:false}" maintainAspectRatio="false"  x="43" y="-7"/>
+	<s:HGroup x="7" y="45" gap="1">
+		<component:CrotaBasicLabel
+			styleName="ROLEINFOTEXTFORMAT"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcpfbIR_zmfb')}" textAlign="center"
+			x="9"  width="69" height="17"/>
+		<component:CrotaBasicLabel
+			styleName="ROLEINFOTEXTFORMAT"
+			 color="#FFFF00"
+			id="l_juntuan_name"
+			text="{data.fuBenName?data.fuBenName:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu')}" textAlign="left"
+			x="81"  width="69" height="17"/>
+	</s:HGroup>
+	
+	<s:HGroup x="7" y="61" gap="1">
+		<component:CrotaBasicLabel
+			styleName="ROLEINFOTEXTFORMAT"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcpfbIR_zmjt')}" textAlign="center"
+			x="9"  width="69" height="17"/>
+		<component:CrotaBasicLabel
+			styleName="ROLEINFOTEXTFORMAT"
+			id="l_juntuan_name0"
+			color="#990000"
+			text="{data.coloCorpsName?data.coloCorpsName:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu')}" textAlign="left"
+			x="81"  width="69" height="17"/>
+	</s:HGroup>
+	
+	<s:HGroup x="7" y="79" gap="1">
+		<component:CrotaBasicLabel
+			styleName="ROLEINFOTEXTFORMAT"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcpfbIR_zmlz')}" textAlign="center"
+			x="9"  width="69" height="17"/>
+		<component:CrotaBasicLabel
+			styleName="ROLEINFOTEXTFORMAT"
+			id="l_juntuan_name1"
+			 color="#61B152"
+			text="{data.lingzhu?data.lingzhu:CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu')}" textAlign="left"
+			x="81"  width="69" height="17"/>
+	</s:HGroup>	
+	
+</s:ItemRenderer>

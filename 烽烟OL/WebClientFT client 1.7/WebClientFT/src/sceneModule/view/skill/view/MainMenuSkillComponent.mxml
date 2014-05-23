@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 width="946" height="448"
+		 xmlns:win="managers.*"
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:view="sceneModule.view.mainMenu.view.*" xmlns:event="sceneModule.view.skill.event.*" xmlns:view1="sceneModule.view.skill.view.*" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.skill.event.MediatorRegisterSkillEvent;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.skill.view.MainMenuSkillComponent";
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				CommonTools.make_bitmap(skillBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_skill","skill_bg");
+				
+				this.dispatchEvent(new MediatorRegisterSkillEvent(MediatorRegisterSkillEvent.MEDIATORREGISTER_SKILLCOMP,this,true));
+				
+			}
+
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="skillBg" />
+	<s:List 
+		id="learnSkill" 
+		skinClass="style.Skin_CrotaBasicList"
+		dataProvider="{SystemDataModel.mainSkillInfo.skillList}"
+		itemRenderer="sceneModule.view.skill.view.MainMenuSkillItemRender" 
+		x="360" y="119" height="79" width="484">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="6" requestedRowCount="1" horizontalGap="4"/>
+		</s:layout>
+	</s:List>
+	<!--<s:List 
+		id="learnSkill0" 
+		skinClass="style.Skin_CrotaBasicList" 
+		dataProvider="{SystemDataModel.mainSkillInfo.pasSkillList}" 
+		itemRenderer="sceneModule.view.skill.view.MainMenuSkillItemRender"
+		x="355" y="211" height="79" width="484">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="6" requestedRowCount="1" horizontalGap="4"/>
+		</s:layout>
+	</s:List>
+	<s:List 
+		id="learnSkill1" 
+		skinClass="style.Skin_CrotaBasicList" 
+		dataProvider="{SystemDataModel.mainSkillInfo.appSkillList}" 
+		itemRenderer="sceneModule.view.skill.view.MainMenuSkillItemRender" 
+		x="355" y="319" height="79" width="484">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="6" requestedRowCount="1" horizontalGap="4"/>
+		</s:layout>
+	</s:List>
+	-->
+	<view1:MainMenuBattleSkillComponent 
+		id="bSkill_1" 
+		data="{SystemDataModel.mainSkillInfo.battleSkillList.length ==3 ? SystemDataModel.mainSkillInfo.battleSkillList.getItemAt(0): new Object}"
+		_skillPos="0" x="80" y="105"/>
+	<!--<view1:MainMenuBattleSkillComponent 
+		id="bSkill_2"
+		data="{SystemDataModel.mainSkillInfo.battleSkillList.length ==3 ? SystemDataModel.mainSkillInfo.battleSkillList.getItemAt(1): new Object}" 
+		_skillPos="1" x="80" y="176"/>
+	<view1:MainMenuBattleSkillComponent
+		id="bSkill_3" 
+		data="{SystemDataModel.mainSkillInfo.battleSkillList.length ==3 ? SystemDataModel.mainSkillInfo.battleSkillList.getItemAt(2): new Object}"
+		_skillPos="2" x="80" y="247"/>-->
+	<util:CommonButton 
+		id="closeBtn" 
+		skinClass="style.Skin_CrotaCloseButton111" x="856" y="40"/>
+</win:BaseWindow>

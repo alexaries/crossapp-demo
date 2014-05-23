@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UI加载进度条 -->
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:win="managers.*" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:component="component.*" 
+				xmlns:ui="sceneModule.view.ui.*"
+				width="369" height="92"
+				creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import event.UILoadEvent;
+			
+			import flash.events.Event;
+			import flash.events.TimerEvent;
+			import flash.utils.Timer;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.wordmap.model.MapConfig;
+			
+			import util.CommonTools;
+			import util.xtrace;
+			
+			public static const NAME:String = "loader.UILoaderProgressBarView";
+			public static const MAX_STAR:int = 3;
+			public static const TIME_DELAY:int = 310;
+			
+			private var _fix_w:int;
+			private var _bar_len:int;
+			private var _timer:Timer;
+			private var _cur_star_index:int;
+			private var _step:int;
+			
+			private function init():void {
+				//CommonTools.make_bitmap(img_bg).bitmapData = 
+				//	AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_load_bg');
+				CommonTools.make_bitmap(img_bar_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_load_bar_bg');
+				CommonTools.make_bitmap(img_bar).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_load_bar');
+				//CommonTools.make_bitmap(img_star).bitmapData = 
+				//	AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_star_0');
+					
+				img_bar.mask = g_mark;
+					
+				//_fix_w = -AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_star_0').width / 2;
+				_bar_len = AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_load_bar_bg').width;
+				
+				this.addEventListener(Event.ADDED_TO_STAGE, rest_percent);
+				this.addEventListener(Event.REMOVED_FROM_STAGE, clear_timer);
+				AssetCenter.getInstance().addEventListener(UILoadEvent.UILoadEvent_PROGRESS,on_loading);
+				_step = 1;
+				
+				//var t:int = MapConfig.getInstance().fb_config_xml.test.@time;
+				_timer = new Timer(TIME_DELAY);
+				_timer.addEventListener(TimerEvent.TIMER, flash_star);
+				
+				rest_percent();
+			}
+			
+			private function start_star():void {
+				_timer.reset();
+				_timer.start();
+			}
+			
+			private function end_star():void {
+				_timer.reset();
+				_timer.stop();
+			}
+			
+			private function clear_timer(e:Event):void {
+				end_star();
+			}
+			
+			private function flash_star(e:Event):void {
+				return;
+				_cur_star_index += _step;
+				if (_cur_star_index >= MAX_STAR){
+					_step = - _step;
+					_cur_star_index = MAX_STAR - 2;
+				}
+				if (_cur_star_index < 0) {
+					_step = - _step;
+					_cur_star_index = 1;
+				}
+				//xtrace("_cur_star_index ",_cur_star_index);
+				CommonTools.make_bitmap(img_star).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('real_time_load', 'real_time_star_' + _cur_star_index);
+			}
+			
+			private function rest_percent(e:Event = null):void{
+				set_bar(0, 1, 0);
+				//start_star();
+				l_des.text = resource.AssetCenter.getInstance().loading_des;
+			}
+			
+			private function on_loading(e:UILoadEvent):void {
+				//xtrace("e.obj.percent_loaded ", e.obj.percent_loaded);
+				set_bar(e.obj.cur, e.obj.total, e.obj.percent_loaded);
+			}
+			private function set_bar(cur:Number, max:Number, percent:Number):void {
+				//img_star.x = img_bar_bg.x + _fix_w + percent * _bar_len;
+				l_progress.text = int(percent * 100) + "%";
+				
+				g_mark.graphics.clear();
+				g_mark.graphics.beginFill(0xFFFF00);
+				g_mark.graphics.drawRect(0, 0, percent * _bar_len, 30);
+				g_mark.graphics.endFill();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		<!--<mx:Image id="img_bg" source="assets/real_time_load/realtime_load_bg.png"/>
+		<mx:Image id="img_bar_bg" source="assets/real_time_load/realtime_load_bar_bg.png" x="149" y="46"/>
+		<mx:Image id="img_bar" source="assets/real_time_load/realtime_load_bar.png" x="149" y="46"/>
+		<mx:Image id="img_star" source="assets/real_time_load/reatime_load_star_0.png" y="25" x="130"/>-->
+		
+		<!--<mx:Image id="img_bg"/>-->
+		<mx:Image id="img_bar_bg" x="0" y="30"/>
+		<mx:Image id="img_bar" x="0" y="30"/>
+		<s:Group id="g_mark" x="0" y="30"/>
+		<component:CrotaBasicLabel 
+		   id="l_progress" 
+		   x="313" y="18"
+		   styleName="MAINMENUROLEFONT12bebebe"/>
+		<component:CrotaBasicLabel 
+			id="l_des" 
+			x="155" y="18"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('loader','uilpbv_zyjz')}"
+			styleName="MAINMENUROLEFONT12bebebe"/>
+		<!--<mx:Image id="img_star" y="26" x="130"/>-->
+</win:BaseWindow>

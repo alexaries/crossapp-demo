@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="498"
+	width="672"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:ui="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.calendar.view.CalendarInfoComponent";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				CommonTools.make_bitmap(calendarBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_calendar", "calendar_bg");
+//				source="assets/Image/CalendarReward/calendarImg.png" 
+			}
+			
+//			private function getImageFilterByStatus(status:int):Array{
+//				if(status == 0){
+//					return new Array();
+//				}
+//				return new Array(CommonTools.changeColorFilter());
+//			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="calendarBg"
+		source="assets/Image/CalendarReward/calendarImg.png" />
+	<!--奖励箱-->
+	<mx:Image buttonMode="true"
+		filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=100?new Array():new Array(CommonTools.changeColorFilter())}"
+		id="rewardBox4"
+		source='assets/Image/CalendarReward/230004.png'
+		useHandCursor="true"
+		x="518"
+		y="403" />
+	<mx:Image buttonMode="true"
+		filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=80?new Array():new Array(CommonTools.changeColorFilter())}"
+		id="rewardBox3"
+		source='assets/Image/CalendarReward/230003.png'
+		useHandCursor="true"
+		x="404"
+		y="403" />
+	<mx:Image buttonMode="true"
+		filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=60?new Array():new Array(CommonTools.changeColorFilter())}"
+		id="rewardBox2"
+		source='assets/Image/CalendarReward/230002.png'
+		useHandCursor="true"
+		x="289"
+		y="403" />
+	<mx:Image buttonMode="true"
+		filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=10?new Array():new Array(CommonTools.changeColorFilter())}"
+		id="rewardBox1"
+		source='assets/Image/CalendarReward/230001.png'
+		useHandCursor="true"
+		x="175"
+		y="403" />
+	<component:CrotaBasicLabel filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=10?new Array():new Array(CommonTools.changeColorFilter())}"
+		fontSize="12"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('calendar','ciC_sd')}"
+		width="115"
+		x="125"
+		y="457" />
+	<component:CrotaBasicLabel filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=60?new Array():new Array(CommonTools.changeColorFilter())}"
+		fontSize="12"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('calendar','ciC_lsd')} "
+		width="115"
+		x="241"
+		y="457" />
+	<component:CrotaBasicLabel filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=80?new Array():new Array(CommonTools.changeColorFilter())}"
+		fontSize="12"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('calendar','ciC_bsd')}"
+		width="115"
+		x="358"
+		y="457" />
+	<component:CrotaBasicLabel filters="{SystemDataModel.calendarTaskInfo.totalLivenessNum>=100?new Array():new Array(CommonTools.changeColorFilter())}"
+		fontSize="12"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('calendar','ciC_ybd')}"
+		width="115"
+		x="470"
+		y="457" />
+	<!--已完成事件-->
+	<s:List dataProvider="{SystemDataModel.calendarTaskInfo.finished}"
+		height="247"
+		id="finishedList"
+		itemRenderer="sceneModule.view.calendar.view.CalendarFinishedTaskItemRender"
+		skinClass="style.Skin_CrotaBasicList"
+		width="234"
+		x="341"
+		y="133">
+		<s:layout>
+			<s:TileLayout horizontalAlign="left"
+				horizontalGap="0"
+				requestedColumnCount="1"
+				verticalGap="0" />
+		</s:layout>
+	</s:List>
+	<!--未完成事件-->
+	<s:List dataProvider="{SystemDataModel.calendarTaskInfo.unfinished}"
+		height="247"
+		id="unfinishedList"
+		itemRenderer="sceneModule.view.calendar.view.CalendarTaskItemRender"
+		skinClass="style.Skin_CrotaBasicList"
+		width="224"
+		x="102"
+		y="133">
+		<s:layout>
+			<s:TileLayout horizontalAlign="left"
+				horizontalGap="0"
+				requestedColumnCount="1"
+				verticalGap="0" />
+		</s:layout>
+	</s:List>
+	<component:CrotaBasicLabel color="#E8FC05"
+		fontSize="28"
+		height="40"
+		text="{SystemDataModel.calendarTaskInfo.totalLivenessNum}"
+		textAlign="center"
+		width="75"
+		x="489"
+		y="70" />
+	<component:CrotaBasicLabel color="0xBB3D00"
+		fontSize="15"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('calendar','ciC_ywc')}"
+		textAlign="center"
+		width="88"
+		x="346"
+		y="112" />
+	<component:CrotaBasicLabel color="0xBB3D00"
+		fontSize="15"
+		height="24"
+		text="{'（'+SystemDataModel.calendarTaskInfo.finished.length+'）'}"
+		textAlign="center"
+		width="50"
+		x="431"
+		y="112" />
+	<component:CrotaBasicLabel color="0xBB3D00"
+		fontSize="15"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('calendar','ciC_wwc')}"
+		textAlign="center"
+		width="90"
+		x="106"
+		y="112" />
+	<component:CrotaBasicLabel color="0xBB3D00"
+		fontSize="15"
+		height="24"
+		text="{'（'+SystemDataModel.calendarTaskInfo.unfinished.length+'）'}"
+		textAlign="center"
+		width="50"
+		x="191"
+		y="112" />
+	<ui:CommonButton id="closeBtn"
+		skinClass="style.Skin_CrotaCloseButton111"
+		x="575"
+		y="33" />
+</win:BaseWindow>

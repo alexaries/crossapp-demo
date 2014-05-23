@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>		
+<data>		
+    <module level="1">		
+         <info name="守護目標" imgUrl="110.png" toL="13" toT="286" toR="0" direction="left"/>		
+    </module>		
+	 <module level="2">	
+         <info name="強化" imgUrl="108.png" toL="13" toT="98" toR="0" direction="left"/>		
+    </module>		
+	<module level="3">	
+		<!-- 我的領地-->
+         <info name="神格" imgUrl="114.png" toL="600" toT="600" toR="300" direction="right"/>		
+    </module>		
+	  	
+    <module level="4">		
+		<!-- 寵物-->
+         <info name="圖鑒" imgUrl="115.png" toL="13" toT="160" toR="0" direction="left"/>		
+         <info name="佈陣" imgUrl="107.png" toL="13" toT="160" toR="0" direction="left"/>		
+    </module>		
+
+	<module level="5">	
+         <info name="礦洞" imgUrl="113.png" toL="550" toT="600" toR="300" direction="right"/>		
+    </module>		
+	  	
+	   <!-- 主菜單-->	
+	<module level="7">	
+         <info name="技能" imgUrl="103.png" toL="600" toT="600" toR="100" direction="right"/>		
+    </module>		
+
+	<module level="10">	
+         <info name="寵物培養" imgUrl="101.png" toL="13" toT="160" toR="0" direction="left"/>		
+    </module>		
+
+	 <module level="11">	
+         <info name="寶石鑲嵌" imgUrl="116.png" toL="13" toT="98" toR="0" direction="left"/>		
+    </module>		
+	 	
+    <module level="12">		
+         <info name="軍團" imgUrl="104.png" toL="600" toT="600" toR="100" direction="right"/>		
+    </module>		
+
+	<module level="13">	
+         <info name="殖民" imgUrl="111.png" toL="13" toT="219" toR="0" direction="left"/>		
+     		
+    </module>		
+    <module level="14">		
+         <info name="日程表" imgUrl="120.png" toL="13" toT="281" toR="0" direction="left"/>		
+    </module>		
+
+	 <module level="15">	
+         <info name="競技場" imgUrl="105.png" toL="13" toT="339" toR="0" direction="left"/>		
+   		
+    </module>		
+
+	    <module level="16">	
+		 <info name="探寶" imgUrl="112.png" toL="600" toT="600" toR="300" direction="right"/>
+    </module>		
+  		
+    <module level="18">		
+         <info name="軍營" imgUrl="119.png" toL="600" toT="600" toR="300" direction="right"/>		
+    </module>		
+
+    <module level="20">		
+	     <info name="祈禱" imgUrl="109.png" toL="84" toT="101" toR="0" direction="left"/>	
+         <info name="官爵" imgUrl="117.png" toL="600" toT="600" toR="300" direction="right"/>		
+    </module>		
+
+	     <module level="21">	
+         <info name="合成" imgUrl="102.png" toL="13" toT="98" toR="0" direction="left"/>		
+    </module>		
+
+	     <module level="25">	
+         <info name="傳承" imgUrl="100.png" toL="13" toT="160" toR="0" direction="left"/>		
+    </module>		
+
+	     <module level="30">	
+         <info name="屬性轉移" imgUrl="118.png" toL="13" toT="98" toR="0" direction="left"/>		
+        </module>		
+
+</data>		

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" mouseChildren="false" mouseEnabled="false" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="500" height="50">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<!--<mx:Move id="move_up" effectEnd="move_up_effectEndHandler(event)" target="{tt}"/>-->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.easing.Linear;
+			
+			import mx.controls.Alert;
+			import mx.events.EffectEvent;
+			
+			import spark.filters.GlowFilter;
+			private var durationtime:Number;
+			public var durationTime:Number=5000;
+			public var _repeatCount:Number = 1;
+			public var mode:String="vb2t";//vb2t:下往上滚动；vt2b:上往下滚动；hl2r:左往右滚动；hr2l:右往左滚动
+			public var marqueeText:String="flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here<br>flexMarquee text here";
+			public var info_arr:Array = new Array();
+			public function setMarqueeTxt():void
+			{
+//				if(move_up.isPlaying)return;
+//				if(info_arr.length<=0)return;
+//				tt.htmlText=info_arr[0];
+//				info_arr.shift();
+//				tt.validateNow();
+//				if(mode=="hl2r" || mode=="hr2l"){
+//					durationtime=(tt.textWidth<=250?durationTime:Math.round(tt.textWidth/250*durationTime));
+//				}else{
+//					durationtime=(tt.textHeight<=250?durationTime:Math.round(tt.textHeight/250*durationTime));
+//				}
+//				//设置文字。若为横向移动，将换行符改为适当的空格
+//				//根据不同模式调整区域大小及文字滚动的方向
+//				switch(mode){
+//					case "hl2r":
+//						
+//						move_up.xFrom=0-tt.textWidth+6;
+//						move_up.xTo=cs.width-6;
+//						break;
+//					case "hr2l":
+//						move_up.xFrom=cs.width-6;
+//						move_up.xTo=0-tt.textWidth+6;
+//						break;
+//					case "vt2b":
+//						move_up.yFrom=0-tt.textHeight+6;
+//						move_up.yTo=cs.height-6;
+//						break;
+//					default:
+//						//Alert.show(tt.height+"---"+tt.textHeight);
+//						move_up.yFrom=cs.height - 6;
+//						move_up.yTo=0 - tt.textHeight + 6;
+//				}
+//				move_up.repeatCount=1;
+//				//loop 
+//				move_up.repeatDelay=0;
+//				//loop time 
+//				move_up.duration=durationtime;
+//				//the time of scroll once 
+//				move_up.easingFunction = Linear.easeNone;
+////				move_up.play();
+				
+				onStartMove();
+			}
+			
+			private var moveTimer:Timer;
+			private function onStartMove():void{
+				if(!moveTimer){
+					onReset();
+					moveTimer = new Timer(50);
+					moveTimer.addEventListener(TimerEvent.TIMER,onTimer);
+					moveTimer.start();
+				}
+				if(!moveTimer.running){
+					onReset();
+					moveTimer.start();
+				}
+			}
+			
+			private function onTimer(evt:TimerEvent):void{
+				cs.x = cs.x - 3;
+				if(cs.x <= -cs.width){
+					if(info_arr.length > 0){
+						onReset();
+					}else{
+						moveTimer.stop();
+					}
+					
+				}
+			}
+			
+			private function onReset():void{
+				tt.htmlText=info_arr[0];
+				info_arr.shift(); 
+				cs.x = 500;
+			}
+			
+			private function move_pause():void
+			{
+//				move_up.pause();
+				//pause 
+			}
+			private function move_resume():void
+			{
+//				move_up.resume();
+				//start from the pause position 
+			}
+			
+			protected function move_up_effectEndHandler(event:EffectEvent):void
+			{
+				tt.htmlText='';
+				setMarqueeTxt();
+			}
+			
+			public function startTimeToMove():void{
+				if(moveTimer && !moveTimer.running){
+					moveTimer.start();
+				}
+			}
+			
+			public function stopTimeToStop():void{
+				if(moveTimer && moveTimer.running){
+					moveTimer.stop();
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:Canvas  id="cs" mask="{ImgMask}" height="50" top="0" verticalScrollPolicy="off" horizontalScrollPolicy="off" mouseOver="move_pause()" mouseOut="move_resume()">
+		<mx:Text id="tt" height="45" color="#ffff00" fontWeight="bold" fontSize="22" top="1" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" horizontalCenter="0" verticalCenter="0">
+		</mx:Text>
+	</mx:Canvas>
+	<s:Group width="500" height="50" top="0" id="ImgMask" >
+		
+		<s:Rect left="0" top="0" right="0" bottom="0" radiusX="20" radiusY="20">
+			
+			<s:fill>
+				
+				<s:SolidColor alpha="0"/>
+				
+			</s:fill>
+			
+		</s:Rect>
+	
+	</s:Group>
+</s:Group>

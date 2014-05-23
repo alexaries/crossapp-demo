@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="init()"
+				width="177" height="101"  autoDrawBackground="false"
+				 xmlns:component="component.*" xmlns:util="util.*">
+	 
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaItemConfig;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.guanjue.event.ShengWangItemRenderEvent;
+			import sceneModule.view.guanjue.vo.Wupin;
+			
+			import util.CommonTools;
+			
+			private var _itemWp:Wupin = new Wupin ();
+			
+			private function init():void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_guanjue","shengItemBg_bg");
+				this.dispatchEvent(new ShengWangItemRenderEvent(ShengWangItemRenderEvent.SHNEGWANGITEMRENDER_EVENT,this,true));
+			}
+			
+			private function getItemImaUrl(itemId:int):String
+			{
+				_itemWp.itemInfo= CrotaItemConfig.getItemInfoByTempleteId(itemId);
+				var url:String = CommonTools.setEquipmentUrl(_itemWp.itemInfo.icon, _itemWp.itemInfo.type);
+				return url;
+			}
+		]]>
+	</fx:Script>
+	<mx:Image id="bg" x="1" y="1"/>
+	<mx:Image source="{getItemImaUrl(data.id)}" x="21" y="13"/>
+	
+	<component:CrotaBasicLabel textAlign="center" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','swIR_sl')}" styleName="TASK_MAIN_ITEM" verticalAlign="middle"  x="70" y="31"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.count}" styleName="TASK_MAIN_ITEM"  verticalAlign="middle"   x="96" y="31" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','swIR_jl')}" verticalAlign="middle" styleName="TASK_MAIN_ITEM" height="21" width="32" x="69" y="45"/>
+	<component:CrotaBasicLabel textAlign="center" text="{data.weiwang}"  verticalAlign="middle" styleName="TASK_MAIN_ITEM" x="96" y="50" width="36" height="12"/>
+	<component:CrotaBasicLabel textAlign="center" text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','swIR_ww')}" verticalAlign="middle" styleName="TASK_MAIN_ITEM" height="21" width="32" x="121" y="45"/>
+	<component:CrotaBasicLabel textAlign="center" id="theName" text="{data.name}"  verticalAlign="middle" styleName="TASK_MAIN_ITEM" x="69" y="11" width="60" height="12"/>
+	<util:CommonButton id="sjBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','swIR_sj')}" skinClass="style.Skin_CrotaCommonButton1" enabled="{data.adddq}" x="14" y="61"/>
+	<util:CommonButton id="gxBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('guanjue','swIR_gx')}" skinClass="style.Skin_CrotaCommonButton1" enabled="{data.addzuan}" x="108" y="61"/>	  
+</s:ItemRenderer>
+

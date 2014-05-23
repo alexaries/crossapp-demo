@@ -1,0 +1,155 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+
+.MAINMENUROLEFONT808080
+{
+	fontSize:12;
+	color: #808080;
+}
+
+.MAINMENUROLEFONT12a18c70
+{
+	fontSize:12;
+	color: #a18c70;
+}
+
+.MAINMENUROLEFONT13a18c70
+{
+	fontSize:13;
+	color: #a18c70;
+}
+.MAINMENUROLEFONT12e4e0b3
+{
+	fontSize:12;
+	color: #e4e0b3;
+}
+.MAINMENUROLEFONT13e4e0b3
+{
+	fontSize:13;
+	color: #e4e0b3;
+}
+.MAINMENUROLEFONT12bebebe
+{
+	fontSize:12;
+	color: #bebebe;
+}
+.MAINMENUROLEFONT12F0E68C
+{
+	fontSize:12;
+	color: #F0E68C;
+}
+.MAINMENUROLEFONT13bebebe
+{
+	fontSize:13;
+	color: #bebebe;
+}
+.MAINMENUROLEFONT12beadf7
+{
+	fontSize:12;
+	color: #beadf7;
+}
+.MAINMENUROLEFONT129165ce
+{
+	fontSize:12;
+	color: #9165ce;
+}
+
+.MAINMENUROLEFONT12a9d091
+{
+	fontSize:12;
+	color: #a9d091;
+}
+.MAINMENUROLEFONT13b95c4e
+{
+	fontSize:13;
+	color: #b95c4e;
+}
+.MAINMENUROLEFONT13b95c4e2
+{
+	fontSize:13;
+	color: #ffffff;
+}
+
+.MAINMENUROLEFONT13b95c4e215
+{
+	fontSize:15;
+	color: #ffffff;
+}
+
+.MAINMENUROLEFONT1331302c
+{
+	fontSize:13;
+	color: #31302c;
+}
+.MAINMENUROLEFONT1231302c
+{
+	fontSize:12;
+	color: #31302c;
+}
+.MAINMENUROLEFONT15ffffff
+{
+	fontSize:15;
+	color: #ffffff;
+}
+.MAINMENUROLEFONT12385211
+{
+	fontSize:12;
+	color: #f5f806;
+}
+.MAINMENUROLEFONT12f38c01
+{
+	fontSize:12;
+	color: #f38c01;
+}
+
+.MAINMENUROLEFONTFFFFFF
+{
+	fontSize:12;
+	color: #FFFFFF;
+}
+.MAINMENUROLEFONTFF0000
+{
+	fontSize:12;
+	color: #FF0000;
+}
+.MAINMENUROLEFONT27ca01
+{
+	fontSize:12;
+	color: #27ca01;
+}
+
+.TASK_NPC_NAMW{
+	fontSize:14;
+	color: #FFFFFF;
+}
+
+.TASK_ITEM{
+	fontSize:12;
+	color: #00ff33;
+}
+.TASK_PRICE_NUMBER{
+	fontSize:12;
+	color: #ffd400;
+}
+.TASK_PRIVE_EXP{
+	fontSize:12;
+	color: #00ff33;
+}
+.TASK_MAIN_NAME{
+	fontSize:14;
+	color: #c4ab73;
+}
+.TASK_MAIN_ITEM{
+	fontSize:12;
+	color: #000000;
+}
+.TASK_NPC_WORD{
+	fontSize:14;
+	color: #ffffff;
+}
+.TASK_USER_WORD{
+	fontSize:12;
+	color: #00ff00;
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:win="managers.*"
+		 creationComplete="basewindow1_creationCompleteHandler(event)"
+		 width="433" height="497" 
+		 xmlns:util="util.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.group.command.GroupMessage;
+			import sceneModule.view.group.vo.DWMemberInfoVO;
+			
+			import util.CommonTools;
+			public static const NAME:String = "sceneModule.view.group.view.CreateOrJoinWindow";
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bgImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","pInfo");
+				var arr:ArrayCollection = new ArrayCollection();
+				for(var i:int=0;i<9;i++){
+					var info:DWMemberInfoVO = new DWMemberInfoVO();
+					info.pos = i;
+					info.dType = data.dType;
+					if(data.funType != 'Create'){
+						info.funType = 'Join';
+					}
+					arr.addItem(info);
+				}
+				SystemDataModel.mainGroupInfo.dwmemberInfo.source = arr.toArray();
+				if(data.funType != 'Create'){
+					GroupMessage.getInstance().getMatrixRoleInfo(data.dType);
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="bgImg"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="403" y="0"/>
+	<s:List id="roleList" dragEnabled="false" width="391" height="391" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.mainGroupInfo.dwmemberInfo}" itemRenderer="sceneModule.view.group.view.CreateOrJoinItemRender" x="22" y="94">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="3" requestedRowCount="3" horizontalGap="14" verticalGap="14"/>
+		</s:layout>
+	</s:List>
+</win:BaseWindow>

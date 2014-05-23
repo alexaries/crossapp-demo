@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="utf-8" ?>			
+<data>			
+	<!-- 克洛平原 -->		
+	<!-- 		
+		id 傳送門的id	
+		bgimg 選擇介面的背景圖片路徑	
+	-->		
+
+	<fb id="10001" bgimg="assets/nfuben/luoke/keluopingyuan_bg.jpg">		
+		<!-- 落葉平原 -->	
+		<!--	
+			id 副本組id,於資料庫的組id對應
+			*_img 四種狀態的圖片路徑
+			posx,posy 左上角為基準的按鈕位置
+			point 按鈕箭頭指向,1:左上 2:右上 3:左下 4:右下
+			des 按鈕下的描述文字
+		-->	
+		<chose id="5003" 	
+			nomal_img="assets/nfuben/luoke/luoyepingyuan_nomal.png" 
+			down_img="assets/nfuben/luoke/luoyepingyuan_down.png" 
+			selected_img="assets/nfuben/luoke/luoyepingyuan_selected.png" 
+			disable_img="assets/nfuben/luoke/luoyepingyuan_disable.png" 
+			posx="539" posy="217" point="4"
+			des="落葉平原"
+		/>	
+		<!-- 平原入口 -->	
+		<chose id="5001" 	
+			nomal_img="assets/nfuben/luoke/pingyuan_nomal.png" 
+			down_img="assets/nfuben/luoke/pingyuan_down.png" 
+			selected_img="assets/nfuben/luoke/pingyuan_selected.png" 
+			disable_img="assets/nfuben/luoke/pingyuan_disable.png" 
+			posx="223" posy="175" point="4"
+			des="平原入口"
+		/>	
+		<!-- 平原深處 -->	
+		<chose id="5004" 	
+			nomal_img="assets/nfuben/luoke/pingyuanshenchu_nomal.png" 
+			down_img="assets/nfuben/luoke/pingyuanshenchu_down.png" 
+			selected_img="assets/nfuben/luoke/pingyuanshenchu_selected.png" 
+			disable_img="assets/nfuben/luoke/pingyuanshenchu_disable.png" 
+			posx="752" posy="376" point="4"
+			des="平原深處"
+		/>	
+		<!-- 平原小徑 -->	
+		<chose id="5002" 	
+			nomal_img="assets/nfuben/luoke/pingyuanxiaojing_nomal.png" 
+			down_img="assets/nfuben/luoke/pingyuanxiaojing_down.png" 
+			selected_img="assets/nfuben/luoke/pingyuanxiaojing_selected.png" 
+			disable_img="assets/nfuben/luoke/pingyuanxiaojing_disable.png" 
+			posx="322" posy="378" point="4"
+			des="平原小徑"
+		/>	
+	</fb>		
+	<!-- 被遺忘的聖地 -->		
+	<fb id="10003" bgimg="assets/nfuben/beiyiwangdeshengdi/beiyiwangdeshengdi_bg.jpg">		
+		<!-- 廢棄之密道 -->	
+		<chose id="5016" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/feiqizhimidao_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/feiqizhimidao_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/feiqizhimidao_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/feiqizhimidao_disable.png" 
+			posx="703" posy="442" point="3"
+			des="廢棄之密道"
+		/>	
+		<!-- 禁地 -->	
+		<chose id="5017" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/jindi_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/jindi_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/jindi_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/jindi_disable.png" 
+			posx="814" posy="297" point="4"
+			des="禁地"
+		/>	
+		<!-- 教堂長廊 -->	
+		<chose id="5011" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/jiaotangchanglang_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/jiaotangchanglang_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/jiaotangchanglang_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/jiaotangchanglang_disable.png" 
+			posx="258" posy="278" point="4"
+			des="教堂長廊"
+		/>	
+		<!-- 教堂門廳 -->	
+		<chose id="5012" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/jiaotangmenting_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/jiaotangmenting_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/jiaotangmenting_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/jiaotangmenting_disable.png" 
+			posx="176" posy="421" point="3"
+			des="教堂門廳"
+		/>	
+		<!-- 寂靜回廊 -->	
+		<chose id="5013" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/jijinghuilang_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/jijinghuilang_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/jijinghuilang_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/jijinghuilang_disable.png" 
+			posx="499" posy="186" point="4"
+			des="寂靜回廊"
+		/>	
+		<!-- 禮拜堂 -->	
+		<chose id="5015" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/libaitang_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/libaitang_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/libaitang_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/libaitang_disable.png" 
+			posx="765" posy="133" point="3"
+			des="禮拜堂"
+		/>	
+		<!-- 聖地入口 -->	
+		<chose id="5010" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/shengdirukou_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/shengdirukou_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/shengdirukou_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/shengdirukou_disable.png" 
+			posx="162" posy="126" point="3"
+			des="聖地入口"
+		/>	
+		<!-- 圖書館 -->	
+		<chose id="5014" 	
+			nomal_img="assets/nfuben/beiyiwangdeshengdi/tushuguan_nomal.png" 
+			down_img="assets/nfuben/beiyiwangdeshengdi/tushuguan_down.png" 
+			selected_img="assets/nfuben/beiyiwangdeshengdi/tushuguan_selected.png" 
+			disable_img="assets/nfuben/beiyiwangdeshengdi/tushuguan_disable.png" 
+			posx="468" posy="442" point="3"
+			des="圖書館"
+		/>	
+	</fb>		
+	<!-- 妖精森林 -->		
+	<fb id="10002" bgimg="assets/nfuben/yaojingsenlin/yaojingsenlin_bg.jpg">		
+		<!-- 盡頭的秘密 -->	
+		<chose id="5009" 	
+			nomal_img="assets/nfuben/yaojingsenlin/jingtoudemimi_nomal.png" 
+			down_img="assets/nfuben/yaojingsenlin/jingtoudemimi_down.png" 
+			selected_img="assets/nfuben/yaojingsenlin/jingtoudemimi_selected.png" 
+			disable_img="assets/nfuben/yaojingsenlin/jingtoudemimi_disable.png" 
+			posx="704" posy="397" point="4"
+			des="盡頭的秘密"
+		/>	
+		<!-- 密林地帶 -->	
+		<chose id="5007" 	
+			nomal_img="assets/nfuben/yaojingsenlin/milindidai_selected.png" 
+			down_img="assets/nfuben/yaojingsenlin/milindidai_nomal.png" 
+			selected_img="assets/nfuben/yaojingsenlin/milindidai_down.png" 
+			disable_img="assets/nfuben/yaojingsenlin/milindidai_disable.png" 
+			posx="535" posy="145" point="4"
+			des="密林地帶"
+		/>	
+		<!-- 密林深處 -->	
+		<chose id="5008" 	
+			nomal_img="assets/nfuben/yaojingsenlin/milinshenchu_nomal.png" 
+			down_img="assets/nfuben/yaojingsenlin/milinshenchu_down.png" 
+			selected_img="assets/nfuben/yaojingsenlin/milinshenchu_selected.png" 
+			disable_img="assets/nfuben/yaojingsenlin/milinshenchu_disable.png" 
+			posx="824" posy="212" point="3"
+			des="密林深處"
+		/>	
+		<!-- 森林入口 -->	
+		<chose id="5005" 	
+			nomal_img="assets/nfuben/yaojingsenlin/senlinrukou_nomal.png" 
+			down_img="assets/nfuben/yaojingsenlin/senlinrukou_down.png" 
+			selected_img="assets/nfuben/yaojingsenlin/senlinrukou_selected.png" 
+			disable_img="assets/nfuben/yaojingsenlin/senlinrukou_disable.png" 
+			posx="270" posy="196" point="3"
+			des="森林入口"
+		/>	
+		<!-- 森林小徑 -->	
+		<chose id="5006" 	
+			nomal_img="assets/nfuben/yaojingsenlin/senlinxiaojing_nomal.png" 
+			down_img="assets/nfuben/yaojingsenlin/senlinxiaojing_down.png" 
+			selected_img="assets/nfuben/yaojingsenlin/senlinxiaojing_selected.png" 
+			disable_img="assets/nfuben/yaojingsenlin/senlinxiaojing_disable.png" 
+			posx="170" posy="412" point="4"
+			des="森林小徑"
+		/>	
+		<!-- 螢光棕林 -->	
+		<chose id="5062" 	
+			nomal_img="assets/nfuben/yaojingsenlin/yingguangzonglin_nomal.png" 
+			down_img="assets/nfuben/yaojingsenlin/yingguangzonglin_down.png" 
+			selected_img="assets/nfuben/yaojingsenlin/yingguangzonglin_selected.png" 
+			disable_img="assets/nfuben/yaojingsenlin/yingguangzonglin_disable.png" 
+			posx="453" posy="348" point="4"
+			des="螢光棕林"
+		/>	
+	</fb>		
+		<!-- 噩夢沼澤 -->	
+	<fb id="10004" bgimg="assets/nfuben/emengzhaoze/emengzhaoze_bg.jpg">		
+		<!-- 沼澤入口 -->	
+		<chose id="5018" 	
+			nomal_img="assets/nfuben/emengzhaoze/zhaozerukou_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/zhaozerukou_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/zhaozerukou_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/zhaozerukou_disable.png" 
+			posx="202" posy="118" point="3"
+			des="沼澤入口"
+		/>	
+		<!-- 泥潭沼澤 -->	
+		<chose id="5019" 	
+			nomal_img="assets/nfuben/emengzhaoze/nitanzhaoze_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/nitanzhaoze_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/nitanzhaoze_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/nitanzhaoze_disable.png" 
+			posx="264" posy="300" point="4"
+			des="泥潭沼澤"
+		/>	
+		<!-- 沼澤深處 -->	
+		<chose id="5020" 	
+			nomal_img="assets/nfuben/emengzhaoze/zhaozeshenchu_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/zhaozeshenchu_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/zhaozeshenchu_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/zhaozeshenchu_disable.png" 
+			posx="182" posy="432" point="4"
+			des="沼澤深處"
+		/>	
+		<!-- 惡臭沼澤 -->	
+		<chose id="5021" 	
+			nomal_img="assets/nfuben/emengzhaoze/echouzhaoze_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/echouzhaoze_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/echouzhaoze_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/echouzhaoze_disable.png" 
+			posx="474" posy="158" point="3"
+			des="惡臭沼澤"
+		/>	
+		<!-- 黑暗沼澤 -->	
+		<chose id="5022" 	
+			nomal_img="assets/nfuben/emengzhaoze/heianzhaoze_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/heianzhaoze_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/heianzhaoze_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/heianzhaoze_disable.png" 
+			posx="469" posy="452" point="3"
+			des="黑暗沼澤"
+		/>	
+		<!-- 沼澤深淵 -->	
+		<chose id="5023" 	
+			nomal_img="assets/nfuben/emengzhaoze/zhaozeshenyuan_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/zhaozeshenyuan_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/zhaozeshenyuan_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/zhaozeshenyuan_disable.png" 
+			posx="553" posy="305" point="4"
+			des="沼澤深淵"
+		/>	
+		<!-- 死亡沼澤 -->	
+		<chose id="5024" 	
+			nomal_img="assets/nfuben/emengzhaoze/siwangzhaoze_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/siwangzhaoze_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/siwangzhaoze_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/siwangzhaoze_disable.png" 
+			posx="836" posy="206" point="3"
+			des="死亡沼澤"
+		/>	
+		<!-- 無盡之輪回 -->	
+		<chose id="5025" 	
+			nomal_img="assets/nfuben/emengzhaoze/wujinzhilunhui_nomal.png" 
+			down_img="assets/nfuben/emengzhaoze/wujinzhilunhui_down.png" 
+			selected_img="assets/nfuben/emengzhaoze/wujinzhilunhui_selected.png" 
+			disable_img="assets/nfuben/emengzhaoze/wujinzhilunhui_disable.png" 
+			posx="760" posy="438" point="4"
+			des="無盡之輪回"
+		/>	
+	</fb>		
+
+	<!-- 鬼霧峽穀 -->		
+	<fb id="10005" bgimg="assets/nfuben/guiwuxiagu/guiwuxiagu_bg.jpg">		
+		<!-- 寂靜地帶 -->	
+		<chose id="5029" 	
+			nomal_img="assets/nfuben/guiwuxiagu/jijingdidai_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/jijingdidai_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/jijingdidai_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/jijingdidai_disable.png" 
+			posx="396" posy="416" point="3"
+			des="寂靜地帶"
+		/>	
+		<!-- 狂雷峽穀 -->	
+		<chose id="5033" 	
+			nomal_img="assets/nfuben/guiwuxiagu/kuangleixiagu_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/kuangleixiagu_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/kuangleixiagu_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/kuangleixiagu_disable.png" 
+			posx="818" posy="307" point="4"
+			des="狂雷峽穀"
+		/>	
+		<!-- 兩級之地 -->	
+		<chose id="5027" 	
+			nomal_img="assets/nfuben/guiwuxiagu/liangjizhidi_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/liangjizhidi_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/liangjizhidi_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/liangjizhidi_disable.png" 
+			posx="396" posy="140" point="3"
+			des="兩級之地"
+		/>	
+		<!-- 迷霧峽穀 -->	
+		<chose id="5028" 	
+			nomal_img="assets/nfuben/guiwuxiagu/miwuxiagu_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/miwuxiagu_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/miwuxiagu_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/miwuxiagu_disable.png" 
+			posx="168" posy="305" point="4"
+			des="迷霧峽穀"
+		/>	
+		<!-- 霜風峽穀 -->	
+		<chose id="5030" 	
+			nomal_img="assets/nfuben/guiwuxiagu/shuangfengxiagu_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/shuangfengxiagu_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/shuangfengxiagu_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/shuangfengxiagu_disable.png" 
+			posx="681" posy="443" point="4"
+			des="霜風峽穀"
+		/>	
+		<!-- 峽穀邊境 -->	
+		<chose id="5026" 	
+			nomal_img="assets/nfuben/guiwuxiagu/xiagubianjing_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/xiagubianjing_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/xiagubianjing_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/xiagubianjing_disable.png" 
+			posx="163" posy="116" point="4"
+			des="峽穀邊境"
+		/>	
+		<!-- 峽穀深處 -->	
+		<chose id="5032" 	
+			nomal_img="assets/nfuben/guiwuxiagu/xiagushenchu_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/xiagushenchu_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/xiagushenchu_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/xiagushenchu_disable.png" 
+			posx="715" posy="124" point="3"
+			des="峽穀深處"
+		/>	
+		<!-- 幽冥峽穀 -->	
+		<chose id="5031" 	
+			nomal_img="assets/nfuben/guiwuxiagu/youmingxiagu_nomal.png" 
+			down_img="assets/nfuben/guiwuxiagu/youmingxiagu_down.png" 
+			selected_img="assets/nfuben/guiwuxiagu/youmingxiagu_selected.png" 
+			disable_img="assets/nfuben/guiwuxiagu/youmingxiagu_disable.png" 
+			posx="482" posy="274" point="4"
+			des="幽冥峽穀"
+		/>	
+	</fb>		
+        <!-- 迷幻草原 -->			
+	<fb id="10006" bgimg="assets/nfuben/beiyiwangdeshengdi/beiyiwangdeshengdi_bg.jpg">		
+        <!-- 草原入口 -->			
+		<chose id="5034" 	
+			nomal_img="assets/nfuben/mihuncaoyuan/caoyuan_nomal.png" 
+			down_img="assets/nfuben/mihuncaoyuan/caoyuan_down.png" 
+			selected_img="assets/nfuben/mihuncaoyuan/caoyuan_selected.png" 
+			disable_img="assets/nfuben/mihuncaoyuan/caoyuan_disable.png" 
+			posx="396" posy="416" point="3"
+			des="草原入口"
+		/>	
+		<!-- 綠之海 -->	
+		<chose id="5035" 	
+			nomal_img="assets/nfuben/mihuncaoyuan/lvhai_nomal.png" 
+			down_img="assets/nfuben/mihuncaoyuan/lvhai_down.png" 
+			selected_img="assets/nfuben/mihuncaoyuan/lvhai_selected.png" 
+			disable_img="assets/nfuben/mihuncaoyuan/lvhai_disable.png" 
+			posx="818" posy="307" point="4"
+			des="綠之海"
+		/>	
+		<!-- 迷魂草原 -->	
+		<chose id="5036" 	
+			nomal_img="assets/nfuben/mihuncaoyuan/mihun_nomal.png" 
+			down_img="assets/nfuben/mihuncaoyuan/mihun_down.png" 
+			selected_img="assets/nfuben/mihuncaoyuan/mihun_selected.png" 
+			disable_img="assets/nfuben/mihuncaoyuan/mihun_disable.png" 
+			posx="396" posy="140" point="3"
+			des="迷魂草原"
+		/>	
+		<!-- 幻海草原 -->	
+		<chose id="5037" 	
+			nomal_img="assets/nfuben/mihuncaoyuan/huanhai_nomal.png" 
+			down_img="assets/nfuben/mihuncaoyuan/huanhai_down.png" 
+			selected_img="assets/nfuben/mihuncaoyuan/huanhai_selected.png" 
+			disable_img="assets/nfuben/mihuncaoyuan/huanhai_disable.png" 
+			posx="168" posy="305" point="4"
+			des="幻海草原"
+		/>	
+		<!-- 無盡草原 -->	
+		<chose id="5038" 	
+			nomal_img="assets/nfuben/mihuncaoyuan/wujin_nomal.png" 
+			down_img="assets/nfuben/mihuncaoyuan/wujin_down.png" 
+			selected_img="assets/nfuben/mihuncaoyuan/wujin_selected.png" 
+			disable_img="assets/nfuben/mihuncaoyuan/wujin_disable.png" 
+			posx="681" posy="443" point="4"
+			des="無盡草原"
+		/>	
+		<!-- 迷幻之海 -->	
+		<chose id="5039" 	
+			nomal_img="assets/nfuben/mihuncaoyuan/mihuan_nomal.png" 
+			down_img="assets/nfuben/mihuncaoyuan/mihuan_down.png" 
+			selected_img="assets/nfuben/mihuncaoyuan/mihuan_selected.png" 
+			disable_img="assets/nfuben/mihuncaoyuan/mihuan_disable.png" 
+			posx="163" posy="116" point="4"
+			des="迷幻之海"
+		/>	
+	</fb>		
+        <!-- 皇家地牢 -->			
+	<fb id="10007" bgimg="assets/nfuben/beiyiwangdeshengdi/beiyiwangdeshengdi_bg.jpg">		
+         <!-- 水牢 -->			
+		<chose id="5040" 	
+			nomal_img="assets/nfuben/huangjiadilao/shuilao_nomal.png" 
+			down_img="assets/nfuben/huangjiadilao/shuilao_down.png" 
+			selected_img="assets/nfuben/huangjiadilao/shuilao_selected.png" 
+			disable_img="assets/nfuben/huangjiadilao/shuilao_disable.png" 
+			posx="217" posy="128" point="3"
+			des="水牢"
+		/>	
+		<!-- 陰霾之地 -->	
+		<chose id="5041" 	
+			nomal_img="assets/nfuben/huangjiadilao/yinmaizhidi_nomal.png" 
+			down_img="assets/nfuben/huangjiadilao/yinmaizhidi_down.png" 
+			selected_img="assets/nfuben/huangjiadilao/yinmaizhidi_selected.png" 
+			disable_img="assets/nfuben/huangjiadilao/yinmaizhidi_disable.png" 
+			posx="488" posy="181" point="3"
+			des="陰霾之地"
+		/>	
+        <!-- 熾熱牢籠 -->			
+		<chose id="5042" 	
+			nomal_img="assets/nfuben/huangjiadilao/chirelaolong_nomal.png" 
+			down_img="assets/nfuben/huangjiadilao/chirelaolong_down.png" 
+			selected_img="assets/nfuben/huangjiadilao/chirelaolong_selected.png" 
+			disable_img="assets/nfuben/huangjiadilao/chirelaolong_disable.png" 
+			posx="227" posy="367" point="4"
+			des="熾熱牢籠"
+		/>	
+		<!-- 寒嵐冰獄 -->	
+		<chose id="5043" 	
+			nomal_img="assets/nfuben/huangjiadilao/hanlanbingyu_nomal.png" 
+			down_img="assets/nfuben/huangjiadilao/hanlanbingyu_down.png" 
+			selected_img="assets/nfuben/huangjiadilao/hanlanbingyu_selected.png" 
+			disable_img="assets/nfuben/huangjiadilao/hanlanbingyu_disable.png" 
+			posx="752" posy="164" point="3"
+			des="寒嵐冰獄"
+		/>	
+		<!-- 哀嚎的深淵 -->	
+		<chose id="5044" 	
+			nomal_img="assets/nfuben/huangjiadilao/aihaodeshenyuan_nomal.png" 
+			down_img="assets/nfuben/huangjiadilao/aihaodeshenyuan_down.png" 
+			selected_img="assets/nfuben/huangjiadilao/aihaodeshenyuan_selected.png" 
+			disable_img="assets/nfuben/huangjiadilao/aihaodeshenyuan_disable.png" 
+			posx="477" posy="414" point="4"
+			des="哀嚎的深淵"
+		/>	
+		<!-- 殞夢祭壇 -->	
+		<chose id="5045" 	
+			nomal_img="assets/nfuben/huangjiadilao/yunmengjitan_nomal.png" 
+			down_img="assets/nfuben/huangjiadilao/yunmengjitan_down.png" 
+			selected_img="assets/nfuben/huangjiadilao/yunmengjitan_selected.png" 
+			disable_img="assets/nfuben/huangjiadilao/yunmengjitan_disable.png" 
+			posx="801" posy="394" point="3"
+			des="殞夢祭壇"
+		/>	
+	</fb>		
+    <!-- 記憶裂縫 -->			
+	<fb id="10008" bgimg="assets/nfuben/jiyiliefeng/jiyiliefeng_bg.jpg">		
+	    <!-- 混亂裂口 -->		
+		<chose id="5065" 	
+			nomal_img="assets/nfuben/jiyiliefeng/hunluanliekou2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/hunluanliekou4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/hunluanliekou3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/hunluanliekou1_disable.png" 
+			posx="217" posy="135" point="3"
+			des="混亂裂口"
+		/>	
+		<!-- 雙子回憶 -->	
+		<chose id="5066" 	
+			nomal_img="assets/nfuben/jiyiliefeng/shuangzihuiyi2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/shuangzihuiyi4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/shuangzihuiyi3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/shuangzihuiyi1_disable.png" 
+			posx="160" posy="350" point="3"
+			des="雙子回憶"
+		/>	
+         <!-- 榮光背後 -->			
+		<chose id="5068" 	
+			nomal_img="assets/nfuben/jiyiliefeng/guangrongbeihou2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/guangrongbeihou4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/guangrongbeihou3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/guangrongbeihou1_disable.png" 
+			posx="380" posy="430" point="4"
+			des="榮光背後"
+		/>	
+		<!-- 無罪的羔羊 -->	
+		<chose id="5069" 	
+			nomal_img="assets/nfuben/jiyiliefeng/wuzuidegaoyang2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/wuzuidegaoyang4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/wuzuidegaoyang3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/wuzuidegaoyang1_disable.png" 
+			posx="537" posy="164" point="3"
+			des="無罪的羔羊"
+		/>	
+		<!-- 守護亡靈 -->	
+		<chose id="5070" 	
+			nomal_img="assets/nfuben/jiyiliefeng/shouhuwangling2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/shouhuwangling4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/shouhuwangling3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/shouhuwangling1_disable.png" 
+			posx="602" posy="360" point="4"
+			des="守護亡靈"
+		/>	
+		<!-- 再會的兄弟 -->	
+		<chose id="5071" 	
+			nomal_img="assets/nfuben/jiyiliefeng/zaihuidexiongdi2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/zaihuidexiongdi4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/zaihuidexiongdi3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/zaihuidexiongdi1_disable.png" 
+			posx="876" posy="200" point="3"
+			des="再會的兄弟"
+		/>	
+		<!-- 暴怒的王者 -->	
+		<chose id="5072" 	
+			nomal_img="assets/nfuben/jiyiliefeng/baonudewangzhe2_nomal.png" 
+			down_img="assets/nfuben/jiyiliefeng/baonudewangzhe4_down.png" 
+			selected_img="assets/nfuben/jiyiliefeng/baonudewangzhe3_selected.png" 
+			disable_img="assets/nfuben/jiyiliefeng/baonudewangzhe1_disable.png" 
+			posx="828" posy="405" point="4"
+			des="暴怒的王者"
+		/>	
+	</fb>		
+	<!-- 混亂城鎮 -->		
+	<fb id="10009" bgimg="assets/nfuben/hunluanchengzhen/hunluanchengzhen_bg.png">		
+	    <!-- 封閉的山路 -->		
+		<chose id="5073" 	
+			nomal_img="assets/nfuben/hunluanchengzhen/fengbideshanlu_nomal.png" 
+			down_img="assets/nfuben/hunluanchengzhen/fengbideshanlu_down.png" 
+			selected_img="assets/nfuben/hunluanchengzhen/fengbideshanlu_selected.png" 
+			disable_img="assets/nfuben/hunluanchengzhen/fengbideshanlu_disable.png" 
+			posx="217" posy="135" point="3"
+			des="封閉的山路"
+		/>	
+		<!-- 城內街巷 -->	
+		<chose id="5054" 	
+			nomal_img="assets/nfuben/hunluanchengzhen/chengneijiexiang_nomal.png" 
+			down_img="assets/nfuben/hunluanchengzhen/chengneijiexiang_down.png" 
+			selected_img="assets/nfuben/hunluanchengzhen/chengneijiexiang_selected.png" 
+			disable_img="assets/nfuben/hunluanchengzhen/chengneijiexiang_disable.png" 
+			posx="227" posy="367" point="3"
+			des="城內街巷"
+		/>	
+         <!-- 狂妄祭台 -->			
+		<chose id="5055" 	
+			nomal_img="assets/nfuben/hunluanchengzhen/kuangwangjitai_nomal.png" 
+			down_img="assets/nfuben/hunluanchengzhen/kuangwangjitai_down.png" 
+			selected_img="assets/nfuben/hunluanchengzhen/kuangwangjitai_selected.png" 
+			disable_img="assets/nfuben/hunluanchengzhen/kuangwangjitai_disable.png" 
+			posx="488" posy="181" point="4"
+			des="狂妄祭台"
+		/>	
+		<!-- 餓狼蹤跡 -->	
+		<chose id="5056" 	
+			nomal_img="assets/nfuben/hunluanchengzhen/elangjongji_nomal.png" 
+			down_img="assets/nfuben/hunluanchengzhen/elangjongji_down.png" 
+			selected_img="assets/nfuben/hunluanchengzhen/elangjongji_selected.png" 
+			disable_img="assets/nfuben/hunluanchengzhen/elangjongji_disable.png" 
+			posx="782" posy="164" point="3"
+			des="餓狼蹤跡"
+		/>	
+		<!--錯亂的法陣 -->	
+		<chose id="5057" 	
+			nomal_img="assets/nfuben/hunluanchengzhen/cuoluandezhenfa_nomal.png" 
+			down_img="assets/nfuben/hunluanchengzhen/cuoluandezhenfa_down.png" 
+			selected_img="assets/nfuben/hunluanchengzhen/cuoluandezhenfa_selected.png" 
+			disable_img="assets/nfuben/hunluanchengzhen/cuoluandezhenfa_disable.png" 
+			posx="557" posy="414" point="4"
+			des="錯亂的法陣"
+		/>	
+	</fb>		
+	<!-- 瘋狂戰線 -->		
+	<fb id="10010" bgimg="assets/nfuben/fengkuangzhanxian/fengkuangzhanxian.jpg">		
+	    <!-- 暴亂戰場 -->		
+		<chose id="5058" 	
+			nomal_img="assets/nfuben/fengkuangzhanxian/baoluanzhanchang_nomal.png" 
+			down_img="assets/nfuben/fengkuangzhanxian/baoluanzhanchang_down.png" 
+			selected_img="assets/nfuben/fengkuangzhanxian/baoluanzhanchang_selected.png" 
+			disable_img="assets/nfuben/fengkuangzhanxian/baoluanzhanchang_disable.png" 
+			posx="217" posy="135" point="3"
+			des="暴亂戰場"
+		/>	
+		<!-- 迷幻草地 -->	
+		<chose id="5059" 	
+			nomal_img="assets/nfuben/fengkuangzhanxian/mihuancaodi_nomal.png" 
+			down_img="assets/nfuben/fengkuangzhanxian/mihuancaodi_down.png" 
+			selected_img="assets/nfuben/fengkuangzhanxian/mihuancaodi_selected.png" 
+			disable_img="assets/nfuben/fengkuangzhanxian/mihuancaodi_disable.png" 
+			posx="227" posy="367" point="3"
+			des="迷幻草地"
+		/>	
+         <!-- 血色的戰場 -->			
+		<chose id="5060" 	
+			nomal_img="assets/nfuben/fengkuangzhanxian/xuesedezhanchang_nomal.png" 
+			down_img="assets/nfuben/fengkuangzhanxian/xuesedezhanchang_down.png" 
+			selected_img="assets/nfuben/fengkuangzhanxian/xuesedezhanchang_selected.png" 
+			disable_img="assets/nfuben/fengkuangzhanxian/xuesedezhanchang_disable.png" 
+			posx="488" posy="181" point="4"
+			des="血色的戰場"
+		/>	
+		<!-- 邪神山谷 -->	
+		<chose id="5061" 	
+			nomal_img="assets/nfuben/fengkuangzhanxian/xieshenshangu_nomal.png" 
+			down_img="assets/nfuben/fengkuangzhanxian/xieshenshangu_down.png" 
+			selected_img="assets/nfuben/fengkuangzhanxian/xieshenshangu_selected.png" 
+			disable_img="assets/nfuben/fengkuangzhanxian/xieshenshangu_disable.png" 
+			posx="782" posy="164" point="3"
+			des="邪神山谷"
+		/>	
+		<!-- 第一前線 -->	
+		<chose id="5063" 	
+			nomal_img="assets/nfuben/fengkuangzhanxian/diyiqianxian_nomal.png" 
+			down_img="assets/nfuben/fengkuangzhanxian/diyiqianxian_down.png" 
+			selected_img="assets/nfuben/fengkuangzhanxian/diyiqianxian_selected.png" 
+			disable_img="assets/nfuben/fengkuangzhanxian/diyiqianxian_disable.png" 
+			posx="557" posy="414" point="4"
+			des="第一前線"
+		/>	
+	</fb>		
+	<!-- 大鬥獸場 -->		
+	<fb id="10011" bgimg="assets/nfuben/dadoushouchang/dadoushouchang_bg.jpg">		
+	    <!-- 獨眼怪之鬥 -->		
+		<chose id="5074" 	
+			nomal_img="assets/nfuben/dadoushouchang/duyanguaizhidou_nomal.png" 
+			down_img="assets/nfuben/dadoushouchang/duyanguaizhidou_down.png" 
+			selected_img="assets/nfuben/dadoushouchang/duyanguaizhidou_selected.png" 
+			disable_img="assets/nfuben/dadoushouchang/duyanguaizhidou_disable.png" 
+			posx="217" posy="135" point="3"
+			des="獨眼怪之鬥"
+		/>	
+		<!-- 野狼之鬥 -->	
+		<chose id="5075" 	
+			nomal_img="assets/nfuben/dadoushouchang/yelangzhidou_nomal.png" 
+			down_img="assets/nfuben/dadoushouchang/yelangzhidou_down.png" 
+			selected_img="assets/nfuben/dadoushouchang/yelangzhidou_selected.png" 
+			disable_img="assets/nfuben/dadoushouchang/yelangzhidou_disable.png" 
+			posx="227" posy="367" point="3"
+			des="野狼之鬥"
+		/>	
+         <!-- 野蠻沙巴爾 -->			
+		<chose id="5076" 	
+			nomal_img="assets/nfuben/dadoushouchang/yemanshabaer_nomal.png" 
+			down_img="assets/nfuben/dadoushouchang/yemanshabaer_down.png" 
+			selected_img="assets/nfuben/dadoushouchang/yemanshabaer_selected.png" 
+			disable_img="assets/nfuben/dadoushouchang/yemanshabaer_disable.png" 
+			posx="488" posy="181" point="4"
+			des="野蠻沙巴爾"
+		/>	
+		<!-- 暗殺者之日 -->	
+		<chose id="5077" 	
+			nomal_img="assets/nfuben/dadoushouchang/anshazhezhiri_nomal.png" 
+			down_img="assets/nfuben/dadoushouchang/anshazhezhiri_down.png" 
+			selected_img="assets/nfuben/dadoushouchang/anshazhezhiri_selected.png" 
+			disable_img="assets/nfuben/dadoushouchang/anshazhezhiri_disable.png" 
+			posx="782" posy="164" point="3"
+			des="暗殺者之日"
+		/>	
+		<!-- 黃金戰士 -->	
+		<chose id="5078" 	
+			nomal_img="assets/nfuben/dadoushouchang/huangjinzhanshi_nomal.png" 
+			down_img="assets/nfuben/dadoushouchang/huangjinzhanshi_down.png" 
+			selected_img="assets/nfuben/dadoushouchang/huangjinzhanshi_selected.png" 
+			disable_img="assets/nfuben/dadoushouchang/huangjinzhanshi_disable.png" 
+			posx="557" posy="414" point="4"
+			des="黃金戰士"
+		/>	
+	</fb>		
+	<!-- 沙漠寶石 -->		
+	<fb id="10012" bgimg="assets/nfuben/shamobaoshi/shamobaoshi_bg.jpg">		
+	    <!-- 西花園 -->		
+		<chose id="5079" 	
+			nomal_img="assets/nfuben/shamobaoshi/xihuayuan_nomal.png" 
+			down_img="assets/nfuben/shamobaoshi/xihuayuan_down.png" 
+			selected_img="assets/nfuben/shamobaoshi/xihuayuan_selected.png" 
+			disable_img="assets/nfuben/shamobaoshi/xihuayuan_disable.png" 
+			posx="217" posy="135" point="3"
+			des="西花園"
+		/>	
+		<!-- 圍牆頂端 -->	
+		<chose id="5080" 	
+			nomal_img="assets/nfuben/shamobaoshi/weiqiangdingduan_nomal.png" 
+			down_img="assets/nfuben/shamobaoshi/weiqiangdingduan_down.png" 
+			selected_img="assets/nfuben/shamobaoshi/weiqiangdingduan_selected.png" 
+			disable_img="assets/nfuben/shamobaoshi/weiqiangdingduan_disable.png" 
+			posx="227" posy="367" point="3"
+			des="圍牆頂端"
+		/>	
+         <!-- 紅酒噴泉 -->			
+		<chose id="5081" 	
+			nomal_img="assets/nfuben/shamobaoshi/hongjiupenquan_nomal.png" 
+			down_img="assets/nfuben/shamobaoshi/hongjiupenquan_down.png" 
+			selected_img="assets/nfuben/shamobaoshi/hongjiupenquan_selected.png" 
+			disable_img="assets/nfuben/shamobaoshi/hongjiupenquan_disable.png" 
+			posx="488" posy="181" point="4"
+			des="紅酒噴泉"
+		/>	
+		<!-- 東花園 -->	
+		<chose id="5082" 	
+			nomal_img="assets/nfuben/shamobaoshi/donghuayuan_nomal.png" 
+			down_img="assets/nfuben/shamobaoshi/donghuayuan_down.png" 
+			selected_img="assets/nfuben/shamobaoshi/donghuayuan_selected.png" 
+			disable_img="assets/nfuben/shamobaoshi/donghuayuan_disable.png" 
+			posx="782" posy="164" point="3"
+			des="東花園"
+		/>	
+		<!-- 夕陽庭院-->	
+		<chose id="5083" 	
+			nomal_img="assets/nfuben/shamobaoshi/xiyangtingyuan_nomal.png" 
+			down_img="assets/nfuben/shamobaoshi/xiyangtingyuan_down.png" 
+			selected_img="assets/nfuben/shamobaoshi/xiyangtingyuan_selected.png" 
+			disable_img="assets/nfuben/shamobaoshi/xiyangtingyuan_disable.png" 
+			posx="557" posy="414" point="4"
+			des="夕陽庭院"
+		/>	
+	</fb>		
+	<!-- 銀色雪山 -->		
+	<fb id="10013" bgimg="assets/nfuben/yinsexueshan/yinsexueshan_bg.jpg">		
+	    <!-- 狂暴的熊 -->		
+		<chose id="5084" 	
+			nomal_img="assets/nfuben/yinsexueshan/kuangbaodexiong_nomal.png" 
+			down_img="assets/nfuben/yinsexueshan/kuangbaodexiong_down.png" 
+			selected_img="assets/nfuben/yinsexueshan/kuangbaodexiong_selected.png" 
+			disable_img="assets/nfuben/yinsexueshan/kuangbaodexiong_disable.png" 
+			posx="217" posy="135" point="3"
+			des="狂暴的熊"
+		/>	
+		<!-- 精靈山谷 -->	
+		<chose id="5085" 	
+			nomal_img="assets/nfuben/yinsexueshan/jinglingshangu_nomal.png" 
+			down_img="assets/nfuben/yinsexueshan/jinglingshangu_down.png" 
+			selected_img="assets/nfuben/yinsexueshan/jinglingshangu_selected.png" 
+			disable_img="assets/nfuben/yinsexueshan/jinglingshangu_disable.png" 
+			posx="227" posy="367" point="3"
+			des="精靈山谷"
+		/>	
+         <!-- 勇士擂臺 -->			
+		<chose id="5086" 	
+			nomal_img="assets/nfuben/yinsexueshan/yongshileitai_nomal.png" 
+			down_img="assets/nfuben/yinsexueshan/yongshileitai_down.png" 
+			selected_img="assets/nfuben/yinsexueshan/yongshileitai_selected.png" 
+			disable_img="assets/nfuben/yinsexueshan/yongshileitai_disable.png" 
+			posx="488" posy="181" point="4"
+			des="勇士擂臺"
+		/>	
+		<!-- 獸群之路-->	
+		<chose id="5087" 	
+			nomal_img="assets/nfuben/yinsexueshan/shouqunzhilu_nomal.png" 
+			down_img="assets/nfuben/yinsexueshan/shouqunzhilu_down.png" 
+			selected_img="assets/nfuben/yinsexueshan/shouqunzhilu_selected.png" 
+			disable_img="assets/nfuben/yinsexueshan/shouqunzhilu_disable.png" 
+			posx="782" posy="164" point="3"
+			des="獸群之路"
+		/>	
+		<!-- 困獸之鬥 -->	
+		<chose id="5088" 	
+			nomal_img="assets/nfuben/yinsexueshan/kunshouzhidou_nomal.png" 
+			down_img="assets/nfuben/yinsexueshan/kunshouzhidou_down.png" 
+			selected_img="assets/nfuben/yinsexueshan/kunshouzhidou_selected.png" 
+			disable_img="assets/nfuben/yinsexueshan/kunshouzhidou_disable.png" 
+			posx="557" posy="414" point="4"
+			des="困獸之鬥"
+		/>	
+	</fb>		
+	<!-- 聖皇遺跡 -->		
+	<fb id="10014" bgimg="assets/nfuben/shenghuangyiji/shenghuangyiji_bg.png">		
+	    <!-- 資格的考驗 -->		
+		<chose id="5089" 	
+			nomal_img="assets/nfuben/shenghuangyiji/zigedekaoyan_nomal.png" 
+			down_img="assets/nfuben/shenghuangyiji/zigedekaoyan_down.png" 
+			selected_img="assets/nfuben/shenghuangyiji/zigedekaoyan_selected.png" 
+			disable_img="assets/nfuben/shenghuangyiji/zigedekaoyan_disable.png" 
+			posx="217" posy="135" point="3"
+			des="資格的考驗"
+		/>	
+		<!-- 不滅的靈魂 -->	
+		<chose id="5090" 	
+			nomal_img="assets/nfuben/shenghuangyiji/bumiedelinghun_nomal.png" 
+			down_img="assets/nfuben/shenghuangyiji/bumiedelinghun_down.png" 
+			selected_img="assets/nfuben/shenghuangyiji/bumiedelinghun_selected.png" 
+			disable_img="assets/nfuben/shenghuangyiji/bumiedelinghun_disable.png" 
+			posx="227" posy="367" point="3"
+			des="不滅的靈魂"
+		/>	
+         <!-- 永遠的守衛 -->			
+		<chose id="5091" 	
+			nomal_img="assets/nfuben/shenghuangyiji/yongyuandeshouwei_nomal.png" 
+			down_img="assets/nfuben/shenghuangyiji/yongyuandeshouwei_down.png" 
+			selected_img="assets/nfuben/shenghuangyiji/yongyuandeshouwei_selected.png" 
+			disable_img="assets/nfuben/shenghuangyiji/yongyuandeshouwei_disable.png" 
+			posx="488" posy="181" point="4"
+			des="永遠的守衛"
+		/>	
+		<!--聖劍寶庫 -->	
+		<chose id="5092" 	
+			nomal_img="assets/nfuben/shenghuangyiji/shengjianbaoku_nomal.png" 
+			down_img="assets/nfuben/shenghuangyiji/shengjianbaoku_down.png" 
+			selected_img="assets/nfuben/shenghuangyiji/shengjianbaoku_selected.png" 
+			disable_img="assets/nfuben/shenghuangyiji/shengjianbaoku_disable.png" 
+			posx="782" posy="164" point="3"
+			des="聖劍寶庫"
+		/>	
+		<!-- 最後的聖堂 -->	
+		<chose id="5093" 	
+			nomal_img="assets/nfuben/shenghuangyiji/zuihoudeshengtang_nomal.png" 
+			down_img="assets/nfuben/shenghuangyiji/zuihoudeshengtang_down.png" 
+			selected_img="assets/nfuben/shenghuangyiji/zuihoudeshengtang_selected.png" 
+			disable_img="assets/nfuben/shenghuangyiji/zuihoudeshengtang_disable.png" 
+			posx="557" posy="414" point="4"
+			des="最後的聖堂"
+		/>	
+	</fb>		
+	<!-- 廢棄庭院 -->		
+	<fb id="10015" bgimg="assets/nfuben/feiqitingyuan/feiqitingyuan_bg.jpg">		
+		<!-- 暗之長廊 -->	
+		<chose id="5099" 	
+			nomal_img="assets/nfuben/feiqitingyuan/anzhichanglang_nomal.png" 
+			down_img="assets/nfuben/feiqitingyuan/anzhichanglang_down.png" 
+			selected_img="assets/nfuben/feiqitingyuan/anzhichanglang_selected.png" 
+			disable_img="assets/nfuben/feiqitingyuan/anzhichanglang_disable.png" 
+			posx="217" posy="135" point="3"
+			des="暗之長廊"
+		/>	
+		<!-- 魔物園圃 -->	
+		<chose id="5100" 	
+			nomal_img="assets/nfuben/feiqitingyuan/mowuyuanpu_nomal.png" 
+			down_img="assets/nfuben/feiqitingyuan/mowuyuanpu_down.png" 
+			selected_img="assets/nfuben/feiqitingyuan/mowuyuanpu_selected.png" 
+			disable_img="assets/nfuben/feiqitingyuan/mowuyuanpu_disable.png" 
+			posx="227" posy="367" point="3"
+			des="魔物園圃"
+		/>	
+		<!-- 靈魂之井 -->	
+		<chose id="5101" 	
+			nomal_img="assets/nfuben/feiqitingyuan/linghunzhijing_nomal.png" 
+			down_img="assets/nfuben/feiqitingyuan/linghunzhijing_down.png" 
+			selected_img="assets/nfuben/feiqitingyuan/linghunzhijing_selected.png" 
+			disable_img="assets/nfuben/feiqitingyuan/linghunzhijing_disable.png" 
+			posx="488" posy="181" point="4"
+			des="靈魂之井"
+		/>	
+		<!-- 異化之地 -->	
+		<chose id="5102" 	
+			nomal_img="assets/nfuben/feiqitingyuan/yihuazhidi_nomal.png" 
+			down_img="assets/nfuben/feiqitingyuan/yihuazhidi_down.png" 
+			selected_img="assets/nfuben/feiqitingyuan/yihuazhidi_selected.png" 
+			disable_img="assets/nfuben/feiqitingyuan/yihuazhidi_disable.png" 
+			posx="782" posy="164" point="3"
+			des="異化之地"
+		/>	
+		<!-- 神的喘息地 -->	
+		<chose id="5103" 	
+			nomal_img="assets/nfuben/feiqitingyuan/shendechuanxidi_nomal.png" 
+			down_img="assets/nfuben/feiqitingyuan/shendechuanxidi_down.png" 
+			selected_img="assets/nfuben/feiqitingyuan/shendechuanxidi_selected.png" 
+			disable_img="assets/nfuben/feiqitingyuan/shendechuanxidi_disable.png" 
+			posx="557" posy="414" point="4"
+			des="神的喘息地"
+		/>	
+	</fb>		
+	<!-- 暴怒火山 -->		
+	<fb id="10016" bgimg="assets/nfuben/baonuhuoshan/baonuhuoshan_bg.png">		
+	    <!-- 火山入口 -->		
+		<chose id="5094" 	
+			nomal_img="assets/nfuben/baonuhuoshan/huoshanrukou_nomal.png" 
+			down_img="assets/nfuben/baonuhuoshan/huoshanrukou_down.png" 
+			selected_img="assets/nfuben/baonuhuoshan/huoshanrukou_selected.png" 
+			disable_img="assets/nfuben/baonuhuoshan/huoshanrukou_disable.png" 
+			posx="217" posy="135" point="3"
+			des="火山入口"
+		/>	
+		<!-- 地下一層 -->	
+		<chose id="5095" 	
+			nomal_img="assets/nfuben/baonuhuoshan/dixiayiceng_nomal.png" 
+			down_img="assets/nfuben/baonuhuoshan/dixiayiceng_down.png" 
+			selected_img="assets/nfuben/baonuhuoshan/dixiayiceng_selected.png" 
+			disable_img="assets/nfuben/baonuhuoshan/dixiayiceng_disable.png" 
+			posx="227" posy="367" point="3"
+			des="地下一層"
+		/>	
+         <!-- 地下二層 -->			
+		<chose id="5096" 	
+			nomal_img="assets/nfuben/baonuhuoshan/dixiaerceng_nomal.png" 
+			down_img="assets/nfuben/baonuhuoshan/dixiaerceng_down.png" 
+			selected_img="assets/nfuben/baonuhuoshan/dixiaerceng_selected.png" 
+			disable_img="assets/nfuben/baonuhuoshan/dixiaerceng_disable.png" 
+			posx="488" posy="181" point="4"
+			des="地下二層"
+		/>	
+		<!-- 女王之穴 -->	
+		<chose id="5097" 	
+			nomal_img="assets/nfuben/baonuhuoshan/nvwangzhixue_nomal.png" 
+			down_img="assets/nfuben/baonuhuoshan/nvwangzhixue_down.png" 
+			selected_img="assets/nfuben/baonuhuoshan/nvwangzhixue_selected.png" 
+			disable_img="assets/nfuben/baonuhuoshan/nvwangzhixue_disable.png" 
+			posx="782" posy="164" point="3"
+			des="女王之穴"
+		/>	
+		<!-- 暗黑漩渦 -->	
+		<chose id="5098" 	
+			nomal_img="assets/nfuben/baonuhuoshan/anheixuanwo_nomal.png" 
+			down_img="assets/nfuben/baonuhuoshan/anheixuanwo_down.png" 
+			selected_img="assets/nfuben/baonuhuoshan/anheixuanwo_selected.png" 
+			disable_img="assets/nfuben/baonuhuoshan/anheixuanwo_disable.png" 
+			posx="557" posy="414" point="4"
+			des="暗黑漩渦"
+		/>	
+	</fb>		
+	<!-- 眾神的歎息 -->		
+	<fb id="10017" bgimg="assets/nfuben/zhongshendetanxi/zhongshendetanxi_bg.jpg">		
+	    <!-- 聖山腳下 -->		
+		<chose id="5104" 	
+			nomal_img="assets/nfuben/zhongshendetanxi/shengshanjiaoxia_nomal.png" 
+			down_img="assets/nfuben/zhongshendetanxi/shengshanjiaoxia_down.png" 
+			selected_img="assets/nfuben/zhongshendetanxi/shengshanjiaoxia_selected.png" 
+			disable_img="assets/nfuben/zhongshendetanxi/shengshanjiaoxia_disable.png" 
+			posx="217" posy="135" point="3"
+			des="聖山腳下"
+		/>	
+		<!-- 聖山西面 -->	
+		<chose id="5105" 	
+			nomal_img="assets/nfuben/zhongshendetanxi/shengshanximian_nomal.png" 
+			down_img="assets/nfuben/zhongshendetanxi/shengshanximian_down.png" 
+			selected_img="assets/nfuben/zhongshendetanxi/shengshanximian_selected.png" 
+			disable_img="assets/nfuben/zhongshendetanxi/shengshanximian_disable.png" 
+			posx="227" posy="367" point="3"
+			des="聖山西面"
+		/>	
+         <!-- 聖山神殿 -->			
+		<chose id="5106" 	
+			nomal_img="assets/nfuben/zhongshendetanxi/shengshanshendian_nomal.png" 
+			down_img="assets/nfuben/zhongshendetanxi/shengshanshendian_down.png" 
+			selected_img="assets/nfuben/zhongshendetanxi/shengshanshendian_selected.png" 
+			disable_img="assets/nfuben/zhongshendetanxi/shengshanshendian_disable.png" 
+			posx="488" posy="181" point="4"
+			des="聖山神殿"
+		/>	
+		<!-- 懸空梯-->	
+		<chose id="5107" 	
+			nomal_img="assets/nfuben/zhongshendetanxi/xuankongti_nomal.png" 
+			down_img="assets/nfuben/zhongshendetanxi/xuankongti_down.png" 
+			selected_img="assets/nfuben/zhongshendetanxi/xuankongti_selected.png" 
+			disable_img="assets/nfuben/zhongshendetanxi/xuankongti_disable.png" 
+			posx="782" posy="164" point="3"
+			des="懸空梯"
+		/>	
+		<!-- 結晶山裂縫 -->	
+		<chose id="5108" 	
+			nomal_img="assets/nfuben/zhongshendetanxi/jiejingshanliefeng_nomal.png" 
+			down_img="assets/nfuben/zhongshendetanxi/jiejingshanliefeng_down.png" 
+			selected_img="assets/nfuben/zhongshendetanxi/jiejingshanliefeng_selected.png" 
+			disable_img="assets/nfuben/zhongshendetanxi/jiejingshanliefeng_disable.png" 
+			posx="557" posy="414" point="4"
+			des="結晶山裂縫"
+		/>	
+	</fb>		
+	<!-- 神跡結晶山 -->		
+	<fb id="10018" bgimg="assets/nfuben/shenjijiejingshan/shenjijiejingshan_bg.jpg">		
+	    <!-- 流光隧道 -->		
+		<chose id="5109" 	
+			nomal_img="assets/nfuben/shenjijiejingshan/liuguangsuidao_nomal.png" 
+			down_img="assets/nfuben/shenjijiejingshan/liuguangsuidao_down.png" 
+			selected_img="assets/nfuben/shenjijiejingshan/liuguangsuidao_selected.png" 
+			disable_img="assets/nfuben/shenjijiejingshan/liuguangsuidao_disable.png" 
+			posx="217" posy="135" point="3"
+			des="流光隧道"
+		/>	
+		<!-- 拉瓦蒂神廟 -->	
+		<chose id="5110" 	
+			nomal_img="assets/nfuben/shenjijiejingshan/lawadishenmiao_nomal.png" 
+			down_img="assets/nfuben/shenjijiejingshan/lawadishenmiao_down.png" 
+			selected_img="assets/nfuben/shenjijiejingshan/lawadishenmiao_selected.png" 
+			disable_img="assets/nfuben/shenjijiejingshan/lawadishenmiao_disable.png" 
+			posx="227" posy="367" point="3"
+			des="拉瓦蒂神廟"
+		/>	
+         <!-- 眾神的墓室 -->			
+		<chose id="5111" 	
+			nomal_img="assets/nfuben/shenjijiejingshan/zhongshendemushi_nomal.png" 
+			down_img="assets/nfuben/shenjijiejingshan/zhongshendemushi_down.png" 
+			selected_img="assets/nfuben/shenjijiejingshan/zhongshendemushi_selected.png" 
+			disable_img="assets/nfuben/shenjijiejingshan/zhongshendemushi_disable.png" 
+			posx="488" posy="181" point="4"
+			des="眾神的墓室"
+		/>	
+		<!-- 夕陽窗臺 -->	
+		<chose id="5112" 	
+			nomal_img="assets/nfuben/shenjijiejingshan/xiyangchuangtai_nomal.png" 
+			down_img="assets/nfuben/shenjijiejingshan/xiyangchuangtai_down.png" 
+			selected_img="assets/nfuben/shenjijiejingshan/xiyangchuangtai_selected.png" 
+			disable_img="assets/nfuben/shenjijiejingshan/xiyangchuangtai_disable.png" 
+			posx="782" posy="164" point="3"
+			des="夕陽窗臺"
+		/>	
+		<!-- 墮落的聖壇 -->	
+		<chose id="5113" 	
+			nomal_img="assets/nfuben/shenjijiejingshan/duoluodeshengtan_nomal.png" 
+			down_img="assets/nfuben/shenjijiejingshan/duoluodeshengtan_down.png" 
+			selected_img="assets/nfuben/shenjijiejingshan/duoluodeshengtan_selected.png" 
+			disable_img="assets/nfuben/shenjijiejingshan/duoluodeshengtan_disable.png" 
+			posx="557" posy="414" point="4"
+			des="墮落的聖壇"
+		/>	
+	</fb>		
+</data>			

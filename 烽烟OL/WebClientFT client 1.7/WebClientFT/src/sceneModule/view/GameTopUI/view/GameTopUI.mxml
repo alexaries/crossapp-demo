@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="75">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:List id="rewardList" right="0" skinClass="style.Skin_CrotaBasicList" minWidth="75" itemRenderer="sceneModule.view.GameTopUI.view.GameTopUIItemRender" dataProvider="{SystemDataModel.gameTopList}">
+		<s:layout>
+			<s:TileLayout requestedRowCount="1" verticalGap="0" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+</s:Group>

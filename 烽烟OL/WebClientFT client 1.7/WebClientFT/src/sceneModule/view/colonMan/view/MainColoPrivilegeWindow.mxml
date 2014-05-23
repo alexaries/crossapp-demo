@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				     
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				xmlns:win="managers.*" width="956" height="435" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import util.CommonTools;
+			
+			public static var NAME:String = 'sceneModule.view.colonMan.view.MainColoPrivilegeWindow';
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				CommonTools.make_bitmap(coloImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_coloMan_TeQuan', 'ui_colonize');
+//				source='assets/coloMan/colonize.png' maintainAspectRatio="false" width="1005" height="497"
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image id="coloImg"  />
+		<s:List id="ColoList"  selectedIndex="0"  width="130" height="306" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.colonMan.view.MainColoPrivilegeItemRender" dataProvider="{SystemDataModel.colonizationPrivilegeInfo.colonizationList}" x="81" y="93">
+			<s:layout>
+				<s:TileLayout horizontalGap="0" verticalAlign="bottom" requestedColumnCount="1" requestedRowCount="10" verticalGap="5" />
+			</s:layout>
+		</s:List>
+		<s:List id="fbList" width="622" height="260"    skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.colonMan.view.MainColoPrivilegeFuBenItemRender" dataProvider="{SystemDataModel.curColonizationFuBenInfo.fubenList}" x="229" y="63">
+			<s:layout>
+				<s:TileLayout  requestedColumnCount="4" requestedRowCount="2" horizontalAlign="center" verticalGap="1" horizontalGap="2"/>
+			</s:layout>
+		</s:List>
+		<util:CommonButton id="pre_btn" 
+				  skinClass="style.Skin_CrotaBasicPreButton"
+				  y="388" x="99" enabled="{SystemDataModel.colonizationPrivilegeInfo.curPage>1}"/>
+		<component:CrotaBasicLabel id="page_info"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   x="129" y="392"
+								   text="{SystemDataModel.colonizationPrivilegeInfo.curPage+'/'+SystemDataModel.colonizationPrivilegeInfo.maxPage}"
+								   textAlign="center" width="38"/>
+		<util:CommonButton id="next_btn"
+				  x="176" y="388" enabled="{SystemDataModel.colonizationPrivilegeInfo.maxPage>SystemDataModel.colonizationPrivilegeInfo.curPage}"
+				  skinClass="style.Skin_CrotaBasicNextButton"/>
+		<util:CommonButton id="closeBtnWin" skinClass="style.Skin_CrotaCloseButton111" x="867" y="19"/>
+		<component:CrotaBasicChatTextArea  borderStyle="none" id="iTextArea"  rollOver="this.iTextArea.setFocus();" editable="false" 
+										  selectable="false" 
+										  focusEnabled="false" focusAlpha="0" wordWrap="false" 
+										  height="75" width="605" backgroundAlpha="0.0" 
+										  htmlText="{SystemDataModel.curColonizationFuBenInfo.curColonaztionDes}"
+										  styleName="SKILLINFOTEXTFORMAT" x="226" bottom="0"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

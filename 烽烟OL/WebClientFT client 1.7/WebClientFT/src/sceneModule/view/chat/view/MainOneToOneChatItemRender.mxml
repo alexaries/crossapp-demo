@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+			    creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" height="22" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+              
+			public var pp_bitmap:Bitmap;
+			public var bg_bitmap:Bitmap;
+			public var sl_bitmap:Bitmap;
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+//				pp_bitmap = new Bitmap();
+//				ppImg.source = pp_bitmap;
+//				pp_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_whisper", "pp_img");
+				
+				bg_bitmap = new Bitmap();
+				bgImg.source = bg_bitmap;
+				bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_whisper", "bg_img");
+				
+				sl_bitmap = new Bitmap();
+//				slImg.source = sl_bitmap;
+				sl_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_whisper", "sl_img");
+			}
+
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="hovered" />
+		<s:State name="selected" />
+	</s:states>
+	<s:BitmapImage id="slImg" includeIn="selected" width="100%" height="100%" source="{AssetCenter.getInstance().get_img_form_pacakge('ui_whisper', 'sl_img')}"/>
+	<mx:Image id="bgImg" width="100%" height="100%"/>
+	<component:CrotaBasicLabel id="chatObjName" text="{data.name}" styleName="MAINMENUROLEFONT12bebebe" x="28" y="5"/>
+	<mx:SWFLoader id="ppSwf" visible="{!data.readFlag}" source="{AssetCenter.getInstance().get_mc_form_pacakge('ui_whisper','pp_swf')}" y="-4"/>
+</s:ItemRenderer>

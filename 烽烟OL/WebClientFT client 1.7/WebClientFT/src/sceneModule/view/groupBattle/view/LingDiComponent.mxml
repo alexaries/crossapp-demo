@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 width="739" height="508" 
+		 xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.CommonTools;
+			
+			public static const BASE_PATH:String = "assets/ncorps/junhui/";
+			public static const BASE_LD_PATH:String = "assets/groupBattle/lingdi";
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_lingdi","ld_ldbg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<mx:Image id="ldImg" source="{BASE_LD_PATH+SystemDataModel.groupBattleInfo.lingdiInfo.ldType+'.png'}" x="0" y="98"/>
+	<mx:Image source="{SystemDataModel.groupBattleInfo.lingdiInfo.icon == 0 ? '' : BASE_PATH+SystemDataModel.groupBattleInfo.lingdiInfo.icon+'.png'}" width="42" height="42" x="294" y="345"/>
+	<component:CrotaBasicLabel
+		id="l_name"
+		text="{SystemDataModel.groupBattleInfo.lingdiInfo.groupName}"
+		width="126" y="351"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="163"/>
+	<component:CrotaBasicLabel
+		id="l_name2"
+		text="{int(SystemDataModel.groupBattleInfo.lingdiInfo.battleTime/3600)}"
+		width="28" y="29"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="center" x="363"/>
+	<component:CrotaBasicLabel
+		id="l_name3"
+		text="{int((SystemDataModel.groupBattleInfo.lingdiInfo.battleTime%3600)/60)}"
+		width="28" y="29"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="center" x="416"/>
+	<component:CrotaBasicLabel
+		id="l_name0"
+		text="{SystemDataModel.groupBattleInfo.lingdiInfo.groupLevel==0?'':SystemDataModel.groupBattleInfo.lingdiInfo.groupLevel}" 
+		width="126" y="390"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="163"/>
+	<component:CrotaBasicLabel
+		id="l_name1"
+		text="{SystemDataModel.groupBattleInfo.lingdiInfo.groupLeader}"
+		width="126" y="429"
+		styleName="MAINMENUROLEFONT13bebebe" textAlign="left" x="150"/>
+	<s:List id="binfoList"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.groupBattleInfo.lingdiInfo.battleInfo}"
+			itemRenderer="sceneModule.view.groupBattle.view.BattleInfoItemRender"
+			x="368" y="106" width="358" height="288">
+		<s:layout>
+			<s:TileLayout verticalGap="0" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<s:Button id="obBtn" enabled="{!SystemDataModel.groupBattleInfo.lingdiInfo.obtainJL}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','ldc_lqjl')}" skinClass="style.Skin_CrotaPackRedButton" x="519" y="415"/>
+</s:Group>

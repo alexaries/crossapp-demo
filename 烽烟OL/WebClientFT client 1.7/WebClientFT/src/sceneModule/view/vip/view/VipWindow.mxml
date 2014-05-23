@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="982" height="526" 
+				xmlns:view="sceneModule.view.pack.view.*"
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				xmlns:win="managers.*" xmlns:component="component.*" xmlns:util="util.*" >
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.vip.VIPdataChangeEvent;
+			import sceneModule.view.vip.command.VIPmessage;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.vip.view.VipWindow";
+
+			protected function submit_clickHandler(event:MouseEvent):void
+			{
+				CommonTools.onOpenNavigate();
+				onVipDataChange();
+			}
+
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				VIPmessage.getInstance().getVipInfo();
+				CommonTools.make_bitmap(vipBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_vip","vip_bg");
+				CommonTools.make_bitmap(vipPro).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_vip","vip_progres");
+				VIPmessage.getInstance().addEventListener(VIPdataChangeEvent.VIPDATACHANGEEVENT,onVipDataChange);
+			}
+			
+			private function onVipDataChange(evt:VIPdataChangeEvent=null):void{
+				var len:int = (SystemDataModel.mainVipInfo.exp/SystemDataModel.mainVipInfo.maxexp)*484;
+				TweenLite.to(vipPro,1,{width:len});
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="vipBg"/>
+	<mx:Image id="vipPro" width="0" x="237" y="144" height="9" maintainAspectRatio="false"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainVipInfo.viplevel}" fontSize="14" fontWeight="bold" color="#ffff00" textAlign="left" x="313" y="121"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainVipInfo.msg}" fontSize="14" fontWeight="bold" color="#ffff00" textAlign="left" x="246" y="162"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.mainVipInfo.exp+'/'+SystemDataModel.mainVipInfo.maxexp}" fontSize="12" color="#ffffff" textAlign="center" x="430" y="142"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="891" y="66"/>
+	<s:List id="iList"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.mainVipInfo.vipinfoList}"
+			itemRenderer="sceneModule.view.vip.view.VipItemRender" 
+			x="95" y="237" width="788" height="249">
+		<s:layout>
+			<s:TileLayout verticalGap="0" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="submit" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','risC_cz')}" skinClass="style.Skin_CrotaPackRedButton" x="747" y="133" click="submit_clickHandler(event)"/>
+</win:BaseWindow>

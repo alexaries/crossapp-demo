@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="638" height="250" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import sceneModule.model.vo.taskVO.TaskInfoVo;
+			
+			import style.Skin_CrotaAlpheBackground;
+			import style.Skin_CrotaSmallButton;
+			
+			[Bindable]
+			private var taskInfoVo:TaskInfoVo;
+			
+			[Bindable]
+			public var taskDes:String = "防身的器具是闯荡世界所必不可少的，您手头的钱币对于一件初级的防具而言很充裕。";
+			
+		    public function set setData(value:TaskInfoVo):void{
+				taskInfoVo = value;
+			}
+			public function get getTaskId():int{
+				return taskInfoVo.taskId;
+			}
+			/**
+			 * 关闭此窗口
+			 */
+			public function onCloseWindow():void{
+				this.parent.removeChild(this);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations> 
+	<mx:Image id="roleImage" source='assets/role/roleImage1.png' width="300" height="353" x="-42" y="-103"/>
+		<s:SkinnableContainer width="535" height="250" x="103">
+			<mx:Image source='assets/ui/popupWindowBg.png' maintainAspectRatio="false"/>
+			<!--<component:CrotaBasicLabel text="您的ID和密码输入有误，请重新输入" x="198" y="46" styleName="ROLETEXT"/>-->
+			<component:CrotaBasicLabel text="任务名称:" x="93" y="41" styleName="ROLETEXT"/>
+			<s:Label id="nameTask" text="{taskInfoVo.taskname}" x="166" y="40" width="120" styleName="ROLETEXT"/>
+				
+			<component:CrotaBasicLabel text="任务目标:" x="93" y="87" styleName="ROLETEXT"/>
+			<s:Label id="goalTask" x="162" y="87" width="118" text="找到防具商泰勒，购买一件衣服并装备上" styleName="ROLETEXT"/>
+			
+			<component:CrotaBasicLabel text="任务奖励:" x="93" y="135" styleName="ROLETEXT"/>
+			<s:Label id="rewardTask" x="162" y="135" width="120" text="经验加成+100,魔晶+100，磨钻+100" styleName="ROLETEXT"/>
+			
+			<component:CrotaBasicLabel text="任务描述:" x="345" y="30" styleName="ROLETEXT"/>
+			<mx:TextArea id="taskArea" editable="false" text="{taskDes}" verticalScrollBarStyleName="VScrollBar" x="301" y="54" height="124" width="224" backgroundAlpha="0.0" styleName="SKILLINFOTEXTFORMAT" selectable="false"/>
+			
+			<util:CommonButton id="accessBtn" label="接受" x="202" y="184" skinClass="style.Skin_CrotaSmallButton"/>
+			<util:CommonButton id="cancelBtn" label="取消" x="352" y="184" click="onCloseWindow()" skinClass="style.Skin_CrotaSmallButton"/>
+		</s:SkinnableContainer>
+	
+</s:Group>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:win="managers.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="120" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			public static var NAME:String = 'sceneModule.view.gaAndsd.view.GuaJiConfimComponent';
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source='assets/ncorps/union_alert.png' maintainAspectRatio="false" width="300" height="120"/>
+	<component:CrotaBasicLabel
+		id="l_msg" 
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gjcC_zzmx')}"
+		fontSize="12" color="#ffffff"
+		x="10" y="39" width="278" textAlign="center"/>
+	<util:CommonButton id="rBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" 
+			  skinClass="style.Skin_CrotaCommonButton2"
+			  x="60" y="69"/>
+	<util:CommonButton id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" 
+			  skinClass="style.Skin_CrotaCommonButton2"
+			  x="167" y="69"/>
+</win:BaseWindow>

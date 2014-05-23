@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="497"
+	width="898"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:view="sceneModule.view.pack.view.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.pray.view.PrayWindow";
+			
+			private var timer:Timer;
+			private var delay:int = 1000;
+			[Bindable]
+			private var counter:int = 3; //3秒倒计时
+			[Bindable]
+			public var surTime:int;
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+				CommonTools.make_bitmap(prayBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pray", "pray_bg");
+			}
+			
+			private function setRewardTime(times:int):void {
+				surTime = times;
+				if (times > 0) {
+					if (!timer) {
+						timer = new Timer(delay);
+						timer.addEventListener(TimerEvent.TIMER, onTimer);
+						timer.start();
+					} else if (!timer.running) {
+						timer.start();
+						praybtn.enabled = false;
+					}
+				} else {
+					time_tile.text = "";
+					praybtn.enabled = true;
+				}
+			}
+			
+			private function onTimer(evt:TimerEvent):void {
+				surTime = surTime - 1;
+				
+				if (surTime < 0) {
+					timer.stop();
+					timer.reset();
+					time_tile.text = "";
+					praybtn.enabled = true;
+				} else {
+					time_tile.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('pray', 'pW_lqsj') + ByteArrayUtil.formateTimeToString2(surTime * 1000)
+					praybtn.enabled = false;
+				}
+			}
+			
+			protected function praybtn_clickHandler(event:MouseEvent):void {
+				setRewardTime(counter);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="prayBg" />
+	<component:CrotaBasicLabel color="#ffff00"
+		fontSize="12"
+		text="{SystemDataModel.prayInfoVo.needDiamond+CrotaResourceConfig.getInstance().getTextByModuleAndId('pray','pW_zc')}"
+		textAlign="left"
+		width="96"
+		x="316"
+		y="435" />
+	<component:CrotaBasicLabel color="#FF0000"
+		fontSize="12"
+		id="time_tile"
+		text="{setRewardTime(counter)}"
+		textAlign="left"
+		x="460"
+		y="390" />
+	<component:CrotaBasicLabel color="#ffff00"
+		fontSize="12"
+		text="{SystemDataModel.prayInfoVo.prayDes}"
+		textAlign="left"
+		x="271"
+		y="390" />
+	<component:CrotaBasicLabel color="#ffff00"
+		fontSize="12"
+		text="{SystemDataModel.prayInfoVo.remainTimes}"
+		textAlign="center"
+		width="30"
+		x="446"
+		y="435" />
+	<component:CrotaBasicLabel color="0xFFFFF"
+		fontSize="12"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pray','pW_sm')}"
+		textAlign="center"
+		x="319"
+		y="372" />
+	<util:CommonButton id="closeBtn"
+		skinClass="style.Skin_CrotaCloseButton111"
+		x="791"
+		y="15" />
+	<component:CrotaBasicChatTextArea backgroundAlpha="0.0"
+		borderStyle="none"
+		editable="false"
+		focusAlpha="0"
+		focusEnabled="false"
+		height="330"
+		htmlText="{SystemDataModel.prayInfoVo.tempStr}"
+		id="con1"
+		rollOver="this.con1.setFocus();"
+		selectable="false"
+		styleName="MAINMENUROLEFONT12a18c70"
+		verticalScrollPolicy="off"
+		width="165"
+		wordWrap="true"
+		x="632"
+		y="124" />
+	<util:CommonButton click="praybtn_clickHandler(event)"
+		id="praybtn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pray','pW_qd')}"
+		skinClass="style.Skin_CrotaPackRedButton"
+		x="501"
+		y="425" />
+	<mx:UIComponent id="uic" />
+</win:BaseWindow>

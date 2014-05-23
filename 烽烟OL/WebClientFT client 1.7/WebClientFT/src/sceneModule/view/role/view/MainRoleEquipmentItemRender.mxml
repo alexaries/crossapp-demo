@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="42" height="42"
+				autoDrawBackground="false">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			
+			public static var FROMROLEPACK:String = "fromRolePack";
+			
+			//装备位置
+			[Bindable]
+			public var rolePos:int = 0;
+			
+			//设置当前格子所称数据的装备部位
+			public function set _rolePos(value:int):void{
+				rolePos = value;
+				switch(rolePos){
+					case 0:
+						equipImg.source = "assets/copyScene/breastplate.png";
+						break;
+					case 1:
+						equipImg.source = "assets/copyScene/equipleg.png";
+						break;
+					case 2:
+						equipImg.source = "assets/copyScene/equiphead.png";
+						break;
+					case 3:
+						equipImg.source = "assets/copyScene/equiphand.png";
+						break;
+					case 4:
+						equipImg.source = "assets/copyScene/equipshoes.png";
+						break;
+					case 5:
+						equipImg.source = "assets/copyScene/equipshoulder.png";
+						break;
+					case 6:
+						equipImg.source = "assets/copyScene/necklace.png";
+						break;
+					case 7:
+						equipImg.source = "assets/copyScene/ring.png";
+						break;
+					case 8:
+						equipImg.source = "assets/copyScene/mainhand.png";
+						break;
+					case 9:
+						equipImg.source = "assets/copyScene/hand.png";
+						break;
+				}
+			}
+			public function get _curRolePos():int{
+				return rolePos;
+			}
+			
+			/**
+			 * 鼠标单击拖拽事件
+			 */
+			public function onClick(evt:MouseEvent):void{
+				if(data && data.id){
+					var iu:IUIComponent=evt.target as IUIComponent;
+					var ds:DragSource=new DragSource();
+					ds.addData(data, MainRoleEquipmentItemRender.FROMROLEPACK);
+					//当前装备的部位用于左侧装备栏的效果
+					var dragProxy:Image = new Image();
+					dragProxy.width = 42;
+					dragProxy.height = 42;
+					dragProxy.source = equipImg.source;
+					DragManager.doDrag(iu, ds, evt,dragProxy); // 开始拖动这个物体
+				}
+			}
+			
+			//获取装备图标路径
+			public function setEquipmentUrl(s:String,t:int,p:int):String{
+				var url:String="";
+				if(t == 0){
+					switch(p){
+						case 0:
+							url = "assets/copyScene/breastplate.png";
+							break;
+						case 1:
+							url = "assets/copyScene/equipleg.png";
+							break;
+						case 2:
+							url = "assets/copyScene/equiphead.png";
+							break;
+						case 3:
+							url = "assets/copyScene/equiphand.png";
+							break;
+						case 4:
+							url = "assets/copyScene/equipshoes.png";
+							break;
+						case 5:
+							url = "assets/copyScene/equipshoulder.png";
+							break;
+						case 6:
+							url = "assets/copyScene/necklace.png";
+							break;
+						case 7:
+							url = "assets/copyScene/ring.png";
+							break;
+						case 8:
+							url = "assets/copyScene/mainhand.png";
+							break;
+						case 9:
+							url = "assets/copyScene/hand.png";
+							break;
+					}
+					return url;
+				}else{
+					url = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="equipImg" source="{setEquipmentUrl(data.icon,data.type,rolePos)}" width="100%" height="100%"/>
+	<mx:Image id="borderOverEffectImg" source='assets/pack/packOverBorder.png' visible="{SystemDataModel.bodyPos == rolePos ? true : false}"/>
+</s:ItemRenderer>

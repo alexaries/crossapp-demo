@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*" xmlns:view="sceneModule.view.pack.view.*">
+	<fx:Script>
+		<![CDATA[
+			import sceneModule.model.vo.taskVO.TaskBasicInfoVo;
+			
+			import style.Skin_CrotaSmallButton;
+			
+			[Bindable]
+			private var dataInfo:TaskBasicInfoVo;
+			
+			public function set setDataInfo(value:TaskBasicInfoVo):void{
+				dataInfo = value;
+			}
+			
+			public function get reporterId():int{
+				return dataInfo.reporterID;
+			}
+			
+			public function get providerId():int{
+				return dataInfo.providerID;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source='assets/task/taskInfoBg.png' x="0" y="6"/>
+	<component:CrotaBasicLabel id="taskName" styleName="MAINMENUROLEFONT12bebebe" x="73" y="8"/>
+	<component:CrotaBasicLabel text="任务追踪" styleName="MAINMENUROLEFONT129165ce" x="414" y="7"/>
+	<component:CrotaBasicCheckBoxCreate id="taskTranscript" x="469" y="3"/>
+	<mx:Text id="providerNPC" htmlText="{'接取NPC'+dataInfo.providerID}" selectable="false" 
+			 buttonMode="true" useHandCursor="true" mouseChildren="false" 
+			 styleName="MAINMENUROLEFONT12a9d091" x="73" y="128"/>
+	<mx:Text id="reporterNPC" text="{'交付NPC'+dataInfo.reporterID}" 
+			 styleName="MAINMENUROLEFONT12a9d091" buttonMode="true" 
+			 useHandCursor="true" mouseChildren="false" x="73" y="153"/>
+	<mx:Text id="taskPoint" x="73" styleName="MAINMENUROLEFONT12bebebe" width="445" y="180"/>
+	<component:CrotaBasicLabel text="EXP:" styleName="MAINMENUROLEFONT12bebebe" x="116" y="310"/>
+	<component:CrotaBasicLabel text="{dataInfo.ExpBound}" styleName="MAINMENUROLEFONT12bebebe" x="150" y="310"/>
+	<component:CrotaBasicLabel text="RaP:" styleName="MAINMENUROLEFONT12bebebe" x="117" y="336"/>
+	<component:CrotaBasicLabel text="{dataInfo.gloryBound}" styleName="MAINMENUROLEFONT12bebebe" x="150" y="336"/>
+	<component:CrotaBasicLabel text="XXXX阵营声望:" styleName="MAINMENUROLEFONT12bebebe" x="117" y="360"/>
+	<component:CrotaBasicLabel text="XXXX" styleName="MAINMENUROLEFONT12bebebe" x="207" y="360"/>
+	<component:CrotaBasicLabel text="XXXXXXXX:" styleName="MAINMENUROLEFONT12bebebe" x="117" y="385"/>
+    <component:CrotaChatTextInput2 id="RMB" enabled="false" styleName="MAINMENUROLEFONT12bebebe" x="134" y="472" width="82" height="22" text="{dataInfo.coinBound}" textAlign="left"/>
+	<util:CommonButton skinClass="style.Skin_CrotaSmallButton" x="391" y="500" label="放弃任务"/>
+	<view:MainMenuEquipmentComponent id="buffComp" x="116" y="422"/>
+	<view:MainMenuEquipmentComponent id="itemComp1" x="116" y="222"/>
+	<view:MainMenuEquipmentComponent id="itemComp2" x="164" y="222"/>
+	<view:MainMenuEquipmentComponent id="itemComp3" x="212" y="222"/>
+	<view:MainMenuEquipmentComponent id="itemComp4" x="260" y="222"/>
+	<view:MainMenuEquipmentComponent id="itemComp5" x="308" y="222"/>
+	<view:MainMenuEquipmentComponent id="itemComp6" x="356" y="222"/>
+</s:Group>

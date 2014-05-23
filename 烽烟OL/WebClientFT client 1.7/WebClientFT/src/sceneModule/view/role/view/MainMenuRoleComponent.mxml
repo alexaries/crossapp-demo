@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"  
+		 xmlns:component="component.*" xmlns:view="sceneModule.view.pack.view.*" 
+		 xmlns:ui="sceneModule.view.ui.*"
+		 xmlns:win="managers.*"
+		 width="989" height="422" 
+		 xmlns:view1="sceneModule.view.role.view.*"
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="initApp()" xmlns:util="util.*"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import style.Skin_CrotaCloseButton111;
+			
+			public var roleBg_bitmap:Bitmap;
+			public var rolePackBg_bitmap:Bitmap;
+			
+			public var bg_bitmap:Bitmap;
+			
+			public static const NAME:String = "sceneModule.view.role.view.MainMenuRoleComponent";
+			private function initApp():void{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				add_to_stage();
+				this.addEventListener(Event.ADDED_TO_STAGE,add_to_stage);
+				
+//				roleBg_bitmap = new Bitmap();
+//				roleBg.source = roleBg_bitmap;
+				rolePackBg_bitmap = new Bitmap();
+				packBg.source = rolePackBg_bitmap;
+//				roleBg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_role","role_bg");
+				rolePackBg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_mainMenu","pack_bg");
+				bg_bitmap = new Bitmap();
+				mainBg.source = bg_bitmap;
+				bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_mainMenu","mainMenuBg");
+				
+			}
+			private function add_to_stage(e:Event = null):void{
+				comp_roleinfo.data = SystemDataModel.roleInfo;
+				comp_roleinfo.equip_obj = SystemDataModel.peopleItemInfo;
+			}
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+				
+			}
+
+
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="mainBg"  x="-21" y="0"/>
+	<s:SkinnableContainer width="100%" height="100%">	
+		<!--<mx:Image id="roleBg"/>-->
+		<mx:Image id="packBg" x="581" y="55"/>
+		<view1:MainRoleInfoComponent id="comp_roleinfo" x="57" y="54"/>
+		<!--背包-->
+		<view:MainMenuEquipmentGroup id="mainMenuEquipment" x="582" y="54"/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="880" y="14"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="init()"
+	height="450"
+	preinitialize="group1_preinitializeHandler(event)"
+	width="981"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.corps.event.MediatorRegisterCorpsEvent;
+			
+			import util.CommonTools;
+			public static var NAME:String = "sceneModule.view.corps.view.NCropsRootView";
+			
+			private function init():void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				this.dispatchEvent(new MediatorRegisterCorpsEvent(MediatorRegisterCorpsEvent.MR_CORPS_ROOT, this, true));
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_bg');
+			}
+			
+			public function to_not_in():void {
+				remove_if_have(member_rb);
+				remove_if_have(junhui_rb);
+				remove_if_have(keji_rb);
+				//remove_if_have(waijiao_rb);
+				remove_if_have(requese_list);
+			}
+			
+			public function to_in():void {
+				this.addElement(member_rb);
+				this.addElement(junhui_rb);
+				this.addElement(keji_rb);
+				//this.addElement(waijiao_rb);
+				//if( SystemDataModel.roleInfo.roleCorpsInfo.corpsPosition > 0){
+				this.addElement(requese_list);
+				requese_list.enabled = (SystemDataModel.roleInfo.roleCorpsInfo.corpsPosition > 0);
+				//}
+				//else{
+				//remove_if_have(requese_list);
+				//}
+			}
+			
+			private function remove_if_have(element:IVisualElement):void {
+				if (element.parent) {
+					this.removeElement(element);
+				}
+			}
+			
+			protected function group1_preinitializeHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" />
+	</fx:Declarations>
+	<mx:Image id="img_bg" />
+	<s:RadioButton group="{cardtype}"
+		height="31"
+		id="union_rb"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jt')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="MAINMENUROLEFONT12e4e0b3"
+		value="0"
+		width="102"
+		x="111"
+		y="57" />
+	<s:RadioButton group="{cardtype}"
+		height="31"
+		id="member_rb"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncrov_cy')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="MAINMENUROLEFONT12e4e0b3"
+		value="1"
+		width="102"
+		x="213"
+		y="57" />
+	<s:RadioButton group="{cardtype}"
+		height="31"
+		id="junhui_rb"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncrov_jtxx')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="MAINMENUROLEFONT12e4e0b3"
+		value="2"
+		width="102"
+		x="315"
+		y="57" />
+	<s:RadioButton group="{cardtype}"
+		height="31"
+		id="keji_rb"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncrov_kj')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="MAINMENUROLEFONT12e4e0b3"
+		value="3"
+		width="102"
+		x="417"
+		y="57" />
+	<s:RadioButton group="{cardtype}"
+		height="31"
+		id="requese_list"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncrov_sqlb')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="MAINMENUROLEFONT12e4e0b3"
+		value="5"
+		width="102"
+		x="519"
+		y="57" />
+	<s:Group id="car_contain"
+		x="12"
+		y="96" />
+	<util:CommonButton id="closeBtn"
+		skinClass="style.Skin_CrotaCloseButton111"
+		x="888"
+		y="17" />
+</win:BaseWindow>

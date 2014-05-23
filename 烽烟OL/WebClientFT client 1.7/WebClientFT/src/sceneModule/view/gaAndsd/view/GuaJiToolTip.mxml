@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" mouseChildren="false"
+		 xmlns:s="library://ns.adobe.com/flex/spark" implements="mx.core.IToolTip"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp();" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.IToolTip;
+			
+			import resource.CrotaResourceConfig;
+			
+			import util.ByteArrayUtil;
+			
+			private const TIMEFRE:int = 1000;
+			private var timer:Timer = new Timer(TIMEFRE);
+			
+			private function initApp():void{
+				timer.addEventListener(TimerEvent.TIMER,onTimer);
+			}
+			
+			/**
+			 * IToolTip的set get方法
+			 */
+			public function get text():String
+			{
+				return null;
+			}
+			
+			public function set text(value:String):void
+			{
+				
+			}
+			
+			private var reTime:int;
+			public function setReTime(time:int):void{
+				reTime = time;
+				timer.start();
+				onTimer();
+			}
+			
+			private function onTimer(evt:TimerEvent=null):void{
+				reTime+=1;
+				timeTxt.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gas_gjsj')+ByteArrayUtil.formateTimeToString(reTime*1000);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaCoinTooltip">
+		<s:VGroup gap="1" top="5" left="5" right="5" bottom="5">
+			<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gas_mxz')}" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicLabel id="expTxt" styleName="TOOLTIPTEXTFORMAT4"/>
+			<component:CrotaBasicLabel id="zhanliTxt" width="100%" styleName="TOOLTIPTEXTFORMAT5" />
+			<component:CrotaBasicLabel id="timeTxt" styleName="TOOLTIPTEXTFORMAT1"/>
+		</s:VGroup>
+	</s:SkinnableContainer>	
+</s:Group>

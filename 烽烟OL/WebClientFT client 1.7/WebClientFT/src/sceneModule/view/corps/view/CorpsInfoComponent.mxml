@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"   
+		    
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" 
+		 width="267" height="308" 
+		 xmlns:component="component.*" 
+		 creationComplete="initApp()" 
+		 xmlns:view="sceneModule.view.skill.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import managers.WindowManager;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			import sceneModule.view.corps.mediator.NCorpsOutMediator;
+			
+			import style.Skin_CrotaMainMenuHotelSkinnableContainer;
+			
+			import util.ObjectToString;
+			import util.xtrace;
+			
+			public static const NAME:String = "sceneModule.view.corps.view.CorpsInfoComponent";
+			public static const BASE_PATH:String = "assets/ncorps/junhui/";
+			
+			
+			private var _info:Object;
+			
+			private function initApp():void{
+				refresh_view();
+				clokeBtn.addEventListener(MouseEvent.CLICK,close_self);
+				//this.addEventListener(Event.ADDED_TO_STAGE,add_to_stage);
+				contactChief.addEventListener(MouseEvent.CLICK, on_func_btn);
+			}
+			
+			private function on_func_btn(e:MouseEvent):void {
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_ON_UNION_INFO_FUN_BTN,_info,true));
+			}
+			
+			private function close_self(e:MouseEvent):void{
+				//NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_REMOVE_JOIN_UNION,null,true));
+				WindowManager.closeWindow(CorpsInfoComponent.NAME);
+			}
+			
+			private function add_to_stage(e:Event):void{
+				refresh_view();
+			}
+			
+			override public function set data(obj:Object):void{
+				_info = obj;
+				refresh_view();
+			}
+			
+			private function refresh_view():void{
+				if(null != union_name){
+					union_name.text = _info.corpsName;
+					union_des.text = _info.corpsAnnouncement
+					union_member_num.text = _info.curNum+'/'+_info.maxNum;
+					union_leader.text = _info.corpsChief;
+					union_level.text = 'Lv.'+_info.corpsLevel;
+					img_junhui.SkillImage = BASE_PATH + _info.corpsImg + ".png";
+//					l_junhao.text = _info.corpsTitle;//需求改为不显示
+				
+				
+					
+					//functionBtn.label = _info.onApplication?"取消申请":"申请加入";
+					//contactChief
+					
+					//if (NCorpsOutMediator.UNION_POS_LEADER == SystemDataModel.roleInfo.roleCorpsInfo.corpsPosition && _info.corpsName == SystemDataModel.roleInfo.roleCorpsInfo.corpsName) {
+					if (_info.corpsName == SystemDataModel.roleInfo.roleCorpsInfo.corpsName) {
+						contactChief.label = CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_sjjh');
+					}
+					else {
+						contactChief.label = CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_lxtz');
+					}
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="228" height="276" >
+		<mx:Image source='assets/corps/tips.png' width="226" height="274" x="0" y="0"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCloseButton111" id="clokeBtn" x="199" y="4"/>
+		<view:ImageComponent id="img_junhui" x="29" y="53"/>
+		<component:CrotaBasicLabel 
+			id="l_junhao" x="29" y="53" width="42" height="42" 
+			styleName="MAINMENUROLEFONT12bebebe"
+			textAlign="center" verticalAlign="middle"/>
+		<component:CrotaBasicLabel id="union_des" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			x="22" y="137" height="84" width="181"/>
+		<component:CrotaBasicLabel 
+			id="union_name"
+			styleName="MAINMENUROLEFONT12a18c70" x="117" y="41" textAlign="center" width="80"/>
+		<component:CrotaBasicLabel 
+			id="union_member_num"
+			styleName="MAINMENUROLEFONT12a18c70" x="117" y="65" textAlign="center" width="80"/>
+		<component:CrotaBasicLabel 
+			id="union_leader"
+			styleName="MAINMENUROLEFONT12a18c70" x="117" y="87" textAlign="center" width="80"/>
+		<component:CrotaBasicLabel 
+			id="union_level"
+			x="17" y="94" styleName="MAINMENUROLEFONT12a18c70" width="64" textAlign="center"/>
+		<util:CommonButton id="contactChief" 
+				  skinClass="style.Skin_CrotaCommonButton3" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_lxtz')}" 
+				  x="67" y="226"/>
+		<!--<util:CommonButton id="functionBtn" 
+				  skinClass="style.Skin_CrotaCommonButton3" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_sqjr')}" 
+				  x="6" y="224"/>-->
+	</s:SkinnableContainer>
+</win:BaseWindow>

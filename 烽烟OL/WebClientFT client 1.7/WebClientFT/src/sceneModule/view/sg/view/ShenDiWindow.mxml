@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="749" height="402" 
+				xmlns:view="sceneModule.view.pack.view.*"
+				 creationComplete="basewindow1_creationCompleteHandler(event)"				
+				xmlns:win="managers.*" xmlns:component="component.*" xmlns:util="util.*" >
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import style.Skin_CrotaCloseButton111;
+			import style.Skin_CrotaCommonButton;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String="sceneModule.view.sg.view.ShenDiWindow";
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// source="{WebClient.host+'assets/sd/shenDiBg.png'}"
+				CommonTools.make_bitmap(shengdiImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_shengdi","shengdi_bg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image id="shengdiImg" />
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="638" y="54"/>
+		<component:CrotaBasicLabel text="{SystemDataModel.shenDiInfo.des}" styleName="TOOLTIPTEXTFORMAT4" x="279" y="109" width="363" height="43"/>
+		<component:CrotaBasicLabel text="{SystemDataModel.shenDiInfo.douqi}" styleName="TOOLTIPTEXTFORMAT4" x="161" y="327" width="117" height="20" textAlign="center"/>
+		<s:List id="sgList" width="359" height="135" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.sg.view.ShenGeItemRender" dataProvider="{SystemDataModel.shenDiInfo.shenGeList}" x="281" y="182">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="5" requestedRowCount="2" verticalGap="0" horizontalGap="0"/>
+			</s:layout>
+		</s:List>
+		<util:CommonButton id="pre_btn" 
+				  skinClass="style.Skin_CrotaBasicPreButton"
+				  y="336" x="409" enabled="{SystemDataModel.shenDiInfo.curPage>1}"/>
+		<component:CrotaBasicLabel text="{SystemDataModel.shenDiInfo.curPage+'/'+SystemDataModel.shenDiInfo.maxPage}" styleName="TOOLTIPTEXTFORMAT4" x="432" y="336" width="57" textAlign="center"/>
+		<util:CommonButton id="next_btn"
+				  x="494" y="336" enabled="{SystemDataModel.shenDiInfo.maxPage>SystemDataModel.shenDiInfo.curPage}"
+				  skinClass="style.Skin_CrotaBasicNextButton"/>
+	</s:SkinnableContainer>
+	
+</win:BaseWindow>

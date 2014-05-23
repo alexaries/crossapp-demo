@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 mouseChildren="false"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 implements="mx.core.IToolTip"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="initApp();"
+		 xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			public static var NAME:String="sceneModule.view.roleInfo.view.RoleInfoShowTooltip";
+
+			private function initApp():void
+			{
+			}
+
+			/**
+			 * IToolTip的set get方法
+			 */
+			public function get text():String
+			{
+				return null;
+			}
+
+			public function set text(value:String):void
+			{
+
+			}
+
+			[Bindable]
+			private var msTxt:String;
+
+			public function set msDes(msdes:String):void
+			{
+				msTxt=msdes;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaCoinTooltip">
+		<component:CrotaBasicLabel id="ms"
+								   text="{msTxt}"
+								   styleName="TOOLTIPTEXTFORMATROLEINFO"
+								   left="5"
+								   right="5"
+								   top="10"
+								   bottom="5"/>
+	</s:SkinnableContainer>
+</s:Group>

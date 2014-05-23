@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:win="managers.*" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*" 
+		  
+		 width="310" height="110"
+		 creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.display.Bitmap;
+			import flash.events.Event;
+			import flash.events.TimerEvent;
+			import resource.AssetCenter;
+			import util.CommonTools;
+			
+			import managers.WindowManager;
+			
+			
+			public static const NAME:String = "logonModule.view.ConserverAlert";
+			
+			private var _info:Object;
+			
+			private function init():void {
+				inner_init();
+				if (null != img_bg.source as Bitmap) {
+					return;
+				}
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('friend', 'union_alert_bg');
+			}
+			
+			private function inner_init(e:Event=null):void{
+				if(null != l_msg){
+					l_msg.text = _info.msg;
+				}
+			}
+			
+			override public function set data(obj:Object):void{
+				_info = obj;
+				inner_init();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="298" height="83" >
+		<mx:Image source='assets/ncorps/union_alert.png'/>
+		<mx:Image id="img_bg"/>
+		<component:CrotaBasicLabel
+			id="l_msg" 
+			text="msg"
+			styleName="MAINMENUROLEFONT12a18c70"
+			x="10" y="20" width="278" textAlign="center"/>
+		<!--<component:CrotaBasicLabel
+			id="l_tips"
+			text="tips"
+			styleName="MAINMENUROLEFONT12bebebe"
+			x="0" y="37" width="100%" textAlign="center"/>-->
+	</s:SkinnableContainer>
+</win:BaseWindow>

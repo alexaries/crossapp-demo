@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				width="233" height="64" autoDrawBackground="false"
+				creationComplete="initApp();"
+				mouseMove="onMouseMove(event)"
+				rollOver="skinnablecontainer1_rollOverHandler(event)"
+				rollOut="skinnablecontainer1_rollOutHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.ToolTipEvent;
+			
+			import style.Skin_CrotaSkillComponentAnthorSkinnableContainer;
+			import style.Skin_CrotaSkillComponentSkinnableContainer;
+			
+			/**
+			 * tip item
+			 */
+			private var _tip:MainShopItemTip = new MainShopItemTip;
+			
+			private function initApp():void{
+				_tip.toolTip="商品";
+				imgItemIcon.addEventListener(ToolTipEvent.TOOL_TIP_CREATE, onTooltipCreate);
+				imgItemIcon.addEventListener(ToolTipEvent.TOOL_TIP_START, onTooltipStart);
+				imgItemIcon.addEventListener(ToolTipEvent.TOOL_TIP_SHOW, onTooltipShow);
+			}
+			
+			protected function skinnablecontainer1_rollOverHandler(evt:MouseEvent):void
+			{
+				iContainer.setStyle("skinClass",Skin_CrotaSkillComponentAnthorSkinnableContainer);
+			}
+			
+			
+			protected function skinnablecontainer1_rollOutHandler(evt:MouseEvent):void
+			{
+				iContainer.setStyle("skinClass",Skin_CrotaSkillComponentSkinnableContainer);
+			}
+			
+			/**
+			 * 实例化ToolTip
+			 */
+			private function onTooltipCreate(event:ToolTipEvent):void
+			{
+				_tip.data = this.data;
+				event.toolTip=_tip;
+			}
+			
+			private function onTooltipStart(event:ToolTipEvent):void
+			{
+				
+			}
+			
+			private function onTooltipShow(event:ToolTipEvent):void
+			{
+				//			tileTooltip.setArmyInfo(mapArmyVO);
+			}
+			/**
+			 * 鼠标移动事件
+			 * ToolTip跟随鼠标移动
+			 */
+			private function onMouseMove(event:MouseEvent):void
+			{
+				if (_tip)
+				{
+					_tip.x=FlexGlobals.topLevelApplication.mouseX + 5;
+					_tip.y=FlexGlobals.topLevelApplication.mouseY + 5;
+				}
+			}
+			
+			public function setEquipmentUrl(s:int,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:SkinnableContainer id="iContainer" skinClass="style.Skin_CrotaSkillComponentSkinnableContainer" width="100%" height="100%">
+		<mx:Image x="10" y="13" id="imgItemIcon" toolTip="商品" width="40" height="40" source="{setEquipmentUrl(data.icon,data.type)}"/>
+		<s:Label x="57" y="12" text="{data.name}" fontSize="13" color="#31302C" id="lbItemName"/>
+		<!--<s:Label x="61" y="20" fontSize="13" color="#D22396" id="reaminTime"/>-->
+		<mx:Image x="119" y="36" width="14" height="14" id="goldIcon"/>
+		<s:Label x="143" y="30" text="{data.buyingRateCoin}" color="#31302C" id="lbPrice" fontSize="12"/>
+		<util:CommonButton x="172" y="7" skinClass="style.Skin_CrotaCommonButton1" label="回购" width="56" height="36" id="btnBackBuy" styleName="RICHEDITABLETEXT"/>
+	</s:SkinnableContainer>	
+</s:ItemRenderer>

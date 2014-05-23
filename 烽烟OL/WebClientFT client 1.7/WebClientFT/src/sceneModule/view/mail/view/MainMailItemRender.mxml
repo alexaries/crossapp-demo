@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="304" height="65" creationComplete="initApp()" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			import mx.collections.ArrayCollection;
+			
+			import mx.events.StateChangeEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.mailVo.MailBasicInfoVo;
+			import sceneModule.view.mail.command.GetMailListResponseCommand;
+			import sceneModule.view.mail.event.MediatorRegisterMainEvent;
+			
+			import style.Skin_CrotaSkillComponentAnthorSkinnableContainer;
+			import style.Skin_CrotaSkillComponentSkinnableContainer;
+			
+			import util.CommonTools;
+			import util.ObjectToString;
+			import util.xtrace;
+			public var read_bitmap:Bitmap;
+			public var unread_bitmap:Bitmap;
+			private function initApp():void {
+				
+				this.dispatchEvent(new MediatorRegisterMainEvent(MediatorRegisterMainEvent.MR_MAIL_ITEMRENDER,this,true));
+				
+				//this.addEventListener(MouseEvent.ROLL_OVER,onMouseRollOver);
+				//this.addEventListener(MouseEvent.ROLL_OUT, onMouseRollOut);
+				read_bitmap=new Bitmap();
+				unread_bitmap=new Bitmap();
+				
+				this.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE, on_state_change);
+			}
+			
+			private function on_state_change(e:StateChangeEvent):void {
+				//xtrace("状态转换", e.newState);
+				switch(e.newState){
+					case "selected":
+					case "hovered":
+						iContainer.setStyle("skinClass",Skin_CrotaSkillComponentAnthorSkinnableContainer);
+						break;
+					default:
+						iContainer.setStyle("skinClass",Skin_CrotaSkillComponentSkinnableContainer);
+						break;
+				}
+			}
+			
+			/**
+			 * 鼠标移过事件处理
+			 * 
+			 */
+			private function onMouseRollOver(evt:MouseEvent):void{
+				//iContainer.setStyle("skinClass",Skin_CrotaSkillComponentAnthorSkinnableContainer);
+			}
+			
+			/**
+			 * 鼠标移出事件处理
+			 */
+			private function onMouseRollOut(evt:MouseEvent):void{
+				//iContainer.setStyle("skinClass",Skin_CrotaSkillComponentSkinnableContainer);
+
+			}
+			/**
+			 * 获取邮件状态图标
+			 */
+			public function getMailStateImg(state:int):Object{
+				var bitmap:Bitmap = util.CommonTools.make_bitmap(equipImg);
+				switch(state){
+					case 0:
+						bitmap.bitmapData = 
+							AssetCenter.getInstance().get_img_form_pacakge('ui_mail', 'mail_unread_ico');
+						break;
+					case 1:
+						bitmap.bitmapData = 
+							AssetCenter.getInstance().get_img_form_pacakge('ui_mail', 'mail_readed_ico');
+						break;
+				}
+				return bitmap;
+			}
+		]]>
+	</fx:Script>
+	 <s:states>
+        <s:State name="normal"/>
+        <s:State name="hovered"/>
+        <s:State name="selected"/>
+    </s:states>  
+	<s:SkinnableContainer 
+		id="iContainer" 
+		skinClass="style.Skin_CrotaSkillComponentSkinnableContainer" 
+		width="100%" height="100%">
+		<mx:Image 
+			x="11" y="10" width="44" height="44" 
+			 id="imgTopLayer"/>
+			
+		<mx:Image 
+			source="{ProConst.shopAndSkillBgObj}" 
+			maintainAspectRatio="false" 
+			width="100%" height="100%"/>
+		<mx:Image 
+			id="equipImg" 
+			source="{getMailStateImg(data.mailState)}" 
+			width="40" height="40" x="13" y="12"/>
+		
+		<component:CrotaBasicLabel 
+			text="{data.mailFromType == 0 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','bfM_xt') : CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_wj')}" 
+			x="62" y="15"
+			styleName="MAINMENUROLEFONT12bebebe" 
+			fontWeight="{0 == data.mailState?'bold':'normal'}"/>
+		<component:CrotaBasicLabel 
+			text="{data.mailTitle}" 
+			x="95" y="15" 
+			width="100" height="14"
+			styleName="MAINMENUROLEFONT12bebebe"
+			fontWeight="{0 == data.mailState?'bold':'normal'}"/>
+		<component:CrotaBasicLabel 
+			x="237" y="15" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			text="{new ArrayCollection(data.mialSendTime.split(' ')).getItemAt(0)}"
+			fontWeight="{0 == data.mailState?'bold':'normal'}"/>
+		<component:CrotaBasicLabel 
+			x="55" y="38" width="290"
+			styleName="MAINMENUROLEFONT12bebebe" 
+			text="{data.outline}"
+			fontWeight="{0 == data.mailState?'bold':'normal'}"/>
+	</s:SkinnableContainer>	
+</s:ItemRenderer>

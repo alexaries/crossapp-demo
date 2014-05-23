@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="basewindow1_creationCompleteHandler(event)"
+		 xmlns:win="managers.*" width="904" height="509" xmlns:util="util.*" xmlns:component="component.*" xmlns:ui="sceneModule.view.ui.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.group.command.GroupMessage;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.group.view.GroupWindow";
+			
+			public function getBattleBtnVisible(inGroup:Boolean,isLeader:Boolean):Boolean{
+				if(inGroup && isLeader){
+					return true;
+				}
+				return false;
+			}
+
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bgImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","drzd_bg");
+			}
+			
+			public function getInfoSource(inGroupFlag:Boolean):Bitmap{
+				var bitmap:Bitmap = new Bitmap();
+				if(inGroupFlag){
+					bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","zdtr_bg");
+				}else{
+					bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","drzd_info_bg");
+				}
+				return bitmap;
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bgImg"/>
+	<mx:Image id="infoBg" source="{getInfoSource(SystemDataModel.mainGroupInfo.inGroupFlag)}" x="607" y="59"/>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="833" y="25"/>
+	<s:List id="dwList" width="506" height="360" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.group.view.GroupItemRender" dataProvider="{SystemDataModel.mainGroupInfo.duiWuInfo}" x="91" y="100">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="1" requestedRowCount="5" verticalGap="0" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="pre_btn" 
+					   skinClass="style.Skin_CrotaBasicPreButton"
+					   click="{SystemDataModel.mainGroupInfo.curPage -= 1}"
+					   y="463" x="281" enabled="{SystemDataModel.mainGroupInfo.curPage>1}"/>
+	<component:CrotaBasicLabel id="page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="309" y="463"
+							   text="{SystemDataModel.mainGroupInfo.curPage+'/'+SystemDataModel.mainGroupInfo.maxPage}"
+							   textAlign="center" width="38"/>
+	<util:CommonButton id="next_btn"
+					   click="{SystemDataModel.mainGroupInfo.curPage += 1}"
+					   x="357" y="463" enabled="{SystemDataModel.mainGroupInfo.maxPage>SystemDataModel.mainGroupInfo.curPage}"
+					   skinClass="style.Skin_CrotaBasicNextButton"/>
+	<ui:CrotaIIBasicBitmapButton id="hchlBtn"
+								 visible="{!SystemDataModel.mainGroupInfo.inGroupFlag}"
+								 package_id="ui_group" 
+								 x="656" y="314"
+								 nomal="hchl_nomal" over="hchl_over" down="hchl_down" disable="hchl_disable"/>
+	<ui:CrotaIIBasicBitmapButton id="djtyBtn" 
+								 visible="{!SystemDataModel.mainGroupInfo.inGroupFlag}"
+								 package_id="ui_group" 
+								 x="656" y="364"
+								 nomal="djty_nomal" over="djty_over" down="djty_down" disable="djty_disable"/>
+	<ui:CrotaIIBasicBitmapButton id="hdkjBtn" 
+								 visible="{!SystemDataModel.mainGroupInfo.inGroupFlag}"
+								 package_id="ui_group" 
+								 x="656" y="414"
+								 nomal="hdkj_nomal" over="hdkj_over" down="hdkj_down" disable="hdkj_disable"/>
+	<s:List id="infoList" visible="{SystemDataModel.mainGroupInfo.inGroupFlag}" width="219" height="342" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.group.view.GroupMemberInfoItemRender" dataProvider="{SystemDataModel.mainGroupInfo.memberInfo}" x="612" y="100">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="1" requestedRowCount="5" verticalGap="0" horizontalGap="3"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="leaveBtn" visible="{SystemDataModel.mainGroupInfo.inGroupFlag}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('group','gr_lkdw')}" skinClass="style.Skin_CrotaPackRedButton" x="{SystemDataModel.mainGroupInfo.isLeader?630:677}" y="445" click="{GroupMessage.getInstance().leaveGroup()}"/>
+	<util:CommonButton id="battleBtn" visible="{getBattleBtnVisible(SystemDataModel.mainGroupInfo.inGroupFlag,SystemDataModel.mainGroupInfo.isLeader)}" enabled="{SystemDataModel.mainGroupInfo.memberInfo.length>=2}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('group','gr_kszd')}" skinClass="style.Skin_CrotaPackRedButton" x="720" y="445" click="{GroupMessage.getInstance().onBattle()}"/>
+</win:BaseWindow>

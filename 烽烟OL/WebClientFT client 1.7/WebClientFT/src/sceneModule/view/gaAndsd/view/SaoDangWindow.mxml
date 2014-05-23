@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="412"
+	width="659"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import spark.events.TextOperationEvent;
+			public static var NAME:String = 'sceneModule.view.gaAndsd.view.SaoDangWindow';
+			
+			[Bindable]
+			public var sInfo:String = '';
+			
+			[Bindable]
+			private var selfdata:Object = data;
+			
+			private var timer:Timer;
+			private const TIME:int = 300;
+			private var info:Array;
+			
+			public function set battleDes(arr:Array):void {
+				if (timer) {
+					info = arr;
+					timer.reset();
+					timer.start();
+				}
+			}
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+				timer = new Timer(TIME);
+				timer.addEventListener(TimerEvent.TIMER, onComplete);
+			}
+			private var num:int = 0;
+			
+			private function onComplete(evt:TimerEvent):void {
+				if (num < info.length) {
+					sInfo += info[num].baDesStr + '\n';
+					num = num + 1;
+				} else {
+					timer.stop();
+					num = 0;
+					rBtn.enabled = true;
+				}
+			}
+			
+			protected function numTxt_changeHandler(event:TextOperationEvent):void {
+				var maxNum:int = SystemDataModel.roleInfo.energy / 5;
+				if (int(numTxt.text) > maxNum) {
+					numTxt.text = maxNum.toString();
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="no1" />
+		<s:RadioButtonGroup id="sdGroup"
+			selectedValue="no1" />
+	</fx:Declarations>
+	<mx:Image source='assets/gaji/sdBg.png' />
+	<s:RadioButton enabled="{selfdata.state0 == 1}"
+		group="{cardtype}"
+		height="21"
+		label="no1"
+		skinClass="style.Skin_CrotaRadioButton"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		width="45"
+		x="95"
+		y="102" />
+	<component:CrotaBasicLabel color="0x01FF2A"
+		id="common"
+		styleName="MAINMENUROLEFONT12bebebe"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_pt')}"
+		x="121"
+		y="105" />
+	<s:RadioButton enabled="{selfdata.state1 == 1}"
+		group="{cardtype}"
+		height="21"
+		label="no2"
+		skinClass="style.Skin_CrotaRadioButton"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		width="45"
+		x="204"
+		y="102" />
+	<component:CrotaBasicLabel color="0x01FF2A"
+		id="common0"
+		styleName="MAINMENUROLEFONT12bebebe"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_kn')}"
+		x="231"
+		y="105" />
+	<s:RadioButton enabled="{selfdata.state2 == 1}"
+		group="{cardtype}"
+		height="21"
+		label="no3"
+		skinClass="style.Skin_CrotaRadioButton"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		width="45"
+		x="317"
+		y="102" />
+	<component:CrotaBasicLabel color="0x01FF2A"
+		id="common1"
+		styleName="MAINMENUROLEFONT12bebebe"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gas_jy')}"
+		x="341"
+		y="105" />
+	<component:CrotaBasicLabel color="0x01FF2A"
+		id="common2"
+		styleName="MAINMENUROLEFONT12bebebe"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_sd')}"
+		x="113"
+		y="154" />
+	<s:RadioButton group="{sdGroup}"
+		height="21"
+		label="no1"
+		skinClass="style.Skin_CrotaRadioButton"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		width="45"
+		x="95"
+		y="149" />
+	<component:CrotaBasicLabel color="0x01FF2A"
+		id="common3"
+		styleName="MAINMENUROLEFONT12bebebe"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gas_lxh')+int(numTxt.text)*5+CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gas_hl')}"
+		x="185"
+		y="154" />
+	<s:RadioButton group="{sdGroup}"
+		height="21"
+		label="no2"
+		skinClass="style.Skin_CrotaRadioButton"
+		styleName="EQUIPMENTTEXTFORMAT"
+		textAlpha="0"
+		width="45"
+		x="272"
+		y="149" />
+	<component:CrotaBasicLabel color="0x01FF2A"
+		id="common4"
+		styleName="MAINMENUROLEFONT12bebebe"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('gaAndsd','gas_xhhl')}"
+		x="300"
+		y="154" />
+	<component:CrotaBasicTextInput2 change="numTxt_changeHandler(event)"
+		id="numTxt"
+		restrict="0-9"
+		text="0"
+		width="35"
+		x="144"
+		y="149" />
+	<mx:TextArea backgroundAlpha="0"
+		borderStyle="none"
+		editable="false"
+		height="154"
+		htmlText="{sInfo}"
+		id="sdTextArea"
+		leading="6"
+		rollOver="this.sdTextArea.setFocus();"
+		selectable="false"
+		styleName="MAINMENUROLEFONT12bebebe"
+		width="469"
+		x="97"
+		y="222" />
+	<util:CommonButton id="rBtn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}"
+		skinClass="style.Skin_CrotaCommonButton2"
+		x="435"
+		y="128" />
+	<util:CommonButton id="closeBtn"
+		skinClass="style.Skin_CrotaCloseButton111"
+		x="587"
+		y="24" />
+</win:BaseWindow>

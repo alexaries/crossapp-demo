@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:win="managers.*" 
+		 width="368" height="214" 
+		 xmlns:component="component.*"
+		 creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import flash.events.Event;
+			import flash.events.MouseEvent;
+			
+			import mediator.TaskGuideMediator;
+			
+			import model.GuideInfo;
+			
+			import proto.corps.corps1302.UnionTypeEnum;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.copyScene.view.BitmapButton;
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			import util.CommonTools;
+			import util.DelayExcuter;
+			
+			public static const NAME:String = "sceneModule.view.corps.view.ChoseCorpsComponent";
+			
+			
+			private function init():void {
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_chose_bg');
+				
+				var guang:BitmapButton = new BitmapButton(
+					'ui_union', 
+					'union_guangming_btn_up',
+					'union_guangming_btn_over',
+					'union_guangming_btn_down',
+					'union_guangming_btn_disable'
+				);
+				btn_contain.addChild(guang);
+				
+				var heian:BitmapButton = new BitmapButton(
+					'ui_union', 
+					'union_heian_btn_up',
+					'union_heian_btn_over',
+					'union_heian_btn_down',
+					'union_heian_btn_disable'
+				);
+				heian.x = 194;
+				btn_contain.addChild(heian);
+				
+				guang.addEventListener(MouseEvent.CLICK, to_guangming);
+				heian.addEventListener(MouseEvent.CLICK, to_heian);
+			}
+			
+			private function to_heian(e:MouseEvent):void 
+			{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_CHOSE, {type:UnionTypeEnum.HEIAN } ));
+				new DelayExcuter(TaskGuideMediator.MAIN_PLAYER_DELAY, GuidEventCenter.getInstance().dispatchEvent, [new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_INPUT_UNION_NAME)]);
+//				GuidEventCenter.getInstance().dispatchEvent(new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE,GuideInfo.ACTION_INPUT_UNION_NAME));
+			}
+			
+			private function to_guangming(e:MouseEvent):void 
+			{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_CHOSE, {type:UnionTypeEnum.GUANGMING } ));
+				new DelayExcuter(TaskGuideMediator.MAIN_PLAYER_DELAY, GuidEventCenter.getInstance().dispatchEvent, [new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_INPUT_UNION_NAME)]);
+
+			}
+			
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		<mx:Image id="img_bg" x="0" y="0"/>
+		<mx:UIComponent id="btn_contain" y="67" x="24" />
+	</s:SkinnableContainer>
+</win:BaseWindow>

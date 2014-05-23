@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:win="managers.*"
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="120" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			public static var NAME:String = 'sceneModule.view.zhanxing.view.HeChengXYConfimComponent';
+			
+			[Bindable]
+			private var selfdata:Object = data;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image source='assets/ncorps/union_alert.png' maintainAspectRatio="false" width="300" height="120"/>
+	<component:CrotaBasicText
+		id="l_msg" 
+		htmlText="{selfdata.des}"
+		styleName="MAINMENUROLEFONT12a18c70"
+		x="10" y="28" width="278" textAlign="center"/>
+	<util:CommonButton id="rBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','hccC_ts')}" 
+			  skinClass="style.Skin_CrotaCommonButton2"
+			  x="60" y="79"/>
+	<util:CommonButton id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" 
+			  skinClass="style.Skin_CrotaCommonButton2"
+			  x="153" y="79"/>
+</win:BaseWindow>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*"
+		 width="822" height="353"  x="70" y="-24"
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.MediatorRegisterCorpsEvent;
+			
+			import util.CommonTools;
+			private function init():void {
+				this.dispatchEvent(new MediatorRegisterCorpsEvent(MediatorRegisterCorpsEvent.MR_CORPS_EMBLEM,this,true));
+				
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_emblem_bg');
+				CommonTools.make_bitmap(img_pro_bar_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_progress_bar_bg');
+				CommonTools.make_bitmap(img_pro_bar).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_progress_bar');
+				
+				onMaskToProBar();
+			}
+			
+			public function onMaskToProBar(per:Number=1):void{
+				pro_bar_mask.graphics.beginFill(0xFFFF00);
+				pro_bar_mask.graphics.drawRect(
+					0, 
+					0, 
+					CommonTools.make_bitmap(img_pro_bar_bg).bitmapData.width*per,
+					CommonTools.make_bitmap(img_pro_bar_bg).bitmapData.height
+				);
+				pro_bar_mask.graphics.endFill();
+				
+				img_pro_bar.mask = pro_bar_mask;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- <mx:Image source="assets/ncorps/union_emblem.png" /> -->
+	<mx:Image id="img_bg" y="1"/>
+	
+	<mx:Image 
+		id="img_junhui"
+		x="38" y="47"/>
+	
+	<mx:Image
+		x="390" y="46"
+		id="img_pro_bar_bg"
+	/>
+	<mx:Image
+		x="390" y="60"
+		id="img_pro_bar"
+	/>
+	<mx:UIComponent
+		x="390" y="35"
+		id="pro_bar_mask"
+	/>
+	<component:CrotaBasicLabel 
+		id="l_progress"
+		width="351" x="390" y="48"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_sjjd')}"
+		styleName="MAINMENUROLEFONT12bebebe"  textAlign="center"/>
+	
+	<component:CrotaBasicLabel 
+		id="l_junhua"
+		text=""
+		styleName="MAINMENUROLEFONT12bebebe" x="38" y="47" verticalAlign="middle" textAlign="center" width="101" height="95"/>
+	
+	<component:CrotaBasicLabel 
+		id="l_des_get_pos" 
+		x="459" y="73"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_jttz')}"
+		styleName="MAINMENUROLEFONT12bebebe" textAlign="right" width="211"/>
+	<component:CrotaBasicLabel 
+		id="l_des_change_junhao"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_xgdq')}"
+		x="459" y="109"
+		styleName="MAINMENUROLEFONT12bebebe" width="206" textAlign="right"/>
+	<component:CrotaBasicLabel 
+		id="l_des_up_junhui"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_zjsx')}"
+		x="346" y="144"
+		styleName="MAINMENUROLEFONT12bebebe" width="324" textAlign="right"/>
+	
+	
+	<util:CommonButton 
+		id="btn_get_pos" 
+		width="125"
+		skinClass="style.Skin_CrotaCommonButton3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_jw')}" 
+		x="680" y="67"/>
+	
+	<util:CommonButton 
+		id="btn_change_junhao"
+		width="125"
+		skinClass="style.Skin_CrotaCommonButton3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_xgjh')}" 
+		x="680" y="98"/>
+	<util:CommonButton 
+		id="btn_up_junhui" 
+		skinClass="style.Skin_CrotaCommonButton3" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ciC_sjjh')}" 
+		x="680" y="129"/>
+	
+	<component:CrotaBasicLabel  
+		x="251" y="77" 
+		id="l_creater"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_csr')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	<component:CrotaBasicLabel  
+		x="251" y="96" 
+		id="l_create_data"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_rq')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	<component:CrotaBasicLabel  
+		x="251" y="115" 
+		id="l_union_level"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	<component:CrotaBasicLabel  
+		x="251" y="133" 
+		id="l_emblem_level"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	
+	
+	
+	<component:CrotaBasicLabel  
+		x="100" y="224" 
+		id="l_leader"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_tz')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	<component:CrotaBasicLabel  
+		x="100" y="243" 
+		id="l_yuanlao"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_yl')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	<component:CrotaBasicLabel  
+		x="100" y="262" 
+		id="l_canmou"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_cm')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+	<component:CrotaBasicLabel  
+		x="100" y="279" 
+		id="l_yishi"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_ys')}"
+		styleName="MAINMENUROLEFONT12bebebe"/>
+</s:Group>

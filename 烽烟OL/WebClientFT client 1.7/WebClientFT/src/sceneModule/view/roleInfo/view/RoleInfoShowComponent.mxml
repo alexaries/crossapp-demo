@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" autoDrawBackground="false"
+		 xmlns:component="component.*" xmlns:view="sceneModule.view.role.view.*" 
+		 xmlns:ui="sceneModule.view.ui.*" 
+		 xmlns:roleInfo="sceneModule.view.roleInfo.*" 
+		 xmlns:view1="sceneModule.view.roleInfo.view.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import flash.geom.Rectangle;
+			import model.ProConst;
+			import model.SystemDataModel;
+			import mx.controls.Image;
+			
+			import style.Skin_CrotaAddHuoLiButton;
+			import style.Skin_CrotaChongZhiButton;
+			import style.Skin_CrotaMingXiangButton;
+			
+			public function getVipStr(n:int):String {
+				return "VIP: " + n;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image 
+		source="{ProConst.getJobImg(SystemDataModel.roleInfo.profession)}" 
+		x="19" y="15"
+	/>
+	<mx:Image 
+		source='assets/mainui/char_info_bg.png'
+	/>
+	<component:CrotaBasicLabel
+		text="{SystemDataModel.roleInfo.nickname}"
+		x="135" y="20"
+		styleName="MAINMENUROLEFONTFFFFFF"/>
+	<component:CrotaBasicLabel
+		id="l_level"
+		text="{data.level}"
+		x="96" y="82" width="18" textAlign="center"
+		styleName="MAINMENUROLEFONTFFFFFF"/>
+	<mx:Image 
+		source='assets/mainui/jinbiImg.png' 
+		x="126" y="68"
+	/>
+	<component:CrotaBasicLabel
+		id="l_qian"
+		text="{data.coin}"
+		x="146" y="72"
+		styleName="MAINMENUROLEFONTFFFFFF"/>
+	<mx:Image 
+		source='assets/mainui/zuanImg.png' 
+		x="195" y="70"
+	/>
+	<component:CrotaBasicLabel
+		id="l_zuan"
+		text="{data.gold}"
+		x="216" y="72"
+		styleName="MAINMENUROLEFONTFFFFFF"/>
+	<component:CrotaBasicLabel
+		id="l_vip"
+		text="{getVipStr(data.roletype)}"
+		x="160" y="22" width="120" textAlign="right"
+		styleName="MAINMENUROLEFONTFF0000"/>
+	<!--width="{(data.hp/data.maxHp)*149}" -->
+	<mx:Image 
+		id="comp_hp" 
+		source="@Embed('/embed/mainui/hp.png',scaleGridTop='1',scaleGridLeft='7',scaleGridRight='140',scaleGridBottom='7')"
+	    scaleX="{0 == data.maxHp ? 1 : 1.0 * data.hp/data.maxHp}"
+		x="129"  y="38"
+		maintainAspectRatio="false"/>
+	<!--width="{(data.energy/200)*149}"-->
+	<mx:Image 
+		id="comp_active" 
+		source="@Embed('/embed/mainui/jingli.png',scaleGridTop='1',scaleGridLeft='7',scaleGridRight='140',scaleGridBottom='7')"
+		maintainAspectRatio="false" 
+		scaleX="{0 == data.maxExp ? 1: 1.0 * data.exp/data.maxExp}"
+		x="129" y="54"/>
+	<component:CrotaBasicLabel
+		id="xl_txt"
+		x="129"  y="39" width="149"
+		textAlign="center"
+		styleName="MAINMENUROLEFONTFFFFFF" />
+	<component:CrotaBasicLabel
+		id="hl_txt"
+		x="129" y="54" width="149"
+		textAlign="center"
+		styleName="MAINMENUROLEFONTFFFFFF" />
+	<!-- visible="{160>=data.energy}"   -->
+	<!--<s:Button 
+		id="addHL" 
+		visible="{160>=data.energy}"
+		skinClass="style.Skin_CrotaAddHuoLiButton" 
+		x="278" y="48"
+	/>-->
+</s:ItemRenderer>

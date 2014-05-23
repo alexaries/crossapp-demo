@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="315" height="182" 
+		 creationComplete="initApp();" mouseChildren="true" mouseEnabled="false" 
+		 xmlns:component="component.*" xmlns:systemNotice="sceneModule.view.systemNotice.*" xmlns:ui="sceneModule.view.ui.*" xmlns:util="util.*">
+	<!-- height="{showLevel == 0 ? 80 : (showLevel == 1 ? 140 : 230)}" -->
+	<fx:Script>
+		<![CDATA[
+			import com.greensock.TweenLite;
+			
+			import flashx.textLayout.conversion.ITextImporter;
+			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.elements.TextFlow;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			import mx.events.ScrollEvent;
+			import mx.rpc.Responder;
+			import mx.rpc.events.FaultEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import service.ISocketServer;
+			import service.SocketService;
+			
+			import spark.core.NavigationUnit;
+			
+			import style.Skin_CrotaBasicComboBox;
+			import style.Skin_CrotaBasicScroller;
+			import style.Skin_CrotaChatBgSkinnableContainer;
+			import style.Skin_CrotaChatSendMessageButton;
+			
+			import util.CommonTools;
+			
+			//当前显示级别 0,1,2
+			[Bindable]
+			public var showLevel:int = 1;
+			//保存私聊对象10条数据
+			[Bindable]
+			public var nearChatList:ArrayCollection = new ArrayCollection();
+			
+			//存放聊天连接的信息
+			public var linkArr:Array = new Array();
+			
+			
+			//-----------------最新聊天变量-------------------------
+			//综合聊天信息
+			public var compositeMessage:String="";
+			public var compositeMessageArr:Array = new Array();
+			//世界聊天信息
+			public var worldMessage:String="";
+			public var worldMessageArr:Array = new Array();
+			//当前聊天信息
+			public var currentMessage:String="";
+			public var currentMessageArr:Array = new Array();
+			//军团聊天信息
+			public var corpsMessage:String="";
+			public var corpsMessageArr:Array = new Array();
+			//GM聊天信息
+			public var gmMessage:String="";
+			public var gmMessageArr:Array = new Array();
+			//系统公告信息
+			public var systemMessage:String="";
+			public var systemMessageArr:Array = new Array();
+			
+			private var str:String = '支持<a href="http://en.wikipedia.org/wiki/HTML" target="_blank"><u><i>HTML文本</i></u></a>';
+			
+			private function initApp():void{
+			   
+			   this.addEventListener(MouseEvent.ROLL_OVER,onMouseOver);
+			   this.addEventListener(MouseEvent.ROLL_OUT,onMouseOut);
+			}
+			/**
+			 * onMouseOver
+			 */
+			private function onMouseOver(evt:MouseEvent):void{
+				if(!iContainer.visible){
+					iContainer.visible = true;
+				}
+			}
+			/**
+			 * onMouseOut
+			 */
+			private function onMouseOut(evt:MouseEvent):void{
+				if(iContainer.visible){
+					iContainer.visible = false;
+				}
+			}
+			
+			/**
+			 * 最大化最小化
+			 * 
+			 */
+			private var isMax:Boolean = true;
+			private function onClickBtn(r:int):void{
+				showLevel　+= r;
+				if(showLevel > 2){
+					showLevel = 2;
+				}else if(showLevel < 0){
+					showLevel = 0;
+				}
+				if(showLevel == 0){
+					iContainer.height = 0;
+					iTextArea.height = 0;
+					this.height = 65;
+				}else if(showLevel == 1){
+					iContainer.height = 150;
+					iTextArea.height = 90;
+				}else if(showLevel == 2){
+					iContainer.height = 240;
+					iTextArea.height = 180;
+				}
+			}
+			
+			public function onValueCommit():void{
+				//设置滚动条位置
+				this.iTextArea.validateNow();
+				//当前显示的首行字符的行号
+				this.iTextArea.verticalScrollPosition=this.iTextArea.maxVerticalScrollPosition;//最大行号
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_zh')}"/>
+	</fx:Declarations>
+    <s:SkinnableContainer id="iContainer" visible="false" skinClass="style.Skin_CrotaChatBgSkinnableContainer" width="100%" height="155" bottom="0" 
+						  mouseChildren="true" mouseEnabled="false">
+		
+    </s:SkinnableContainer>
+	<component:CrotaBasicChatTextArea  borderStyle="none" id="iTextArea"  rollOver="this.iTextArea.setFocus();" editable="false"
+									  selectable="false" focusEnabled="false" focusAlpha="0" wordWrap="true" height="120" width="258" backgroundAlpha="0.0" 
+									  styleName="SKILLINFOTEXTFORMAT" x="60" bottom="33"/>
+	<!--<mx:Image id="functionBgImg" source="@Embed(source='../assets/chat/chatFunctionBg.png',scaleGridTop='5',scaleGridBottom='6',scaleGridLeft='7',scaleGridRight='8')" 
+			  maintainAspectRatio="false" x="0" bottom="0" width="315" height="31"/>-->
+	<s:ComboBox id="chatTypeCB" labelField="name" selectedIndex="0" skinClass="style.Skin_CrotaBasicComboBox" x="8" bottom="5" width="59" fontSize="12" color="#FFFFFF">
+		<s:ArrayCollection>
+			<fx:Object name="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sj')}"/>
+			<fx:Object name="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_dq')}"/>
+			<fx:Object name="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jt')}"/>
+		</s:ArrayCollection>
+	</s:ComboBox>
+	<component:CrotaBasicTextInput2 id="myMessage" maxChars="30" x="60" bottom="3" width="256" height="30" restrict="^[]" styleName="MAILINFOTEXTFORMAT"/>
+	<util:CommonButton id="sendBtn" x="261" bottom="9" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_fs')}" skinClass="style.Skin_CrotaChatSendMessageButton" fontSize="12" width="45" height="22"/>
+	<s:TextInput x="216" y="4" width="86" visible="false" id="chatObject"/>
+	<util:CommonButton id="controlBtn" visible="false" width="15" height="16" click="onClickBtn(1)" skinClass="style.Skin_CrotaChatUpBtn" x="293" bottom="34"/>
+	<util:CommonButton id="controlBtn0" visible="false" width="15" height="16" click="onClickBtn(-1)" skinClass="style.Skin_CrotaChatDownBtn" x="272" bottom="34"/>
+	<util:CommonButton id="clearContent" visible="false" width="22" height="22" x="4" bottom="3"/>
+	<util:CommonButton id="systemSettingBtn" visible="false" width="22" height="22" skinClass="style.Skin_CrotaChatSetingBtn" x="3" bottom="28"/>
+	<s:RadioButton group="{cardtype}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_zh')}" skinClass="style.Skin_CrotaChatAllRadioButton" styleName="EQUIPMENTTEXTFORMAT" width="45" height="21" x="15" bottom="113"/>
+	<s:RadioButton group="{cardtype}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sj')}" skinClass="style.Skin_CrotaChatAllRadioButton" styleName="EQUIPMENTTEXTFORMAT" width="45" height="21" x="15" bottom="88"/>
+	<s:RadioButton group="{cardtype}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_dq')}" skinClass="style.Skin_CrotaChatAllRadioButton" styleName="EQUIPMENTTEXTFORMAT" width="45" height="21" x="15" bottom="63"/>
+	<s:RadioButton group="{cardtype}" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jt')}" skinClass="style.Skin_CrotaChatAllRadioButton" styleName="EQUIPMENTTEXTFORMAT" width="45" height="21" x="15" bottom="39"/>
+	
+</s:Group>

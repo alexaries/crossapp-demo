@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8" ?>				
+<data>				
+	<!--			
+		 @type 任務指引判斷類型		
+			1:創建npc	
+				[arg1:創建的npcid, arg2:可接任務id]
+			2:打開ui	
+				[arg1:打開的ui類型, arg2:可接任務id, arg3:已接任務id, arg4:對話任務id, arg5:完成的任務id, arg6:對應傳送門的id,如果沒有為0]
+			3:程式內部操作	
+				[arg1:操作類型, arg2:上一個指引id, arg3:打開的副本組id,如果不是打開副本組為0]
+			4:檢測當前人物資訊	
+				[arg1:可接任務id, arg2:當前任務id, arg3:完成的任務id, arg4:場景中應該存在的npcid,如果不需要檢測為0]
+
+		@ui類型		
+			1:npc任務介面	
+			2:主菜單人物介面	
+			3:副本選擇介面	
+			4:npc強化介面	
+			5:打開技能介面	
+			//打開軍團頁面	
+			public static const UI_JUNTUAN:int = 6;	
+			//打開創建軍團頁面	
+			public static const UI_CREATE_UNION:int = 7;	
+			//打開結算介面	
+			public static const UI_FIGHT_JIESUAN:int = 8;	
+			//打開翻牌子	
+			public static const UI_FIGHT_FANPAIZI:int = 9;	
+			//打開再次征戰副本	
+			public static const UI_FIGHT_AGAIN:int = 10;	
+			//打開寵物介面	
+			public static const UI_PET:int = 11;	
+			//打開場景地圖	
+			public static const UI_SCENE_MAP:int = 12;	
+			//打開世界地圖	
+			public static const UI_MAP_SCENE:int = 13;	
+		@操作類型		
+			1:點擊npc任務條目	
+			2:接受任務成功	
+			3:穿裝備	
+			4:打開副本組	
+			5:放入強化的物品	
+			6:執行強化操作	
+			7:彈出確認擴展背包提示	
+			8:擴展背包成功	
+			9:點擊確認擴展背包提示也頁面的 關閉 按鈕	
+			10:顯示NPC獎勵介面	
+			11.啟動技能	
+			12.裝備技能 	
+			//進入立刻佈陣	
+			public static const ACTION_LIKE_BUZHEN:int = 13;	
+			//選擇陣法	
+			public static const ACTION_XUANZE_ZHENFA:int = 14;	
+			//寵物拖動到陣法	
+			public static const ACTION_DROP_PET:int = 15;	
+			//啟動陣法	
+			public static const ACTION_QIYONG_ZHENFA:int = 16;	
+		@containtype		
+			任務指引的顯示層	
+			1:ui層	
+			2:場景層,這時 @targetid 是要指向的npcid	
+			3:指向背包裏的裝備,這時 @targetid 是要指向的裝備id	
+			4:指向可擴展背包的位置,會默認指向第一個可擴展的背包框, @targetid 為0 #暫時未支持	
+			5:指向任務追蹤的某條任務, @targetid 為任務id, 如果沒有找到任務追蹤中的這個任務, 則不顯示這個指引項	
+		@pos_x, pos_y		
+			任務追蹤圖示的位置,如果不是指向ui層,這個是為指向某個實體的偏移值	
+		@show_arg		
+			顯示任務指引時需要做的額外的操作	
+			0:不做任何操作	
+			1:將任務追蹤的標籤切換到當前任務	
+			2:將任務追蹤的標籤切換到可接任務	
+
+
+		click_down.swf 向下指向的箭頭		
+	-->			
+	<guidspeed speed="0"></guidspeed>			
+	<!-- 接受任務 0-100 -->			
+	<!-- 進入場景,檢測任務狀態,指向可接任務的npc 第一步 引導玩家點擊克雷西對話 （第1步）-->			
+	<info id="1" type="4" arg1="10001" arg2="0" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="30" pos_y="-260" targetid="100007" containtype="2" 			
+	show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊開始任務" tipStr="" tipx="-280" tipy="50" asset="click_left.swf"/>			
+
+	<!-- 打開npc任務介面,指向可接任務 引導玩家點擊對話 接受任務 （第2步）-->			
+	<info id="2" type="2" arg1="1" arg2="10001" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="190" mask_h="30" labelStr="點擊查看任務" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目,指向 下一頁 按鈕  點擊對話下一步 （第3，4步） -->			
+	<info id="3" type="3" arg1="1" arg2="2" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目,指向 下一頁 按鈕  點擊接受任務 （第5步） -->			
+	<info id="4" type="3" arg1="10" arg2="3" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 檢測當前任務資訊 指向要對話的npc 點擊接受任務 點擊防具商泰斯交任（第7步）-->			
+	<info id="5" type="4" arg1="0" arg2="0" arg3="10001" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10001" containtype="5" 			
+	show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 打開npc任務對話頁面,指向任務條目 點擊完成任務（第8步） -->			
+	<info id="6" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10001" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊任務條目,指向下一頁按鈕 點擊對話 下一步（第9,10步）-->			
+	<info id="7" type="3" arg1="1" arg2="6" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+
+
+	<!-- 指向可接任務標題 點擊道具商泰勒 接第2個任務（第11步）-->			
+	<info id="8" type="4" arg1="10002" arg2="0" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-170" pos_y="-37" targetid="10002" containtype="5" 			
+	show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊自動尋路" tipStr="" tipx="-268" tipy="55" asset="click_right.swf"/>			
+
+	<!-- 打開npc任務介面,指向可接任務 引導玩家點擊對話 接受防具商泰勒給的任務 第二個接受任務 （第12步）-->			
+	<info id="9" type="2" arg1="1" arg2="10002" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="190" mask_h="30" labelStr="點擊查看任務" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目,指向 下一頁 按鈕 與防具商泰勒對話接任務-->			
+	<info id="10" type="3" arg1="1" arg2="9" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7"			
+	 show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目,指向 接任務 按鈕  點擊接受任務 -->			
+	<info id="11" type="3" arg1="10" arg2="10" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+
+
+	<!-- 穿裝備 100-200 -->			
+	<!-- 檢測任務,指向主菜單 打開主菜單-->			
+	<info id="101" type="4" arg1="0" arg2="10002" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="898" pos_y="370" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開主菜單" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 打開人物主介面,指向裝備 穿裝備指引  雙擊穿上裝備-->			
+	<info id="102" type="2" arg1="2" arg2="0" arg3="10002" arg4="0" arg5="0" arg6="0" pos_x="260" pos_y="-15" targetid="0" containtype="3" 			
+	show_arg="0" label="12" marsk_w="50" mask_h="50" labelStr="雙擊裝備武器" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 穿戴裝備成功,指向關閉按鈕  關閉主菜單  點主菜單-->			
+	<info id="103" type="3" arg1="3" arg2="102" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="780" pos_y="-3" targetid="0" containtype="1" 			
+	show_arg="0" label="5" marsk_w="95" mask_h="30" labelStr="點擊關閉主菜單" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 檢測當前任務資訊 指向要對話的npc 指向防具商泰勒-->			
+	<info id="104" type="4" arg1="0" arg2="0" arg3="10002" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10002" containtype="5" 			
+	show_arg="0" label="4" marsk_w="100" mask_h="30" labelStr="點擊交付任務" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 打開npc任務對話頁面,指向任務條目，交付任務 泰勒的忠告（可完成） -->			
+	<info id="105" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10002" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 指向可接任務標題 怎麼樣，還不賴吧（泰勒對話）點擊對話 兩步-->			
+	<info id="106" type="3" arg1="1" arg2="105" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+
+
+
+	<!-- 指向NPC妮娜 第3個任務，妮娜的認可 -->			
+	<info id="107" type="4" arg1="10003" arg2="0" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-170" pos_y="-37" targetid="10003" containtype="5" 			
+	show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊自動尋路" tipStr="" tipx="-268" tipy="55" asset="click_right.swf"/>			
+
+	<!-- 查看任務  第3個任務，妮娜的認可（可接受）-->			
+	<info id="108" type="2" arg1="1" arg2="10003" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="570" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="190" mask_h="30" labelStr="點擊查看任務" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目,指向 下一頁 按鈕  點擊對話下一步  -->			
+	<info id="109" type="3" arg1="1" arg2="108" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目,  妮娜的認可  點擊接受任務  -->			
+	<info id="110" type="3" arg1="10" arg2="109" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+
+
+	<!-- 進副本  250-300 --> 			
+	<!-- 檢測任務狀態,指向任務追蹤  蜻蜓獵手 任務指引 自動尋路 -->			
+	<info id="251" type="4" arg1="0" arg2="10003" arg3="0" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10003" containtype="5" 			
+	show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!--  打開副本選擇介面,指向副本組 -->			
+	<info id="252" type="2" arg1="3" arg2="0" arg3="10003" arg4="0" arg5="0" arg6="10001" pos_x="320" pos_y="111" targetid="0" containtype="1" 			
+	show_arg="0" label="1" marsk_w="215" mask_h="76" labelStr="點擊進入副本" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 副本組圖示劃開,指向副本等級 -->			
+	<info id="253" type="3" arg1="4" arg2="252" arg3="5001" arg4="0" arg5="0" arg6="0" pos_x="155" pos_y="133" targetid="0" containtype="1" 			
+	show_arg="0" label="1" marsk_w="61" mask_h="30" labelStr="點擊進入副本" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 指向獵手蜻蜓 撞擊怪物-->			
+	<info id="254" type="4" arg1="0" arg2="10003" arg3="0" arg4="5004" arg5="0" arg6="0" pos_x="85" pos_y="-110" targetid="5004" containtype="2" 			
+	show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="撞擊怪物進入戰鬥" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 打完獵手蜻蜓後點擊確認結算 -->			
+	<info id="255" type="2" arg1="8" arg2="0" arg3="10003" arg4="0" arg5="0" arg6="0" pos_x="542" pos_y="418 " targetid="10003" containtype="1" 			
+	show_arg="1" label="10" marsk_w="150" mask_h="50" labelStr="點擊確定關閉" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊翻牌子介面 -->			
+	<info id="256" type="2" arg1="9" arg2="0" arg3="0" arg4="10003" arg5="0" arg6="0" pos_x="212" pos_y="140 " targetid="10003" containtype="1" 			
+	show_arg="1" label="10" marsk_w="150" mask_h="50" labelStr="點擊牌子獲取獎勵" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊 退出副本-->			
+	<info id="257" type="2" arg1="10" arg2="0" arg3="0" arg4="10003" arg5="0" arg6="0" pos_x="626" pos_y="313 " targetid="10003" containtype="1" 			
+	show_arg="1" label="10" marsk_w="150" mask_h="50" labelStr="點擊退出副本" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 妮娜的認可 打完怪出副本後 自動尋路 交付任務 -->			
+	<info id="258" type="4" arg1="0" arg2="0" arg3="10003" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10003" containtype="5" 			
+	show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 打開npc任務對話頁面,指向任務條目 點擊交付對話 -->			
+	<info id="259" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10003" arg6="0" pos_x="653" pos_y="530" targetid="10003" containtype="7" 			
+	show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊任務條目,指向完成按鈕 完成任務  -->			
+	<info id="260" type="3" arg1="1" arg2="259" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+
+
+	<!-- 強化裝備 （主線） 自動尋路指引 引導接任務 -->			
+	<info id="261" type="4" arg1="10004" arg2="0" arg3="0" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10004" containtype="5" show_arg="2" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+	<!-- 打開任務介面, 指向任務條目 -->			
+	<info id="262" type="2" arg1="1" arg2="10004" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊查看任務" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊可接任務條目,指向 下一頁 按鈕  -->			
+	<info id="263" type="3" arg1="1" arg2="262" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	<info id="264" type="3" arg1="10" arg2="263" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+	<!--  點擊按鈕 打開強化介面 -->			
+	<info id="265" type="4" arg1="0" arg2="10004" arg3="0" arg4="0" arg5="1000" arg6="0" pos_x="0" pos_y="-3" targetid="0" containtype="8" show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊開始強化" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 打開強化介面,指向物品 -->			
+	<info id="266" type="2" arg1="4" arg2="0" arg3="10004" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="160" targetid="0" containtype="9" show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="單擊裝備進行強化" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 準備強化完成,指向強化按鈕 -->			
+	<info id="267" type="3" arg1="17" arg2="266" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="750" pos_y="420" targetid="0" containtype="9" show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊強化" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 操作完畢,指向關閉按鈕 -->			
+	<info id="268" type="3" arg1="6" arg2="267" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="660" pos_y="30" targetid="0" containtype="1" show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+	<!--  自動尋路指引 打開對話介面 -->			
+	<info id="272" type="4" arg1="0" arg2="0" arg3="10004" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10004" containtype="5" show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+	<!-- 打開npc任務對話頁面,指向任務條目 點擊完成任務 -->			
+	<info id="273" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10004" arg6="0" pos_x="600" pos_y="530" targetid="10004" containtype="7" show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊任務條目,指向下一頁按鈕 點擊對話 下一步-->			
+	<info id="274" type="3" arg1="1" arg2="273" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+  				
+
+
+	<!-- 貪心的泰斯  -->			
+	<!-- 進入場景,檢測任務狀態,開始新任務  -->			
+	<info id="304" type="4" arg1="10005" arg2="0" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-170" pos_y="-37" targetid="10005" containtype="5" show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊自動尋路" tipStr="" tipx="-268" tipy="55" asset="click_right.swf"/>			
+
+	<!-- 打開任務介面, 查看任務     -->			
+	<info id="305" type="2" arg1="1" arg2="10005" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊查看任務" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊可接任務條目, 點擊對話  -->			
+	<info id="306" type="3" arg1="1" arg2="305" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊對話, 接受任務 -->			
+	<info id="307" type="3" arg1="10" arg2="306" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 檢測任務狀態,戰鬥 任務指引 自動尋路 -->			
+	<info id="308" type="4" arg1="0" arg2="10005" arg3="0" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10005" containtype="5" show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 根據任務設定，戰鬥  選擇副本組 -->			
+	<info id="309" type="2" arg1="3" arg2="0" arg3="10005" arg4="0" arg5="0" arg6="10001" pos_x="424" pos_y="328" targetid="0" containtype="1" show_arg="0" label="1" marsk_w="215" mask_h="76" labelStr="點擊進入副本" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 副本組圖示打開,戰鬥  選擇副本等級 -->			
+	<info id="310" type="3" arg1="4" arg2="309" arg3="5002" arg4="0" arg5="0" arg6="0" pos_x="258" pos_y="342" targetid="0" containtype="1" show_arg="0" label="1" marsk_w="61" mask_h="30" labelStr="點擊進入副本" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 戰鬥完成後，戰鬥  確認結算 -->			
+	<info id="311" type="2" arg1="8" arg2="0" arg3="10005" arg4="0" arg5="0" arg6="0" pos_x="542" pos_y="418 " targetid="10005" containtype="1" show_arg="1" label="10" marsk_w="150" mask_h="50" labelStr="點擊確定關閉" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊 退出副本-->			
+	<info id="312" type="2" arg1="10" arg2="0" arg3="0" arg4="10005" arg5="0" arg6="0" pos_x="626" pos_y="313 " targetid="10005" containtype="1" show_arg="1" label="10" marsk_w="150" mask_h="50" labelStr="點擊退出副本" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 完成任務，選擇自動尋路  找到對應NPC交付任務  -->			
+	<info id="313" type="4" arg1="0" arg2="0" arg3="10005" arg4="0" arg5="1000" arg6="0" pos_x="-170" pos_y="-37" targetid="10005" containtype="5" show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 完成任務，打開任務介面，點擊交付對話  -->			
+	<info id="314" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10005" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 完成任務，結束任務介面，點擊完成任務    -->			
+	<info id="315" type="3" arg1="1" arg2="314" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+
+
+
+	<!-- 2級神格技能任務 -->			
+	<!-- 打開我的領地 -->			
+	<info id="320" type="4" arg1="0" arg2="10262" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 打開神祗 -->			
+	<info id="321" type="2" arg1="2" arg2="0" arg3="10262" arg4="0" arg5="0" arg6="0" pos_x="150" pos_y="200" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開神格介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊啟動神祗 -->			
+    <info id="322" type="2" arg1="14" arg2="0" arg3="10262" arg4="0" arg5="0" arg6="0" pos_x="-230" pos_y="110" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊神格" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+    				
+	<!-- 啟動神祗 -->			
+    <info id="323" type="2" arg1="20" arg2="0" arg3="10262" arg4="0" arg5="0" arg6="0" pos_x="-210" pos_y="166" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊啟動" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+    				
+    <!-- 指向關閉按鈕-->				
+    <info id="324" type="3" arg1="29" arg2="323" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="1" 				
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+ 				
+
+
+
+	<!-- 4級寵物圖鑒任務  自動尋路指引 引導接任務（主線）  -->			
+
+	<!-- 打開任務介面, 指向任務條目 -->			
+	<info id="1074" type="4" arg1="0" arg2="10267" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="90" targetid="0" containtype="8" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊寵物布陣按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	 <!-- 打開任務介面, 指向任務條目 -->			
+	<info id="1075" type="2" arg1="11" arg2="0" arg3="10267" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="100" targetid="0" containtype="9" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊圖鑑" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 打開任務介面, 指向任務條目 -->			
+	<info id="1076" type="3" arg1="22" arg2="1075" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="800" pos_y="180" targetid="0" containtype="9" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選擇獵手蜻蜓" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	 <!-- 打開任務介面, 指向任務條目 -->			
+    <info id="1077" type="3" arg1="22" arg2="1076" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="545" pos_y="432" targetid="0" containtype="9" 				
+    show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊召喚按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+	<!-- 打開任務介面, 指向任務條目 -->			
+	<info id="1078" type="3" arg1="22" arg2="1077" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="720" pos_y="50" targetid="0" containtype="1" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+
+
+
+
+	<!-- 4級寵物佈陣任務  自動尋路指引 引導接任務（主線）  -->			
+
+		<!-- 點擊對話, 指向任務獎勵 -->		
+	<info id="1082" type="4" arg1="0" arg2="10268" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="90" targetid="0" containtype="8" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊寵物布陣按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+		<!-- 點擊對話, 指向任務獎勵 -->		
+	<info id="1083" type="2" arg1="11" arg2="0" arg3="10268" arg4="0" arg5="0" arg6="0" pos_x="470" pos_y="95" targetid="0" containtype="9" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊布陣" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	<info id="1084" type="3" arg1="23" arg2="1083" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-50" pos_y="160" targetid="0" containtype="1" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="拖動放置角色右邊格子中" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+		<!-- 關閉按鈕沒有指向關閉，程式已實現  -->		
+	<info id="1085" type="3" arg1="20" arg2="1084" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="720" pos_y="50" targetid="0" containtype="1" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+
+
+
+
+	<!-- 7級神格技能任務 -->			
+	<!-- 打開我的領地 -->			
+	<info id="461" type="4" arg1="0" arg2="10263" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 打開神祗 -->			
+	<info id="462" type="2" arg1="2" arg2="0" arg3="10263" arg4="0" arg5="0" arg6="0" pos_x="150" pos_y="200" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開神祗介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊神祗 -->			
+    <info id="463" type="2" arg1="14" arg2="0" arg3="10263" arg4="0" arg5="0" arg6="0" pos_x="-160" pos_y="110" targetid="0" containtype="3"				
+     show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊神祗" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+     				
+	<!-- 啟動神祗 -->			
+    <info id="464" type="2" arg1="20" arg2="0" arg3="10263" arg4="0" arg5="0" arg6="0" pos_x="-210" pos_y="166" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊啟動" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+    				
+    <!-- 操作完畢，指向關閉按鈕-->				
+    <info id="465" type="3" arg1="29" arg2="464" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="10" targetid="0" containtype="1" 				
+	show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+ 				
+  				
+  				
+
+
+	<!-- 學習技能  -->			
+	<!-- 進入場景,檢測任務狀態,指向可接任務的npc 引導玩家通過自動尋徑找到NPC進行對話 -->			
+
+	<!-- 學習技能 克雷西 點擊打開主菜單-->			
+	<info id="404" type="4" arg1="0" arg2="10271" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="898" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開主菜單" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 在主菜單    打開技能欄   引導指向技能-->			
+	<info id="405" type="2" arg1="2" arg2="0" arg3="10271" arg4="0" arg5="0" arg6="0" pos_x="-560" pos_y="-70" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開技能介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+    <!-- 學習技能     單擊裝備技能-->				
+	<info id="406" type="2" arg1="5" arg2="0" arg3="10271" arg4="0" arg5="0" arg6="0" pos_x="485" pos_y="145" targetid="0" containtype="1" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="單擊裝備技能" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+    <!-- 學習技能     關閉主介面 離開技能介面-->				
+	<info id="407" type="3" arg1="12" arg2="406" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="768" pos_y="-3" targetid="0" containtype="1" 			
+	show_arg="0" label="5" marsk_w="95" mask_h="30" labelStr="點擊關閉主菜單" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+
+
+
+
+	<!-- 37級神格技能任務 -->			
+	<!-- 打開我的領地 -->			
+	<info id="461" type="4" arg1="0" arg2="10269" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+	<!-- 打開神祗 -->			
+	<info id="462" type="2" arg1="2" arg2="0" arg3="10269" arg4="0" arg5="0" arg6="0" pos_x="150" pos_y="200" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開神祗介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊神祗 -->			
+    <info id="463" type="2" arg1="14" arg2="0" arg3="10269" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="110" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊神格" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+	<!-- 啟動神祗 -->			
+    <info id="464" type="2" arg1="20" arg2="0" arg3="10269" arg4="0" arg5="0" arg6="0" pos_x="-210" pos_y="166" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊啟動" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+     <!-- 操作完畢，指向關閉按鈕-->				
+     <info id="465" type="3" arg1="29" arg2="464" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="10" targetid="0" containtype="1" 				
+	show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+    				
+    				
+
+
+    <!-- 45級神格技能任務 -->				
+	<!-- 打開我的領地 -->			
+	<info id="461" type="4" arg1="0" arg2="10270" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+	<!-- 打開神祗 -->			
+	<info id="462" type="2" arg1="2" arg2="0" arg3="10270" arg4="0" arg5="0" arg6="0" pos_x="150" pos_y="200" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開神格介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊神祗 -->			
+    <info id="463" type="2" arg1="14" arg2="0" arg3="10270" arg4="0" arg5="0" arg6="0" pos_x="150" pos_y="110" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊神格" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+	<!-- 啟動神祗 -->			
+    <info id="464" type="2" arg1="20" arg2="0" arg3="10270" arg4="0" arg5="0" arg6="0" pos_x="-210" pos_y="166" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊啟動" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+     <!-- 操作完畢，指向關閉按鈕-->				
+     <info id="465" type="3" arg1="29" arg2="464" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="10" targetid="0" containtype="1" 				
+	show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+    				
+    				
+
+
+
+	<!-- 舊的佈陣出戰-->			
+
+	<!-- 點擊按鈕 打開寵物介面-->			
+	<info id="615" type="4" arg1="0" arg2="10021" arg3="0" arg4="0" arg5="1000" arg6="0" pos_x="0" pos_y="60" targetid="0" containtype="8" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="進入寵物介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊佈陣-->			
+	<info id="616" type="2" arg1="11" arg2="0" arg3="10021" arg4="0" arg5="0" arg6="0" pos_x="-510" pos_y="280" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊立刻布陣" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 選擇陣法-->			
+	<info id="617" type="3" arg1="13" arg2="616" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="130" pos_y="60" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="選擇陣法" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 拖動寵物進入陣法-->			
+	<info id="618" type="3" arg1="14" arg2="617" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-454" pos_y="-31" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="把寵物拖動到陣法中" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 啟用陣法-->			
+	<info id="619" type="3" arg1="15" arg2="618" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="120" pos_y="275" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊啟用陣法" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 佈陣    關閉主介面 離開寵物介面-->			
+	<info id="620" type="3" arg1="16" arg2="619" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="644" pos_y="-3" targetid="0" containtype="1" 			
+	show_arg="0" label="5" marsk_w="95" mask_h="30" labelStr="關閉主菜單" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+
+
+
+
+	<!-- 11級強化屬性轉移任務  自動尋路指引 引導接任務（支線）  -->			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	<info id="649" type="4" arg1="0" arg2="20246" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="0" targetid="0" containtype="8" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊左側裝備強化" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	 <!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="650" type="2" arg1="4" arg2="0" arg3="20246" arg4="0" arg5="0" arg6="0" pos_x="280" pos_y="285" targetid="0" containtype="9" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊屬性轉移標籤" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="651" type="3" arg1="17" arg2="650" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="200" pos_y="150" targetid="0" containtype="9" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="拖動物品" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+	 <!-- 點擊對話, 指向任務獎勵 -->			
+	  <info id="652" type="3" arg1="17" arg2="651" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="765" pos_y="420" targetid="0" containtype="9" 			
+	  show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊屬性轉移按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="653" type="3" arg1="17" arg2="652" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="655" pos_y="35" targetid="0" containtype="1" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40" 	labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+
+
+	<!-- 雷格鎮  700開始 -->			
+
+	<!-- 打開世界地圖-->			
+	<info id="704" type="4" arg1="0" arg2="0" arg3="10024" arg4="0" arg5="1000" arg6="0" pos_x="-410" pos_y="-90" targetid="10024" containtype="5" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊查看地圖" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 指向打開世界地圖-->			
+	<info id="705" type="2" arg1="12" arg2="0" arg3="0" arg4="10024" arg5="0" arg6="0" pos_x="35" pos_y="275" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開世界地圖" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 點擊雷格鎮-->			
+	<info id="706" type="2" arg1="13" arg2="0" arg3="0" arg4="10024" arg5="0" arg6="0" pos_x="-265" pos_y="280" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點這裡進入雷格鎮" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+
+
+
+
+	<!-- 升級技能  -->			
+	<!-- 新的技能,檢測任務狀態,指向可接任務的npc 引導玩家通過自動尋徑找到NPC進行對話 -->			
+	<!--<info id="717" type="4" arg1="10026" arg2="0" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-170" pos_y="-37" targetid="10026" containtype="5" show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊自動尋路" tipStr="" tipx="-268" tipy="55" asset="click_right.swf"/> -->			
+
+	<!-- 打開任務介面, 查看任務 -->			
+	<!--<info id="718" type="2" arg1="1" arg2="10026" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 點擊可接任務條目,指向 進行對話 按鈕  -->			
+	<!--<info id="719" type="3" arg1="1" arg2="718" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 結束對話, 接受任務 -->			
+	<!--<info id="720" type="3" arg1="10" arg2="719" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+
+
+	<!-- 升級技能 喬瑪麗 點擊打開主菜單-->			
+	<!--<info id="721" type="4" arg1="0" arg2="10026" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="898" pos_y="350" targetid="0" containtype="6" show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開主菜單" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+
+	<!-- 在主菜單    打開技能欄   引導指向技能-->			
+	<!--<info id="722" type="2" arg1="2" arg2="0" arg3="10026" arg4="0" arg5="0" arg6="0" pos_x="-560" pos_y="-70" targetid="0" containtype="3" show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開技能介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+    <!-- 升級技能     點擊啟動技能-->				
+	<!--<info id="723" type="2" arg1="5" arg2="0" arg3="10026" arg4="0" arg5="0" arg6="0" pos_x="432" pos_y="45" targetid="0" containtype="1" show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊升級技能" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+
+    <!-- 升級技能     單擊裝備技能-->				
+	<!--<info id="724" type="3" arg1="11" arg2="723" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="521" pos_y="145" targetid="0" containtype="1" show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="單擊裝備技能" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+    <!-- 升級技能     關閉主介面 離開技能介面-->				
+	<!--<info id="725" type="3" arg1="12" arg2="724" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="750" pos_y="-3" targetid="0" containtype="1" show_arg="0" label="5" marsk_w="95" mask_h="30" labelStr="點擊關閉主菜單" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>-->			
+
+
+
+	<!-- 完成任務，選擇自動尋路  找到對應NPC交付任務  -->			
+	<!--<info id="726" type="4" arg1="0" arg2="0" arg3="10026" arg4="0" arg5="1100" arg6="0" pos_x="-170" pos_y="-37" targetid="10026" containtype="5" show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>-->			
+
+	<!-- 完成任務，打開任務介面，點擊交付對話  -->			
+	<!--<info id="727" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10026" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 完成任務，結束任務介面，點擊完成任務    -->			
+	<!--<info id="728" type="3" arg1="1" arg2="727" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+
+
+
+
+
+
+
+	<!-- 13級軍團  800開始 -->			
+
+
+	<!-- 打開主菜單   -->			
+	<info id="804" type="4" arg1="0" arg2="10029" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="898" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開主菜單" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 打開軍團介面-->			
+	<info id="805" type="2" arg1="2" arg2="0" arg3="10029" arg4="0" arg5="0" arg6="0" pos_x="-560" pos_y="-24" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開軍團介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊加入軍團-->			
+	<info id="806" type="2" arg1="6" arg2="0" arg3="10029" arg4="0" arg5="0" arg6="0" pos_x="270" pos_y="200" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="加入軍團" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 關閉軍團按鈕-->			
+	<info id="807" type="3" arg1="19" arg2="806" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="780" pos_y="-3" targetid="0" containtype="1"			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊關閉按鈕" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+
+
+
+
+
+	<!-- 殖民  900開始 -->			
+
+	<!-- 進入場景,檢測任務狀態,指向可接任務的npc 引導玩家通過自動尋徑找到NPC進行對話 -->			
+	<!--<info id="900" type="4" arg1="10036" arg2="0" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-170" pos_y="-37" targetid="10036" containtype="5" 			
+	show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊自動尋路" tipStr="" tipx="-268" tipy="55" asset="click_right.swf"/>-->			
+
+	<!-- 打開任務介面, 查看任務 -->			
+	<!--<info id="901" type="2" arg1="1" arg2="10036" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊查看任務" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 點擊可接任務條目,指向 進行對話 按鈕  -->			
+	<!--<info id="902" type="3" arg1="1" arg2="901" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 結束對話, 接受任務 -->			
+	<!--<info id="903" type="3" arg1="10" arg2="902" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+
+	<!-- 自動尋路 去聖地入口 殖民任務10036-->			
+	<info id="904" type="4" arg1="0" arg2="10036" arg3="0" arg4="0" arg5="1100" arg6="0" pos_x="0" pos_y="140" targetid="0" containtype="8" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊圖示，進入殖民" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!--  打開副本選擇介面,指向領地列表 -->			
+	<info id="905" type="2" arg1="2" arg2="0" arg3="10036" arg4="0" arg5="0" arg6="10003" pos_x="800" pos_y="180" targetid="0" containtype="9" 			
+	show_arg="0" label="1" marsk_w="215" mask_h="76" labelStr="點擊圖示，進入征戰資訊" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!--指向副本組 -->			
+	<!--<info id="906" type="3" arg1="27" arg2="905" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-380" pos_y="50" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊圖示，進入征戰資訊" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 點擊侵略 -->			
+	<info id="907" type="2" arg1="16" arg2="0" arg3="10036" arg4="0" arg5="0" arg6="0" pos_x="550" pos_y="430" targetid="0" containtype="1" 			
+	show_arg="0" label="1" marsk_w="61" mask_h="30" labelStr="點擊立即殖民，進入副本殖民資訊" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 2次點擊侵略 -->			
+	<info id="908" type="2" arg1="21" arg2="0" arg3="10036" arg4="0" arg5="0" arg6="0" pos_x="550" pos_y="380" targetid="0" containtype="1" 			
+	show_arg="0" label="1" marsk_w="61" mask_h="30" labelStr="點擊“侵略”開始殖民" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 退出殖民介面 殖民成功-->			
+	<info id="909" type="2" arg1="16" arg2="0" arg3="" arg4="10036" arg5="1100" arg6="0" pos_x="500" pos_y="330" targetid="0" containtype="1" 			
+	show_arg="0" label="1" marsk_w="61" mask_h="30" labelStr="點擊確定返回城鎮" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 退出殖民介面  殖民失敗-->			
+	<info id="910" type="2" arg1="18" arg2="0" arg3="" arg4="10036" arg5="0" arg6="0" pos_x="620" pos_y="330" targetid="0" containtype="1" 			
+	show_arg="0" label="1" marsk_w="61" mask_h="30" labelStr="點擊確定返回城鎮" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 完成任務，選擇自動尋路  找到對應NPC交付任務  -->			
+	<!--<info id="911" type="4" arg1="0" arg2="0" arg3="10036" arg4="0" arg5="1100" arg6="0" pos_x="-170" pos_y="-37" targetid="10036" containtype="5" 			
+	show_arg="1" label="10" marsk_w="155" mask_h="50" labelStr="點擊自動尋路" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>-->			
+
+	<!-- 完成任務，打開任務介面，點擊交付對話  -->			
+	<!--<info id="912" type="2" arg1="1" arg2="0" arg3="0" arg4="0" arg5="10036" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="190" mask_h="30" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->			
+
+	<!-- 完成任務，結束任務介面，點擊完成任務    -->			
+	<!--<info id="913" type="3" arg1="1" arg2="912" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊完成任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+
+
+
+
+
+	<!--20級官爵任務，領取俸祿   -->			
+
+	<!-- 打開我的領地 -->			
+	<info id="320" type="4" arg1="0" arg2="10264" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<!-- 打開官爵 -->			
+	<info id="321" type="2" arg1="2" arg2="0" arg3="10264" arg4="0" arg5="0" arg6="0" pos_x="-400" pos_y="-80" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開官爵介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 點擊領取俸祿按鈕 -->			
+	<info id="322" type="3" arg1="21" arg2="321" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-400" pos_y="313" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊領取俸祿按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	<!-- 操作完畢，指向關閉按鈕，未完成 -->			
+	<info id="323" type="3" arg1="25" arg2="322" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="460" pos_y="-60" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	 			
+
+
+
+
+
+		<!-- 20級雇傭寵物任務 -->		
+		<!-- 進入場景,檢測任務狀態,指向可接任務的npc 引導玩家通過自動尋徑找到NPC進行對話 -->		
+		<!--<info id="326" type="4" arg1="10265" arg2="0" arg3="0" arg4="0" arg5="1100" arg6="0" pos_x="-170" pos_y="-37" targetid="10265" containtype="5" 		
+		show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊自動尋路" tipStr="" tipx="-268" tipy="55" asset="click_right.swf"/>-->		
+
+		<!-- 打開任務介面, 查看任務 -->		
+		<!--<info id="327" type="2" arg1="1" arg2="10265" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="530" targetid="0" containtype="7" 		
+		show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->		
+
+		<!-- 點擊可接任務條目,指向 進行對話 按鈕  -->		
+		<!--<info id="328" type="3" arg1="1" arg2="327" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="653" pos_y="530" targetid="0" containtype="7" 		
+		show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊對話" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>-->		
+
+		<!-- 結束對話, 接受任務 -->		
+		<!--<info id="329" type="3" arg1="10" arg2="328" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 		
+		show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->		
+
+		<!-- 任務箭頭指向克雷西-->		
+		<info id="330" type="4" arg1="0" arg2="10265" arg3="0" arg4="0" arg5="1100" arg6="0" pos_x="30" pos_y="-260" targetid="110012" containtype="2" 		
+		show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊NPC克雷西" tipStr="" tipx="-280" tipy="50" asset="click_left.swf"/>		
+
+		<!-- 打開任務介面, 點擊進入酒館 -->		
+		<info id="331" type="2" arg1="1" arg2="0" arg3="10265" arg4="0" arg5="0" arg6="0" pos_x="510" pos_y="585"  targetid="0" containtype="7" 		
+		show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊進入寵物商店" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<!-- 進入酒館後點擊雇傭按鈕 -->		
+		<info id="332" type="2" arg1="19" arg2="0" arg3="10265" arg4="0" arg5="0" arg6="0" pos_x="400" pos_y="400" targetid="0" containtype="9" 		
+		show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="任選寵物點擊雇傭" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<!-- 操作完畢，指向關閉按鈕 -->		
+		<info id="333" type="3" arg1="20" arg2="332" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="400" pos_y="-80" targetid="0" containtype="6" 		
+		show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+
+
+
+
+
+
+
+		<!-- 21級酒館刷寵，進入雷格鎮場景,檢測任務狀態,指向可接任務的npc 引導玩家通過自動尋徑找到NPC進行對話 -->		
+		<!-- 點擊NPC -->		
+		<info id="1071" type="4" arg1="0" arg2="10266" arg3="0" arg4="110010" arg5="1100" arg6="0" pos_x="360" pos_y="-260" targetid="110010" containtype="2" 		
+		show_arg="2" label="4" marsk_w="100" mask_h="30" labelStr="點擊NPC克雷西" tipStr="" tipx="-280" tipy="50" asset="click_left.swf"/>		
+
+		<!-- 點擊進入酒館文字 -->		
+		<info id="1072" type="2" arg1="1" arg2="0" arg3="10266" arg4="0" arg5="0" arg6="0" pos_x="510" pos_y="585" targetid="0" containtype="7" 		
+		show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊進入寵物商店" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<!-- 進入酒館後點擊刷新按鈕 -->		
+		<info id="1073" type="2" arg1="19" arg2="0" arg3="10266" arg4="0" arg5="0" arg6="0" pos_x="440" pos_y="450" targetid="0" containtype="9" 		
+		show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊刷新" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+		<info id="1074" type="2" arg1="18" arg2="0" arg3="10266" arg4="0" arg5="1100" arg6="0" pos_x="-150" pos_y="286" targetid="0" containtype="6" 		
+		show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊確定刷新" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+		<!-- 關閉按鈕 -->		
+		<info id="1075" type="3" arg1="31" arg2="1074" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="730" pos_y="-20" targetid="0" containtype="1" 		
+		show_arg="0" label="10" marsk_w="155" mask_h="50" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+
+
+
+		 <!-- 5級礦洞任務 -->		
+
+		<!-- 打開我的領地 -->		
+		<info id="320" type="4" arg1="0" arg2="10272" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 		
+		show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>		
+
+		<!-- 打開鐵礦洞 -->		
+		<info id="321" type="2" arg1="2" arg2="0" arg3="10272" arg4="0" arg5="0" arg6="0" pos_x="-220" pos_y="150" targetid="0" containtype="3" 		
+		show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊進入鐵礦洞" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+		<!-- 點擊挖掘 -->		
+	    <info id="323" type="2" arg1="26" arg2="0" arg3="10272" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="166" targetid="0" containtype="3" 			
+	    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊挖掘" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	    			
+	 	<!-- 操作完畢,指向關閉按鈕 -->		
+		 <info id="324" type="3" arg1="28" arg2="323" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="800" pos_y="-20" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		 		
+	    			
+	    			
+	    			
+	    			
+		 <!-- 10級寵物培養任務  自動尋路指引 引導接任務（主線）  -->		
+
+		<info id="1105" type="4" arg1="0" arg2="10273" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="90" targetid="0" containtype="8" 		
+		show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊寵物佈陣按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		 		
+		<info id="1106" type="2" arg1="11" arg2="0" arg3="10273" arg4="0" arg5="0" arg6="0" pos_x="390" pos_y="100" targetid="0" containtype="9" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊培養" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<info id="1107" type="3" arg1="30" arg2="1106" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-60" pos_y="180" targetid="0" containtype="9" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選擇寵物" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		 		
+	    <info id="1108" type="3" arg1="31" arg2="1107" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="830" pos_y="420" targetid="0" containtype="9" 			
+	    show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊訓練按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+		<info id="1109" type="3" arg1="33" arg2="1108" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="830" pos_y="420" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊替換" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<info id="1110" type="3" arg1="32" arg2="1109" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="700" pos_y="60" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+
+
+
+
+		<!-- 11級強化，寶石鑲嵌任務  自動尋路指引 引導接任務（支線）  -->		
+		<!-- 點擊對話, 指向任務獎勵 -->		
+		<info id="1124" type="4" arg1="0" arg2="10274" arg3="0" arg4="0" arg5="1100" arg6="0" pos_x="0" pos_y="0" targetid="10274" containtype="8" 		
+		show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊左側裝備強化" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		 <!-- 點擊對話, 指向任務獎勵 -->		
+		 <info id="1125" type="2" arg1="4" arg2="0" arg3="10274" arg4="0" arg5="0" arg6="0" pos_x="280" pos_y="185" targetid="0" containtype="9" 		
+		 show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊寶石鑲嵌標籤" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		<!-- 點擊對話, 指向任務獎勵 -->		
+		 <info id="1126" type="3" arg1="34" arg2="1125" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="170" pos_y="160" targetid="0" containtype="9" 		
+		 show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="單擊裝備" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		 <!-- 點擊對話, 指向任務獎勵 -->		
+		 <info id="1127" type="3" arg1="35" arg2="1126" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="170" pos_y="340" targetid="0" containtype="9" 		
+		 show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="拖動寶石到插槽" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		 <!-- 點擊對話, 指向任務獎勵 -->		
+		  <info id="1128" type="2" arg1="17" arg2="0" arg3="10274" arg4="0" arg5="0" arg6="0" pos_x="250" pos_y="265" targetid="0" containtype="9" 		
+		  show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="確認鑲嵌" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		<!-- 點擊對話, 指向任務獎勵 -->		
+		 <info id="1129" type="3" arg1="31" arg2="1124" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="660" pos_y="30" targetid="0" containtype="1" 		
+		 show_arg="0" label="5" marsk_w="98" mask_h="40" 	labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/> 	
+		 		
+	 			
+
+
+
+	<!-- 15級競技場任務  自動尋路指引 引導接任務（支線）  -->			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	<!--<info id="1133" type="3" arg1="10" arg2="1132" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="479" pos_y="397" targetid="0" containtype="7" 			
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊接受任務" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>-->			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	<info id="1134" type="4" arg1="0" arg2="10275" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="260" targetid="0" containtype="8" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊競技場" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="1135" type="2" arg1="2" arg2="0" arg3="10275" arg4="0" arg5="0" arg6="0" pos_x="990" pos_y="85" targetid="0" containtype="9" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊進行競技" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+
+
+
+	<!-- 16級探寶任務 -->			
+
+	<!-- 打開我的領地 -->			
+	<info id="1204" type="4" arg1="0" arg2="10276" arg3="0" arg4="0" arg5="1100" arg6="0" pos_x="710" pos_y="350" targetid="10276" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+	<!-- 打開我的領地 -->			
+	<info id="1205" type="2" arg1="2" arg2="0" arg3="10276" arg4="0" arg5="0" arg6="0" pos_x="-155" pos_y="150" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開探寶介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 打開我的領地 -->			
+    <info id="1206" type="3" arg1="38" arg2="1205" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-550" pos_y="260" targetid="0" containtype="3" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊木質寶箱探寶" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>				
+    <!-- 打開我的領地 -->				
+    <info id="1207" type="3" arg1="24" arg2="1206" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="470" pos_y="315" targetid="0" containtype="9" 				
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊後拾取" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+    <!-- 打開我的領地 -->				
+    <info id="1208" type="3" arg1="23" arg2="1207" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="450" pos_y="300" targetid="0" containtype="9" 				
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊符文背包" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+	<!-- 打開我的領地 -->			
+	 <info id="1209" type="2" arg1="15" arg2="0" arg3="10276" arg4="0" arg5="0" arg6="0" pos_x="-70" pos_y="10" targetid="0" containtype="3" 			
+	show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="拖動圖示裝備符文" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 打開我的領地 -->			
+	<info id="1210" type="3" arg1="3" arg2="1209" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="775" pos_y="-10" targetid="0" containtype="1" 			
+	show_arg="0" label="6" marsk_w="565" mask_h="123" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+
+
+
+	<!-- 18級軍營任務 -->			
+	<!-- 打開我的領地 -->			
+	<info id="1304" type="4" arg1="0" arg2="10277" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="710" pos_y="350" targetid="0" containtype="6" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開我的領地" tipStr="" tipx="100" tipy="100" asset="click_down.swf"/>			
+
+	<info id="1305" type="2" arg1="2" arg2="0" arg3="10277" arg4="0" arg5="0" arg6="0" pos_x="-400" pos_y="200" targetid="0" containtype="3" 			
+	show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="打開軍營介面" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+	 <info id="1306" type="3" arg1="17" arg2="1305" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="50" pos_y="170" targetid="0" containtype="3" 			
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊開始訓練" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>				
+    				
+	 <info id="1307" type="3" arg1="6" arg2="1306" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="800" pos_y="-20" targetid="0" containtype="1" 			
+    show_arg="0" label="2" marsk_w="95" mask_h="30" labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>				
+    				
+    				
+    				
+    				
+    <!-- 21級合成任務  自動尋路指引 引導接任務（支線）  -->				
+
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	<info id="1404" type="4" arg1="0" arg2="10278" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="0" targetid="0" containtype="8" 			
+	show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊左側裝備強化" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	 <!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="1405" type="2" arg1="4" arg2="0" arg3="10278" arg4="0" arg5="0" arg6="0" pos_x="280" pos_y="240" targetid="0" containtype="9" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊合成標籤" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="1406" type="3" arg1="39" arg2="1405" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="480" pos_y="90" targetid="0" containtype="9" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊寶石標籤" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+	 	<!-- 點擊對話, 指向任務獎勵 -->		
+	  <info id="1407" type="3" arg1="13" arg2="1406" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="160" pos_y="260" targetid="0" containtype="9" 			
+	  show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選中二級耐力寶石" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>			
+	<!-- 點擊對話, 指向任務獎勵 -->			
+	 <info id="1408" type="3" arg1="23" arg2="1407" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="765" pos_y="395" targetid="0" containtype="1" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40" 	labelStr="點擊合成按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		<!-- 點擊對話, 指向任務獎勵 -->		
+	<info id="1409" type="3" arg1="13" arg2="1408" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="655" pos_y="35" targetid="0" containtype="1" 			
+	 show_arg="0" label="5" marsk_w="98" mask_h="40" 	labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+
+
+
+	 	<!-- 25級傳承任務  自動尋路指引 引導接任務（主線）  -->		
+
+		<!-- 打開任務介面, 指向任務條目 -->		
+		<info id="1505" type="4" arg1="0" arg2="10273" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="0" pos_y="90" targetid="0" containtype="8" 		
+		show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊寵物佈陣按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		 <!-- 打開任務介面, 指向任務條目 -->		
+		<info id="1506" type="2" arg1="11" arg2="0" arg3="10273" arg4="0" arg5="0" arg6="0" pos_x="600" pos_y="100" targetid="0" containtype="9" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊傳承" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		<!-- 打開任務介面, 指向任務條目 -->		
+		<info id="1507" type="3" arg1="30" arg2="1106" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="800" pos_y="180" targetid="0" containtype="9" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選擇寵物" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		 <!-- 打開任務介面, 指向任務條目 -->		
+	    <info id="1508" type="3" arg1="31" arg2="1107" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="900" pos_y="390" targetid="0" containtype="8" 			
+	    show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選中被傳承寵物" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+		<!-- 打開任務介面, 指向任務條目 -->		
+		<info id="1509" type="3" arg1="33" arg2="1108" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="900" pos_y="390" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊傳承" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		<!-- 打開任務介面, 指向任務條目 -->		
+		<info id="1510" type="3" arg1="32" arg2="1109" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="900" pos_y="390" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+
+
+
+		 <!-- 25級傳承任務  自動尋路指引 引導接任務（主線）  -->		
+
+		<info id="1605" type="4" arg1="0" arg2="10279" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="20" pos_y="90" targetid="0" containtype="8" 		
+		show_arg="0" label="4" marsk_w="565" mask_h="123" labelStr="點擊寵物佈陣按鈕" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+		 		
+		<info id="1606" type="2" arg1="11" arg2="0" arg3="10279" arg4="0" arg5="0" arg6="0" pos_x="520" pos_y="100" targetid="0" containtype="9" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40" labelStr="點擊傳承" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<info id="1607" type="3" arg1="40" arg2="1606" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="-60" pos_y="180" targetid="0" containtype="9" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選擇需要傳承寵物" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+		 		
+	    <info id="1608" type="3" arg1="31" arg2="1607" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="830" pos_y="160" targetid="0" containtype="9" 			
+	    show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="選擇被替換寵物" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>			
+
+		<info id="1609" type="3" arg1="22" arg2="1608" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="830" pos_y="420" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊傳承" tipStr="" tipx="100" tipy="100" asset="click_left.swf"/>		
+
+		<info id="1610" type="3" arg1="32" arg2="1609" arg3="0" arg4="0" arg5="0" arg6="0" pos_x="700" pos_y="60" targetid="0" containtype="1" 		
+		show_arg="0" label="5" marsk_w="98" mask_h="40"  labelStr="點擊關閉" tipStr="" tipx="100" tipy="100" asset="click_right.swf"/>		
+
+
+	</data>			

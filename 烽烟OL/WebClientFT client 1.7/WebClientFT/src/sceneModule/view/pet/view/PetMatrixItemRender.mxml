@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" width="65" height="66">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.pet.event.MediatorRegisterPetEvent;
+			import sceneModule.view.pet.vo.PetMatrixTitleInfoVO;
+			
+			import util.CommonTools;
+			
+			public static var DRAGFROMMATRIX:String = "dragFromMatrix";
+			
+			[Bindable]
+			public var dataInfo:PetMatrixTitleInfoVO = new PetMatrixTitleInfoVO();
+			
+			public function getPetImg(petId:int,type:int,icon:int):String{
+				var url:String;
+				if(petId == 0){
+					switch(SystemDataModel.roleInfo.profession){
+						case ProConst.PROFESSIONREQUIRE2:
+							url = "assets/pet/petWarriorImg.png";
+							break;
+						case ProConst.PROFESSIONREQUIRE3:
+							url = "assets/pet/petMageImg.png";
+							break;
+						case ProConst.PROFESSIONREQUIRE4:
+							url = "assets/pet/petPastorImg.png";
+							break;
+						case ProConst.PROFESSIONREQUIRE5:
+							url = "assets/pet/petRangerImg.png";
+							break;
+						case ProConst.petWarriorImg4:
+							url = "assets/pet/petWarriorImg4.png";
+							break;
+						case ProConst.petMageImg5:
+							url = "assets/pet/petMageImg5.png";
+							break;
+						case ProConst.petRangerImg6:
+							url = "assets/pet/petRangerImg6.png";
+							break;
+					}
+				}else{
+					url = ProConst.getImageSource(dataInfo.type,dataInfo.icon);
+				}
+			   return url;
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.dispatchEvent(new MediatorRegisterPetEvent(MediatorRegisterPetEvent.MR_PET_MATRIXITEMRENDER,this,true));
+				
+				CommonTools.make_bitmap(diImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet","pet_di_bg");
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="diImg" mouseEnabled="false" mouseChildren="false"/>
+	<mx:Image id="petImg" source="{getPetImg(dataInfo.petId,dataInfo.type,dataInfo.icon)}" visible="{dataInfo.hasPet}" x="5" y="5" mouseEnabled="false" mouseChildren="false"/>
+</s:ItemRenderer>

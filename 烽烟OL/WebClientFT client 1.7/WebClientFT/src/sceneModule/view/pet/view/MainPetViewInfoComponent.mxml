@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				     
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:win="managers.*" 
+				width="961" height="437" 
+				xmlns:ui="sceneModule.view.ui.*"
+				xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			
+			import sceneModule.view.pet.vo.PetSkillInfoVO;
+			public static const NAME:String = 'sceneModule.view.pet.view.MainPetViewInfoComponent';
+			
+			private function getPetAnimationURL(rId:int):String{
+				var url:String='';
+				if(rId != 0){
+					url = 'assets/swf/battleRes/'+rId+'550.swf';
+				}
+				return url;
+			}
+			
+			public function getLabelDes(man:int):String{
+				var str:String='';
+				if(man!=0){
+					str = " + <font color='#26C900'>"+man+"</font>";
+				}
+				return str;
+			}
+			
+			private function getPetSkillListInfo(arr:ArrayCollection):ArrayCollection{
+				var l:int = arr.length;
+				var skillList:ArrayCollection = new ArrayCollection();
+				for(var i:int=0;i<5;i++){
+					var petSkillInfo:PetSkillInfoVO  = new PetSkillInfoVO();
+					if(i<l){
+						petSkillInfo.hasActivationFlag = true;
+						petSkillInfo.icon = arr[i].icon;
+						petSkillInfo.petSkillDes = arr[i].petSkillDes;
+						petSkillInfo.petSkillId = arr[i].petSkillId;
+						petSkillInfo.petSkillLevel = arr[i].petSkillLevel;
+						petSkillInfo.petSkillMaxLevel = arr[i].petSkillMaxLevel;
+						petSkillInfo.petSkillName = arr[i].petSkillName;
+						petSkillInfo.type = arr[i].type;
+					}
+					petSkillInfo.skillPos = i;
+					skillList.addItem(petSkillInfo);
+				}
+				return skillList;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image source='assets/pet/viewPetInfoBg.png' x="0" y="2"/>
+		<mx:Image source='assets/pet/petEffectBg.png' x="269" y="73"/>
+		<mx:SWFLoader source="{getPetAnimationURL(SystemDataModel.otherPetInfoVo.resPetId)}" x="292" y="49"/>
+		<ui:RedAndBludComponent 
+			_bgWidth="103" height="11" x="644" y="109" 
+			_bgUrl='assets/role/blueBackground.png' 
+			_Obj="0" 
+			cur_Num="{SystemDataModel.otherPetInfoVo.baseHp}"
+			max_Num="{SystemDataModel.otherPetInfoVo.maxHp}"
+			id="comp_hp"/>
+		<ui:RedAndBludComponent 
+			_bgWidth="103" height="11" x="644" y="131" 
+			_bgUrl='assets/role/blueBackground.png' 
+			_Obj="2" 
+			cur_Num="{SystemDataModel.otherPetInfoVo.curExp}"
+			max_Num="{SystemDataModel.otherPetInfoVo.maxExp}"
+			id="comp_jingli"/>
+		<component:CrotaBasicLabel text="{'Lv.'+SystemDataModel.otherPetInfoVo.petLevel+' '+(SystemDataModel.otherPetInfoVo.petName == null ? '':SystemDataModel.otherPetInfoVo.petName)}" styleName="RANKINGFORMAT1" x="310" y="105" width="232" textAlign="center"/>
+		<component:CrotaBasicLabel text="{SystemDataModel.otherPetInfoVo.petDes}" styleName="RANKINGFORMAT1" x="95" y="108" width="147" textAlign="left" height="287"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseHitRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualHitRate)}" styleName="RANKINGFORMAT1" x="649" y="343" width="97" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseBlock+getLabelDes(SystemDataModel.otherPetInfoVo.manualBlock)}" styleName="RANKINGFORMAT1" x="649" y="361" width="97" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.basePhyAttack+getLabelDes(SystemDataModel.otherPetInfoVo.manualPhyAttack)}" styleName="RANKINGFORMAT1" x="649" y="289" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.liliang}" styleName="RANKINGFORMAT1" x="649" y="233" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{ProConst.getPetQuality(SystemDataModel.otherPetInfoVo.curQuality)}" styleName="RANKINGFORMAT1" x="646" y="165" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.skillName}" styleName="RANKINGFORMAT1" x="646" y="182" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.texing}" styleName="RANKINGFORMAT1" x="646" y="199" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.naili}" styleName="RANKINGFORMAT1" x="649" y="253" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.minjie}" styleName="RANKINGFORMAT1" x="794" y="253" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.zhili}" styleName="RANKINGFORMAT1" x="794" y="235" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseDodgeRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualDodgeRate)}" styleName="RANKINGFORMAT1" x="794" y="343" width="120" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseMagicAttack+getLabelDes(SystemDataModel.otherPetInfoVo.manualMagicAttack)}" styleName="RANKINGFORMAT1" x="794" y="289" width="120" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.basePhyDefense+getLabelDes(SystemDataModel.otherPetInfoVo.manualPhyDefense)}" styleName="RANKINGFORMAT1" x="649" y="325" width="106" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseSpeed+getLabelDes(SystemDataModel.otherPetInfoVo.manualSpeed)}" styleName="RANKINGFORMAT1" x="649" y="307" width="68" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseCritRate+getLabelDes(SystemDataModel.otherPetInfoVo.manualCritRate)}" styleName="RANKINGFORMAT1" x="794" y="307" width="120" textAlign="left"/>
+		<component:CrotaBasicText htmlText="{SystemDataModel.otherPetInfoVo.baseMagicDefense+getLabelDes(SystemDataModel.otherPetInfoVo.manualMagicDefense)}" styleName="RANKINGFORMAT1" x="794" y="325" width="120" textAlign="left"/>
+		
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="891" y="25"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

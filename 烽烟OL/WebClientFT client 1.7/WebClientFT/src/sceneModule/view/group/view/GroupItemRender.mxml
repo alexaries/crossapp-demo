@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" width="496" height="51" xmlns:component="component.*" xmlns:util="util.*">
+
+	<fx:Script>
+		<![CDATA[
+			import managers.ToolTipManager;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.core.FlexGlobals;
+			
+			import resource.AssetCenter;
+			import resource.CrotaItemConfig;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.packageVo.PackageItem;
+			import sceneModule.view.group.command.GroupMessage;
+			import sceneModule.view.pack.view.MainMenuEquipmentTooltip;
+			
+			public var tooltip:MainMenuEquipmentTooltip;
+			protected function funBtn_clickHandler(event:MouseEvent):void
+			{
+				GroupMessage.getInstance().onPopUpCreateOrJoinWindow('Join',data.dwId);
+			}
+			
+			public function getButtonVisible(name:String,num:int):Boolean{
+				if(name != SystemDataModel.roleInfo.nickname && num <5){
+					return true;
+				}
+				return false;
+			}
+			
+			public function getBgURL(type:int):Bitmap{
+				var bitmap:Bitmap = new Bitmap();
+				switch(type){
+					case 1:
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","hchl");
+						break;
+					case 2:
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","djty");
+						break;
+					case 3:
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","hdkj");
+						break;
+				}
+				return bitmap;
+			}
+			
+			public function getFunBtnEnable(name:String,num:int):Boolean{
+				if(name != SystemDataModel.roleInfo.nickname && num<5){
+					return true;
+				}
+				return false;
+			}
+			
+			/**
+			 * 如果有数据则显示Tooltip
+			 */
+			private function onMouseOver(evt:MouseEvent,str:String):void{
+				if(this.data){
+					if(!tooltip){
+						tooltip = ToolTipManager.showToolTip(MainMenuEquipmentTooltip.NAME) as MainMenuEquipmentTooltip;
+					}
+					var tempId:int;
+					if(str == 'One'){
+						switch(data.dwType){
+							case 1:
+								tempId = 20700059;
+								break;
+							case 2:
+								tempId = 20700060;
+								break;
+							case 3:
+								tempId = 20700062;
+								break;
+						}
+					}else{
+						switch(data.dwType){
+							case 1:
+								tempId = 20700033;
+								break;
+							case 2:
+								tempId = 20700034;
+								break;
+							case 3:
+								tempId = 20700035;
+								break;
+						}
+					}
+					var packgeItem:PackageItem = CrotaItemConfig.getItemInfoByTempleteId(tempId);
+					tooltip.curDataInfo = packgeItem;
+					//设置ToolTip位置
+					setTooltipPosition();
+					this.addElement(tooltip);
+					
+				}			
+			}
+			//鼠标移动 设置ToolTip位置
+			private function onMouseMove(evt:MouseEvent):void{
+				if(tooltip){
+					setTooltipPosition();
+				}
+			}
+			/**
+			 * 当鼠标移出，设置Tooltip为不可见
+			 */
+			private function onMouseOut(evt:MouseEvent):void{
+				if(tooltip && this.contains(tooltip))this.removeElement(tooltip);
+			}
+			/**
+			 * 设置Tooltip在屏幕的坐标
+			 */
+			private function setTooltipPosition():void{
+				tooltip.y = this.mouseY - 30;
+				tooltip.x = this.mouseX - tooltip.width - 5;
+//				if(1000 - FlexGlobals.topLevelApplication.mouseX < tooltip.width){
+//					tooltip.x = FlexGlobals.topLevelApplication.mouseX - tooltip.width - 10;
+//				}else{
+//					tooltip.x = FlexGlobals.topLevelApplication.mouseX;
+//				}
+			}
+		]]>
+	</fx:Script>
+
+	
+	<mx:Image source="{getBgURL(data.dwType)}"/>
+	<component:CrotaBasicLabel text="{data.curNum+'/5'}" styleName="RANKINGFORMAT1" x="162" y="11" width="103" textAlign="left"/>
+	<component:CrotaBasicLabel text="{data.leaderName}" styleName="RANKINGFORMAT1" x="131" y="29" width="103" textAlign="left"/>
+	<util:CommonButton id="funBtn"
+					   x="431" y="10" width="60"
+					   enabled="{getFunBtnEnable(data.leaderName,data.curNum)}"
+					   click="funBtn_clickHandler(event)"
+					   skinClass="style.Skin_CrotaPackRedButton" 
+					   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('group','gr_jr')}" height="31"/>
+	<mx:Image source="{ProConst.getImageResUrl(110000)+'111000.png'}" x="309" y="5" mouseOver="{onMouseOver(event,'One')}" mouseMove="{onMouseMove(event)}" mouseOut="{onMouseOut(event)}"/>
+	<mx:Image source="{ProConst.getImageResUrl(110000)+(data.dwType == 1 ? '110400.png' : data.dwType == 2 ? '110401.png' : '110402.png')}" x="363" y="5" mouseOver="{onMouseOver(event,'Two')}" mouseMove="{onMouseMove(event)}" mouseOut="{onMouseOut(event)}"/>
+</s:ItemRenderer>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*"
+		 creationComplete="init()"
+		 width="80" height="90">
+	<fx:Script>
+		<![CDATA[
+			import flash.display.Bitmap;
+			import flash.events.MouseEvent;
+			import util.xtrace;
+			import resource.AssetCenter;
+			
+			public static const BASE_PATH:String = "assets/word_map/icos/map_";
+			
+			private var _icon_id:int = 0;
+			private var _is_selected:Boolean;
+			private var _is_over:Boolean;
+			private var _ico_bitmap:Bitmap;
+			
+			
+			private function init():void {
+				_is_selected = false;
+				_is_over = false;
+				this.addEventListener(MouseEvent.ROLL_OVER, mouse_over);
+				this.addEventListener(MouseEvent.ROLL_OUT, mouse_out);
+			}
+			
+			public function set icon_id(id:int):void {
+				_icon_id = id;
+			}
+			
+			private function mouse_over(e:MouseEvent):void {
+				_is_over = true;
+				refresh();
+			}
+			
+			private function mouse_out(e:MouseEvent):void {
+				_is_over = false;
+				refresh();
+			}
+			
+			public function set_selected(b:Boolean):void {
+				_is_selected = b;
+				refresh();
+			}
+			
+			public function refresh():void{
+				if(0 == _icon_id){
+					img.source = null;
+					return;
+				}
+				
+				if (null == _ico_bitmap) {
+					_ico_bitmap = new Bitmap();
+					img.source = _ico_bitmap;
+				}
+				
+				if (_is_selected) {
+					_ico_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge('word_map', 'word_ico_selected_' + _icon_id);
+					//img.source = BASE_PATH + _icon_id + "_selected.png";
+				}
+				else if (_is_over) {
+					_ico_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge('word_map', 'word_ico_selected_' + _icon_id);
+					//img.source = BASE_PATH + _icon_id + "_selected.png";
+				}
+				else {
+					_ico_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge('word_map', 'word_ico_nomal_' + _icon_id);
+					//img.source = BASE_PATH + _icon_id + "_nomal.png";
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="img"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT13bebebe"
+		width="100%"
+		textAlign="center"
+		id="l_name"
+		y="70"/>
+	<component:CrotaBasicLabel 
+		styleName="MAINMENUROLEFONT12bebebe"
+		width="100%"
+		textAlign="center"
+		id="l_des"
+		y="85"/>
+</s:Group>

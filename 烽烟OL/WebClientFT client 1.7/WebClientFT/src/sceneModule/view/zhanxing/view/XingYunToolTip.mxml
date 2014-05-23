@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.zhanxing.vo.XingYunBasicInfoVO;
+			
+			import util.CommonTools;
+			[Bindable]
+			private var quality:int;
+			public function set putXingYunInfo(value:XingYunBasicInfoVO):void{
+				quality = value.quality;
+				xyName.text=value.xyName+' Lv.'+value.level;
+				xyDes.text=CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','xyTT_ms')+value.xyDes;
+				expDes.text =CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','xyTT_jy')+value.exp+'/'+value.maxexp;
+				xyJiage.text=CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','xyTT_jg')+value.price.toString();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaCoinTooltip">
+		<s:VGroup gap="1" top="5" left="5" right="5" bottom="5">
+			<component:CrotaBasicLabel id="xyName" textAlign="center" fontSize="12" color="{CommonTools.get_equipement_color(quality)}"/>
+			<component:CrotaBasicLabel id="xyDes" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicLabel id="expDes" styleName="TOOLTIPTEXTFORMAT4"/>
+			<component:CrotaBasicLabel id="xyJiage" styleName="TOOLTIPTEXTFORMAT1"/>
+		</s:VGroup>
+	</s:SkinnableContainer>	
+</s:Group>

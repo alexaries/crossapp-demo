@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<!-- npc -->
+	<entity id="100001">		
+		<item id="npc1" posx="0" posy="0"/>
+	</entity>
+	<entity id="100002">		
+		<item id="npc2" posx="0" posy="0"/>
+	</entity>
+	<entity id="100003">		
+		<item id="npc3" posx="0" posy="0"/>
+	</entity>
+	<entity id="100004">		
+		<item id="npc4" posx="0" posy="0"/>
+	</entity>
+	<entity id="100005">		
+		<item id="npc5" posx="0" posy="0"/>
+	</entity>
+	<entity id="100006">		
+		<item id="npc6" posx="0" posy="0"/>
+	</entity>
+        <!-- 长枪兵 -->
+	<entity id="1">		
+		<item id="jiangling1" posx="0" posy="-1"/>
+		<item id="changqiangbing" posx="-1" posy="0"/>
+		<item id="changqiangbing" posx="0" posy="0"/>
+		<item id="changqiangbing" posx="1" posy="0"/>
+		<item id="changqiangbing" posx="-1" posy="1"/>
+		<item id="changqiangbing" posx="0" posy="1"/>
+		<item id="changqiangbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 刀兵 -->
+	<entity id="2">
+		<item id="jiangling1" posx="0" posy="0"/>
+		<item id="changqiangbing" posx="-1" posy="1"/>
+		<item id="changqiangbing" posx="0" posy="1"/>
+		<item id="changqiangbing" posx="1" posy="1"/>
+		<item id="changqiangbing" posx="-1" posy="2"/>
+		<item id="changqiangbing" posx="0" posy="2"/>
+		<item id="changqiangbing" posx="1" posy="2"/>
+	</entity>
+        <!-- 弓箭兵 -->
+	<entity id="3">
+		<item id="jiangling1" posx="0" posy="-1"/>
+		<item id="gongjianbing" posx="-1" posy="0"/>
+		<item id="gongjianbing" posx="0" posy="0"/>
+		<item id="gongjianbing" posx="1" posy="0"/>
+		<item id="gongjianbing" posx="-1" posy="1"/>
+		<item id="gongjianbing" posx="0" posy="1"/>
+		<item id="gongjianbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 黄巾兵 -->
+	<entity id="4">
+		<item id="huangjinjiangling2" posx="0" posy="0"/>
+		<item id="huangjinbing" posx="-1" posy="1"/>
+		<item id="huangjinbing" posx="0" posy="1"/>
+		<item id="huangjinbing" posx="1" posy="1"/>
+		<item id="huangjinbing" posx="-1" posy="2"/>
+		<item id="huangjinbing" posx="0" posy="2"/>
+		<item id="huangjinbing" posx="1" posy="2"/>
+	</entity>
+        <!-- 藤甲兵 -->
+	<entity id="5">
+		<item id="jiangling1" posx="0" posy="-1"/>
+		<item id="tengjiabing" posx="-1" posy="0"/>
+		<item id="tengjiabing" posx="0" posy="0"/>
+		<item id="tengjiabing" posx="1" posy="0"/>
+		<item id="tengjiabing" posx="-1" posy="1"/>
+		<item id="tengjiabing" posx="0" posy="1"/>
+		<item id="tengjiabing" posx="1" posy="1"/>
+	</entity>
+        <!-- 武斗兵 -->
+	<entity id="6">
+		<item id="jiangling1" posx="0" posy="-1"/>
+		<item id="wudoubing" posx="-1" posy="0"/>
+		<item id="wudoubing" posx="0" posy="0"/>
+		<item id="wudoubing" posx="1" posy="0"/>
+		<item id="wudoubing" posx="-1" posy="1"/>
+		<item id="wudoubing" posx="0" posy="1"/>
+		<item id="wudoubing" posx="1" posy="1"/>
+	</entity>
+        <!-- 女兵 -->
+	<entity id="7">
+		<item id="jiangling1" posx="0" posy="-1"/>
+		<item id="yexingren" posx="-1" posy="0"/>
+		<item id="yexingren" posx="0" posy="0"/>
+		<item id="yexingren" posx="1" posy="0"/>
+		<item id="yexingren" posx="-1" posy="1"/>
+		<item id="yexingren" posx="0" posy="1"/>
+		<item id="yexingren" posx="1" posy="1"/>
+	</entity>
+        <!-- 长枪兵怪物 -->
+	<entity id="5001">
+		<item id="wudoubing" posx="0" posy="-1"/>
+		<item id="changqiangbing" posx="-1" posy="0"/>
+		<item id="changqiangbing" posx="0" posy="0"/>
+		<item id="changqiangbing" posx="1" posy="0"/>
+		<item id="changqiangbing" posx="-1" posy="1"/>
+		<item id="changqiangbing" posx="0" posy="1"/>
+		<item id="changqiangbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 弓箭兵怪物 -->
+	<entity id="5002">
+
+		<item id="tengjiabing" posx="0" posy="-1"/>
+		<item id="gongjianbing" posx="-1" posy="0"/>
+		<item id="gongjianbing" posx="0" posy="0"/>
+		<item id="gongjianbing" posx="1" posy="0"/>
+		<item id="gongjianbing" posx="-1" posy="1"/>
+		<item id="gongjianbing" posx="0" posy="1"/>
+		<item id="gongjianbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 藤甲兵 怪物-->
+	<entity id="5003">
+		<item id="yexingren" posx="0" posy="-1"/>
+		<item id="tengjiabing" posx="-1" posy="0"/>
+		<item id="tengjiabing" posx="0" posy="0"/>
+		<item id="tengjiabing" posx="1" posy="0"/>
+		<item id="tengjiabing" posx="-1" posy="1"/>
+		<item id="tengjiabing" posx="0" posy="1"/>
+		<item id="tengjiabing" posx="1" posy="1"/>
+	</entity>
+        <!-- 武斗兵怪物 -->
+	<entity id="5004">
+		<item id="gongjianbing" posx="0" posy="-1"/>
+		<item id="wudoubing" posx="-1" posy="0"/>
+		<item id="wudoubing" posx="0" posy="0"/>
+		<item id="wudoubing" posx="1" posy="0"/>
+		<item id="changqiangbing" posx="-1" posy="1"/>
+		<item id="wudoubing" posx="0" posy="1"/>
+		<item id="changqiangbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 女兵怪物 -->
+	<entity id="5005">
+		<item id="wudoubing" posx="0" posy="-1"/>
+		<item id="yexingren" posx="-1" posy="0"/>
+		<item id="yexingren" posx="1" posy="0"/>
+		<item id="yexingren" posx="-1" posy="1"/>
+		<item id="yexingren" posx="0" posy="1"/>
+	</entity>
+        <!-- 散兵游勇1怪物 -->
+	<entity id="5006">
+		<item id="yexingren" posx="0" posy="-1"/>
+		<item id="yexingren" posx="-1" posy="0"/>
+		<item id="gongjianbing" posx="0" posy="0"/>
+		<item id="jiangling1" posx="1" posy="0"/>
+		<item id="huangjinbing" posx="-1" posy="1"/>
+		<item id="gongjianbing" posx="0" posy="1"/>
+		<item id="huangjinbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 散兵游勇2怪物 -->
+	<entity id="5007">
+		<item id="huangjinbing" posx="-1" posy="-1"/>
+		<item id="changqiangbing" posx="0" posy="-1"/>
+		<item id="gongjianbing" posx="1" posy="-1"/>
+		<item id="gongjianbing" posx="-1" posy="0"/>
+		<item id="changqiangbing" posx="0" posy="0"/>
+		<item id="tengjiabing" posx="1" posy="0"/>
+	</entity>
+        <!-- 散兵游勇3 怪物-->
+	<entity id="5008">
+		<item id="tengjiabing" posx="0" posy="-1"/>
+		<item id="tengjiabing" posx="-1" posy="0"/>
+		<item id="tengjiabing" posx="0" posy="0"/>
+		<item id="tengjiabing" posx="1" posy="0"/>
+		<item id="gongjianbing" posx="-1" posy="1"/>
+		<item id="gongjianbing" posx="0" posy="1"/>
+		<item id="gongjianbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 散兵游勇4怪物 -->
+	<entity id="5009">
+		<item id="tengjiabing" posx="-1" posy="-1"/>
+		<item id="tengjiabing" posx="0" posy="-1"/>
+		<item id="tengjiabing" posx="1" posy="-1"/>
+		<item id="wudoubing" posx="0" posy="0"/>
+		<item id="wudoubing" posx="1" posy="0"/>
+
+	</entity>
+        <!-- 散兵游勇5 怪物-->
+	<entity id="5010">
+		<item id="wudoubing" posx="1" posy="-1"/>
+		<item id="gongjianbing" posx="-1" posy="0"/>
+		<item id="gongjianbing" posx="-1" posy="1"/>
+		<item id="gongjianbing" posx="0" posy="1"/>
+		<item id="gongjianbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 散兵游勇6 怪物-->
+	<entity id="5011">
+		<item id="daobing" posx="-1" posy="-1"/>
+		<item id="daobing" posx="0" posy="-1"/>
+		<item id="daobing" posx="1" posy="-1"/>
+		<item id="changqiangbing" posx="-1" posy="0"/>
+		<item id="gongjianbing" posx="0" posy="1"/>
+		<item id="gongjianbing" posx="1" posy="1"/>
+	</entity>
+        <!-- 散兵游勇7 怪物-->
+	<entity id="5012">
+		<item id="jiangling1" posx="0" posy="-1"/>
+		<item id="huangjinbing" posx="-1" posy="0"/>
+		<item id="yexingren" posx="0" posy="0"/>
+		<item id="gongjianbing" posx="1" posy="0"/>
+		<item id="huangjinbing" posx="-1" posy="1"/>
+		<item id="yexingren" posx="0" posy="1"/>
+		<item id="gongjianbing" posx="1" posy="1"/>
+	</entity>
+
+</data>

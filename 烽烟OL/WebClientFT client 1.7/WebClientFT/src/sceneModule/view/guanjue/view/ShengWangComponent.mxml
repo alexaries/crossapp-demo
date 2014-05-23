@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow
+		xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*" 
+		  creationComplete="init()"
+		 xmlns:win="managers.*"
+		 width="575" height="288" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			import mx.events.FlexEvent;
+			import resource.AssetCenter;
+			import sceneModule.view.guanjue.event.ShengWangItemRenderEvent;
+			import util.CommonTools;
+
+			public static const NAME:String = "sceneModule.view.guanjue.view.ShengWangComponent";
+			
+			private function init():void
+			{
+				this.dispatchEvent(new ShengWangItemRenderEvent(ShengWangItemRenderEvent.SHNEGWANG_EVENT,this,true));
+				CommonTools.make_bitmap(shengWangBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_guanjue","shengWang_bg");
+//				source="assets/guanjue/shengwangBg.png"
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		<mx:Image id="shengWangBg" />
+		<s:List id="shengwangList" width="552" height="227"  selectedIndex="0" skinClass="style.Skin_CrotaBasicList" 
+				itemRenderer="sceneModule.view.guanjue.view.ShengWangItemRender" 
+				dataProvider="{SystemDataModel.shengWangInfo.wp}" x="12" y="47">
+			<s:layout>
+				<s:TileLayout horizontalGap="0" verticalAlign="bottom"   requestedColumnCount="3" requestedRowCount="2"  verticalGap="2" />
+			</s:layout>
+		</s:List>
+	<util:CommonButton 
+		skinClass="style.Skin_CrotaCloseButton111" 
+		id="clokeBtn" 
+		x="532" y="3"/>
+</win:BaseWindow>
+

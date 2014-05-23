@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow
+		xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*" 
+		  creationComplete="init()"
+		 xmlns:win="managers.*"
+		 width="1014" height="593" x="512" y="460" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.tavern.event.WOWItemRenderEvent;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+
+			private var timer:Timer;
+			private var delay:int = 1000;
+			[Bindable]
+			public var surTime:int;
+			
+			public static const NAME:String = "sceneModule.view.tavern.view.WOWTavernComponent";
+			
+			private function init():void
+			{
+				CommonTools.make_bitmap(petTavernbg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet","pet_tavern");
+				time_tile.text='00:00:00';
+			}
+			
+			private function setRewardTime(times:int):void{
+				surTime = times;
+				if(times > 0){
+					if(!timer){
+						timer = new Timer(delay);
+						timer.addEventListener(TimerEvent.TIMER,onTimer);
+						timer.start();
+					}else if(!timer.running){
+						timer.start();
+					}
+				}else{
+				}
+			}
+			
+			private function onTimer(evt:TimerEvent):void{
+				surTime = surTime - 1;
+				
+				if(surTime<0){
+					timer.stop();
+					timer.reset();
+				}else{
+					time_tile.text = ByteArrayUtil.formateTimeToString2(surTime*1000)
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		<mx:Image id="petTavernbg"   x="-1" y="-27"/>
+		<s:List id="WOWList" width="705" height="421"  selectedIndex="0" skinClass="style.Skin_CrotaBasicList" 
+				itemRenderer="sceneModule.view.tavern.view.WOWItemRender" 
+				dataProvider="{SystemDataModel.wow.wowInfo}" x="74" y="65">
+			<s:layout>
+				<s:TileLayout horizontalGap="0" verticalAlign="bottom"   requestedColumnCount="4" requestedRowCount="1"  verticalGap="0" />
+			</s:layout>
+		</s:List>
+	
+	<!--<s:List id="fashiList" 
+			skinClass="style.Skin_CrotaBasicList" 
+			dataProvider="{SystemDataModel.wow.fashiPet}"
+			x="792" y="138" 
+			itemRenderer="sceneModule.view.tavern.view.PetHeadItemRender"
+			width="125" height="125">
+		<s:layout>
+			<s:TileLayout requestedRowCount="2" requestedColumnCount="2" verticalGap="6" horizontalGap="6"/>
+		</s:layout>
+	</s:List>
+	<s:List id="zhanshiList0" 
+			skinClass="style.Skin_CrotaBasicList" 
+			dataProvider="{SystemDataModel.wow.zhanshiPet}"
+			x="791" y="278" 
+			itemRenderer="sceneModule.view.tavern.view.PetHeadItemRender"
+			width="125" height="125">
+		<s:layout>
+			<s:TileLayout requestedRowCount="2" requestedColumnCount="2" verticalGap="6" horizontalGap="6"/>
+		</s:layout>
+	</s:List>
+	<s:List id="youxiaList1" 
+			skinClass="style.Skin_CrotaBasicList" 
+			dataProvider="{SystemDataModel.wow.youxiaPet}"
+			x="791" y="420" 
+			itemRenderer="sceneModule.view.tavern.view.PetHeadItemRender"
+			width="125" height="125">
+		<s:layout>
+			<s:TileLayout requestedRowCount="2" requestedColumnCount="2" verticalGap="6" horizontalGap="6"/>
+		</s:layout>
+	</s:List>
+	-->
+	
+	<util:CommonButton 
+		id="luckExchange" x="535" y="20" 
+		skinClass="style.Skin_CrotaPackRedButton" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('tavern','wtC_xyzdh')}" />
+	
+	<component:CrotaBasicLabel text="1"  styleName="RANKINGFORMAT3" x="169" y="515" width="15" height="20" textAlign="center"/>
+	<component:CrotaBasicLabel id="time_tile" text="{setRewardTime(SystemDataModel.wow.refreshTime)}" styleName="RANKINGFORMAT1" x="484" y="514" width="78" height="20" textAlign="left"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.wow.shengYuCiShu}"  styleName="RANKINGFORMAT3" x="342" y="513" width="30" height="20" textAlign="left"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.wow.xingyunzhi}" styleName="RANKINGFORMAT1" x="749" y="37" width="40" height="20" textAlign="left"/>
+	
+	<component:CrotaBasicLabel text="1" styleName="RANKINGFORMAT3" x="223" y="47" width="20" height="20" textAlign="left"/>
+	
+	<component:CrotaBasicCheckBox   x="548" y="509" id="showPromptCB" />
+	
+	<util:CommonButton 
+		id="nowRefresh"  
+		x="674" y="504" 
+		skinClass="style.Skin_CrotaPackRedButton" 
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('tavern','wtC_ljsx')}" />
+	<util:CommonButton 
+		skinClass="style.Skin_CrotaCloseButton111" 
+		id="closeBtn" 
+		x="756" y="-8"/>
+</win:BaseWindow>
+

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute"
+    width="800" height="600"
+    creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.XMLListCollection;
+			import mx.events.MenuEvent;
+			
+			[Bindable] 
+			public var menuBarCollection:XMLListCollection;
+			
+			[Bindable]
+			public var masktypes:ArrayCollection = new ArrayCollection(
+			[ 
+				{label:"阻挡",data:0},
+				{label:"半透", data:1}, 
+				{label:"通过", data:2} 
+			]);
+			
+			[Bindable]
+			public var movetypes:ArrayCollection = new ArrayCollection(
+				[ 
+					{label:"点",data:0},
+					{label:"矩形", data:1}
+				]);
+			
+			public static const GRID_SIZE:int = 32;
+			private var _isspace:Boolean;
+			private var _dragmousePoint:Point;
+			private var _dragimgPoint:Point;
+			private var _ismovedown:Boolean;
+			private var _rectangPoint:Point;
+			private var _imgfile:FileReference;
+			private var _datafile:FileReference;
+			private var _savefile:FileReference;
+			private var _infos:Array;
+			private var _xcount:int;
+			private var _ycount:int;
+			
+			private var menubarXML:XMLList = 
+				<> 
+					<menuitem label="menu" data="top"> 
+						<menuitem label="open img" data="openimg"/>
+						<menuitem label="open data" data="opendata"/>
+						<menuitem label="save" data="save"/> 
+					</menuitem>
+				</>;
+			
+			private function init():void{
+				menuBarCollection = new XMLListCollection(menubarXML); 
+				if(stage){
+					addToStage();
+				}
+				else{
+					this.addEventListener(Event.ADDED_TO_STAGE, addToStage);
+				}
+			}
+			
+			private function addToStage(e:Event = null):void{
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, keydown);
+				stage.addEventListener(KeyboardEvent.KEY_UP, keyup);
+				this.addEventListener(Event.ENTER_FRAME, enterFrame);
+			}
+			
+			private function enterFrame(e:Event):void{
+				if(_ismovedown){
+					var mousePoint:Point = new Point(scrollcontain.mouseX, scrollcontain.mouseY);
+					var sizePoint:Point = new Point(scrollcontain.width - scrollcontain.horizontalScrollBar.height, scrollcontain.height - scrollcontain.horizontalScrollBar.height);
+					if(sizePoint.x - mousePoint.x < GRID_SIZE){
+						scrollcontain.horizontalScrollPosition += 5;
+						onmousemove();
+					}				
+					if(sizePoint.y - mousePoint.y < GRID_SIZE){
+						scrollcontain.verticalScrollPosition += 5;
+						onmousemove();
+					}
+				}
+				if(null != _infos){
+					infodis.graphics.clear();
+					var ylen:int = _infos.length;
+					for(var i:int = 0; i < ylen; i++){
+						var xlen:int = (_infos[i] as Array).length;
+						for(var j:int = 0; j < xlen; j++){
+							if(undefined == _infos[i][j]){
+								continue;
+							}
+							var t:int = _infos[i][j];
+							if(0 == t){
+								infodis.graphics.beginFill(0xFF0000, 0.5);
+								infodis.graphics.drawRect(j * GRID_SIZE, i * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+							}
+							else if(1 == t){
+								infodis.graphics.beginFill(0xFFFF00, 0.5);
+								infodis.graphics.drawRect(j * GRID_SIZE, i * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+							}
+						}
+					}
+				}
+			}
+			
+			
+			private function keydown(e:KeyboardEvent):void{
+				switch(e.keyCode){
+					case 32://空格
+						_isspace = true;
+						break;
+				}
+			}
+			
+			private function keyup(e:KeyboardEvent):void{
+				switch(e.keyCode){
+					case 32://空格
+						_isspace = false;
+						_dragimgPoint = null;
+						_dragmousePoint = null;
+						break;
+				}
+			}
+			
+			private function menuHandler(event:MenuEvent):void  { 
+				var data:String = event.item.@data;
+				if("openimg" == data){
+					openimg();
+				}
+				else if("opendata" == data){
+					openData();
+				}
+				else if("save" == data){
+					save();
+				}
+			} 
+			private function openimg():void{
+				var imagesFilter:FileFilter = new FileFilter("Images (*.jpg, *.gif, *.png)", "*.jpg;*.gif;*.png");
+				_imgfile = new FileReference();
+				_imgfile.addEventListener(Event.SELECT, onOpenImg);
+				_imgfile.browse([imagesFilter]);
+				trace("open select file window");
+			}
+			private function openData():void{
+				var filter:FileFilter = new FileFilter("data (*.int)", "*int");
+				_datafile = new FileReference();
+				_datafile.addEventListener(Event.SELECT, onOpenData);
+				_datafile.browse([filter]);
+			}
+			private function save():void{
+				var filter:FileFilter = new FileFilter("data (*.int)", "*int");
+				_savefile = new FileReference();
+				var ycount:int = _infos.length;
+				var newlins:Array = [];
+				for(var i:int = 0; i < ycount; i++){
+					var linepoints:Array = _infos[i] as Array;
+					var linestr:String = linepoints.join('-');
+					newlins.push(linestr);
+				}
+				var str:String = newlins.join(',');
+				_savefile.save(str, 'path.int');
+			}
+			
+			private function onOpenData(e:Event):void{
+				_datafile.addEventListener(Event.COMPLETE, onDataLoaded);
+				_datafile.load();
+			}
+			
+			private function onDataLoaded(e:Event):void{
+				var txt:String = _datafile.data.readUTFBytes(_datafile.data.length);
+				var lines:Array = txt.split(",");
+				var linelen:int = lines.length;
+				for(var i:int = 0; i < linelen; i++){
+					var curline:String = lines[i] as String;
+					var curlinearr:Array = curline.split("-");
+					var xlen:int = curlinearr.length;
+					for(var j:int = 0; j < xlen; j++){
+						var curpoint:int = int(curlinearr[j]);
+						_infos[i][j] = curpoint;
+					}
+				}
+			}
+			
+			private function onOpenImg(e:Event):void{
+				trace("selected img");
+				_imgfile.addEventListener(Event.COMPLETE, onImgLoaded);
+				_imgfile.load();
+			}
+			
+			private function onImgLoaded(e:Event):void{
+				trace("load file to bin");
+				var loader:Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(
+					Event.COMPLETE,
+					function(e:Event):void{
+						removeAll(img);
+						_xcount = Math.ceil(loader.width * 1.0 / GRID_SIZE);
+						_ycount = Math.ceil(loader.height * 1.0 / GRID_SIZE);
+						trace("img info ", _xcount, _ycount);
+						var tw:int = Math.ceil(loader.width * 1.0 / GRID_SIZE) * GRID_SIZE;
+						var th:int = Math.ceil(loader.height * 1.0 / GRID_SIZE) * GRID_SIZE;
+						movecontain.width = tw;
+						movecontain.height = th;
+						img.addChild(loader);
+						resetGrid();
+						trace("show img");
+					}
+				);
+				loader.loadBytes(_imgfile.data);
+			}
+			
+			private function resetGrid():void{
+				line.graphics.clear();
+				line.graphics.lineStyle(1, 0xFFFF00);
+				_infos = [];
+				var tw:int = Math.ceil(movecontain.width * 1.0 / GRID_SIZE);
+				var th:int = Math.ceil(movecontain.height * 1.0 / GRID_SIZE);
+				for(var j:int = 0; j <= th; j++){
+					line.graphics.moveTo(0, j * GRID_SIZE);
+					line.graphics.lineTo(movecontain.width, j * GRID_SIZE);
+					_infos[j] = [];
+					for(var m:int = 0; m <= tw; m++){
+						_infos[j][m] = 3;
+					}
+				}
+				for(var i:int = 0; i <= tw; i++ ){
+					line.graphics.moveTo(i * GRID_SIZE, 0);
+					line.graphics.lineTo(i * GRID_SIZE, movecontain.height);
+				}
+			}
+			
+			private function removeAll(dis:DisplayObjectContainer):void{
+				while(dis.numChildren > 0){
+					dis.removeChildAt(0);
+				}
+			}
+			
+			private function onmousedown(e:MouseEvent):void{
+				if(_isspace){
+					_dragimgPoint = new Point(scrollcontain.horizontalScrollPosition, scrollcontain.verticalScrollPosition);
+					_dragmousePoint = new Point(stage.mouseX, stage.mouseY);
+				}
+				else{
+					_ismovedown = true;
+					if(1 == movetype.value){
+						//rec
+						var p:Point = new Point(img.mouseX, img.mouseY);
+						_rectangPoint = p;
+					}
+					else{
+						onmousemove();
+					}
+				}
+			}
+			
+			private function onmouseup(e:MouseEvent):void{
+				_dragimgPoint = null;
+				_dragmousePoint = null;
+				_ismovedown = false;
+				_rectangPoint = null;
+			}
+			
+			private function onmousemove(e:MouseEvent = null):void{
+				if(null != _dragimgPoint){
+					var tx:int = stage.mouseX;
+					var ty:int = stage.mouseY;
+					var desx:int = tx - _dragmousePoint.x;
+					var desy:int = ty - _dragmousePoint.y;
+					scrollcontain.horizontalScrollPosition = _dragimgPoint.x - desx;
+					scrollcontain.verticalScrollPosition = _dragimgPoint.y - desy;
+				}
+				else{
+					if(_ismovedown){
+						var p:Point = new Point(img.mouseX, img.mouseY);
+						if(null == _rectangPoint){
+							//point
+							p = getposindex(p);
+							_infos[p.y][p.x] = masktype.value;
+						}
+						else{
+							//rec
+							var startindexpoint:Point = getposindex(_rectangPoint);
+							var endindexpoint:Point = getposindex(p);
+							for(var i:int = startindexpoint.x; i <= endindexpoint.x; i++){
+								for(var j:int = startindexpoint.y; j <= endindexpoint.y; j++){
+									_infos[j][i] = masktype.value;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			private function fixpos(p:Point):void{
+				p.x = int(p.x / GRID_SIZE) * GRID_SIZE;
+				p.y = int(p.y / GRID_SIZE) * GRID_SIZE;
+			}
+			
+			private function getposindex(p:Point):Point{
+				var np:Point = new Point();
+				np.x = int(p.x / GRID_SIZE);
+				np.y = int(p.y / GRID_SIZE);
+				return np;
+			}
+		]]>
+	</mx:Script>
+	<mx:MenuBar
+		id="m"
+		labelField="@label" height="20"
+		itemClick="menuHandler(event);"
+		dataProvider="{menuBarCollection}" />
+	<mx:Canvas id="scrollcontain" top="20" bottom="0" right="0" left="100">
+		<mx:Canvas id="movecontain" mouseDown="onmousedown(event)" mouseUp="onmouseup(event)" mouseMove="onmousemove(event)">
+			<mx:UIComponent id="img"/>
+			<mx:UIComponent id="line"/>
+			<mx:UIComponent id="infodis" />
+		</mx:Canvas>
+	</mx:Canvas>
+	<mx:Canvas left="0" right="100" bottom="0" top="20">
+		<mx:Label x="0" y="0" text="masktype:" fontSize="12"/>
+		<mx:ComboBox id="masktype" width="100" dataProvider="{masktypes}" x="0" y="20" fontSize="12"></mx:ComboBox>
+		<mx:Label x="0" y="68" text="movetype:" fontSize="12"/>
+		<mx:ComboBox id="movetype" width="100" dataProvider="{movetypes}" x="0" y="89" fontSize="12"></mx:ComboBox>
+	</mx:Canvas>
+</mx:WindowedApplication>

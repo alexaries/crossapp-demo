@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:win="managers.*"
+				width="816" height="433" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			public static const NAME:String="sceneModule.view.ui.GuideWindowLayer";
+			
+			[Bindable]
+			private var selfdata:Object = data;
+			
+			private function getImgBitMap(d:int):Bitmap{
+				var bitmap:Bitmap = new Bitmap();
+				bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_yd_"+d,d.toString());
+				return bitmap;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="taskGuideImg" source="{getImgBitMap(selfdata.tempTaskId)}" x="1" y="1"   maintainAspectRatio="false"/>
+	<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaPackRedButton"  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','gWL_wzdl')}" x="650" y="368" width="93" height="42"/>
+</win:BaseWindow>

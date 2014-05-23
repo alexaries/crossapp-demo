@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	width="624"
+	height="540"
+	xmlns:win="managers.*"
+	creationComplete="basewindow1_creationCompleteHandler(event)"
+	xmlns:view="sceneModule.view.pet.view.*"
+	xmlns:component="component.*"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			import mx.events.FlexEvent;
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			import util.CommonTools;
+			
+			[Bindable]
+			private var text1:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing', 'zxW_yjtb') + "</u>";
+			[Bindable]
+			private var text2:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing', 'zxW_yjsq') + "</u>";
+			[Bindable]
+			private var text3:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing', 'zxW_yjmc') + "</u>";
+			[Bindable]
+			private var text4:String = "<u>" + CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing', 'zxW_fwbb') + "</u>";
+			
+			public static const NAME:String = "sceneModule.view.zhanxing.view.ZhanXingWindow";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// source="{WebClient.host+'assets/zhanxing/zxBg.png'}"
+				CommonTools.make_bitmap(zhanxingBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_zhanxing", "zhanxing_bg");
+			
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="zhanxingBg"
+		x="-30"
+		y="-30" />
+	<s:List id="petList"
+		skinClass="style.Skin_CrotaBasicList"
+		dataProvider="{SystemDataModel.zhanxingInfo.xyList}"
+		x="75"
+		y="74"
+		itemRenderer="sceneModule.view.zhanxing.view.XingYunItemRender"
+		width="423"
+		height="202">
+		<s:layout>
+			<s:TileLayout requestedRowCount="3"
+				requestedColumnCount="6"
+				verticalGap="10"
+				horizontalGap="15" />
+		</s:layout>
+	</s:List>
+	<mx:Image id="bx1"
+		source='assets/zhanxing/bx1.png'
+		buttonMode="true"
+		useHandCursor="true"
+		x="73"
+		y="354" />
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','zxW_mzbx')}"
+		fontSize="12"
+		color="#ff9900"
+		x="88"
+		y="423" />
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','zxW_tzbx')}"
+		fontSize="12"
+		color="#ff9900"
+		x="178"
+		y="423" />
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','zxW_yzbx')}"
+		fontSize="12"
+		color="#ff9900"
+		x="266"
+		y="423" />
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','zxW_jzbx')}"
+		fontSize="12"
+		color="#ff9900"
+		x="355"
+		y="423" />
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','zxW_smbx')}"
+		fontSize="12"
+		color="#ff9900"
+		x="444"
+		y="423" />
+	<mx:Image id="bx2"
+		source='assets/zhanxing/bx2.png'
+		buttonMode="true"
+		useHandCursor="true"
+		enabled="{SystemDataModel.zhanxingInfo.curBX==2}"
+		filters="{SystemDataModel.zhanxingInfo.curBX==2?new Array():new Array(CommonTools.changeColorFilter())}"
+		x="161"
+		y="354" />
+	<mx:Image id="bx3"
+		source='assets/zhanxing/bx3.png'
+		buttonMode="true"
+		useHandCursor="true"
+		enabled="{SystemDataModel.zhanxingInfo.curBX==3}"
+		filters="{SystemDataModel.zhanxingInfo.curBX==3?new Array():new Array(CommonTools.changeColorFilter())}"
+		x="250"
+		y="354" />
+	<mx:Image id="bx4"
+		source='assets/zhanxing/bx4.png'
+		buttonMode="true"
+		useHandCursor="true"
+		enabled="{SystemDataModel.zhanxingInfo.curBX==4}"
+		filters="{SystemDataModel.zhanxingInfo.curBX==4?new Array():new Array(CommonTools.changeColorFilter())}"
+		x="340"
+		y="354" />
+	<mx:Image id="bx5"
+		source='assets/zhanxing/bx5.png'
+		buttonMode="true"
+		useHandCursor="true"
+		enabled="{SystemDataModel.zhanxingInfo.curBX==5}"
+		filters="{SystemDataModel.zhanxingInfo.curBX==5?new Array():new Array(CommonTools.changeColorFilter())}"
+		x="429"
+		y="354" />
+	<component:CrotaBasicText id="iTxt1"
+		htmlText="{text1}"
+		fontSize="12"
+		color="#ffff00"
+		buttonMode="true"
+		useHandCursor="true"
+		x="101"
+		y="308"
+		width="80"
+		textAlign="left" />
+	<component:CrotaBasicText id="iTxt2"
+		htmlText="{text2}"
+		fontSize="12"
+		color="#ffff00"
+		buttonMode="true"
+		useHandCursor="true"
+		x="212"
+		y="308"
+		width="80"
+		textAlign="left" />
+	<component:CrotaBasicText id="iTxt3"
+		htmlText="{text3}"
+		fontSize="12"
+		color="#ffff00"
+		buttonMode="true"
+		useHandCursor="true"
+		x="316"
+		y="308"
+		width="84"
+		textAlign="left" />
+	<component:CrotaBasicText id="iTxt4"
+		htmlText="{text4}"
+		fontSize="12"
+		color="#ffff00"
+		buttonMode="true"
+		useHandCursor="true"
+		x="419"
+		y="308"
+		width="80"
+		textAlign="left" />
+	<util:CommonButton id="closeBtn"
+		skinClass="style.Skin_CrotaCloseButton111"
+		x="491"
+		y="27" />
+	<component:CrotaBasicLabel text="{SystemDataModel.zhanxingInfo.maxCount}"
+		styleName="RANKINGFORMAT1"
+		x="325"
+		y="443"
+		width="87"
+		textAlign="left" />
+	<util:CommonButton id="cBtn"
+		skinClass="style.Skin_CrotaPackRedButton"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('zhanxing','zxW_jfdh')}"
+		x="383"
+		y="440" />
+</win:BaseWindow>

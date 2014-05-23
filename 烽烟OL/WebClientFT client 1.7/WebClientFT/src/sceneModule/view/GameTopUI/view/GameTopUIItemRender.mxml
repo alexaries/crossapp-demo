@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer autoDrawBackground="false"
+	buttonMode="true"
+	creationComplete="itemrenderer1_creationCompleteHandler(event)"
+	fontWeight="normal"
+	height="82"
+	useHandCursor="true"
+	width="70"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.GameTopUI.vo.GameTopUIVO;
+			
+			import style.Skin_CrotaRewardButton;
+			
+			import util.ByteArrayUtil;
+			private var timer:Timer;
+			private var delay:int = 1000;
+			[Bindable]
+			public var surTime:int;
+			
+			private function setRewardTime(times:int):void {
+				surTime = times;
+				if (times > 0) {
+					if (!timer) {
+						timer = new Timer(delay);
+						timer.addEventListener(TimerEvent.TIMER, onTimer);
+						timer.start();
+					} else if (!timer.running) {
+						timer.start();
+					}
+				} else {
+					time_tile.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('GameTopUI', 'gtuIR_ljlq');
+				}
+			}
+			
+			override public function set data(value:Object):void {
+				super.data = value;
+				itemrenderer1_creationCompleteHandler();
+			}
+			
+			private function onTimer(evt:TimerEvent):void {
+				surTime = surTime - 1;
+				
+				if (surTime < 0) {
+					timer.stop();
+					timer.reset();
+					time_tile.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('GameTopUI', 'gtuIR_ljlq');
+				} else {
+					time_tile.text = ByteArrayUtil.formateTimeToString2(surTime * 1000)
+				}
+			}
+			
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent = null):void {
+				if (this.data) {
+					if (this.data.anouType == 4) {
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaNewRewardButton));
+					} else if (this.data.anouType == 5) {
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaLoginRewardButton));
+					} else if (this.data.anouType == 8) {
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaRankingJJButton));
+					} else if (this.data.anouType == 9) {
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaMainGroupButton));
+					} else if (this.data.anouType == 10) {
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaGroupBattleButton));
+					} else if (this.data.anouType == 1) {
+						
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaRewardJiangLiButton));
+					} else {
+						iBtn.setStyle('skinClass', Class(style.Skin_CrotaRewardButton));
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	<mx:SWFLoader id="iEff"
+		mouseEnabled="false"
+	    mouseChildren="false"
+		source='assets/reward/rewardEff.swf'
+		visible="{GameTopUIVO(data).anouType == 3 || GameTopUIVO(data).anouType == 5 || surTime &lt; 0}"
+		x="-26"
+		y="-30"
+		scaleX="0.75"
+	    scaleY="0.75"/>
+	<util:CommonButton id="iBtn"/>
+	<component:CrotaBasicLabel color="#E8FC05"
+		fontSize="12"
+		id="time_tile"
+		text="{setRewardTime(data.surplusTimes)}"
+		textAlign="center"
+		visible="{GameTopUIVO(data).anouType == 4}"
+		width="71"
+		x="0"
+		y="58" />
+</s:ItemRenderer>

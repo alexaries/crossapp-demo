@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 好友界面 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*"
+		 creationComplete="init()"
+		 width="849" height="513">
+	<fx:Script>
+		<![CDATA[
+			import flash.display.Bitmap;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.friend.event.MediatorRegisterFriendEvent;
+			
+//			public var bg_bitmap:Bitmap;
+			
+			private function init():void {
+				this.dispatchEvent(new MediatorRegisterFriendEvent(MediatorRegisterFriendEvent.MR_FRIEND_VIEW,this,true));
+				
+//				bg_bitmap = new Bitmap();
+//				img_firend_bg.source = bg_bitmap;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<mx:Image id="img_firend_bg"/>
+	<!-- 好友列表 -->
+	<s:List id="friends_list"
+			skinClass="style.Skin_CrotaBasicList"
+			itemRenderer="sceneModule.view.friend.view.NFriendItemRender" 
+			x="35" y="110">
+		<s:layout>
+			<s:TileLayout verticalGap="0" horizontalGap="0"/>
+		</s:layout>
+	</s:List>
+	
+	<!-- 页数信息 -->
+	<component:CrotaBasicLabel 
+		id="page_info"
+		styleName="MAINMENUROLEFONT12a18c70"
+		x="338" y="424"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ncev_ys')}"
+		textAlign="center" width="38"/>
+	<util:CommonButton id="pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  y="424" x="318"/>
+	<util:CommonButton id="next_btn"
+			  x="376" y="424"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	
+	<!-- 功能按钮 -->
+	<util:CommonButton id="btn_addfriend"
+			  x="601" y="405"
+			  skinClass="style.Skin_CrotaCommonButton3" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','mmfV_tjhy')}" />
+	<util:CommonButton id="btn_changestate"
+			  x="710" y="405"
+			  skinClass="style.Skin_CrotaCommonButton3" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','mmfV_xgxq')}" />
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="790" y="6"/>
+</s:Group>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="1010" height="570"
+		 creationComplete="initApp();"
+		 xmlns:win="managers.*"
+		 xmlns:view="sceneModule.view.battle.view.*">
+	<fx:Script>
+		<![CDATA[
+			import Animation.AnimationOnceManager;
+			
+			import model.SystemDataModel;
+			import model.URLConst;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.CollectionEvent;
+			
+			import resource.AssetCenter;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.battle.view.BattleFlipComponent";
+			
+			private var effectMCPos:Array = new Array(new Point(66,115),new Point(242,115),new Point(419,115),new Point(593,115),new Point(770,115),
+				                                      new Point(66,252),new Point(242,252),new Point(419,252),new Point(593,252),new Point(770,252));
+			private function initApp():void{
+				
+				timeAnimation.source = AssetCenter.getInstance().get_mc_form_pacakge("ui_battle_suc",'flip_time_swf',onTimeMCloaded);
+				effectMC.source = AssetCenter.getInstance().get_mc_form_pacakge("ui_battle_suc",'flip_effect_swf',onOverEffectLoaded);
+				CommonTools.make_bitmap(bgImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_battle_suc","flip_bg");
+				
+				
+			}
+			public var mc:MovieClip;
+			private function onTimeMCloaded(m_c:MovieClip):void{
+				timeAnimation.source = m_c;
+				mc = m_c;
+				mc.gotoAndStop(1);
+			}
+			private function onOverEffectLoaded(mc:MovieClip):void{
+				effectMC.source = mc;
+			}
+			
+			
+			/**
+			 * 翻动一张牌子
+			 */
+			public function turnOneCardFunction(index:int,roleName:String):void{
+				SystemDataModel.battleOverItemInfoCollection[index - 1].nickName = roleName;
+				
+				var animation:AnimationOnceManager = new AnimationOnceManager(URLConst.BATTLE_FLIPEFFECT_URL);
+				animation.addToParent();
+				var pos:Point = effectMCPos[index-1];
+				var m_x:int = FlexGlobals.topLevelApplication.width - 1000;
+				if(m_x<0)m_x=0;
+				var m_y:int = FlexGlobals.topLevelApplication.height - 570;
+				if(m_y<0)m_y=0;
+				if(m_y>80)m_y=80;
+				animation.setPosition(pos.x-45+m_x/2,pos.y-65+m_y/2);
+				animation.play();
+			}
+			
+			//处理鼠标经过的效果
+			private function onMouseOver(index:int):void{
+				if(effectMC){
+					var pos:Point = effectMCPos[index];
+					effectMC.x = pos.x;
+					effectMC.y = pos.y;
+					effectMC.visible = true;
+				}
+			}
+			private function onMouseOut(index:int):void{
+				if(effectMC && effectMC.visible){
+					effectMC.visible = false;
+				}
+			}
+			
+			public function destoryThisCache():void{
+				bgImg.source = "";
+				if(timeAnimation){
+					timeAnimation.unloadAndStop();
+					timeAnimation = null;
+				}
+				
+				if(effectMC){
+					effectMC.unloadAndStop();
+					effectMC = null;
+				}
+				
+				
+				mc = null;
+				
+				timeAnimation0.destoryThisCompCache();
+				timeAnimation1.destoryThisCompCache();
+				timeAnimation2.destoryThisCompCache();
+				timeAnimation3.destoryThisCompCache();
+				timeAnimation4.destoryThisCompCache();
+				timeAnimation5.destoryThisCompCache();
+				timeAnimation6.destoryThisCompCache();
+				timeAnimation7.destoryThisCompCache();
+				timeAnimation8.destoryThisCompCache();
+				timeAnimation9.destoryThisCompCache();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="1000" height="513">
+		<mx:Image id="bgImg" />
+		<mx:SWFLoader id="timeAnimation" x="879" y="10"/>
+		<mx:SWFLoader id="effectMC" mouseEnabled="false" visible="false"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(0)" mouseOut="onMouseOut(0)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(0)}" id="timeAnimation0" x="55" y="113"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(1)" mouseOut="onMouseOut(1)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(1)}" id="timeAnimation1" x="232" y="113"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(2)" mouseOut="onMouseOut(2)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(2)}" id="timeAnimation2" x="409" y="113"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(3)" mouseOut="onMouseOut(3)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(3)}" id="timeAnimation3" x="583" y="113"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(4)" mouseOut="onMouseOut(4)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(4)}" id="timeAnimation4" x="760" y="113"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(5)" mouseOut="onMouseOut(5)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(5)}" id="timeAnimation5" x="55" y="250"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(6)" mouseOut="onMouseOut(6)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(6)}" id="timeAnimation6" x="232" y="250"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(7)" mouseOut="onMouseOut(7)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(7)}" id="timeAnimation7" x="409" y="250"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(8)" mouseOut="onMouseOut(8)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(8)}" id="timeAnimation8" x="583" y="250"/>
+		<view:BattleFlipItemRender mouseOver="onMouseOver(9)" mouseOut="onMouseOut(9)" data="{SystemDataModel.battleOverItemInfoCollection.getItemAt(9)}" id="timeAnimation9" x="760" y="250"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="posImage" source="assets/mainui/pos_info_bg.png"/>
+	<component:CrotaBasicLabel 
+		text="{SystemDataModel.sceneName}" 
+		color="#edc403" fontSize="18" 
+		x="36" y="30" width="160" textAlign="center"/>
+</s:Group>

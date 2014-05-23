@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" fontSize="14"
+		 width="{application.width}" height="{application.height}"
+		 maxHeight="650"
+		 creationComplete="init()" xmlns:component="component.*">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import Animation.Animation;
+			
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import flash.events.Event;
+			
+			import logonModule.event.LoginPageEvent;
+			
+			import model.GuideInfo;
+			import model.SystemDataModel;
+			import model.URLConst;
+			
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			
+			import util.ByteArrayUtil;
+			
+			private var mySo:SharedObject;//添加本地共享对象来保存用户名密码
+			
+			private const LOGIN_TYPE_NAME:int=1;
+			private const LOGIN_TYPE_PASS:int=2;
+			
+			[Bindable]private var flag1:Boolean;
+			[Bindable]private var flag2:Boolean;
+			[Bindable]private var loginBtnFlag:Boolean;
+			
+			[Bindable]
+			private var application:Object = FlexGlobals.topLevelApplication;
+			
+			private function init():void{	
+				mySo = SharedObject.getLocal("webClient");
+				if(mySo.data.saveUserNameSelected!=undefined)
+				{
+					saveNameChkBox.selected = mySo.data.saveUserNameSelected; 
+					if(mySo.data.saveUserNameSelected)
+					{
+						usernameTxt.text=mySo.data.userName;
+						validateLoginInfo(LOGIN_TYPE_NAME);
+					}
+				}	   
+				if(mySo.data.savePwdSelected!=undefined)
+				{
+					savePassChkBox.selected = mySo.data.savePwdSelected; 
+					if(mySo.data.savePwdSelected)
+					{	   	   
+						passwordTxt.text=mySo.data.userPassWord; 	
+						validateLoginInfo(LOGIN_TYPE_PASS);
+					} 
+				}
+				if(this.stage){
+					add_to_stage();
+				}
+				else{
+					this.addEventListener(Event.ADDED_TO_STAGE,add_to_stage);
+				}
+			}
+			
+			private function add_to_stage(e:Event=null):void{
+				
+			}
+		
+			//保存账号到本地           
+			private function saveUserPassWord():void {
+				mySo = SharedObject.getLocal("webClient");
+				mySo.clear();
+//				
+				if(saveNameChkBox.selected)
+				{
+					mySo.data.userName = usernameTxt.text; 
+				} 	          
+				mySo.data.saveUserNameSelected = saveNameChkBox.selected;  	      
+				if(savePassChkBox.selected)
+				{
+					mySo.data.userPassWord = passwordTxt.text; 
+				}          
+				mySo.data.savePwdSelected = savePassChkBox.selected;        
+				var flushStatus:String = null;
+				try {
+					flushStatus = mySo.flush();
+				} catch (error:Error) {
+					trace("保存出错，flush() error");
+				}
+				if (flushStatus != null) {
+					switch (flushStatus) {
+						case SharedObjectFlushStatus.PENDING:                        
+							mySo.addEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
+							break;
+						case SharedObjectFlushStatus.FLUSHED:                        
+							break;
+					}
+				}
+				
+			} 
+			
+			//处理保存密码到本地的异常问题
+			private function onFlushStatus(event:NetStatusEvent):void {
+				mySo.removeEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
+			}
+			private function nowRegisterBtnClick():void{
+//				dispatchEvent(new RegPageEvent(RegPageEvent.SWITCH_TO_REGPAGEVIEW));   2012.3.1
+			}
+			private function HomePageBtn():void{
+				
+//			    var packageWin:PackageWindow = new PackageWindow();
+//				this.addElement(packageWin);
+//				packageWin.x = this.parentApplication.width/2 - packageWin.width/2;
+//				packageWin.y = this.parentApplication.height/2 - packageWin.height/2;
+			}
+			private function enterGameClick():void{
+				dispatchEvent(new LoginPageEvent(LoginPageEvent.ENTER_GAME));
+				saveUserPassWord();
+			}
+			
+			private function validateLoginInfo(regType:int):void{
+				switch(regType){
+					case LOGIN_TYPE_NAME:
+						flag1 = validateName();
+						break;
+					case LOGIN_TYPE_PASS:
+						flag2 = validatePass();
+						break;
+				}
+				if(!flag1 || !flag2){
+					loginBtnFlag = false;
+					return;
+				}
+				loginBtnFlag = true;
+			}
+			
+			private function check_login_able(local:Boolean, msg_able:Boolean):Boolean{
+				return local && msg_able;
+			}
+			
+			private function validateName():Boolean{
+				if(usernameTxt.text.toString().length<4 || usernameTxt.text.toString().length>30){
+					trace("用户名长度为4-30");
+					return false;
+				}
+				return true;
+				
+			}
+			private function validatePass():Boolean{
+				if(passwordTxt.text.toString().length<6 || passwordTxt.text.toString().length>20){
+					trace("密码长度为6-20");
+					return false;
+				}
+				return true;
+			}
+			
+		]]>
+	</fx:Script>
+	<mx:Canvas width="100%" height="100%" backgroundColor="#000000">
+		<s:SkinnableContainer id="l_c" x="{(this.width - l_c.width)/2}" y="{(this.height - l_c.height)/2}">
+			<mx:Image source='assets/n_login/loginBg.png'/>
+			<component:CrotaChatTextInputLoginbar x="104" y="40" id="usernameTxt" change="validateLoginInfo(LOGIN_TYPE_NAME)" restrict="0-9a-zA-Z_^ " width="139" height="25" styleName="REGISTERTEXTINPUTTEXTFORMAT"/>
+			<component:CrotaChatTextInputLoginbar x="104" y="75" id="passwordTxt" restrict="0-9a-zA-Z_^ " displayAsPassword="true" styleName="REGISTERTEXTINPUTTEXTFORMAT" change="validateLoginInfo(LOGIN_TYPE_PASS)" width="142" height="25"/>
+			<component:CrotaBasicCheckBox x="66" y="106" id="saveNameChkBox"/>
+			<component:CrotaBasicCheckBox x="165" y="106" id="savePassChkBox"/>
+			<component:CrotaEnterGameButton x="71" y="140" id="enterGame" click="enterGameClick()" enabled="{check_login_able(loginBtnFlag, !model.SystemDataModel.is_logining)}" width="182" height="29"/>
+		</s:SkinnableContainer>
+	</mx:Canvas>
+	<!--<component:CrotaBasicLabel id="homePageLabel" x="824" y="538" text="首次进入" click="HomePageBtn()">
+		<mx:htmlText>
+			<![CDATA[
+			<font color="#ffffff" size="12"><u>官方主页</u></font>
+			]]>
+		</mx:htmlText>
+	</component:CrotaBasicLabelFliter>-->
+</s:Group>

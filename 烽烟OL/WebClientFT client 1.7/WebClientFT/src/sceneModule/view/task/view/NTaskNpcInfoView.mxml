@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NPC任务信息界面 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*"
+		 width="420" height="100"
+		 creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.GlowFilter;
+			
+			import model.ProConst;
+			
+			import resource.CrotaResourceConfig;
+			
+			public var data:Object;
+			
+			private function init():void{
+				var growFilte:GlowFilter = new GlowFilter(ProConst.BORDER_COLOR,0.7,2,2,5,1);			
+				var arr:Array = [growFilte];
+				l_des.filters =arr;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- NPC名字 -->
+	<component:CrotaBasicLabel
+		id="l_ncp_name" 
+		fontWeight="bold"
+		styleName="TASK_NPC_NAMW"
+		x="24" y="7" visible="false"/>
+	<mx:Text
+		id="l_des"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntniV_rwsm')}"
+	    selectable="false"
+		x="24" y="25" width="408"/>
+	<component:CrotaBasicLabel
+		id="btn_next" 
+		styleName="TASK_USER_WORD"
+       	buttonMode="true"
+		x="67" y="80" width="365" textDecoration="underline"/>
+	<!--<mx:Text
+		id="btn_next"
+		selectable="false"
+		rollOver="focusManager.deactivate()"
+		rollOut="focusManager.activate()" 
+		x="24" y="80" width="408"/>-->
+	<!--<util:CommonButton 
+		id="btn_next" 
+		skinClass="style.Skin_CrotaCommonButton3" 
+		label="下一页"
+		x="322" y="55"/>-->
+</s:Group>

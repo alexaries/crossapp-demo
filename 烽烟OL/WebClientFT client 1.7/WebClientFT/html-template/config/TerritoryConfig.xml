@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+      <!--@id 領地類型 用於彈出相對應的介面-->
+      <!--@name 領地建築名稱-->
+      <!--@icon 領地建築圖片資源的資源名-->
+      <!--@reLevel 當領地建築顯示需要等級限制時需要此值-->
+      <!--@des 領地建築功能類型描述-->
+      <!--@posx @posy 領地建築所在領地地圖的座標-->
+     <territory id="1" name="軍營" icon="1" reLevel="1" des="這是軍營系統" posx="140" posy="304" textPosx="18" textPosy="-5" textColor="#e17909"/>
+     <territory id="2" name="探寶" icon="2" reLevel="1" des="這是探寶系統" posx="370" posy="250" textPosx="30" textPosy="6" textColor="#e17909"/>
+     <territory id="3" name="神格" icon="3" reLevel="1" des="這是神格系統" posx="708" posy="334" textPosx="20" textPosy="-10" textColor="#e17909"/>
+     <territory id="4" name="官爵" icon="4" reLevel="1" des="這是官爵系統" posx="126" posy="29" textPosx="15" textPosy="6" textColor="#e17909"/>
+      <territory id="5" name="鐵礦洞" icon="5" reLevel="1" des="這是鐵礦洞系統" posx="559" posy="277" textPosx="75" textPosy="-80" textColor="#e17909"/>
+</data>

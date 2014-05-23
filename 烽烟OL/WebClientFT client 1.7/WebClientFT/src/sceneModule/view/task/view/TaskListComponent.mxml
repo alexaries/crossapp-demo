@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="560" height="250" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			
+			public function set NPC_ID(value:int):void{
+				switch(value){
+					case ProConst.NPC_SHOP:
+						//roleImage.source = "assets/npcImage/NPC2.png";
+//						roleImage.width = 250;
+//						roleImage.height = 379;
+//						roleImage.x = 14;
+//						roleImage.y = -103;
+						//npcLabTitle.x = 202;
+						//npcLabTitle.y = 37;
+						taskList.x = 204;
+						taskList.y = 96;
+						break;
+					case ProConst.NPC_UNITING:
+						//roleImage.source = "assets/npcImage/NPC4.png";
+//						roleImage.width = 300;
+//						roleImage.height = 379;
+//						roleImage.x = 315;
+//						roleImage.y = -150;
+						//npcLabTitle.x = 70;
+						//npcLabTitle.y = 35;
+						taskList.x = 120;
+						taskList.y = 89;
+						break;
+					case ProConst.NPC_TRAINING:
+						//roleImage.source = "assets/npcImage/NPC1.png";
+//						roleImage.width = 250;
+//						roleImage.height = 379;
+//						roleImage.x = 14;
+//						roleImage.y = -103;
+						//npcLabTitle.x = 202;
+						//npcLabTitle.y = 37;
+						taskList.x = 204;
+						taskList.y = 96;
+						break;
+					case ProConst.NPC_LODGEHOUSE:
+						//roleImage.source = "assets/npcImage/NPC3.png";
+//						roleImage.width = 250;
+//						roleImage.height = 379;
+//						roleImage.x = 3;
+//						roleImage.y = -148;
+						//npcLabTitle.x = 202;
+						//npcLabTitle.y = 37;
+						taskList.x = 204;
+						taskList.y = 96;
+						break;
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+		<!--<mx:Image id="roleImage" source="assets/npcImage/NPC1.png" width="250" height="379" x="304" y="-146"/>-->
+		<s:List id="taskList" dragEnabled="false" dropEnabled="false" width="320" height="123" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.task.view.TaskListItemRender" x="120" y="89" styleName="ROLETEXT">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1" requestedRowCount="5"/>
+			</s:layout>
+		</s:List>
+		<!--<component:CrotaBasicLabel id="npcLabTitle" text="泰勒任务店" styleName="ROLETEXT" x="122" y="29" width="317" height="51"/>-->
+	<!--</s:SkinnableContainer>-->
+	
+</s:Group>

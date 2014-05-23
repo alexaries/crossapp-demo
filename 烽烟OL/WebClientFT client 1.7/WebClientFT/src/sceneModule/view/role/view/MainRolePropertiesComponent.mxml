@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="180" height="160" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<!--物攻-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gj')}" styleName="MAINMENUROLEFONT12a18c70"  x="0" y="75"/>
+		<component:CrotaBasicLabel id="phyAttack" 
+								   text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.physicalAttack == 0 ? '0' : SystemDataModel.roleInfo.physicalAttack.toFixed(0)) : (SystemDataModel.otherInfo.physicalAttack == 0 ? '0' : SystemDataModel.otherInfo.physicalAttack.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="75"/>
+		<!--物防-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_wf')}" styleName="MAINMENUROLEFONT12a18c70" x="0" y="92"/>
+		<component:CrotaBasicLabel id="phyDefense" 
+								   text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.physicalDefense == 0 ? '0' : SystemDataModel.roleInfo.physicalDefense.toFixed(0)) : (SystemDataModel.otherInfo.physicalDefense == 0 ? '0' : SystemDataModel.otherInfo.physicalDefense.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="92"/>
+		<!--魔攻-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mg')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="75"/>
+		<component:CrotaBasicLabel id="magAttack" 
+								   text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.magicAttack == 0 ? '0' : SystemDataModel.roleInfo.magicAttack.toFixed(0)) : (SystemDataModel.otherInfo.magicAttack == 0 ? '0' : SystemDataModel.otherInfo.magicAttack.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="75"/>
+		<!--魔防-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mf')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="92"/>
+		<component:CrotaBasicLabel id="magDefense" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.magicDefense == 0 ? '0' : SystemDataModel.roleInfo.magicDefense.toFixed(0)) : (SystemDataModel.otherInfo.magicDefense == 0 ? '0' : SystemDataModel.otherInfo.magicDefense.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="92"/>
+		<!--速度-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gs')}" styleName="MAINMENUROLEFONT12a18c70" x="0" y="109"/>
+		<component:CrotaBasicLabel id="speedLab" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? SystemDataModel.roleInfo.speed.toFixed(1):SystemDataModel.otherInfo.speed.toFixed(1)}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="109"/>
+		<!--暴击-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_bj')}" styleName="MAINMENUROLEFONT12a18c70" x="0" y="126"/>
+		<component:CrotaBasicLabel id="critRateLab" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? SystemDataModel.roleInfo.critRate.toFixed(2):SystemDataModel.otherInfo.critRate.toFixed(2)+'%'}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="126"/>
+		<!--命中-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mz')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="109"/>
+		<component:CrotaBasicLabel id="hitRateLab" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.hitRate == 0 ? '0' : SystemDataModel.roleInfo.hitRate.toFixed(0)) : (SystemDataModel.otherInfo.hitRate == 0 ? '0' : SystemDataModel.otherInfo.hitRate.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="109"/>
+		<!--闪避-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sb')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="126"/>
+		<component:CrotaBasicLabel id="dodgeRateLab" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? SystemDataModel.roleInfo.dodgeRate.toFixed(2):SystemDataModel.otherInfo.dodgeRate.toFixed(2)+'%'}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="126"/>
+		<!--力量-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ll')}" styleName="MAINMENUROLEFONT12a18c70" x="0" y="3"/>
+		<component:CrotaBasicLabel id="manualStrLab" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualStr == 0 ? '0' : SystemDataModel.roleInfo.manualStr.toFixed(0)) : (SystemDataModel.otherInfo.manualStr == 0 ? '0' : SystemDataModel.otherInfo.manualStr.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe"  x="27" y="3"/>
+		<!--智力-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zl')}" styleName="MAINMENUROLEFONT12a18c70" x="0" y="20"/>
+		<component:CrotaBasicLabel id="wisLab" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualWis == 0 ? '0' : SystemDataModel.roleInfo.manualWis.toFixed(0)) : (SystemDataModel.otherInfo.manualWis == 0 ? '0' : SystemDataModel.otherInfo.manualWis.toFixed(0))}"  
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="20"/>
+		<!--耐力-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nl')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="20"/>
+		<component:CrotaBasicLabel id="vitLab"  text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualVit == 0 ? '0' : SystemDataModel.roleInfo.manualVit.toFixed(0)) : (SystemDataModel.otherInfo.manualVit == 0 ? '0' : SystemDataModel.otherInfo.manualVit.toFixed(0))}" 
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="20"/>
+		<!--精神-->
+		<!--<component:CrotaBasicLabel text="精神" styleName="MAINMENUROLEFONT12a18c70" x="0" y="37"/>
+		<component:CrotaBasicLabel id="manualSpiLab"  text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualSpi == 0 ? '0' : SystemDataModel.roleInfo.manualSpi.toFixed(0)) : (SystemDataModel.otherInfo.manualSpi == 0 ? '0' : SystemDataModel.otherInfo.manualSpi.toFixed(0))}"  
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="37"/>-->
+		<!--敏捷-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mj')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="3"/>
+		<component:CrotaBasicLabel id="dexLab"  text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualDex == 0 ? '0' : SystemDataModel.roleInfo.manualDex.toFixed(0)) : (SystemDataModel.otherInfo.manualDex == 0 ? '0' : SystemDataModel.otherInfo.manualDex.toFixed(0))}"  
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="3"/>
+		<!--反击-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fanji')}" styleName="MAINMENUROLEFONT12a18c70" x="0" y="143"/>
+		<component:CrotaBasicLabel id="dexLab1"  text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualDex == 0 ? '0' : SystemDataModel.roleInfo.manualDex.toFixed(0)) : (SystemDataModel.otherInfo.manualDex == 0 ? '0' : SystemDataModel.otherInfo.manualDex.toFixed(0))}"  
+								   styleName="MAINMENUROLEFONT12bebebe" x="27" y="143"/>
+		<!--破甲-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_pojia')}" styleName="MAINMENUROLEFONT12a18c70" x="83" y="143"/>
+		<component:CrotaBasicLabel id="dexLab2"  text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.manualDex == 0 ? '0' : SystemDataModel.roleInfo.manualDex.toFixed(0)) : (SystemDataModel.otherInfo.manualDex == 0 ? '0' : SystemDataModel.otherInfo.manualDex.toFixed(0))}"  
+								   styleName="MAINMENUROLEFONT12bebebe" x="110" y="143"/>
+	</s:SkinnableContainer>
+</s:Group>

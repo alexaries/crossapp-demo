@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" width="55" height="55" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import sceneModule.view.zhanxing.event.JiFengItemRenderEvent;
+			
+			import util.CommonTools;
+			private var bodyPos:int=0;//所在角色身上的位置0代表是背包里的
+			private var roleOrPetId:int;//所在角色的id
+			
+			public static var XINGYUNFROMBODY:String = "xingYunFromBody";
+			
+			public static var XINGYUNFROMPACK:String = "xingYunFromPack";
+			
+			public function set _bodyPos(p:int):void{
+				bodyPos = p;
+			}
+			
+			public function get _bodyPos():int{
+				return bodyPos;
+			}
+			
+			public function set _roleOrPetId(id:int):void{
+				roleOrPetId = id;
+			}
+			
+			public function get _roleOrPetId():int{
+				return roleOrPetId;
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.dispatchEvent(new JiFengItemRenderEvent(JiFengItemRenderEvent.BODYORPACKXYITEMRENDEREVENT,this,true));
+			}
+			
+			public function getImageURL(t:int,s:int):String{
+				if(t == 0 || s == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="xyImg" source="{getImageURL(230000,data.icon)}"/>
+	<component:CrotaBasicLabel mouseEnabled="false" mouseChildren="false" text="{data.xyName}" textAlign="center" x="0" y="3" fontSize="12" color="{CommonTools.get_equipement_color(data.quality)}" width="55"/>
+	<component:CrotaBasicLabel mouseEnabled="false" mouseChildren="false" text="{data.xyId == 0 ? '' : (data.level == 0 ? '' : ('Lv.'+data.level))}" textAlign="center" x="0" y="40" fontSize="12" color="{CommonTools.get_equipement_color(data.quality)}" width="55"/>
+</s:ItemRenderer>

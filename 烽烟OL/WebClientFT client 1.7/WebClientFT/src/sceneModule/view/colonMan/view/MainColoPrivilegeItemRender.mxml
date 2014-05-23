@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<privilegComp:CrotaBasicColorPrivilegeItemRender  xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				creationComplete="init()"
+				xmlns:privilegComp="util.*"
+				width="120" height="25" buttonMode="true" useHandCursor="true"
+				autoDrawBackground="false">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.GlowFilter;
+			private function init():void
+			{
+				labe.filters = [new GlowFilter(0x34332d,0.7,2,2,5,1)];
+//				labe.text.
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Label id="labe" text="{data.coloName}" width="100%" paddingLeft="10" paddingTop="7"  textAlign="center" verticalAlign="middle" styleName="SKILLINFOTEXTFORMAT"/>
+	
+</privilegComp:CrotaBasicColorPrivilegeItemRender >

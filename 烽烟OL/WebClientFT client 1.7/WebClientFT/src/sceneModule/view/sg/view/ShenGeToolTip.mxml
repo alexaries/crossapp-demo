@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.controls.Alert;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.sg.vo.ShenGeInfoVO;
+			
+			public function set shenGeInfo(value:ShenGeInfoVO):void{
+				sTitle.htmlText = '['+value.sgName+'] ';
+				if(value.activateFlag){
+					sTitle.htmlText += CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_yjh');
+				}else{
+					sTitle.htmlText += '<font color="#ff0000">'+CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_wjh')+'</font>';
+				}
+				desTxt.text = value.sgDes;
+				if(value.reqLev<=SystemDataModel.roleInfo.level){
+					reqLev.htmlText = CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_djxq')+':'+value.reqLev;
+				}else{
+					reqLev.htmlText = CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_djxq')+':<font color="#ff0000">'+value.reqLev+'</font>';
+				}
+				reqTxt.htmlText = CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_xy')+'<font color="#fcff00">'+value.reqDQ+CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_dqz')+'</font>'+CrotaResourceConfig.getInstance().getTextByModuleAndId('sg','sgTT_jhsg');
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaCoinTooltip">
+		<s:VGroup gap="1" top="5" left="5" right="5" bottom="5">
+			<component:CrotaBasicText id="sTitle" fontSize="12" color="#000000"/>
+			<component:CrotaBasicText id="desTxt" fontSize="12" color="#03FA0F"/>
+			<!--<component:CrotaBasicLabel id="reqTxt" width="100%" styleName="TOOLTIPTEXTFORMAT5" />-->
+			<component:CrotaBasicText id="reqLev" styleName="TOOLTIPTEXTFORMAT5" />
+			<component:CrotaBasicText id="reqTxt" styleName="TOOLTIPTEXTFORMAT5" />
+		</s:VGroup>
+	</s:SkinnableContainer>	
+</s:Group>

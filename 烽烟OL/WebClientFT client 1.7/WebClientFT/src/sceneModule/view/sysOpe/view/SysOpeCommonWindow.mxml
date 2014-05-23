@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 mouseEnabled="false"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*" x="73" y="6" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.utils.ObjectProxy;
+			
+			import spark.filters.GlowFilter;
+			
+			import style.Skin_CrotaCommonButton2;
+			
+			[Bindable]private var curObj:Object;
+			
+			public function set _curObj(obj:Object):void{
+				curObj = new ObjectProxy(obj);
+				//setSysOpeCommonInfo();
+			}
+			
+			public function get _curObj():Object{
+				return curObj;
+			}
+			
+			private function setSysOpeCommonInfo():void{
+				iTextArea.text = curObj.contentStr;
+				anBtn.text = curObj.caozuoStr;
+				profession0.text = curObj.tishiStr;
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="261" height="139" >
+		<mx:Image source='assets/ncorps/union_rise.png'/>
+		<component:CrotaBasicChatTextArea  borderStyle="none" id="iTextArea" text="{curObj.contentStr}" rollOver="this.iTextArea.setFocus();" editable="false" textAlign="center"
+										  selectable="false" focusEnabled="false" focusAlpha="0" wordWrap="true" height="39" width="219" backgroundAlpha="0.0" 
+										  styleName="SKILLINFOTEXTFORMAT" x="21" y="49"/>
+		<mx:Label id="anBtn"  mouseChildren="false" buttonMode="true" useHandCursor="true" text="{curObj.caozuoStr}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" textAlign="center" fontSize="12" width="171" x="38" y="99" textDecoration="underline" color="#17F906"/>
+		<mx:Label id="profession0"  text="{curObj.tishiStr}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" textAlign="center" fontSize="12" fontWeight="bold" width="65" x="88" y="11" color="#17F906"/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="239" y="1"/>
+	</s:SkinnableContainer>
+</s:Group>

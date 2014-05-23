@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				mouseOver="{effBorder.visible = true}" mouseOut="{effBorder.visible = false}"
+				buttonMode="true" useHandCursor="true"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				click="itemrenderer1_clickHandler(event)"
+				autoDrawBackground="false" width="120" height="118" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.group.command.GroupMessage;
+			
+			import util.CommonTools;
+
+			protected function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				if(data.roleId == 0){
+					GroupMessage.getInstance().createOrJoin(data.funType,data.pos,data.dType);
+				}
+				
+			}
+
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(effBorder).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_group","gBorder");
+			}
+
+		]]>
+	</fx:Script>
+	
+	<mx:Image id="effBorder" visible="false"/>
+	<mx:Image source="{ProConst.getRoleImg(data.proType)}" x="37" y="35" width="42" height="42"/>
+	<component:CrotaBasicLabel id="ter_tile"
+							   styleName="MAINMENUROLEFONT12bebebe"
+							   color="0xFFFFF"
+							   text="{data.roleId == 0 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('group','gr_zjdjxz') : data.roleName}"
+							   width="120" textAlign="center" x="0" y="96"/>
+	<component:CrotaBasicLabel id="lvInfo"
+							   styleName="MAINMENUROLEFONT12bebebe"
+							   color="0xFFFFF" visible="{data.roleId != 0}"
+							   text="{'Lv.'+data.level}"
+							   width="120" textAlign="center" x="0" y="16"/>
+</s:ItemRenderer>

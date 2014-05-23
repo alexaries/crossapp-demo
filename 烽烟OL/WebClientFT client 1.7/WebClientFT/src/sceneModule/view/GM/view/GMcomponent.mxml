@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="401" height="316" 
+				xmlns:win="managers.*" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			[Embed(source="/embed/hotel/hotelInfoBg.png",scaleGridTop='29',scaleGridBottom='30',scaleGridLeft='54',scaleGridRight='200')]
+			[Bindable]
+			private var obj:Class;
+			
+			public static const NAME:String = "sceneModule.view.GM.view.GMcomponent";
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="399" height="283" skinClass="style.Skin_CrotaMainMenuHotelSkinnableContainer">
+		<mx:Image x="12" y="-24" width="54" height="57" source='assets/hotel/warning.png'/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('GM','gmC_bgms')}" textAlign="center" styleName="MAINMENUROLEFONT13b95c4e" x="72" y="12" width="274" height="22"/>
+		<mx:Image x="10" y="42" width="379" height="179" source="{obj}" maintainAspectRatio="false"/>
+		<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaCommonButton5" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" x="102" y="219" width="93" height="42"/>
+		<util:CommonButton id="cancelBtn" skinClass="style.Skin_CrotaCommonButton5" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qxs')}" x="213" y="219" width="93" height="42"/>
+		<s:TextArea id="iTextArea" skinClass="style.Skin_CrotaBasicShowInfoTextArea" styleName="MAINMENUROLEFONT13b95c4e2" height="160" width="363" x="17" y="53"/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="369" y="0"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

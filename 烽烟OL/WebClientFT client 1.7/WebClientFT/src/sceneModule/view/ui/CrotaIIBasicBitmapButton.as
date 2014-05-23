@@ -1,0 +1,143 @@
+package sceneModule.view.ui
+{
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.events.MouseEvent;
+	import flash.text.TextField;
+	
+	import mx.core.UIComponent;
+	
+	import resource.AssetCenter;
+	
+	import util.CommonTools;
+	public class CrotaIIBasicBitmapButton extends UIComponent
+	{
+		private var _bg_bitmap:Bitmap;
+		
+		private var _package_id:String;
+		private var _nomal:String;
+		private var _over:String;
+		private var _down:String;
+		private var _disable:String;
+		private var _label:String;
+		
+		private var _is_disable:Boolean;
+		private var _is_over:Boolean;
+		private var _is_down:Boolean;
+		
+		private var _tf:TextField;
+		public function CrotaIIBasicBitmapButton()
+		{
+			init_view();
+			if (null != _label) {
+				_tf = CommonTools.createFTF();
+				_tf.text = _label;
+				this.addChild(_tf);
+			}
+			init_event();
+		}
+		
+		public function set label(value:String):void{
+			_label = value;
+		}
+		
+		public function set package_id(value:String):void{
+			_package_id = value;
+			refresh();
+		}
+		
+		public function set nomal(value:String):void{
+			_nomal = value;
+			refresh();
+		}
+		
+		public function set over(value:String):void{
+			_over = value;
+			refresh();
+		}
+		
+		public function set down(value:String):void{
+			_down = value;
+			refresh();
+		}
+		
+		public function set disable(value:String):void{
+			_disable = value;
+			refresh();
+		}
+		
+		private function init_view():void {
+			this.buttonMode = true;
+			_bg_bitmap = new Bitmap();
+			this.addChild(_bg_bitmap);
+			refresh();
+		}
+		
+		private function init_event():void {
+			this.addEventListener(MouseEvent.ROLL_OVER, mouse_over);
+			this.addEventListener(MouseEvent.ROLL_OUT, mouse_out);
+			
+			this.addEventListener(MouseEvent.MOUSE_DOWN, mosue_down);
+			this.addEventListener(MouseEvent.MOUSE_UP, mouse_up);
+		}
+		
+		private function mouse_over(e:MouseEvent):void {
+			_is_over = true;
+			refresh();
+		}
+		private function mouse_out(e:MouseEvent):void {
+			_is_over = false;
+			refresh();
+		}
+		private function mosue_down(e:MouseEvent):void {
+			_is_down = true;
+			refresh();
+		}
+		private function mouse_up(e:MouseEvent):void {
+			_is_down = false;
+			refresh();
+		}
+		
+		private function refresh():void {
+			if (_is_disable) {
+				set_bitmap(_disable);
+			}
+			else {
+				if (_is_down) {
+					set_bitmap(_down);
+				}
+				else{
+					if (_is_over) {
+						set_bitmap(_over);
+					}
+					else {
+						set_bitmap(_nomal);
+					}
+				}
+			}
+		}
+		
+		private function set_bitmap(id:String):void {
+			if (null == id) {
+				id == _nomal;
+			}
+			_bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge(_package_id, id);
+		}
+		
+		public function set set_disable(is_disable:Boolean):void {
+			_is_disable = is_disable;
+			this.buttonMode = !is_disable;
+			this.mouseEnabled = !is_disable;
+			refresh();
+		}
+		
+		public function get_bg_w():int {
+			return  AssetCenter.getInstance().get_img_form_pacakge(_package_id, _nomal).width;
+		}
+		
+		public function get is_disable():Boolean 
+		{
+			return _is_disable;
+		}
+	}
+}

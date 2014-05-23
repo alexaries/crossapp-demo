@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:win="managers.*" 
+		 width="351" height="135" 
+		 xmlns:component="component.*"
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import event.GuidEvent;
+			import event.GuidEventCenter;
+			
+			import flash.events.Event;
+			
+			import model.GuideInfo;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.corps.view.CreateCorpsComponent";
+			
+			private var _is_send_guide:Boolean ;
+			
+			private function init():void {
+				CommonTools.make_bitmap(img_bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_union', 'union_create_crop_bg');
+				
+				this.addEventListener(Event.ADDED_TO_STAGE,add_to_stage);
+				clokeBtn.addEventListener(MouseEvent.CLICK,on_close);
+				cancelBtn.addEventListener(MouseEvent.CLICK,on_close);
+				createBtn.addEventListener(MouseEvent.CLICK,on_create);
+				add_to_stage();
+				_is_send_guide = false;
+			}
+			
+			private function add_to_stage(e:Event = null):void{
+				corpsName.text = "";
+				check_input();
+			}
+			
+			private function on_close(e:MouseEvent):void{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_REMOVE_CREATE_UNION,null,true));
+			}
+			
+			private function on_create(e:MouseEvent):void{
+				if(createBtn.enabled){
+					NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_SEND_CREATE_UNION,{name:corpsName.text},true));
+				}
+			}
+			
+			private function check_input(e:Event = null):void{
+				if(corpsName.text == ""){
+					createBtn.enabled = false;
+				}
+				else{
+					createBtn.enabled = true;
+					if (!_is_send_guide) {
+						_is_send_guide = true;
+					}
+				}
+				GuidEventCenter.getInstance().dispatchEvent(new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE,GuideInfo.ACTION_INPUT_UNION_NAME));
+
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer>
+		 <!--<mx:Image source="ncorps/createcrops.png"/> -->
+		<mx:Image id="img_bg"/>
+		<component:CrotaChatTextInput 
+			id="corpsName" 
+			styleName="SKILLINFOTEXTFORMAT" 
+			x="112" y="45"  width="155" height="28"
+			change="check_input(event)"
+		 	changing="CommonTools.onMailContentChange(event)"
+			maxChars="16"/>
+    	<util:CommonButton 
+			id="clokeBtn"
+			skinClass="style.Skin_CrotaCloseButton111" 
+			x="320" y="7"/>
+		<util:CommonButton id="createBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" 
+				  skinClass="style.Skin_CrotaCommonButton2"
+				  x="49" y="94"/>
+		<util:CommonButton id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" 
+				  skinClass="style.Skin_CrotaCommonButton2"
+				  x="206" y="94"/>
+		<s:Label text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ccC_sxjb')}" fontSize="12" color="#ff0000" x="99" y="79"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

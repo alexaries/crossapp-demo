@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:component="component.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="226" height="97"
+		 creationComplete="init()" xmlns:util="util.*">
+	 <fx:Script>
+		 <![CDATA[
+			 
+			 import com.greensock.TweenLite;
+			 
+			 import event.GuidEvent;
+			 import event.GuidEventCenter;
+			 
+			 import flash.display.Bitmap;
+			 import flash.display.DisplayObjectContainer;
+			 import flash.display.Sprite;
+			 import flash.events.Event;
+			 import flash.events.MouseEvent;
+			 import flash.ui.Mouse;
+			 
+			 import managers.WindowManager;
+			 
+			 import model.GuideInfo;
+			 import model.SystemDataModel;
+			 
+			 import mx.controls.Image;
+			 import mx.core.IVisualElement;
+			 import mx.core.UIComponent;
+			 
+			 import proto.copyScene.copyScene1506.FMonsterInfo;
+			 import proto.copyScene.copyScene1506.UnionState;
+			 
+			 import resource.AssetCenter;
+			 import resource.CrotaResourceConfig;
+			 
+			 import sceneModule.event.ColonizationBattleSendCommandEvent;
+			 import sceneModule.view.Alert.view.CrotaCommonAlert;
+			 import sceneModule.view.chat.event.MainOpenWhisperWindowEvent;
+			 import sceneModule.view.copyScene.event.NCopySceneEvent;
+			 import sceneModule.view.copyScene.mediator.NCopySceneChoseMediator;
+			 import sceneModule.view.copyScene.model.FubenChoseItemVo;
+			 import sceneModule.view.corps.event.NCropMessage;
+			 
+			 import spark.components.Button;
+			 import spark.components.Group;
+			 
+			 import style.Skin_CrotaCommonButton2;
+			 import style.Skin_CrotaRewardBattleButton;
+			 
+			 import util.CommonTools;
+			 import util.xtrace;
+			 
+			 
+			 public static const TOP_LEFT_PATH:String = "assets/fb/fb_item_bg_top_left.png";
+			 public static const TOP_RIGHT_PATH:String = "assets/fb/fb_item_bg_top_right.png";
+			 public static const BOTTOM_LEFT_PATH:String = "assets/fb/fb_item_bg_bottom_left.png";
+			 public static const BOTTOM_RIGHT_PATH:String = "assets/fb/fb_item_bg_bottom_right.png";
+			 
+			 public static const STAR_IMG_PATH:String = "assets/fb/fb_icon_star.png";
+			 
+			 
+			 public static const TOP_LEFT_POS:Array = [25,-45];
+			 public static const TOP_RIGHT_POS:Array = [145,-45];
+			 public static const BOTTOM_LEFT_POS:Array = [25,100];
+			 public static const BOTTOM_RIGHT_POS:Array = [145, 100];
+			 
+			 public static const FIX_Y:int = 18;
+			 public static const FIX_X:int = -3;
+			 public static const BTN_BASE_Y:int = 30;
+			 public static const LABEL_BASE_Y:int = 63;
+			 public static const UP_DES:int = 55;
+			 
+			 public static const MVOE_TIME:Number = 0.1;
+			 
+			 private var _is_selected:Boolean;
+			 private var _is_mouse_over:Boolean;
+			 private var _is_disable:Boolean;
+			 
+			 [Bindable]private var _info:FubenChoseItemVo;
+			 
+			 private var _no_in_tip:FbNoInTip;
+			 private var _monster_tip:FbMonsterTip;
+			 private var _fbLevel_tip:FbLevelToolTip;
+			 
+			 private var _bg_w:int = 226;
+			 private var _bg_h:int = 97;
+			 private var _fix_y:int; //原始y值
+			 
+			 public function init():void
+			 {
+				 _no_in_tip = new FbNoInTip();
+				 _monster_tip = new FbMonsterTip();
+				 _fbLevel_tip = new FbLevelToolTip();
+				 
+				 this.addEventListener(Event.REMOVED_FROM_STAGE, btn_out);
+				 
+				 c_ico.addEventListener(MouseEvent.ROLL_OVER, mouse_ovew);
+				 c_ico.addEventListener(MouseEvent.ROLL_OUT, mouse_out);
+				 c_ico.addEventListener(MouseEvent.CLICK, on_ico_click);
+				 
+				 low_btn.addEventListener(MouseEvent.CLICK,lowbtn_click);
+				 low_btn.addEventListener(MouseEvent.ROLL_OVER,btn_over);
+				 low_btn.addEventListener(MouseEvent.ROLL_OUT,btn_out);
+				 mid_btn.addEventListener(MouseEvent.CLICK, mid_click);
+				 mid_btn.addEventListener(MouseEvent.ROLL_OVER, btn_over);
+				 mid_btn.addEventListener(MouseEvent.ROLL_OUT, btn_out);
+				 hi_btn.addEventListener(MouseEvent.CLICK, hi_click);
+				 hi_btn.addEventListener(MouseEvent.ROLL_OVER, btn_over);
+				 hi_btn.addEventListener(MouseEvent.ROLL_OUT, btn_out);
+				 
+				 
+				 img_do_zhimin.addEventListener(MouseEvent.ROLL_OVER, do_img_over);
+				 img_do_zhimin.addEventListener(MouseEvent.ROLL_OUT, do_img_out);
+				 
+				 img_do_zhimin.addEventListener(MouseEvent.CLICK, on_do_zhimin);
+				 l_juntuan_leader.addEventListener(MouseEvent.CLICK, on_look_leader);
+				 l_juntuan_name.addEventListener(MouseEvent.CLICK, on_look_union);
+				 
+				 img_do_zhimin.buttonMode = true;
+				 l_juntuan_leader.buttonMode = true;
+				 l_juntuan_name.buttonMode = true;
+				 
+				 
+				 remove_if_have(low_btn);
+				 remove_if_have(mid_btn);
+				 remove_if_have(hi_btn);
+			 }
+			 
+			 private function on_ico_click(e:MouseEvent):void {
+				 xtrace("item click");
+				 if (_is_disable) {
+					 return;
+				 }
+				 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_ITEM_CLICK, null));
+			 }
+			 
+			 private function on_do_zhimin(e:MouseEvent):void {
+				 if(this.parentApplication.contains(fubenToolTip)){
+					 this.parentApplication.removeElement(fubenToolTip);
+				 }
+				 xtrace("发送殖民指令");
+//				 this.dispatchEvent(new ColonizationBattleSendCommandEvent(ColonizationBattleSendCommandEvent.COLONIZATIONBATTLESENDCOMMAND,_info.id0,_info.fu_camp));
+				 this.dispatchEvent(new ColonizationBattleSendCommandEvent(ColonizationBattleSendCommandEvent.COLONIZATIONBATTLESENDCOMMAND,info));
+				 e.stopPropagation();
+			 }
+			 private function on_look_leader(e:MouseEvent):void {
+				 xtrace("发送私聊玩家指令");
+				 if(0 != _info.leader_id){
+					 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_CHAT, {id:_info.leader_id, name:_info.leader_name})); 
+				 }
+				 e.stopPropagation();
+			 }
+			 private function on_look_union(e:MouseEvent):void {
+				 xtrace("发送查看军团指令");
+				 if (0 != _info.union_id) {
+					NCropMessage.getInstance().request_single_union_info(_info.union_id);
+				 }
+				 e.stopPropagation();
+			 }
+			 private var fubenToolTip:NFubenZhiMinToolTip;
+			 private function do_img_over(e:MouseEvent):void {
+				 if(!fubenToolTip){
+					 fubenToolTip = new NFubenZhiMinToolTip();
+				 }
+				 this.parentApplication.addElement(fubenToolTip);
+				 fubenToolTip.x = this.parentApplication.mouseX+5;
+				 fubenToolTip.y = this.parentApplication.mouseY+5;
+				  /* CommonTools.make_bitmap(img_do_zhimin).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge(
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE,
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_" + "TAOFA_DO_ICO_LIGHT"
+					); */
+			 }
+			 private function do_img_out(e:MouseEvent):void {
+				 if(this.parentApplication.contains(fubenToolTip)){
+					 this.parentApplication.removeElement(fubenToolTip);
+				 }
+				 /*  CommonTools.make_bitmap(img_do_zhimin).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge(
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE,
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_" + "TAOFA_DO_ICO_NOMAL"
+					); */
+			 }
+			 
+			 private function lowbtn_click(e:MouseEvent):void {
+				 if (_is_disable) {
+					 return;
+				 }
+				 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_ENTER, { level:0 } ));
+			 }
+			 
+			 private function btn_over(e:Event):void {
+				 //检测等级是否允许
+				 //var tips_str:String = "";
+				 var monster_info:FMonsterInfo;
+				 switch (e.currentTarget) 
+				 {
+					 case low_btn:
+						xtrace("普通"); 
+						monster_info = _info.monst_infos[0] as FMonsterInfo;
+						break;
+					case mid_btn:
+						xtrace("精英"); 
+						monster_info = _info.monst_infos[1] as FMonsterInfo;
+						break;
+					case hi_btn:
+						xtrace("英雄");
+						monster_info = _info.monst_infos[2] as FMonsterInfo;
+						break;
+					 default:
+				 }
+				 //if ("" != tips_str) {
+					 //显示不可进入tips
+					 //_no_in_tip.refresh(tips_str);
+					 //this.stage.addChild(_no_in_tip);
+				 //}
+				 //else {
+					 //显示怪物信息
+					 _monster_tip.refresh_info(monster_info);
+					 _monster_tip.x = this.stage.mouseX;
+					 _monster_tip.y = this.stage.mouseY;
+					 this.stage.addChild(_monster_tip);
+				// }
+			 }
+			 
+			 private function get_no_in_str(target:Object):String {
+				  var tips_str:String = "";
+				 switch (target) 
+				 {
+					 case low_btn:
+						xtrace("普通"); 
+						break;
+					case mid_btn:
+						xtrace("精英"); 
+						if (_info.unin_state < UnionState.JINGYING_LEVEL) {
+							//没有加入军团,不允许精英
+							tips_str =CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_knsb');
+						}
+						break;
+					case hi_btn:
+						xtrace("英雄");
+						if (_info.unin_state == UnionState.NO_UNION) {
+							//没有加入军团,不允许精英
+							tips_str = CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_yxsb');
+						}
+						else if (_info.unin_state == UnionState.JINGYING_LEVEL ) {
+							//没有加入军团,不允许精英
+							tips_str = CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_wfyx');
+						}
+						break;
+					 default:
+				 }
+				 return tips_str;
+			 }
+			 
+			 private function btn_out(e:Event):void {
+				  _no_in_tip.parent && _no_in_tip.parent.removeChild(_no_in_tip);
+				  _monster_tip.parent && _monster_tip.parent.removeChild(_monster_tip);
+				  _fbLevel_tip.parent && _fbLevel_tip.parent.removeChild(_fbLevel_tip);
+			 }
+			 
+			 private function mid_click(e:MouseEvent):void {
+				 if(SystemDataModel.roleInfo.level<25){
+					 CrotaCommonAlert.createCrotaBasicAlert(CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_djbz25'));
+					 return;
+				 }
+				 if (_is_disable) {
+					 return;
+				 }
+				 var str:String = get_no_in_str(e.currentTarget);
+				 if ("" != str) {
+					 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_SHOW_NO_IN, { str:str } ));
+					 return;
+				 }
+				 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_ENTER, { level:1 } ));
+			 }
+			 
+			 private function hi_click(e:MouseEvent):void {
+				 if(SystemDataModel.roleInfo.level<25){
+					 CrotaCommonAlert.createCrotaBasicAlert(CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_djbz36'));
+					 return;
+				 }
+				 if (_is_disable) {
+					 return;
+				 } 
+				 var str:String = get_no_in_str(e.currentTarget);
+				 if ("" != str) {
+					 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_SHOW_NO_IN, { str:str } ));
+					 return;
+				 }
+				 this.dispatchEvent(new NCopySceneEvent(NCopySceneEvent.NCopySceneEvent_ENTER, { level:2 } ));
+			 }
+			 
+			 private function make_bitmap(img:Image):Bitmap {
+				 var bm:Bitmap;
+				 if (null == img.source as Bitmap) {
+					bm = new Bitmap();
+					img.source = bm;
+				 }
+				 else {
+					 bm = img.source as Bitmap;
+				 }
+				 return bm;
+			 }
+			 
+			 public function setInfo(item:FubenChoseItemVo):void {
+				 _info = item;
+				 make_bitmap(star_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_STAR"
+																);
+				 //star_img.source = STAR_IMG_PATH;
+				 var fix_x:int = 0;
+				 switch (_info.point) 
+				 {
+					 case FubenChoseItemVo.TOP_LEFT:
+						 star_img.x = TOP_LEFT_POS[0];
+						 star_img.y = TOP_LEFT_POS[1];
+						 make_bitmap(border_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_TOPLEFT"
+																);
+						 //border_img.source = TOP_LEFT_PATH;
+						 _fix_y = FIX_Y;
+						 fix_x = FIX_X;
+						 break;
+					 case FubenChoseItemVo.TOP_RIGHT:
+						 star_img.x = TOP_RIGHT_POS[0];
+						 star_img.y = TOP_RIGHT_POS[1];
+						 make_bitmap(border_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_TOPRIGHT"
+																);
+						 //border_img.source = TOP_RIGHT_PATH;
+						 _fix_y = FIX_Y;
+						 break;
+					 case FubenChoseItemVo.BOTTOM_LEFT:
+						 star_img.x = BOTTOM_LEFT_POS[0];
+						 star_img.y = BOTTOM_LEFT_POS[1];
+						 make_bitmap(border_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_BOTTOMLEFT"
+																);
+						 //border_img.source = BOTTOM_LEFT_PATH;
+						 fix_x = FIX_X;
+						 break;
+					 case FubenChoseItemVo.BOTTOM_RIGHT:
+						 star_img.x = BOTTOM_RIGHT_POS[0];
+						 star_img.y = BOTTOM_RIGHT_POS[1];
+						 make_bitmap(border_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_BOTTOMRIGHT"
+																);
+						 //border_img.source = BOTTOM_RIGHT_PATH;
+						 break;
+					 default:
+				 }
+				 c_ico.y = _fix_y;
+				 low_btn.y = _fix_y + BTN_BASE_Y;
+				 mid_btn.y = _fix_y + BTN_BASE_Y;
+				 hi_btn.y = _fix_y + BTN_BASE_Y;
+				 if(_fix_y != FIX_Y){
+					 _fix_y = 1;
+				 }
+				 l_des.y = LABEL_BASE_Y + _fix_y;
+				 g_zhimin.y = -78 + _fix_y;
+				 g_zhimin.x = 0 + fix_x;
+				 
+				 CommonTools.make_bitmap(img_zhimin_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge(
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE,
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_" + "TAOFA_BG"
+					);
+					
+				/*  CommonTools.make_bitmap(img_do_zhimin).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge(
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE,
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_" + "TAOFA_DO_ICO_NOMAL"
+					); */
+				 
+				 CommonTools.make_bitmap(img_junqi).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge(
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE,
+						NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_BORDER_" + "TAOFA_JUNQI_ICO"
+					);
+					
+					
+				//设置军团信息
+				if (0 == item.union_id) {
+					l_juntuan_name.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu');
+				}
+				else {
+					l_juntuan_name.text = item.union_name;
+				}
+				
+				if (0 == item.leader_id) {
+					l_juntuan_leader.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu');
+				}
+				else {
+					l_juntuan_leader.text = item.leader_name;
+				}
+					
+				 refresh();
+			 }
+			 
+			 private function refresh():void {
+				 if (_is_disable) {
+					 make_bitmap(icon_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_CHOSE_" + "disable_bg_path" + "_" + _info.id
+																);
+					 //icon_img.source = _info.disable_bg_path;
+					 return;
+				 }
+				 if (_is_selected) {
+					 return;
+				 }
+				 if (_is_mouse_over) {
+					make_bitmap(icon_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_CHOSE_" + "down_bg_path" + "_" + _info.id
+																);
+					//icon_img.source = _info.down_bg_path;
+				 }
+				 else {
+					make_bitmap(icon_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_CHOSE_" + "nomal_bg_path" + "_" + _info.id
+																);
+					//icon_img.source = _info.nomal_bg_path;
+				 }
+			 }
+			 
+			 private function to_selected():void {
+				 make_bitmap(icon_img).bitmapData = AssetCenter.getInstance().get_img_form_pacakge(
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE, 
+																	NCopySceneChoseMediator.FUBEN_CHOSE_AEEST_PACKAGE + "_CHOSE_" + "selected_bg_path" + "_" + _info.id
+																);
+				 //icon_img.source = _info.selected_bg_path;
+				 refresh();
+//				 g_zhimin.visible = false;
+				TweenLite.to(c_ico, MVOE_TIME, { y:_fix_y - UP_DES,onComplete :selected_over } );
+			 }
+			 
+			 private function to_nomal():void {
+				 refresh();
+				  l_des.text = "";
+				  remove_if_have(low_btn);
+				  remove_if_have(mid_btn);
+				  remove_if_have(hi_btn);
+				TweenLite.to(c_ico, MVOE_TIME, { y:_fix_y ,onComplete :exit_over } );
+			 }
+			 
+			 private function selected_over():void {
+				 l_des.text = _info.des;
+				 g_zhimin.addElement(low_btn);
+				 g_zhimin.addElement(mid_btn);
+				 g_zhimin.addElement(hi_btn);
+				 GuidEventCenter.getInstance().dispatchEvent(new GuidEvent(GuideInfo.TYPE_ACTION_EXCUTE, GuideInfo.ACTION_OPEN_FB_GROUP, _info.id));
+			 }
+			 private function exit_over():void {
+//				  g_zhimin.visible = true;
+			 }
+			 
+			 public function set_selected(b:Boolean):void {
+				 if (_is_disable) {
+					 return;
+				 }
+				 if (_is_selected == b) {
+					 return;
+				 }
+				 _is_selected = b;
+				 if (_is_selected) {
+					 to_selected();
+				 }
+				 else {
+					 to_nomal();
+				 }
+			 }
+			 
+			 public function set_disable(b:Boolean):void{
+				 _is_disable = b;
+				 refresh();
+			 }
+			 
+			 private function mouse_ovew(e:MouseEvent):void {
+				 _is_mouse_over = true;
+				 refresh();
+				 _fbLevel_tip.x = this.stage.mouseX + 5;
+				 _fbLevel_tip.y = this.stage.mouseY + 5;
+				 this.stage.addChild(_fbLevel_tip);
+			 }
+			 private function mouse_out(e:MouseEvent):void {
+				 _is_mouse_over = false;
+				 refresh();
+			 }
+			 
+			 public function get info():FubenChoseItemVo{
+				return _info;
+			 }
+			 
+			 private function remove_if_have(dis:IVisualElement):void{
+				 if(null != dis.parent){
+					 g_zhimin.removeElement(dis);
+				 }
+			 }
+			 
+			 //public function setLevelState(state:int):void{
+				 //switch (state) 
+				 //{
+					 //case UnionState.NO_UNION:
+						 //low_btn.enabled = true;
+						 //mid_btn.enabled = false;
+						 //hi_btn.enabled = false;
+						 //break;
+					 //case UnionState.JINGYING_LEVEL:
+						 //low_btn.enabled = true;
+						 //mid_btn.enabled = true;
+						 //hi_btn.enabled = false;
+						 //break;
+					 //case UnionState.YINGXIONG_LEVEL:
+						 //low_btn.enabled = true;
+						 //mid_btn.enabled = true;
+						 //hi_btn.enabled = true;
+						 //break;
+					 //default:
+						 //xtrace("设置副本选择军团类型错误 " + state);
+				 //}
+			 //}
+			 
+		 ]]>
+	 </fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- 副本殖民 -->
+	<!-- visible="false" -->
+	<s:Group 
+		id="g_zhimin" 
+		mouseEnabled="false"
+		x="0" y="-78" width="226" height="50">
+		<mx:Image id="img_zhimin_bg" mouseEnabled="false"/>
+		<util:CommonButton 
+			id="low_btn" 
+			skinClass="style.Skin_CrotaCommonButtonFuItemPri" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_pt')}"
+			x="-5" y="0"/>
+		<util:CommonButton 
+			id="mid_btn" 
+			skinClass="style.Skin_CrotaCommonButtonFuItemPri" color="0xFFFF00" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_kn')}" 
+			x="76" y="0"/>
+		<util:CommonButton 
+			id="hi_btn" 
+			skinClass="style.Skin_CrotaCommonButtonFuItemPri" color="0xFF0000" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_yx')}" 
+			x="156" y="0"/>
+		<component:CrotaBasicLabel
+			id="l_des"
+			styleName="MAINMENUROLEFONT13b95c4e"
+			width="100%" textAlign="center"
+			/>
+	</s:Group>
+	
+	<mx:Image id="star_img"/>
+	<mx:Image id="border_img"/>
+	<s:Group id="c_btn">
+		
+		<mx:Image id="img_junqi"  x="2" y="6" mouseEnabled="false"/>
+		<!--<mx:Image id="img_do_zhimin"  x="179" y="6"/>-->
+		<util:CommonButton id="img_do_zhimin" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_sd')}" visible="{SystemDataModel.roleInfo.level >= 16}" skinClass="style.Skin_CrotaRewardBattleButton" x="173" y="0"/>
+		<component:CrotaBasicLabel
+			styleName="MAINMENUROLEFONT27ca01"
+			id="l_juntuan_leader"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_jtz')}"
+			x="87" y="26" textDecoration="underline"/>
+		<component:CrotaBasicLabel
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcpfbIR_zmlz')}"
+			mouseEnabled="false"
+			x="35" y="26"/>
+		<component:CrotaBasicLabel
+			styleName="MAINMENUROLEFONT27ca01"
+			id="l_juntuan_name"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('copyScene','cbbcSC_jtm')}"
+			x="87" y="10" textDecoration="underline"/>
+		<component:CrotaBasicLabel
+			styleName="MAINMENUROLEFONT12bebebe"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('colonMan','mcpfbIR_zmjt')}"
+			mouseEnabled="false"
+			x="35" y="10"/>
+		<mx:Image id="passImg" mouseChildren="false" mouseEnabled="false" visible="{_info._fuben_state == 2}" source='assets/nfuben/passImg.png'/>
+	</s:Group>
+	<s:Group id="c_ico" mouseEnabled="false" width="218" height="77">
+		<mx:Image id="icon_img" x="-14" y="-152"/>
+	</s:Group>
+</s:Group>

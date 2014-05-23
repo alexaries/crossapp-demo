@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<assetpackage id="bufficon" path="res/bufficon/">
+		<asset id="210001" path="210001.png" type="0" ver="20121225185403"/>
+		<asset id="210002" path="210002.png" type="0" ver="20121225185403"/>
+		<asset id="210003" path="210003.png" type="0" ver="20121225185403"/>
+		<asset id="210004" path="210004.png" type="0" ver="20121225185403"/>
+		<asset id="210005" path="210005.png" type="0" ver="20121225185403"/>
+		<asset id="210006" path="210006.png" type="0" ver="20121225185403"/>
+		<asset id="210007" path="210007.png" type="0" ver="20121225185403"/>
+		<asset id="210008" path="210008.png" type="0" ver="20121225185403"/>
+		<asset id="210009" path="210009.png" type="0" ver="20121225185403"/>
+		<asset id="210010" path="210010.png" type="0" ver="20121225185403"/>
+		<asset id="210011" path="210011.png" type="0" ver="20121225185403"/>
+		<asset id="210012" path="210012.png" type="0" ver="20121225185403"/>
+	</assetpackage>
+	<assetpackage id="charchangqiangbing" path="res/charchangqiangbing/">
+		<asset id="charchangqiangbing" path="charchangqiangbing.swf" type="3" ver="20121225185403"/>
+	</assetpackage>
+	<assetpackage id="chardaobing" path="res/chardaobing/">
+		<asset id="chardaobing" path="chardaobing.swf" type="3" ver="20121225185403"/>
+	</assetpackage>
+	<assetpackage id="chargongjianbing" path="res/chargongjianbing/">
+		<asset id="chargongjianbing" path="chargongjianbing.swf" type="3" ver="20121225185403"/>
+	</assetpackage>
+	<assetpackage id="charhuangjinbing" path="res/charhuangjinbing/">
+		<asset id="charhuangjinbing" path="charhuangjinbing.swf" type="3" ver="20121225185403"/>
+	</assetpackage>
+	<assetpackage id="charhuangjinjiangling2" path="res/charhuangjinjiangling2/">
+		<asset id="charhuangjinjiangling2" path="charhuangjinjiangling2.swf" type="3" ver="20121225185403"/>
+	</assetpackage>
+	<assetpackage id="charjiangling1" path="res/charjiangling1/">
+		<asset id="charjiangling1" path="charjiangling1.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charnpc1" path="res/charnpc1/">
+		<asset id="charnpc1" path="charnpc1.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charnpc2" path="res/charnpc2/">
+		<asset id="charnpc2" path="charnpc2.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charnpc3" path="res/charnpc3/">
+		<asset id="charnpc3" path="charnpc3.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charnpc4" path="res/charnpc4/">
+		<asset id="charnpc4" path="charnpc4.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charnpc5" path="res/charnpc5/">
+		<asset id="charnpc5" path="charnpc5.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charnpc6" path="res/charnpc6/">
+		<asset id="charnpc6" path="charnpc6.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="chartengjiabing" path="res/chartengjiabing/">
+		<asset id="chartengjiabing" path="chartengjiabing.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charwudoubing" path="res/charwudoubing/">
+		<asset id="charwudoubing" path="charwudoubing.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="charyexingren" path="res/charyexingren/">
+		<asset id="charyexingren" path="charyexingren.swf" type="3" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="default" path="res/default/">
+		<asset id="bar_bg" path="bar_bg.png" type="0" ver="20121225185404"/>
+		<asset id="bpbar" path="bpbar.png" type="0" ver="20121225185404"/>
+		<asset id="bpbarbg" path="bpbarbg.png" type="0" ver="20121225185404"/>
+		<asset id="breakattack" path="breakattack.png" type="0" ver="20121225185404"/>
+		<asset id="char_1_1_41_55.png" path="char_1_1_41_55.png.png" type="0" ver="20121225185404"/>
+		<asset id="click" path="click.swf" type="2" ver="20121225185404"/>
+		<asset id="crits" path="crits.png" type="0" ver="20121225185404"/>
+		<asset id="default_1_1_0_0" path="default_1_1_0_0.png" type="0" ver="20121225185404"/>
+		<asset id="face1" path="face1.png" type="0" ver="20121225185404"/>
+		<asset id="face10" path="face10.png" type="0" ver="20121225185404"/>
+		<asset id="face11" path="face11.png" type="0" ver="20121225185404"/>
+		<asset id="face12" path="face12.png" type="0" ver="20121225185404"/>
+		<asset id="face2" path="face2.png" type="0" ver="20121225185404"/>
+		<asset id="face3" path="face3.png" type="0" ver="20121225185404"/>
+		<asset id="face4" path="face4.png" type="0" ver="20121225185404"/>
+		<asset id="face5" path="face5.png" type="0" ver="20121225185404"/>
+		<asset id="face6" path="face6.png" type="0" ver="20121225185404"/>
+		<asset id="face7" path="face7.png" type="0" ver="20121225185404"/>
+		<asset id="face8" path="face8.png" type="0" ver="20121225185404"/>
+		<asset id="face9" path="face9.png" type="0" ver="20121225185404"/>
+		<asset id="fightbg" path="fightbg.jpg" type="0" ver="20130109094226"/>
+		<asset id="fightnumber_12_1_0_0" path="fightnumber_12_1_0_0.png" type="0" ver="20121225185404"/>
+		<asset id="hp" path="hp.png" type="0" ver="20121225185404"/>
+		<asset id="jingli" path="jingli.png" type="0" ver="20121225185404"/>
+		<asset id="miss" path="miss.png" type="0" ver="20121225185404"/>
+		<asset id="sblank" path="sblank.swf" type="2" ver="20121225185404"/>
+		<asset id="trippoint" path="trippoint.swf" type="2" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="effect1000" path="res/effect1000/">
+		<asset id="effect" path="effect.swf" type="2" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="effect1001" path="res/effect1001/">
+		<asset id="effect" path="effect.swf" type="2" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="effect1002" path="res/effect1002/">
+		<asset id="effect" path="effect.swf" type="2" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="effect1003" path="res/effect1003/">
+		<asset id="effect" path="effect.swf" type="2" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="fight" path="res/fight/">
+		<asset id="battleBettlementBg" path="battleBettlementBg.png" type="0" ver="20121225185404"/>
+		<asset id="battleFailImg" path="battleFailImg.png" type="0" ver="20121225185404"/>
+		<asset id="okbtn_down" path="okbtn_down.png" type="0" ver="20121225185404"/>
+		<asset id="okbtn_nomal" path="okbtn_nomal.png" type="0" ver="20121225185404"/>
+		<asset id="okbtn_over" path="okbtn_over.png" type="0" ver="20121225185404"/>
+		<asset id="tips" path="tips.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtaskstate1" path="res/npcheadtaskstate1/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtaskstate2" path="res/npcheadtaskstate2/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtaskstate3" path="res/npcheadtaskstate3/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtype2" path="res/npcheadtype2/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtype3" path="res/npcheadtype3/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtype4" path="res/npcheadtype4/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="npcheadtype5" path="res/npcheadtype5/">
+		<asset id="action_1_1_0_0.png" path="action_1_1_0_0.png.png" type="0" ver="20121225185404"/>
+	</assetpackage>
+	<assetpackage id="scene1000" path="res/scene1000/">
+		<asset id="path" path="path.int" type="1" ver="20121226173632"/>
+		<asset id="tiles" path="tiles.jpg" type="0" ver="20121226173632"/>
+	</assetpackage>
+	<assetpackage id="scene5001" path="res/scene5001/">
+		<asset id="path" path="path.int" type="1" ver="20121225185405"/>
+		<asset id="tiles" path="tiles.jpg" type="0" ver="20121226173634"/>
+	</assetpackage>
+	<assetpackage id="scene5003" path="res/scene5003/">
+		<asset id="path" path="path.int" type="1" ver="20121225185406"/>
+		<asset id="tiles" path="tiles.jpg" type="0" ver="20121226173635"/>
+	</assetpackage>
+	<assetpackage id="scene5009" path="res/scene5009/">
+		<asset id="path" path="path.int" type="1" ver="20121225185407"/>
+		<asset id="tiles" path="tiles.jpg" type="0" ver="20121225185407"/>
+	</assetpackage>
+</data>

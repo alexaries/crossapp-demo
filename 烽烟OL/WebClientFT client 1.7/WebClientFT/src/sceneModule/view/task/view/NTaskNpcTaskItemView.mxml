@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NPC任务条目 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*"
+		 width="420" height="20">
+	<fx:Script>
+		<![CDATA[
+			import resource.CrotaResourceConfig;
+			public var data:Object;
+			
+			private var taskId:int;
+			
+			public function set _taskId(id:int):void{
+				taskId = id;
+			}
+			
+			public function get _taskId():int{
+				return taskId;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- 任务条目图标 -->
+	<mx:Image id="img_task_icon" />
+	<!-- 任务条目内容-->
+	<component:CrotaBasicLabel
+		id="l_item_content" 
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('task','ntntIV_tmnr')}"
+		styleName="TASK_ITEM"
+		x="20" y="1" textDecoration="underline" width="400"/>
+</s:Group>

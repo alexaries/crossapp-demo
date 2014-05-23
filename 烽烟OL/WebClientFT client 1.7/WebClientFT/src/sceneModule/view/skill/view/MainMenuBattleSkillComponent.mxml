@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"  
+				rollOver="skinnablecontainer1_rollOverHandler(event)"
+				rollOut="skinnablecontainer1_rollOutHandler(event)"
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" 
+				width="220" height="63" 
+				dragEnter="onDragEnter(event)" 
+				dragExit="onDragExit(event)"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				xmlns:view="sceneModule.view.mainMenu.view.*" 
+				xmlns:event="sceneModule.view.skill.event.*" 
+				xmlns:view1="sceneModule.view.skill.view.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.GlowFilter;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.events.DragEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.skill.event.MediatorRegisterSkillEvent;
+			
+			import style.Skin_CrotaRewardButton;
+			import style.Skin_CrotaSkillComponentAnthorSkinnableContainer;
+			import style.Skin_CrotaSkillComponentSkinnableContainer;
+			public static const FROMROLESKILL:String = "fromRoleSkill";
+			
+			public static const LOCK:int = 0;//未解锁
+			public static const OPEN:int = 1;//解锁
+			public static const EQUIP:int = 2;//装备
+			
+			[Bindable]
+			public var skillPos:int;
+			
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+			
+			public function set _skillPos(p:int):void{
+				skillPos = p;
+			}
+			
+			public function get _skillPos():int{
+				return skillPos;
+			}
+			
+			
+			private function onDragEnter(evt:DragEvent):void{
+				if (data.skillStatus && data.skillStatus != 0 && evt.dragSource.hasFormat(MainMenuSkillItemRender.FROMSKILLLIST)) //如果标号为format则接受拖来的物体
+				{
+					DragManager.acceptDragDrop(IUIComponent(evt.target)); // 接受被拖进来的物体       
+				}
+			}
+			
+			/**
+			 * onDragExit
+			 */
+			private function onDragExit(evt:DragEvent):void{
+				this.filters = [];
+			}
+			private function getSkillImg(status:int,icon:int,type:int):String{
+				var img:String;
+				switch(status){
+					case 0:
+						img = "assets/hotel/unActivation.png";
+						break;
+					case 1:
+						img = "assets/hotel/askImg.png";
+						break;
+					case 2:
+						img = ProConst.getImageResUrl(type);
+						img += (icon + ".png");
+						break;
+				}
+				return img;
+			}
+			protected function skinnablecontainer1_rollOverHandler(evt:MouseEvent):void
+			{
+				iContainer.setStyle("skinClass",Skin_CrotaSkillComponentAnthorSkinnableContainer);
+			}
+			
+			
+			protected function skinnablecontainer1_rollOutHandler(evt:MouseEvent):void
+			{
+				iContainer.setStyle("skinClass",Skin_CrotaSkillComponentSkinnableContainer);
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.dispatchEvent(new MediatorRegisterSkillEvent(MediatorRegisterSkillEvent.MEDIATORREGISTER_BATTLESKILL,this,true));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer id="iContainer" width="100%" height="100%" skinClass="style.Skin_CrotaSkillComponentSkinnableContainer">
+		<mx:Image id="skillImg" buttonMode="true" useHandCursor="true" source="{getSkillImg(data.skillStatus,data.icon,data.type)}" x="11" y="11"/>
+		<s:Label x="57" y="15" text="{skillPos == 0 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('skill','mmbsCM_dy') : (skillPos == 1 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('skill','mmbsCM_de') : CrotaResourceConfig.getInstance().getTextByModuleAndId('skill','mmbsCM_ds'))}" visible="{data.skillStatus == 2}" width="137" styleName="MAINMENUROLEFONT1331302c" height="18"/>
+		<s:Label x="59" y="35" text="{data.skillName}" width="144" styleName="MAINMENUROLEFONT1331302c"/>
+	</s:SkinnableContainer>
+</s:ItemRenderer>

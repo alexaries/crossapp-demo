@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="226" height="80" xmlns:component="component.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import spark.filters.GlowFilter;
+			private function getStr(str:String,i_d:int,type:int):String{
+				var dStr:String = '';
+				if(str != ''){
+					dStr = "<u><a href='event:"+i_d+"?"+type+"'><font color='#00ff00'>" + str + "</font></a></u>";
+				}
+				return dStr;
+			}
+		]]>
+	</fx:Script>
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','csiC_dqgw')+SystemDataModel.monsterNum+CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','csiC_ge')}" styleName="TOOLTIPTEXTFORMAT5" width="206" x="10" y="10"/>
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','csiC_zmjt')}" styleName="TOOLTIPTEXTFORMAT5" width="62" x="10" y="31"/>
+	<mx:Text id="profession" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{getStr(SystemDataModel.sceneCorpsName,SystemDataModel.sceneCorpsId,0)}" fontSize="12" fontWeight="bold" width="145" x="71" y="29"/>
+	<mx:Text id="profession0" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" htmlText="{getStr(SystemDataModel.rewardCorpsName,SystemDataModel.rewardCorpsId,1)}" fontSize="12" fontWeight="bold" width="145" x="72" y="50"/>
+	<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','csiC_zmjf')}" styleName="TOOLTIPTEXTFORMAT5" width="63" x="10" y="52"/>
+</s:Group>

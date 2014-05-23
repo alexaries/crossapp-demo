@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="320" height="145" xmlns:component="component.*" 
+		
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import model.SystemDataModel;
+			
+			import mx.core.IVisualElement;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropMessage;
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			import style.Skin_CrotaBasicNextButton;
+			import style.Skin_CrotaBasicPreButton;
+			
+			import util.CommonTools;
+			
+			private const GROUP_CREATE_NAME:int = 1;
+			
+			public static const NAME:String = "sceneModule.view.corps.view.CorpsTechnologyDonateComponent";
+			
+			private function init():void{
+				init_view();
+				this.addEventListener(Event.ADDED_TO_STAGE,init_view);
+				preBtn.addEventListener(MouseEvent.CLICK,on_dec_btn);
+				nextBtn.addEventListener(MouseEvent.CLICK,on_add_btn);
+				maxNumBtn.addEventListener(MouseEvent.CLICK,on_max_btn);
+				cancelBtn.addEventListener(MouseEvent.CLICK,on_close);
+				clokeBtn.addEventListener(MouseEvent.CLICK, on_close);
+				//donateStone.addEventListener(MouseEvent.CLICK, on_stone);
+				
+				submitBtn.addEventListener(MouseEvent.CLICK,on_juanxian);
+				
+			}
+			
+			private function on_juanxian(e:MouseEvent):void{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_ON_JUANXIAN,{num:int(numTxt.text)},true));
+			}
+			
+			private function on_stone(e:MouseEvent):void{
+				
+			}
+			
+			private function init_view(e:Event = null):void{
+				numTxt.text = "0";
+				check_input();
+				
+				var type:int = SystemDataModel.roleInfo.roletype;
+				//if (0 == type) {
+					//remove_if_have(donateStone);
+				//}
+				//else {
+					//this.addElement(donateStone);
+				//	donateStone.visible = true;
+				//}
+			}
+			
+			private function on_dec_btn(e:MouseEvent):void{
+				var num:int = int(numTxt.text);
+				num -= 100;
+				if(num < 0){
+					num = 0;
+				}
+				if(num == 0){
+					submitBtn.enabled = false;
+				}
+				else{
+					submitBtn.enabled = true;
+				}
+				numTxt.text = num.toString();
+			}
+			private function on_add_btn(e:MouseEvent):void{
+				var num:int = int(numTxt.text);
+				num += 100;
+				if(num > SystemDataModel.roleInfo.coin){
+					num = SystemDataModel.roleInfo.coin;
+				}
+				if(num == 0){
+					submitBtn.enabled = false;
+				}
+				else{
+					submitBtn.enabled = true;
+				}
+				numTxt.text = num.toString();
+			}
+			private function on_max_btn(e:MouseEvent):void{
+				numTxt.text = SystemDataModel.roleInfo.coin.toString();
+				var num:int = SystemDataModel.roleInfo.coin;
+				if(num == 0){
+					submitBtn.enabled = false;
+				}
+				else{
+					submitBtn.enabled = true;
+				}
+			}
+			private function on_close(e:MouseEvent):void{
+				NCropMessage.getInstance().dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_REMOVE_JUANXIAN,null,true));
+			}
+			private function check_input():void{
+				var num:int = int(numTxt.text);
+				if(num < 0){
+					num = 0;
+				}
+				if(num > SystemDataModel.roleInfo.coin){
+					num = SystemDataModel.roleInfo.coin;
+				}
+				if(num == 0){
+					submitBtn.enabled = false;
+				}
+				else{
+					submitBtn.enabled = true;
+				}
+				numTxt.text = num.toString();
+			}
+			
+			private function remove_if_have(element:IVisualElement):void {
+				element.visible = false;
+				//if(element.parent){
+					//this.removeElement(element);
+				//}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="310" height="135" skinClass="style.Skin_CrotaShopBuyItemBackage">
+		<component:CrotaBasicLabel 
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ctdC_jxjb')}"  
+			x="13" y="13" height="19" width="65"
+			styleName="MAINMENUROLEFONT15ffffff"/>
+		<component:CrotaBasicLabel 
+			text="{int(numTxt.text)+'/'+SystemDataModel.roleInfo.coin}" 
+			styleName="MAINMENUROLEFONT13a18c70" 
+			x="35" y="67" width="174" textAlign="center"/>
+		<component:CrotaChatTextInput2 
+			id="numTxt"
+			restrict="0-9"
+		 	changing="check_input()"
+		 	change="check_input()"
+			styleName="MAINMENUROLEFONT12bebebe"
+			x="33" y="39" width="174" height="22"
+			maxChars="12"/>
+		<util:CommonButton 
+			id="preBtn" skinClass="style.Skin_CrotaBasicPreButton" x="11" y="44"/>
+		<util:CommonButton 
+			id="nextBtn" skinClass="style.Skin_CrotaBasicNextButton" x="212" y="44"/>
+		<util:CommonButton 
+			id="maxNumBtn" skinClass="style.Skin_CrotaCommonButton2" label="MAX" x="227" y="31"/>
+		<!--<util:CommonButton 
+			id="donateStone" skinClass="style.Skin_CrotaCommonButton2" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','ctdC_jxz')}" x="227" y="54"/>-->
+    	<util:CommonButton 
+			skinClass="style.Skin_CrotaCloseButton111" id="clokeBtn" x="265" y="4"/>
+		<util:CommonButton 
+			id="submitBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" skinClass="style.Skin_CrotaCommonButton2" x="51" y="92"/>
+		<util:CommonButton 
+			id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" skinClass="style.Skin_CrotaCommonButton2" x="175" y="92"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

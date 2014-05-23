@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="642" height="520" 
+				xmlns:view="sceneModule.view.pack.view.*"
+				  
+				  
+				xmlns:win="managers.*" xmlns:component="component.*" xmlns:util="util.*" >
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import style.Skin_CrotaCloseButton111;
+			import style.Skin_CrotaCommonButton;
+			
+			public static const NAME:String="sceneModule.view.reward.view.RewardBattleInfoWindow";
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image source='assets/reward/rewardBattleInfoBg.png'/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="602" y="4"/>
+		<s:List id="rewardList" width="625" height="441" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.reward.view.RewardBattleInfoItemRender" dataProvider="{SystemDataModel.rewardBattleVo.battleInfoVoArr}" x="19" y="38">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1" requestedRowCount="5" verticalGap="0" horizontalGap="0"/>
+			</s:layout>
+		</s:List>
+		<util:CommonButton id="pre_btn" 
+				  skinClass="style.Skin_CrotaBasicPreButton"
+				  y="470" x="261" enabled="{SystemDataModel.rewardBattleVo.curPage>1}"/>
+		<component:CrotaBasicLabel id="page_info"
+								   styleName="MAINMENUROLEFONT12a18c70"
+								   x="289" y="470"
+								   text="{SystemDataModel.rewardBattleVo.curPage+'/'+SystemDataModel.rewardBattleVo.maxPage}"
+								   textAlign="center" width="38"/>
+		<util:CommonButton id="next_btn"
+				  x="337" y="470" enabled="{SystemDataModel.rewardBattleVo.maxPage>SystemDataModel.rewardBattleVo.curPage}"
+				  skinClass="style.Skin_CrotaBasicNextButton"/>
+		<util:CommonButton id="backBtn" skinClass="style.Skin_CrotaCommonButton" width="89" height="25" styleName="RICHEDITABLETEXT" label="返回" x="535" y="467"/>
+	</s:SkinnableContainer>
+	
+</win:BaseWindow>

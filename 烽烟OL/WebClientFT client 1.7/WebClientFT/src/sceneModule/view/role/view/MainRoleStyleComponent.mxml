@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="280" height="340" xmlns:view="sceneModule.view.pack.view.*" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.RoleInfoVo;
+			
+			//职业中文名
+			public function getJobWord(profession:int):String{
+				var r:String = null;
+				switch (profession) 
+				{
+					case 1:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zs');
+						break;
+					case 2:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fashi');
+						break;
+					case 3:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_yx');
+						break;
+					case 4:
+						r = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ms');
+						break;
+					
+					default:
+						r = "error job"
+				}
+				return r;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image visible="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.profession == 2) : (SystemDataModel.otherInfo.profession == 2)}" source='assets/role/mage.png' x="28.65" y="64.35" width="200" height="300"/>
+		<mx:Image visible="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.profession == 4) : (SystemDataModel.otherInfo.profession == 4)}" source='assets/role/pastor.png' x="57.3" y="66.05" width="200" height="300"/>
+		<mx:Image visible="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.profession == 3) : (SystemDataModel.otherInfo.profession == 3)}" source='assets/role/ranger.png' x="38.35" y="44.65" width="217" height="326"/>
+		<mx:Image visible="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? (SystemDataModel.roleInfo.profession == 1) : (SystemDataModel.otherInfo.profession == 1)}" source='assets/role/warrior.png' x="33.95" y="18" width="236" height="361"/>
+		
+		<component:CrotaBasicLabel text="{SystemDataModel.curShowInfoIsOtherRoleFlag?
+								   getJobWord(SystemDataModel.otherInfo.profession) + ' Lv.' + SystemDataModel.otherInfo.level:
+								   getJobWord(SystemDataModel.roleInfo.profession) + ' Lv.' + SystemDataModel.roleInfo.level}" 
+								   styleName="MAINMENUROLEFONT12a18c70" 
+								   x="0" y="34" width="100%"
+								   textAlign="center"/>
+		<!--角色职业-->
+		<!--<component:CrotaBasicLabel id="profession" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? getJobWord(SystemDataModel.roleInfo.profession): getJobWord(SystemDataModel.otherInfo.profession)}" 
+								   styleName="MAINMENUROLEFONT12a18c70" x="74" y="34.35" width="93" textAlign="center" verticalAlign="top"/>-->
+		<!--角色等级-->
+		<!--<component:CrotaBasicLabel 
+			text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? SystemDataModel.roleInfo.level : SystemDataModel.otherInfo.level}" 
+			x="161" y="34" styleName="MAINMENUROLEFONT12a18c70"/>-->
+		<!--角色名称-->
+		<component:CrotaBasicLabel id="roleName" text="{!SystemDataModel.curShowInfoIsOtherRoleFlag ? SystemDataModel.roleInfo.nickname : SystemDataModel.otherInfo.nickname}" styleName="MAINMENUROLEFONT15ffffff" x="0" y="15" textAlign="center" width="100%" verticalAlign="middle"/>
+		<!--形象-->
+		<!--角色身上的装备-->
+		<view:MainMenuEquipmentComponent _rolePos="10" x="220" y="284" data="{SystemDataModel.peopleItemInfo.getItemAt(9)}" setPosImage='assets/copyScene/hand.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="7" x="220" y="194" data="{SystemDataModel.peopleItemInfo.getItemAt(6)}" setPosImage='assets/copyScene/necklace.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="2" x="220" y="102" data="{SystemDataModel.peopleItemInfo.getItemAt(1)}" setPosImage='assets/copyScene/equipshoulder.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="4" x="220" y="148" data="{SystemDataModel.peopleItemInfo.getItemAt(3)}" setPosImage='assets/copyScene/equiphand.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="8" x="220" y="239" data="{SystemDataModel.peopleItemInfo.getItemAt(7)}" setPosImage='assets/copyScene/ring.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="9" x="26" y="284" data="{SystemDataModel.peopleItemInfo.getItemAt(8)}" setPosImage='assets/copyScene/mainhand.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="6" x="26" y="239" data="{SystemDataModel.peopleItemInfo.getItemAt(5)}" setPosImage='assets/copyScene/equipshoes.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="1" x="26" y="102" data="{SystemDataModel.peopleItemInfo.getItemAt(0)}" setPosImage='assets/copyScene/equiphead.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="3" x="26" y="148" data="{SystemDataModel.peopleItemInfo.getItemAt(2)}" setPosImage='assets/copyScene/breastplate.png'/>
+		<view:MainMenuEquipmentComponent _rolePos="5" x="26" y="194" data="{SystemDataModel.peopleItemInfo.getItemAt(4)}" setPosImage='assets/copyScene/equipleg.png'/>
+		
+	</s:SkinnableContainer>
+</s:Group>

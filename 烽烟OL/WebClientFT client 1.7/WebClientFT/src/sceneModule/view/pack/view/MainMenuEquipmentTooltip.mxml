@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" mouseChildren="false"
+		 xmlns:s="library://ns.adobe.com/flex/spark" implements="mx.core.IToolTip"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp();" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.IToolTip;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.vo.packageVo.PackageItem;
+			import sceneModule.view.pack.vo.DynamicPropertiesInfoVo;
+			
+			import style.Skin_CrotaBasicEquipmentTooltip;
+			
+			import util.CommonTools;
+			[Bindable]
+			private var dataInfo:PackageItem;
+			//动态字段属性信息集合
+			[Bindable]
+			private var dynamicArr:ArrayCollection;
+			[Bindable]
+			private var xqArr:ArrayCollection;
+			[Bindable]
+			private var colcor:uint;
+			
+			public static var NAME:String = "sceneModule.view.pack.view.MainMenuEquipmentTooltip";
+			
+			[Embed(source="/embed/ui/tips_2.png",scaleGridTop='5',scaleGridBottom='6',scaleGridLeft='6',scaleGridRight='7')]
+			[Bindable]
+			private var obj:Class;
+//			[Bindable]
+//		    private var des:String = "撒大法师法发生地方撒大法师法的撒大法师打发士大夫撒旦法师打法是否按时发生地方"; 
+			
+			private function initApp():void{
+				proList.scroller.setStyle("verticalScrollPolicy",false);
+			}
+			
+			/**
+			 * IToolTip的set get方法
+			 */
+			public function get text():String
+			{
+				return null;
+			}
+			
+			public function set text(value:String):void
+			{
+			
+			}
+			public function set curDataInfo(value:PackageItem):void{
+				dataInfo = value;
+				setActivePropertiesInfo();
+			}
+			/**
+			 * 组织动态字段部分的数据信息
+			 */
+			private function setActivePropertiesInfo():void{
+				dynamicArr = new ArrayCollection();
+				xqArr = new ArrayCollection();
+				if(!dataInfo)return;
+				//力量
+				if(dataInfo.baseStr != -1){
+					var strDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					strDynamicPro.properName = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ll');
+					strDynamicPro.curProper = dataInfo.baseStr;
+					strDynamicPro.maxProper = dataInfo.extStr;
+					dynamicArr.addItem(strDynamicPro);
+				}
+				//敏捷
+				if(dataInfo.baseDex != -1){
+					var dexDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					dexDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mj');
+					dexDynamicPro.curProper = dataInfo.baseDex;
+					dexDynamicPro.maxProper = dataInfo.extDex;
+					dynamicArr.addItem(dexDynamicPro);
+				}
+				//耐力
+				if(dataInfo.baseVit != -1){
+					var vitDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					vitDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nl');
+					vitDynamicPro.curProper = dataInfo.baseVit;
+					vitDynamicPro.maxProper = dataInfo.extVit;
+					dynamicArr.addItem(vitDynamicPro);
+				}
+				//智力
+				if(dataInfo.baseWis != -1){
+					var wisDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					wisDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zl');
+					wisDynamicPro.curProper = dataInfo.baseWis;
+					wisDynamicPro.maxProper = dataInfo.extWis;
+					dynamicArr.addItem(wisDynamicPro);
+				}
+				//抗暴
+				if(dataInfo.baseBlock != -1){
+					var blockDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					blockDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_kb');
+					blockDynamicPro.curProper = dataInfo.baseBlock;
+					blockDynamicPro.maxProper = dataInfo.extBlock;
+					dynamicArr.addItem(blockDynamicPro);
+				}
+				//HP
+				if(dataInfo.baseHpAdditional != -1){
+					var hpDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					hpDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_hp');
+					hpDynamicPro.curProper = dataInfo.baseHpAdditional;
+					hpDynamicPro.maxProper = dataInfo.extHpAdditional;
+					dynamicArr.addItem(hpDynamicPro);
+				}
+				//物攻
+				if(dataInfo.basePhysicalAttack != -1){
+					var phyAttackDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					phyAttackDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gj');
+					phyAttackDynamicPro.curProper = dataInfo.basePhysicalAttack;
+					phyAttackDynamicPro.maxProper = dataInfo.extPhysicalAttack;
+					dynamicArr.addItem(phyAttackDynamicPro);
+				}
+				//魔攻
+				if(dataInfo.baseMagicAttack != -1){
+					var magicAttackDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					magicAttackDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mg');
+					magicAttackDynamicPro.curProper = dataInfo.baseMagicAttack;
+					magicAttackDynamicPro.maxProper = dataInfo.extMagicAttack;
+					dynamicArr.addItem(magicAttackDynamicPro);
+				}
+				//物防
+				if(dataInfo.basePhysicalDefense != -1){
+					var phyDefenseDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					phyDefenseDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_wf');
+					phyDefenseDynamicPro.curProper = dataInfo.basePhysicalDefense;
+					phyDefenseDynamicPro.maxProper = dataInfo.extPhysicalDefense;
+					dynamicArr.addItem(phyDefenseDynamicPro);
+				}
+				//魔防
+				if(dataInfo.baseMagicDefense != -1){
+					var magicDefenseDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					magicDefenseDynamicPro.properName =  CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mf');
+					magicDefenseDynamicPro.curProper = dataInfo.baseMagicDefense;
+					magicDefenseDynamicPro.maxProper = dataInfo.extMagicDefense;
+					dynamicArr.addItem(magicDefenseDynamicPro);
+				}
+				//速度
+				if(dataInfo.baseSpeedAdditional != -1){
+					var speedAdditionalDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					speedAdditionalDynamicPro.properName = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gs');
+					speedAdditionalDynamicPro.curProper = dataInfo.baseSpeedAdditional;
+					speedAdditionalDynamicPro.maxProper = dataInfo.extSpeedAdditional;
+					dynamicArr.addItem(speedAdditionalDynamicPro);
+				}
+				//命中
+				if(dataInfo.baseHitAdditional != -1){
+					var hitAdditionalDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					hitAdditionalDynamicPro.properName = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mz');
+					hitAdditionalDynamicPro.curProper = dataInfo.baseHitAdditional;
+					hitAdditionalDynamicPro.maxProper = dataInfo.extHitAdditional;
+					dynamicArr.addItem(hitAdditionalDynamicPro);
+				}
+				//暴击
+				if(dataInfo.baseCritAdditional != -1){
+					var critAdditionalDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					critAdditionalDynamicPro.properName = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_bj');
+					critAdditionalDynamicPro.curProper = dataInfo.baseCritAdditional;
+					critAdditionalDynamicPro.maxProper = dataInfo.extCritAdditional;
+					dynamicArr.addItem(critAdditionalDynamicPro);
+				}
+				//闪避
+				if(dataInfo.baseDodgeAdditional != -1){
+					var baseDodgeDynamicPro:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					baseDodgeDynamicPro.properName = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sb');
+					baseDodgeDynamicPro.curProper = dataInfo.baseDodgeAdditional;
+					baseDodgeDynamicPro.maxProper = dataInfo.extDodgeAdditional;
+					dynamicArr.addItem(baseDodgeDynamicPro);
+				}
+				
+				if(dataInfo.xqDes1 != null){
+					var dy1:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					dy1.properName = dataInfo.xqDes1;
+					dy1.curProper = -2;
+					dy1.maxProper = -1;
+					xqArr.addItem(dy1);
+				}
+				if(dataInfo.xqDes2 != null){
+					var dy2:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					dy2.properName = dataInfo.xqDes2;
+					dy2.curProper = -2;
+					dy2.maxProper = -1;
+					xqArr.addItem(dy2);
+				}
+				if(dataInfo.xqDes3 != null){
+					var dy3:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					dy3.properName = dataInfo.xqDes3;
+					dy3.curProper = -2;
+					dy3.maxProper = -1;
+					xqArr.addItem(dy3);
+				}
+				if(dataInfo.xqDes4 != null){
+					var dy4:DynamicPropertiesInfoVo = new DynamicPropertiesInfoVo();
+					dy4.properName = dataInfo.xqDes4;
+					dy4.curProper = -2;
+					dy4.maxProper = -1;
+					xqArr.addItem(dy4);
+				}
+			}
+			/**
+			 * 物品等级限制
+			 */
+			private function getProfessionRequire(require:int):String{
+				var requireStr:String;
+				switch(require){
+					case ProConst.PROFESSIONREQUIRE1:
+						requireStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_wxz');
+						break;
+					case ProConst.PROFESSIONREQUIRE2:
+						requireStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zs');
+						break;
+					case ProConst.PROFESSIONREQUIRE3:
+						requireStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fashi');
+						break;
+					case ProConst.PROFESSIONREQUIRE4:
+						requireStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ms');
+						break;
+					case ProConst.PROFESSIONREQUIRE5:
+						requireStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_yx');
+						break;
+				}
+				return requireStr;
+			}
+		    /**
+			 * 物品类型
+			 */
+			private function getWeaponTypeStr(weaponType:int):String{
+				var weaponTypeStr:String='';
+				switch(weaponType){
+					case ProConst.WEAPONTYPE0:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_xb');
+						break;
+					case ProConst.WEAPONTYPE1:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_tuib');
+						break;
+					case ProConst.WEAPONTYPE2:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_toub');
+						break;
+					case ProConst.WEAPONTYPE3:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_shoub');
+						break;
+					case ProConst.WEAPONTYPE4:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_jb');
+						break;
+					case ProConst.WEAPONTYPE5:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fushou');
+						break;
+					case ProConst.WEAPONTYPE6:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_jinb');
+						break;
+					case ProConst.WEAPONTYPE7:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sz');
+						break;
+					case ProConst.WEAPONTYPE8:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_jianb');
+						break;
+					case ProConst.WEAPONTYPE9:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ds');
+						break;
+					case ProConst.WEAPONTYPE10:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ss');
+						break;
+					case ProConst.WEAPONTYPE20:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_yj');
+						break;
+					case ProConst.WEAPONTYPE21:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_bs');
+						break;
+					case ProConst.WEAPONTYPE22:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_qt');
+						break;
+					case ProConst.WEAPONTYPE23:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_rwwp');
+						break;
+					case ProConst.WEAPONTYPE24:
+						weaponTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_cl');
+						break;
+				}
+				return weaponTypeStr;
+			}
+			/**
+			 * 身体部位类型
+			 */
+			private function getBodyTypeStr(bodyType:int):String{
+				var bodyTypeStr:String;
+				switch(bodyType){
+					case ProConst.BODYTYPEPOS0:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ss');
+						break;
+					case ProConst.BODYTYPEPOS1:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_toub');
+						break;
+					case ProConst.BODYTYPEPOS2:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_jianb');
+						break;
+					case ProConst.BODYTYPEPOS3:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_xb');
+						break;
+					case ProConst.BODYTYPEPOS4:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_shoub');
+						break;
+					case ProConst.BODYTYPEPOS5:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_tuib');
+						break;
+					case ProConst.BODYTYPEPOS6:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_jb');
+						break;
+					case ProConst.BODYTYPEPOS7:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_xl');
+						break;
+					case ProConst.BODYTYPEPOS8:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_jz');
+						break;
+					case ProConst.BODYTYPEPOS9:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zs');
+						break;
+					case ProConst.BODYTYPEPOS10:
+						bodyTypeStr = CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fushou');
+						break;
+				}
+				return bodyTypeStr;
+			}
+			/**
+			 * 判断标签是否显示
+			 */
+			private function getCurLabVisible(basePro:int,extPro:int):Boolean{
+				if(basePro == -1 && extPro == -1){
+					return false;
+				}
+				return true;
+			}
+			private function nowQuality(i:int):int{
+				switch(i){
+				case 1:
+					colcor=10066329;
+					break;
+				case 2:
+					colcor=16777215;
+					break;
+				case 3:
+					colcor=65331;
+					break;
+				case 4:
+					colcor=26367;
+					break;
+				case 5:
+					colcor=10027212;
+					break;
+				case 6:
+					colcor=16750848;
+					break;
+				case 7:
+					colcor=16711680;
+					break;
+			   }
+				return colcor;
+			}
+			public function professionRequire(i:int):int{
+		        if(i==0){
+					colcor=16711680;
+				}else{
+					colcor=16777215;
+				}
+				return colcor;
+			}
+			/**
+			 * 获取装备名称
+			 * (前缀)装备名称（后缀）
+			 */
+			private function getItemNameStr(name:String,level:int,ty:int):String{
+				var str:String='';
+				if(ty == 1){
+					//装备
+					str = name + ' +' + level;
+				}else{
+					str = name;
+				}
+				
+				return str;
+			}
+			//获取装备图标路径
+			public function setEquipmentUrl(s:int,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaBasicEquipmentTooltip" width="226">
+		<s:VGroup gap="1" top="14" left="6" right="10" bottom="12">
+			<s:Group width="100%" height="80">
+				<component:CrotaBasicLabel 
+					text="{getItemNameStr(dataInfo.name,dataInfo.starLevel,dataInfo.itemPage)}" 
+					styleName="TOOLTIPTEXTFORMAT3" 
+					x="5" 
+					color="{util.CommonTools.get_equipement_color(dataInfo.nowQuality)}" 
+					width="200"/>
+				<component:CrotaBasicLabel y="25" text="{dataInfo.isBound == 1?CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmebiT_bd'):CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmebiT_wbd')}" x="6" styleName="TOOLTIPTEXTFORMAT4"/>
+				<component:CrotaBasicLabel x="5" y="43" text="{dataInfo.isBound == 1?CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_lx'):CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_lx')}" styleName="TOOLTIPTEXTFORMAT4" />
+				<component:CrotaBasicLabel y="43" text="{ProConst.getItemTypeDes(dataInfo.itemPage)}" x="40" styleName="TOOLTIPTEXTFORMAT4"/>
+				<component:CrotaBasicLabel x="5" y="60" text="{dataInfo.isBound == 1?CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sxdj'):CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sxdj')}" styleName="TOOLTIPTEXTFORMAT4" />
+				<component:CrotaBasicLabel y="60" text="{dataInfo.levelRequire}" x="64" styleName="TOOLTIPTEXTFORMAT4"/>
+				<mx:Image id="equipitemImg" width="42" height="42" x="163" y="32" source="{setEquipmentUrl(dataInfo.icon,dataInfo.type)}"/>
+			</s:Group>
+			<!--<s:Group width="100%" visible="{dataInfo.itemPage == 1 ? true : false}" includeInLayout="{dataInfo.itemPage == 1 ? true : false}">
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nj')}" styleName="TOOLTIPTEXTFORMAT4" x="5"/>
+				<component:CrotaBasicLabel text="{(dataInfo.nowDurability/dataInfo.baseDurability)}" styleName="TOOLTIPTEXTFORMAT4" x="40"/>
+			</s:Group>-->
+			<s:Group width="100%" visible="{dataInfo.itemPage != 1 ? false : true}" includeInLayout="{dataInfo.itemPage != 1 ? false : true}">
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcWM_zy')+getProfessionRequire(dataInfo.professionRequire)}" styleName="TOOLTIPTEXTFORMAT4" color="{professionRequire(dataInfo.professionRequire)}" x="5"/>
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_lx')+getWeaponTypeStr(dataInfo.weaponType)}" x="100" styleName="TOOLTIPTEXTFORMAT4"/>
+				
+			</s:Group>
+			<!--<s:Group width="100%" visible="{dataInfo.itemPage != 1 ? false : true}" includeInLayout="{dataInfo.itemPage != 1 ? false : true}">
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('blacksmith','hcC_zb')+getBodyTypeStr(dataInfo.bodyType)}" styleName="TOOLTIPTEXTFORMAT4" x="5"/>
+				<component:CrotaBasicLabel text="{'注魂:'+(dataInfo.canInjection == 1?'不可注魂':'可注魂')}" x="100" styleName="TOOLTIPTEXTFORMAT4" color="{professionRequire(dataInfo.professionRequire)}" y="0" width="107"/>
+			</s:Group>-->
+			
+			<s:Group width="100%" visible="{dataInfo.itemPage != 1 ? false : (dataInfo.bodyType == 7 ? false : (dataInfo.bodyType == 8 ? false : true))}" includeInLayout="{dataInfo.itemPage != 1 ? true : (dataInfo.bodyType == 7 ? true : (dataInfo.bodyType == 8 ? false : true))}">
+				<component:CrotaBasicLabel text="{dataInfo.baseDefense != -1 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_fy') : CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gj') }" visible="{(dataInfo.baseAttack != -1) ? true : ((dataInfo.baseDefense != -1) ? true : false)}" includeInLayout="true" styleName="TOOLTIPTEXTFORMAT4" x="5"/>
+				<component:CrotaBasicLabel text="{dataInfo.baseDefense != -1 ? dataInfo.baseDefense : dataInfo.baseAttack}" visible="{(dataInfo.baseAttack != -1) ? true : ((dataInfo.baseDefense != -1) ? true : false)}" includeInLayout="true" styleName="TOOLTIPTEXTFORMAT4" x="40"/>
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_gs')}" visible="{dataInfo.baseSpeed != -1}" includeInLayout="true" styleName="TOOLTIPTEXTFORMAT4" x="96"/>
+				<component:CrotaBasicLabel text="{dataInfo.baseSpeed}" visible="{dataInfo.baseSpeed != -1}" includeInLayout="true" styleName="TOOLTIPTEXTFORMAT4" x="130" y="0" width="76"/>
+			</s:Group>
+			<s:Group width="100%">
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_sm')+dataInfo.description}" width="204" styleName="TOOLTIPTEXTFORMAT5" x="5"/>
+			</s:Group>
+			<s:Group width="100%" visible="{dataInfo.itemPage != 1 ? false : (dynamicArr.length > 0 ? true : false)}" includeInLayout="true">
+				<s:List id="proList" height="{dynamicArr.length == 0 ? 0 : (dynamicArr.length%2 == 0 ? dynamicArr.length*10:(dynamicArr.length*10+10))}" visible="{dynamicArr.length>0}" includeInLayout="true" dataProvider="{dynamicArr}" itemRenderer="sceneModule.view.pack.view.MainMenuEquipmentTooltipItemRender" skinClass="style.Skin_CrotaBasicList" styleName="TOOLTIPTEXTFORMAT1" x="5">
+					<s:layout>
+						<s:TileLayout requestedColumnCount="2" horizontalGap="-20"/>
+					</s:layout>
+				</s:List>
+			</s:Group>
+			<s:Group width="100%">
+				<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_xqsx')}" visible="{xqArr.length>0}" includeInLayout="{xqArr.length >0 ? true : false}" width="204" styleName="TOOLTIPTEXTFORMAT5" x="5"/>
+			</s:Group>
+			<s:Group width="100%" visible="{xqArr.length>0}" includeInLayout="true">
+				<s:List id="xqList" height="{xqArr.length == 0 ? 0 : (dynamicArr.length%2 == 0 ? xqArr.length*20:(xqArr.length*20))}" visible="{xqArr.length>0}" includeInLayout="true" dataProvider="{xqArr}" itemRenderer="sceneModule.view.pack.view.MainMenuEquipmentTooltipItemRender" skinClass="style.Skin_CrotaBasicList" styleName="TOOLTIPTEXTFORMAT1" x="5">
+					<s:layout>
+						<s:TileLayout requestedColumnCount="1" horizontalGap="-20"/>
+					</s:layout>
+				</s:List>
+			</s:Group>
+			<s:Group width="100%">
+				<component:CrotaBasicLabel text="{dataInfo.SuiteInfo.suitename+'('+dataInfo.SuiteInfo.nowcnt+'/'+dataInfo.SuiteInfo.maxcnt+')'}" visible="{dataInfo.SuiteInfo.suiteeffctArr.length>0}" includeInLayout="{dataInfo.SuiteInfo.suiteeffctArr.length >0 ? true : false}" width="204" styleName="TOOLTIPTEXTFORMAT5" x="5"/>
+			</s:Group>
+			<s:Group width="100%" visible="{dataInfo.SuiteInfo.suiteeffctArr.length>0}" includeInLayout="true">
+				<s:List id="suitList" height="{dataInfo.SuiteInfo.suiteeffctArr.length == 0 ? 0 : (dataInfo.SuiteInfo.suiteeffctArr.length%2 == 0 ? dataInfo.SuiteInfo.suiteeffctArr.length*20:(dataInfo.SuiteInfo.suiteeffctArr.length*20))}" visible="{dataInfo.SuiteInfo.suiteeffctArr.length>0}" includeInLayout="true" dataProvider="{dataInfo.SuiteInfo.suiteeffctArr}" itemRenderer="sceneModule.view.pack.view.MainMenuTZTooltipItemRender" skinClass="style.Skin_CrotaBasicList" styleName="TOOLTIPTEXTFORMAT1" x="5">
+					<s:layout>
+						<s:TileLayout requestedColumnCount="1" horizontalGap="-20"/>
+					</s:layout>
+				</s:List>
+			</s:Group>
+			<s:Group width="100%" visible="{dataInfo.itemPage == 4 ? false : true}" includeInLayout="{dataInfo.itemPage == 4 ? false : true}">
+				<component:CrotaBasicLabel text="{dataInfo.isBound == 1?CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmebiT_mj'):CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmebiT_mj')}" styleName="TOOLTIPTEXTFORMAT1" x="5"/>
+				<component:CrotaBasicLabel text="{'(+'+dataInfo.buyingRateCoin+')'}" x="65" styleName="TOOLTIPTEXTFORMAT1"/>
+			</s:Group>
+		</s:VGroup>
+	</s:SkinnableContainer>	
+</s:Group>

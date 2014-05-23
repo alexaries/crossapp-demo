@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="460" height="42" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			
+			import resource.CrotaResourceConfig;
+			[Embed(source="/embed/ui/loadProgress.png",scaleGridTop='3',scaleGridLeft='9',scaleGridRight='170',scaleGridBottom='9')]
+			[Bindable]
+			private var loadRes:Class;
+			
+			//进度条最大长度
+			private const MAX_LEN:int = 410;
+			/**
+			 * 文件加载速度
+			 * @param curNum 已经加载的个数
+			 * @param maxNum 总个数
+			 * @param showPerFlag是否显示百分比
+			 */
+//			private var loadDes:String=CrotaResourceConfig.getInstance().getTextByModuleAndId('ui','lpC_zyjj');
+			public function setLoadNumInfo(curNum:int,maxNum:int,loadDes:String="资源加载",showPerFlag:Boolean=false):void{
+				fileCountLab.text = loadDes+"("+curNum+"/"+maxNum+")";
+				if(showPerFlag){
+					var per:Number = Number(curNum/maxNum);
+					loadPro.width = MAX_LEN * per;
+					var perShow:String = Number(per*100).toFixed(2);
+					
+					/* var per:Number = Number(curNum/maxNum).toFixed(2);
+					loadPro.width = MAX_LEN * per;
+					var perShow:int = per * 100; */
+					fileProLab.text = perShow+"%";
+//					trace("111--"+fileProLab.text);
+				}
+			}
+			/**
+			 * 当前单个文件加载进度
+			 * @param curLoad已经加载的大小
+			 * @param maxLoad文件的总大小
+			 */
+			public function setCurFileLoadProgress(curLoad:int,maxLoad:int):void{
+				var per:Number = Number(curLoad/maxLoad);
+				loadPro.width = MAX_LEN*per;
+				var perShow:String = Number(per*100).toFixed(2);
+				
+				/* var per:Number = Number(curLoad/maxLoad).toFixed(2);
+				loadPro.width = MAX_LEN * per;
+				var perShow:int = per * 100; */
+				fileProLab.text = perShow+"%";
+//				trace("222--"+fileProLab.text);
+			}
+			/**
+			 * 当前文件加载进度
+			 */
+			public function setCurFileLoadPercentProgress(per:Number,firstLoad:Boolean = false):void{
+				loadPro.width = MAX_LEN * per;
+				if(firstLoad){
+					fileProLab.text = Number(per * 100).toFixed(2)+'%';
+				}else{
+					fileProLab.text = Number(per * 100).toFixed(2)+'% 2/2';
+				}
+				
+//				trace("333--"+per+"--"+fileProLab.text);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image visible="false" source="@Embed('/embed/ui/loadBackground1.png')" width="430" height="22"/>
+	<mx:Image visible="false" id="loadPro" source="{loadRes}" maintainAspectRatio="false" height="12" x="11" y="6"/>
+	<component:CrotaBasicLabel visible="false" id="fileCountLab" color="#ffffff" x="29" y="22" width="203" textAlign="right"/>
+	<component:CrotaBasicLabel id="fileProLab" color="#ffffff" x="145" y="22" width="200" textAlign="center"/>
+</s:Group>

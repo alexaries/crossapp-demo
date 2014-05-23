@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:win="managers.*"
+				creationComplete="basewindow1_creationCompleteHandler(event)"
+				width="347" height="168" xmlns:util="util.*" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaPackRedButton;
+			
+			import util.CommonTools;
+			public static const NAME:String = 'sceneModule.view.jingji.view.JingJiBattleJieSuanWindow';
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+//				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_jingji","jingji_bg");
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg" source='assets/jingji/JingJiSetBg.png'/>
+	<component:CrotaBasicLabel text="{SystemDataModel.battleInfoVo.jingjiResult}" styleName="RANKINGFORMAT1" x="66" y="77" textAlign="center" width="220"/>
+	<component:CrotaBasicLabel text="{SystemDataModel.battleInfoVo.battleResult == 1?CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjjsW_sl'):CrotaResourceConfig.getInstance().getTextByModuleAndId('jingji','jjjsW_sb')}" fontWeight="bold" color="#ffff00" fontSize="14" y="43" textAlign="center" width="220"/>
+	<s:Button id="submit" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" skinClass="style.Skin_CrotaPackRedButton" x="136" y="112"/>
+</win:BaseWindow>

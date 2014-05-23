@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<utilComp:CrotaBasicBaseItemRender xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								   xmlns:s="library://ns.adobe.com/flex/spark"
+								   xmlns:mx="library://ns.adobe.com/flex/mx"
+								   width="197" height="35" 
+								   xmlns:component="component.*" 
+								   xmlns:utilComp="util.*">
+	<fx:Script>
+		<![CDATA[
+			private function getSceneNameColor(l_t:int,m_t:int,z_t:int,n_t:int,j_t:int):uint{
+				if(l_t<1800 || m_t<1800 || z_t<1800 || n_t<1800 || j_t<1800){
+					return 0x00FF66;
+				}
+				return 0xffff00;
+			}
+		]]>
+	</fx:Script>
+	<s:Label text="{data.c_name}" fontSize="22" fontWeight="bold" color="{getSceneNameColor(data.liliang_info.remainTime,data.minjie_info.remainTime,data.zhili_info.remainTime,data.naili_info.remainTime,data.jingshen_info.remainTime)}" width="197" textAlign="center" y="6"/>
+	
+</utilComp:CrotaBasicBaseItemRender>

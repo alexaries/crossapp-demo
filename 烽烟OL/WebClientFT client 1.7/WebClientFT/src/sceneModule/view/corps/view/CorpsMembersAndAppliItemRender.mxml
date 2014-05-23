@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<utilComp:CrotaBasicBaseItemRender xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				 width="740" height="24" xmlns:component="component.*"  
+				 xmlns:utilComp="util.*"
+				 creationComplete="show_data()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.corps.event.NCropsEvent;
+			
+			private function show_data():void{
+				this.addEventListener(FlexEvent.DATA_CHANGE,data_change);
+				ok_btn.addEventListener(MouseEvent.CLICK,on_ok);
+				no_btn.addEventListener(MouseEvent.CLICK,on_no);
+				
+				
+				refresh_view();
+			}
+			
+			private function on_ok(e:MouseEvent):void{
+				this.dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_ACCEPT_REQUEST,data,true));
+			}
+			
+			private function on_no(e:MouseEvent):void{
+				this.dispatchEvent(new NCropsEvent(NCropsEvent.EVENT_Crops_REJEST_REQUEST,data,true));
+			}
+			
+			private function data_change(e:FlexEvent):void{
+				refresh_view();
+			}
+			
+			private function refresh_view():void{
+
+				member_name.text = data.memberName;
+				member_level.text = data.memberLevel;
+				member_job.text = data.memberProfession;
+				member_rank.text = data.memberRank;
+				member_time.text = data.memberTime;
+				
+				if(data.is_leader){
+					this.addElement(no_btn);
+					this.addElement(ok_btn);
+				}
+				else{
+					remove_if_have(no_btn);
+					remove_if_have(ok_btn);
+				}
+			}
+			private function remove_if_have(element:IVisualElement):void{
+				if(element.parent){
+					this.removeElement(element);
+				}
+			}
+		]]>
+	</fx:Script>
+	<component:CrotaBasicLabel 
+		id="member_name"
+		x="0" y="8" width="125" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_level"
+		x="125" y="8" width="99" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_job"
+		x="224" y="7" width="138" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_rank"
+		x="362" y="7" width="121" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<component:CrotaBasicLabel
+		id="member_time"
+		x="480" y="28" width="149" 
+		textAlign="center" styleName="MAINMENUROLEFONT12a18c70"/>
+	<utilComp:CommonButton id="no_btn"
+			  skinClass="style.Skin_CrotaChatSendMessageButton" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmapIR_jj')}" 
+			  x="648" y="2"/>
+	<utilComp:CommonButton id="ok_btn"
+			  skinClass="style.Skin_CrotaChatSendMessageButton" 
+			  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmapIR_pz')}" 
+			  x="693" y="2"/>
+</utilComp:CrotaBasicBaseItemRender>

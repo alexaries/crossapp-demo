@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 width="696"
+		 height="422"
+		 xmlns:win="managers.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:view="sceneModule.view.mainMenu.view.*"
+		 xmlns:component="component.*"
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="init()" xmlns:util="util.*" xmlns:ns="NpcState_fla.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.desktop.Clipboard;
+			import flash.desktop.ClipboardFormats;
+			
+			import flashx.textLayout.operations.DeleteTextOperation;
+			import flashx.textLayout.operations.InsertTextOperation;
+			import flashx.textLayout.operations.PasteOperation;
+			import flashx.textLayout.operations.RedoOperation;
+			
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.mail.event.MainMenuMailComponentCreateCompleteEvent;
+			import sceneModule.view.mail.event.MediatorRegisterMainEvent;
+			import sceneModule.view.mail.event.SendMailEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaBasicNextButton;
+			import style.Skin_CrotaBasicPreButton;
+			import style.Skin_CrotaCommonButtonMail;
+			import style.Skin_CrotaPackRadioButtonMail;
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+
+			//邮件类型 默认为0 所有邮件 1 系统信函  2玩家信函 3保存信函 
+			private var mailType:int=0;
+
+			private var _is_back:Boolean=false;
+			public var wrtieMail_bitmap:Bitmap;
+			public static var NAME:String = "sceneModule.view.mail.view.MainMenuMailComponent";
+			private function init():void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				this.dispatchEvent(new MediatorRegisterMainEvent(MediatorRegisterMainEvent.MR_MAIL_COMP,this,true));
+				this.newMailBtn.addEventListener(MouseEvent.CLICK,onWriteMail);
+				this.closeBtn.addEventListener(MouseEvent.CLICK,onCloseClick);
+				this.resumeBtn.addEventListener(MouseEvent.CLICK,onWriteMail);
+				
+				
+			}
+			private function onCloseClick(evt:MouseEvent):void
+			{
+				commonMail.visible=true;
+			}
+			
+			private function onWriteMail(evt:MouseEvent):void
+			{
+				commonMail.visible=false;
+			}
+			//设置当前邮件类型
+			public function set _mailType(value:int):void
+			{
+				mailType=value;
+			}
+
+			/**
+			 * onSendMail
+			 */
+			private function onSendMail(evt:MouseEvent):void
+			{
+				_is_back=false;
+				check_title();
+				evt.stopPropagation();
+				dispatchEvent(new SendMailEvent(SendMailEvent.SENDMAIL));
+
+			}
+
+			/**
+			 * 关闭写信界面
+			 */
+			private function onCloseWriteMail():void
+			{
+//				this.currentState="commonState";
+				writeMail.visible=false;
+				newMailBtn.visible=true;
+				_is_back=false;
+				check_title();
+
+			}
+
+			public function init_write_page():void
+			{
+//				this.currentState="writeMailState";
+				writeMail.visible=true;
+				newMailBtn.visible=false;
+				commonMail.visible=false;
+				_is_back=false;
+				check_title();
+				clearMailInfo();
+				clearWriteMailInfo();
+			}
+
+			public function clear_write_info():void
+			{
+				userName.text="";
+				writeMailTitle.text="";
+			}
+
+			/**
+			 * 回复
+			 */
+			private function onResumeMail():void
+			{
+//				this.currentState="writeMailState";
+				writeMail.visible=true;
+				newMailBtn.visible=false;
+				userName.text=mailFromPos.text;
+				if (0 == mailTitle.text.indexOf("Re:"))
+				{
+					writeMailTitle.text=mailTitle.text;
+				}
+				else
+				{
+					writeMailTitle.text="Re:" + mailTitle.text;
+				}
+				clearMailInfo();
+				_is_back=true;
+				check_title();
+				clearWriteMailInfo(false);
+				writeCailContent.setFocus();
+			}
+
+			private function check_title():void
+			{
+				if (null != writeMailTitle)
+				{
+					writeMailTitle.editable=!_is_back;
+					writeMailTitle.selectable=!_is_back;
+					userName.enabled=!_is_back;
+				}
+			}
+
+			/**
+			 * 清空写信界面中的信息
+			 */
+			public function clearWriteMailInfo(is_all:Boolean=true):void
+			{
+				if (is_all)
+				{
+					if (null != userName)
+					{
+						userName.text="";
+					}
+					if (null != writeMailTitle)
+					{
+						writeMailTitle.text="";
+					}
+				}
+				if (null != writeCailContent)
+				{
+					writeCailContent.text="";
+//					contentSizeShow.text=CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_sre');
+				}
+				mailList.selectedIndex=-1;
+				//infoConfim.text = "";
+			}
+
+			/**
+			 * 清空邮件信息部分内容按钮状态不可操作
+			 */
+			public function clearMailInfo():void
+			{
+				mailFromPos.text="";
+				mailTitle.text="";
+				mailContent.text="";
+				resumeBtn.enabled=false;
+//				saveBtn.enabled=false;
+				deleteBtn.enabled=false;
+				mailList.selectedIndex=-1;
+				//infoConfim.text = "";
+				mail_data.text="";
+			}
+
+			/**
+			 * 新建邮件
+			 */
+			private function onNewMail():void
+			{
+//				this.currentState="writeMailState";
+				writeMail.visible=true;
+				wrtieMail_bitmap=new Bitmap();
+				writeMailBg.source=wrtieMail_bitmap;
+				wrtieMail_bitmap.bitmapData=AssetCenter.getInstance().get_img_form_pacakge("ui_mail", "writeMailBg");
+				mailList.selectedIndex=-1;
+				clearMailInfo();
+				clearWriteMailInfo();
+				_is_back=false;
+				check_title();
+			}
+
+			/**
+			 * 计算邮件内容输入框还可以输入的字数
+			 * Function __getStringBytesLength获取字符串的字节长度
+			 */
+			private function onMainChange(evt:TextOperationEvent):void
+			{
+				contentSizeShow.text=CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_hky') + (writeCailContent.maxChars - writeCailContent.text.length) +CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_gz') ;
+			}
+
+			/**
+			 * 获取页数Relation
+			 * (当前页数/总页数)
+			 * @param curPage 当前页
+			 * @param maxPage 总页数
+			 */
+			private function getCurPageAndMaxPageRelation(curPage:int, maxPage:int):String
+			{
+				if (curPage > maxPage)
+				{
+					return maxPage + "/" + maxPage;
+				}
+				return curPage + "/" + maxPage;
+			}
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+							selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mail_qb')}"/>
+		
+	</fx:Declarations>
+	<!--<s:states>
+		<s:State name="commonState"/>
+		<s:State name="writeMailState"/>
+	</s:states>-->
+	<s:SkinnableContainer id="mainSkinnableContainer"
+						  width="849"
+						  height="513">
+		<!--<mx:Image source="assets/mail/mainMailBg.png"/>-->
+		<mx:Image id="mainMailBg" source="assets/mail/mainMailBg.png"/>
+		<s:RadioButton group="{cardtype}"
+					   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_qb')}"
+					   skinClass="style.Skin_CrotaPackRadioButtonRight"
+					   styleName="MAINMENUROLEFONT12e4e0b3"
+					   width="66"
+					   height="28"
+					   x="150"
+					   y="57" />
+		<s:RadioButton group="{cardtype}"
+					   skinClass="style.Skin_CrotaPackRadioButtonRight"
+					   styleName="MAINMENUROLEFONT12e4e0b3"
+					   width="66"
+					   height="28"
+					   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','bfM_xt')}"
+					   x="216"
+					   y="57" />
+		<s:RadioButton group="{cardtype}"
+					   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_wj')}"
+					   skinClass="style.Skin_CrotaPackRadioButtonRight"
+					   styleName="MAINMENUROLEFONT12e4e0b3"
+					   width="66"
+					   height="28"
+					   x="282"
+					   y="57" />
+		<!--<s:RadioButton group="{cardtype}"
+					   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_bc')}"
+					   skinClass="style.Skin_CrotaPackRadioButtonRight"
+					   styleName="MAINMENUROLEFONT12e4e0b3"
+					   width="78"
+					   height="30"
+					   x="259"
+					   y="59" />-->
+		<!--<mx:Image source="assets/mail/mail_list_bg.png" x="32" y="110"/>-->
+		<!--邮件列表-->
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_myyj')}"
+								   styleName="MAINMENUROLEFONT12bebebe"
+								   textAlign="center"
+								   verticalAlign="middle"
+								   visible="{0 == SystemDataModel.mailListInfo.mailinfo.length}"
+								   width="315"
+								   x="84"
+								   height="267"
+								   y="95"/>
+
+		<s:List id="mailList"
+				skinClass="style.Skin_CrotaBasicList"
+				dataProvider="{SystemDataModel.mailListInfo.mailinfo}"
+				itemRenderer="sceneModule.view.mail.view.MainMailItemRender"
+				x="86"
+				y="86">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1"
+							  verticalGap="-1"/>
+			</s:layout>
+		</s:List>
+		<util:CommonButton id="preBtn"
+				  skinClass="style.Skin_CrotaBasicPreButton"
+				  enabled="{SystemDataModel.mailListInfo.curPage > 1}"
+				  x="203"
+				  y="359"/>
+		<component:CrotaBasicLabel text="{getCurPageAndMaxPageRelation(SystemDataModel.mailListInfo.curPage,SystemDataModel.mailListInfo.maxPage)}"
+										 styleName="MAINMENUROLEFONT12bebebe"
+										 height="13"
+										 textAlign="center"
+										 width="43"
+										 x="219"
+										 y="364"/>
+		<util:CommonButton id="nextBtn"
+				  skinClass="style.Skin_CrotaBasicNextButton"
+				  enabled="{SystemDataModel.mailListInfo.maxPage > SystemDataModel.mailListInfo.curPage}"
+				  x="259"
+				  y="359"/>
+		<util:CommonButton id="deleteCurPageBtn"
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_scdy')}"
+				  enabled="{SystemDataModel.mailListInfo.mailinfo.length > 0}"
+				  x="99"
+				  y="356"/>
+		<util:CommonButton id="newMailBtn"
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_xjyj')}"
+				  x="301"
+				  y="356"
+				  click="onNewMail()"/>
+		
+		<!--邮件详细信息-->
+		<s:Group id="commonMail"
+				 x="406"
+				 y="112"
+				 width="206"
+				 height="285">
+			<!--<mx:Image source="assets/mail/mailInfoBg.png" x="10" y="5"/>-->
+			<mx:Image id="mailInfoBg"
+					  x="10"
+					  y="15"/>
+			<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_fxyh')}"
+									   styleName="MAINMENUROLEFONT13a18c70"
+									   x="18"
+									   y="-21"/>
+			<component:CrotaBasicLabel id="mailFromPos"
+									   styleName="MAINMENUROLEFONT12bebebe"
+									   x="86"
+									   y="-20"/>
+			<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_xhbt')}"
+									   styleName="MAINMENUROLEFONT13a18c70"
+									   x="18"
+									   y="0"/>
+			<component:CrotaBasicLabel id="mailTitle"
+									   width="100" height="14"
+									   styleName="MAINMENUROLEFONT12bebebe"
+									   x="86" 
+									   y="1"/>
+			<component:CrotaBasicTextArea id="mailContent"
+										  enabled="false"
+										  width="186"
+										   maxChars="126"
+										  styleName="MAINMENUROLEFONT12bebebe"
+										  x="14"
+										  y="21"
+										  height="136"/>
+			<component:CrotaBasicLabel id="mail_data"
+									   enabled="false"
+									   width="180"
+									   styleName="MAINMENUROLEFONT12bebebe"
+									   x="11"
+									   y="194"
+									   textAlign="center"/>
+			<util:CommonButton id="deleteBtn"
+							   skinClass="style.Skin_CrotaCommonButton3"
+							   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_sc')}"
+							   x="33"
+							   y="233"
+							   enabled="false"/>
+			<util:CommonButton id="resumeBtn"
+					  skinClass="style.Skin_CrotaCommonButton3"
+					  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_hf')}"
+					  x="121"
+					  y="233"
+					  click="onResumeMail()"
+					  enabled="false"/>
+			
+		</s:Group>
+		<!--写信界面-->
+		<s:Group x="398"
+				 y="64"
+				 id="writeMail"
+				  visible="false"
+				 width="194"
+				 height="300">
+			<mx:Image source='assets/mail/writeMailBg.png' x="20" y="19"/>
+			<mx:Image id="writeMailBg"
+					  x="20"
+					  y="19"/>
+			<component:CrotaChatTextInput id="userName"
+										  styleName="MAINMENUROLEFONT12bebebe"
+										  x="92"
+										  y="24"
+										  height="22"
+										  width="247"
+										  maxChars="16"/>
+			<component:CrotaChatTextInput id="writeMailTitle"
+										  styleName="MAINMENUROLEFONT12bebebe"
+										  x="92"
+										  y="58"
+										  maxChars="8"/>
+			<component:CrotaBasicLabel id="contentSizeShow"
+									   styleName="MAINMENUROLEFONT12bebebe"
+									   x="224"
+									   y="285"
+									   width="143"
+									   textAlign="right"/>
+			<component:CrotaBasicTextArea id="writeCailContent"
+										   verticalScrollPolicy="off"
+										  width="103"
+										  height="184"
+										  x="92"
+										  y="90"
+										  styleName="MAINMENUROLEFONT12bebebe"
+										  maxChars="126"/>
+			<util:CommonButton id="closeBtn"
+							   skinClass="style.Skin_CrotaCommonButton3"
+							   label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('mail','mmm_gb')}"
+							   x="44"
+							   y="292"
+							   click="onCloseWriteMail()"/>
+			<util:CommonButton id="sendBtn"
+					  skinClass="style.Skin_CrotaCommonButton3"
+					  label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_fs')}"
+					  x="131"
+					  y="292"
+					  click="onSendMail(event)"/>
+			
+		</s:Group>
+	</s:SkinnableContainer>
+	<util:CommonButton id="closeBtnWin" skinClass="style.Skin_CrotaCloseButton111" x="601" y="20"/>
+</win:BaseWindow>

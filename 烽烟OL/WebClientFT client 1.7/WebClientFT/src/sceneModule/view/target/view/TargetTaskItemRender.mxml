@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				buttonMode="true" useHandCursor="true"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				autoDrawBackground="false" xmlns:component="component.*" width="90" height="100">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import util.CommonTools;
+			private function getSkillTileBgImg(taskId:int,icon:int):String{
+				var imgUrl:String = ProConst.getImageResUrl(taskId);
+				imgUrl += 'assets/gaji/'+(icon + ".png");
+				return imgUrl;
+			}
+			
+			private function getSuccOrNoSuccImg(flag:Boolean):Bitmap{
+				var bitmap:Bitmap=new Bitmap();
+				if(flag){
+					bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask","suc_Bg");
+				}else{
+					bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask","noSuc_Bg");
+				}
+				return bitmap;
+			}
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask","dayTarget_Bg");
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image id="bg" x="10"/>
+	<mx:Image source="{getSkillTileBgImg(data.taskId,data.icon)}" x="10"/>
+	<mx:Image id="img" source="{getSuccOrNoSuccImg(data.isCompleteFlag)}" x="0" y="0"/>
+</s:ItemRenderer>

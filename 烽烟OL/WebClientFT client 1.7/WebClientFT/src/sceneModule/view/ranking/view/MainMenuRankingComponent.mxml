@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="849" height="513"  xmlns:win="managers.*"
+		 xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			import sceneModule.view.ranking.event.MediatorRegisterRankingEvent;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonRadioButton;
+			
+			public static var NAME:String = "sceneModule.view.ranking.view.MainMenuRankingComponent"
+				
+			private function getRankingTitleImgSource(selValue:Object):Bitmap{
+				var bitmap:Bitmap = new Bitmap();
+				switch(selValue){
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_grdj'):
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_ranking","role_lev_tit"); 
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_grzl'):
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_ranking","role_bat_tit");
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_jtdj'):
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_ranking","cor_lev_tit");
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_jtzl'):
+						bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_ranking","cor_bat_tit");
+						break;
+				}
+				return bitmap;
+			}
+			
+            public var bg_bitmap:Bitmap;
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				
+				this.dispatchEvent(new MediatorRegisterRankingEvent(MediatorRegisterRankingEvent.MEDIATORREGISTERRANKING,this,true));
+				
+				bg_bitmap = new Bitmap();
+				mainBg.source = bg_bitmap;
+				bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_ranking","rank_bg");
+				
+				
+			}
+
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_grdj')}"/>
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image id="mainBg" />
+		<mx:Image id="titleBg" source="{getRankingTitleImgSource(cardtype.selectedValue)}" x="213" y="107"/>
+		<s:RadioButton label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_grdj')}" group="{cardtype}" skinClass="style.Skin_CrotaCommonRadioButton" width="89" height="25" x="87" y="112"/>
+		<s:RadioButton label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_grzl')}" group="{cardtype}" skinClass="style.Skin_CrotaCommonRadioButton" width="89" height="25" x="87" y="138"/>
+		<s:RadioButton label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_jtdj')}" group="{cardtype}" skinClass="style.Skin_CrotaCommonRadioButton" width="89" height="25" x="87" y="163"/>
+		<s:RadioButton label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_jtzl')}" group="{cardtype}" skinClass="style.Skin_CrotaCommonRadioButton" width="89" height="25" x="87" y="190"/>
+		<component:CrotaBasicLabel text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('ranking','mmRC_wdpm')+SystemDataModel.mainRankingInfo.myRanking}" styleName="RANKINGFORMAT1" x="100" y="77" width="327" textAlign="left"/>
+		<component:CrotaBasicLabel text="{SystemDataModel.mainRankingInfo.refreshTime}" styleName="RANKINGFORMAT2" x="679" y="77" width="99" textAlign="left"/>
+		<s:List id="rankList" dragEnabled="false" width="587" height="269" skinClass="style.Skin_CrotaBasicList" itemRenderer="sceneModule.view.ranking.view.MainMenuRankingItemRender" dataProvider="{SystemDataModel.mainRankingInfo.rankingInfoList}" x="192" y="125">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1" requestedRowCount="11" verticalGap="0"/>
+			</s:layout>
+		</s:List>
+	</s:SkinnableContainer>
+	<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="771" y="20"/>
+</win:BaseWindow>

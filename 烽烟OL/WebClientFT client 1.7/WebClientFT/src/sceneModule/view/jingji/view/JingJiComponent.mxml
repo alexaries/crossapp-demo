@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group creationComplete="group1_creationCompleteHandler(event)"
+	height="62"
+	width="70"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import style.Skin_CrotaJingJiButton;
+			
+			import util.ByteArrayUtil;
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void {
+				// TODO Auto-generated method stub
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<util:CommonButton buttonMode="true"
+		id="jjBtn"
+		skinClass="style.Skin_CrotaJingJiButton"
+		useHandCursor="true" />
+	<component:CrotaBasicLabel color="#ffff00"
+		fontSize="12"
+		id="time_tile"
+		text="{ByteArrayUtil.formateTimeToString2(SystemDataModel.mainJingJiInfoVo.CDTime*1000)}"
+		textAlign="center"
+		width="71"
+		x="2"
+		y="65" />
+</s:Group>

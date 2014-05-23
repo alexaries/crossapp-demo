@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:win="managers.*" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*" 
+		  
+		   
+		    
+		 width="320" height="112"
+		 creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			import flash.events.TimerEvent;
+			
+			import managers.WindowManager;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.friend.event.MediatorRegisterFriendEvent;
+			
+			public static const NAME:String = "sceneModule.view.friend.view.NFriendAlert";
+		
+			
+			private var _info:Object;
+			private function init():void{
+				this.dispatchEvent(new MediatorRegisterFriendEvent(MediatorRegisterFriendEvent.MR_FRIEND_ALERT,this,true));
+				
+				refresh_view();
+				this.addEventListener(Event.ADDED_TO_STAGE,refresh_view);
+				okBtn.addEventListener(MouseEvent.CLICK,on_ok);
+				cancelBtn.addEventListener(MouseEvent.CLICK,on_cancel);
+				
+				init_imgs();
+			}
+			
+			private function init_imgs():void{
+				img_bg.source = new Bitmap(AssetCenter.getInstance().get_img_form_pacakge('friend', 'friend_levelup_bg'));
+			}
+			
+			private function on_ok(e:MouseEvent):void{
+				if(null != data.ok_func){
+					var args:Array = [];
+					if(null != data.ok_args){
+						args = data.ok_args;
+					}
+					(data.ok_func as Function).apply(null, args);
+				}
+				close_self();
+			}
+			
+			private function on_cancel(e:MouseEvent):void{
+				close_self();
+			}
+			
+			private function close_self():void{
+				img_bg.source = null;
+				this.removeEventListener(Event.ADDED_TO_STAGE,refresh_view);
+				okBtn.removeEventListener(MouseEvent.CLICK,on_ok);
+				cancelBtn.removeEventListener(MouseEvent.CLICK,on_cancel);
+				WindowManager.closeWindow(NAME);
+			}
+			
+			private function refresh_view(e:Event = null):void{
+				l_content.text = data.content;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="300" height="92" >
+		<mx:Image id="img_bg"/>
+		<component:CrotaBasicLabel 
+			id="l_content"
+			x="10" y="9"  width="280" height="46"
+			textAlign="left" styleName="MAINMENUROLEFONT12a18c70"/>
+		<util:CommonButton id="okBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" 
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  x="13" y="48"/>
+		<util:CommonButton id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" 
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  x="195" y="49"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

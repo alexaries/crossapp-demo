@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" height="17">
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="hovered" />
+		<s:State name="selected" />
+	</s:states>
+	<mx:Image maintainAspectRatio="false" includeIn="selected" source="@Embed('/embed/ui_n/chatSelected.png',scaleGridTop='4',scaleGridBottom='5',scaleGridLeft='9',scaleGridRight='10')"/>
+	<!--<mx:Image maintainAspectRatio="false" includeIn="hovered" source="@Embed('/embed/ui/overCheckBox.png',scaleGridTop='8',scaleGridBottom='9',scaleGridLeft='9',scaleGridRight='10')"/>-->
+	<s:Label text="{data.name}" y="1" width="100%" textAlign="center"/>
+	
+</s:ItemRenderer>

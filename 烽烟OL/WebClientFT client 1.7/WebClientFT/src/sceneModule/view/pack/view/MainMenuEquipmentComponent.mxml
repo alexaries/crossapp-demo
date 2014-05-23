@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" autoDrawBackground="false"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragComplete="onDragComplete(event)" width="42" height="42" 
+		 xmlns:component="component.*" creationComplete="initApp();">
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.GlowFilter;
+			
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.core.DragSource;
+			import mx.core.FlexGlobals;
+			import mx.core.IUIComponent;
+			import mx.events.DragEvent;
+			import mx.events.MenuEvent;
+			import mx.events.ToolTipEvent;
+			import mx.managers.DragManager;
+			
+			import sceneModule.model.vo.itemsVo.PackgeInfoVo;
+			import sceneModule.model.vo.packageVo.PackageItem;
+			import sceneModule.model.vo.shopVo.MainShopInfoVo;
+			import sceneModule.view.blacksmith.view.MainEquipmentComponent;
+			import sceneModule.event.MediatorRegisterItemEuipmentEvent;
+			import sceneModule.view.pack.event.EquipEquipmentEvent;
+			
+			import style.Skin_CrotaSkillComponentSkinnableContainer;
+			[Bindable]
+			public var mainShopInfoVo:MainShopInfoVo;
+			
+			//装备位置
+			[Bindable]
+			public var rolePos:int = 0;
+			//当前格子是否处于锁定状态
+			public var curTileIsClock:Boolean = false;
+			//当前拖拽类型
+			public var dragType:String;
+			//拖拽源来自Package
+			public const FROMPACKAGE:String = "fromPackage";
+			//拖拽源来自Role
+			public const FROMROLE:String = "fromRole";
+			//装备装备
+			public const FROMPACKAGETOROLE:String = "fromPackageToRole";
+			//卸下装备
+			public const FROMROLETOPACKAGE:String = "fromRoleToPackage";
+			//移动装备
+			public const MOVEITEM:String = "moveItem";
+			//拆分装备
+			public const SPLITITEM:String = "splitItem"; 
+			//拆分的数量
+			public var splitNum:int;
+			//回购
+			public const HUIGOU:String = "huigou";
+			//购买
+			public const GOUMAI:String = "goumai";
+			
+			[Bindable]
+			public var posImageUrl:String;
+			
+			override public function set data(value:Object):void{
+				super.data = value;
+			}
+			public function get _data():Object{
+				return super.data;
+			}
+			//设置当前格子所称数据的装备部位
+			public function set _rolePos(value:int):void{
+				rolePos = value;
+			}
+			public function get _curRolePos():int{
+				return rolePos;
+			}
+			//获取装备图标路径
+			public function setEquipmentUrl(s:String,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+			
+			/**
+			 * 鼠标单击事件
+			 */
+			public function onClick(evt:MouseEvent,type:String=null):void{
+				
+				if(SystemDataModel.shiftKeyDown){
+						
+				}else{
+				if(data && data.id){
+					var iu:IUIComponent=evt.currentTarget as IUIComponent;
+					var ds:DragSource=new DragSource();
+					if(type){
+						ds.addData(this, SPLITITEM);
+					}else{
+						if(rolePos == 0){
+							ds.addData(this, FROMPACKAGE);
+							//当前装备的部位用于左侧装备栏的效果
+							SystemDataModel.bodyPos = this.data.bodyType;
+						}else{
+							ds.addData(this, FROMROLE);
+									
+						}
+					}
+					var dragProxy:MainMenuEquipmentComponent = new MainMenuEquipmentComponent();
+					dragProxy.width = this.width;
+					dragProxy.height = this.height;
+					dragProxy.data = this.data;
+							
+					DragManager.doDrag(this, ds, evt,dragProxy); // 开始拖动这个物体
+				}
+			}	
+	}
+			public function setCurObjData(value:MainShopInfoVo):void{
+				mainShopInfoVo = value;
+			}
+			private function initApp():void{
+				dispatchEvent(new MediatorRegisterItemEuipmentEvent(MediatorRegisterItemEuipmentEvent.MEDIATORREGISTERCOMMISSIONITEMEUIPMENT,this,true));
+			}
+			/**
+			 * 拆分时拖拽对象
+			 */
+			public function onSplitDrag(evt:MouseEvent):void{
+				if(SystemDataModel.shiftKeyDown){
+					
+				}else{
+					if(data && data.id){
+						var iu:IUIComponent=evt.currentTarget as IUIComponent;
+						var ds:DragSource=new DragSource();
+						ds.addData(this, SPLITITEM);
+						
+						var dragProxy:MainMenuEquipmentComponent = new MainMenuEquipmentComponent();
+						dragProxy.width = this.width;
+						dragProxy.height = this.height;
+						dragProxy.data = this.data;
+						DragManager.doDrag(this, ds, evt,dragProxy); // 开始拖动这个物体
+					}
+				}	
+			}
+			private function onDragEnter(evt:DragEvent):void{
+				if(curTileIsClock)return;
+				if (evt.dragSource.hasFormat(FROMPACKAGE)) //如果标号为format则接受拖来的物体
+				{
+					if(rolePos == 0){
+						dragType = MOVEITEM;
+					}else{
+						dragType = FROMPACKAGETOROLE;
+					}
+					
+					DragManager.acceptDragDrop(IUIComponent(evt.target)); // 接受被拖进来的物体       
+				}
+				if(evt.dragSource.hasFormat(FROMROLE))
+				{
+					if(rolePos == 0){
+						dragType = FROMROLETOPACKAGE;
+					}
+					DragManager.acceptDragDrop(IUIComponent(evt.target)); // 接受被拖进来的物体 
+				}
+				if(evt.dragSource.hasFormat(SPLITITEM)){
+					dragType = SPLITITEM;
+					DragManager.acceptDragDrop(IUIComponent(evt.target));
+				}
+				if(evt.dragSource.hasFormat(HUIGOU)){
+					dragType = HUIGOU;
+					DragManager.acceptDragDrop(IUIComponent(evt.target));
+				}
+				if(evt.dragSource.hasFormat(GOUMAI)){
+					dragType = GOUMAI;
+					DragManager.acceptDragDrop(IUIComponent(evt.target));
+				}
+				if(evt.dragSource.hasFormat(MainEquipmentComponent.fromStrengthen)){
+					dragType = MainEquipmentComponent.fromStrengthen;
+					DragManager.acceptDragDrop(IUIComponent(evt.target));
+				}
+			}
+			/**
+			 * onDragExit
+			 */
+			private function onDragExit(evt:DragEvent):void{
+				if(SystemDataModel.bodyPos != rolePos){
+					borderOverEffectImg.visible = false;
+				}				
+			}
+			/**
+			 * onDragComplete
+			 */
+			private function onDragComplete(evt:DragEvent):void{
+				SystemDataModel.bodyPos = -1
+			}
+			/**
+			 * 物品的层叠数
+			 */
+			private function getItemStack(value:int):String{
+				var itemStack:String = "";
+				if(value > 1){
+					itemStack = value.toString();
+				}
+				return itemStack;
+			}
+			public function set setPosImage(url:String):void{
+				posImageUrl = url;
+			}
+			//背包格锁是否显示
+			private function getClockImageVisible(tileState:int,canUseTileCount:int,position:int):Boolean{
+				if(tileState == 0){
+					if(rolePos == 0){
+						curTileIsClock = true;
+					}else{
+						curTileIsClock = false;
+					}
+					return true;
+				}
+				curTileIsClock = false;
+				return false;
+			}
+			//装备外边框是否显示
+			private function getNullItemImageVisible(tileState:int):Boolean{
+				if(tileState == 0){
+					return true;
+				}
+				return false;
+			} 
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer id="iContainer" width="100%" height="100%">
+		<mx:Image id="clockImg" source='assets/role/clockPackage.png' x="2" y="2" width="38" height="38" visible="{getClockImageVisible(data.tileState,SystemDataModel.packageinfoVo.canUseTileCount,data.position)}"/>
+		<mx:Image id="posImg" source="{posImageUrl}" x="2" y="2" width="38" height="38"/>
+		<mx:Image id="beijing" source="@Embed('/embed/copyScene/copyscene1.png')" visible="{getNullItemImageVisible(data.tileState)}" x="0" y="0" height="42" width="42"/>
+		<mx:Image id="equipImg" source="{setEquipmentUrl(data.icon,data.type)}" width="100%" height="100%"/>
+		<component:CrotaBasicLabel text="{getItemStack(data.stack)}" textAlign="right" x="0" y="30" fontSize="10" styleName="ROLEINFOTEXTFORMAT" width="42"/>
+		<mx:Image id="borderOverEffectImg" source='assets/pack/packOverBorder.png' visible="{SystemDataModel.bodyPos == rolePos ? true : SystemDataModel.bodyPos == 10 ? true : false}"/>
+	</s:SkinnableContainer>
+</s:ItemRenderer>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:win="managers.*" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*" 
+		  
+		   
+		    
+		 width="320" height="112"
+		 creationComplete="init()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.display.Bitmap;
+			import flash.events.Event;
+			import flash.events.TimerEvent;
+			
+			import managers.WindowManager;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.friend.event.MediatorRegisterFriendEvent;
+			
+			public static const NAME:String = "sceneModule.view.friend.view.NFriendLevelUpAlert";
+		
+			
+			private var _info:Object;
+			private function init():void{
+				this.dispatchEvent(new MediatorRegisterFriendEvent(MediatorRegisterFriendEvent.MR_FRIEND_LEVELUP,this,true));
+				
+				refresh_view();
+				this.addEventListener(Event.ADDED_TO_STAGE,refresh_view);
+				btn_gongxi.addEventListener(MouseEvent.CLICK,on_ok);
+				btn_bishi.addEventListener(MouseEvent.CLICK,on_bishi);
+				btn_cancal.addEventListener(MouseEvent.CLICK, on_cancel);
+				
+				init_imgs();
+			}
+			
+			private function init_imgs():void {
+				img_bg.source = new Bitmap(AssetCenter.getInstance().get_img_form_pacakge('friend', 'friend_levelup_bg'));
+			}
+			
+			private function on_ok(e:MouseEvent):void{
+				if(null != data.ok_func){
+					var args:Array = [];
+					if(null != data.ok_args){
+						args = data.ok_args;
+					}
+					(data.ok_func as Function).apply(null, args);
+				}
+				close_self();
+			}
+			
+			private function on_bishi(e:MouseEvent):void{
+				if(null != data.bishi_func){
+					var args:Array = [];
+					if(null != data.bishi_args){
+						args = data.bishi_args;
+					}
+					(data.bishi_func as Function).apply(null, args);
+				}
+				close_self();
+			}
+			
+			private function on_cancel(e:MouseEvent):void{
+				close_self();
+			}
+			
+			private function close_self():void{
+				img_bg.source = null;
+				this.removeEventListener(Event.ADDED_TO_STAGE,refresh_view);
+				btn_gongxi.removeEventListener(MouseEvent.CLICK,on_ok);
+				btn_bishi.removeEventListener(MouseEvent.CLICK,on_bishi);
+				btn_cancal.removeEventListener(MouseEvent.CLICK, on_cancel);
+				WindowManager.closeWindow(NAME);
+			}
+			
+			private function refresh_view(e:Event = null):void{
+				l_content.text = data.content;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="300" height="92" >
+		<mx:Image id="img_bg" />
+		<component:CrotaBasicLabel 
+			id="l_content"
+			x="10" y="9"  width="280" height="46"
+			textAlign="left" styleName="MAINMENUROLEFONT12a18c70"/>
+		<util:CommonButton id="btn_gongxi" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nflua_gxyx')}" 
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  x="9" y="44"/>
+		<util:CommonButton id="btn_bishi" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nflua_bsyx')}" 
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  x="100" y="44"/>
+		<util:CommonButton id="btn_cancal" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" 
+				  skinClass="style.Skin_CrotaCommonButton3"
+				  x="190" y="44"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

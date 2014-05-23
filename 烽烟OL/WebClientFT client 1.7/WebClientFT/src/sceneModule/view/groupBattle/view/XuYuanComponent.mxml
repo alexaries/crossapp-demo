@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 width="736" height="505" 
+		 xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.groupBattle.command.GroupBattleMessage;
+			
+			import util.CommonTools;
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(bg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_lingdi","ld_xybg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="bg"/>
+	<s:List id="cityList"
+			skinClass="style.Skin_CrotaBasicList"
+			dataProvider="{SystemDataModel.groupBattleInfo.xuyuanInfo.usedInfo}"
+			itemRenderer="sceneModule.view.groupBattle.view.XuYuanItemRender"
+			x="139" y="31" width="440" height="177">
+		<s:layout>
+			<s:TileLayout verticalGap="0" horizontalGap="16"/>
+		</s:layout>
+	</s:List>
+	<component:CrotaBasicLabel
+		id="xyVlaue"
+		text="{SystemDataModel.groupBattleInfo.xuyuanInfo.xyValue}"
+		width="105" y="270"
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center" x="310"/>
+	<s:Button id="obBtn1" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','xyc_sy')}" click="{GroupBattleMessage.getInstance().useXuYuan(0)}" skinClass="style.Skin_CrotaPackRedButton" x="93" y="322" width="65"/>
+	<s:Button id="obBtn2" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','xyc_sy')}" click="{GroupBattleMessage.getInstance().useXuYuan(1)}" skinClass="style.Skin_CrotaPackRedButton" x="223" y="323" width="65"/>
+	<s:Button id="obBtn3" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','xyc_sy')}" click="{GroupBattleMessage.getInstance().useXuYuan(2)}" skinClass="style.Skin_CrotaPackRedButton" x="354" y="323" width="65"/>
+	<s:Button id="obBtn4" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','xyc_sy')}" click="{GroupBattleMessage.getInstance().useXuYuan(3)}" skinClass="style.Skin_CrotaPackRedButton" x="485" y="323" width="65"/>
+	<s:Button id="obBtn5" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('text_gr_bat','xyc_sy')}" click="{GroupBattleMessage.getInstance().useXuYuan(4)}" skinClass="style.Skin_CrotaPackRedButton" x="616" y="323" width="65"/>
+</s:Group>

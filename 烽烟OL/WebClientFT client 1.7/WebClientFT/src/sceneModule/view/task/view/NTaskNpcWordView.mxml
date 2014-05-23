@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NPC对话界面 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:component="component.*"
+		 xmlns:task="sceneModule.view.task.view.*"
+		 width="620" height="100"
+		 creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.GlowFilter;
+			import model.ProConst;
+			
+			public var data:Object;
+			private function init():void{
+				var growFilte:GlowFilter = new GlowFilter(ProConst.BORDER_COLOR,0.7,2,2,5,1);			
+				l_ncp_word.filters = [growFilte];
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<!-- npc对话内容 -->
+	<mx:Text
+		id="l_ncp_word" 
+		text="ncp_word"
+		selectable="false"
+		styleName="TASK_NPC_WORD"
+		x="4" y="27" width="420"/>
+	<s:VGroup id="task_item_contain"  x="48" y="67" gap="-2"/>
+</s:Group>

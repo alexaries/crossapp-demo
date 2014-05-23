@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="208" height="109" xmlns:component="component.*" creationComplete="initApp()" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaCommonButton1;
+			
+			import util.CommonTools;
+			
+			public static const NAME:String = "sceneModule.view.shop.view.NpcShopSellItemComponent";
+			
+			[Bindable]
+			public var sellCount:int = 1;
+			
+			[Bindable]
+			private var selfdata:Object = data;
+			
+			private function initApp():void{
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_sell_bg');
+			}
+
+			protected function pre_btn_clickHandler(event:MouseEvent):void
+			{
+				sellCount -= 1;
+			}
+
+
+			protected function next_btn_clickHandler(event:MouseEvent):void
+			{
+				sellCount += 1;
+			}
+
+
+			protected function page_info_changeHandler(event:TextOperationEvent):void
+			{
+				if(int(page_info.text) > data.stack){
+					sellCount = data.stack;
+					page_info.text = sellCount.toString();
+				}else{
+					sellCount = int(page_info.text);
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="198" height="99">
+		<!--<mx:Image source="assets/shop/npcShopSellBg.png"/>-->
+		<mx:Image id="img_bg" />
+		<util:CommonButton id="pre_btn" width="22" height="22"
+				  skinClass="style.Skin_CrotaBasicCommonUpButton"
+				  y="37" x="100" enabled="{selfdata.stack > sellCount}"  click="next_btn_clickHandler(event)"/>
+		<component:CrotaChatTextInput2 id="page_info"
+										 styleName="MAINMENUROLEFONT12a18c70"
+										 x="5" y="36"
+										 text="{sellCount}" restrict="0-9" change="page_info_changeHandler(event)"
+										 textAlign="center" width="78"/>
+		<util:CommonButton id="next_btn" width="22" height="22"
+				  x="120" y="37" enabled="{sellCount > 1}" click="pre_btn_clickHandler(event)"
+				  skinClass="style.Skin_CrotaBasicCommonDownButton"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCommonButton1" id="subBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" x="29" y="61" width="56" height="35" />
+		<util:CommonButton skinClass="style.Skin_CrotaBasicCommonMaxButton" id="maxBtn" click="{sellCount = selfdata.stack}" x="148" y="36" height="26" width="42"/>
+		<util:CommonButton skinClass="style.Skin_CrotaCloseButton111" id="canBtn" x="172" y="-2"/> 
+		<util:CommonButton skinClass="style.Skin_CrotaCommonButton1" id="cancelBtn" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qx')}" x="93" y="61" width="56" height="35"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

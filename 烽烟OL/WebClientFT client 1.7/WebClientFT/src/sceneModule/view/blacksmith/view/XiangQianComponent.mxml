@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 preinitialize="group1_preinitializeHandler(event)"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="525" height="368" xmlns:view="sceneModule.view.blacksmith.view.*" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaItemConfig;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.event.MediatorRegisterItemEuipmentEvent;
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import util.CommonTools;
+			
+			[Bindable]
+			public var slStore:int = 0;//所选装备身上的宝石
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				dispatchEvent(new MediatorRegisterItemEuipmentEvent(MediatorRegisterItemEuipmentEvent.MEDIATORREGISTERXIANGQIAN,this,true));
+//				source="assets/blacksmith/xiangqianBg.png"
+				CommonTools.make_bitmap(xiangqianbg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_strengthen","xiangqian_bg");
+			}
+			
+			public function onSetXiangQianInfo():void{
+				if(itemComp.data){
+					s1.data = CrotaItemConfig.getItemInfoByTempleteId(itemComp.data.xqItemId1);
+					s2.data = CrotaItemConfig.getItemInfoByTempleteId(itemComp.data.xqItemId2);
+					s3.data = CrotaItemConfig.getItemInfoByTempleteId(itemComp.data.xqItemId3);
+					s4.data = CrotaItemConfig.getItemInfoByTempleteId(itemComp.data.xqItemId4);
+					l1.text = itemComp.data.xqDes1;
+					l2.text = itemComp.data.xqDes2;
+					l3.text = itemComp.data.xqDes3;
+					l4.text = itemComp.data.xqDes4;
+				}
+			}
+
+
+			protected function group1_preinitializeHandler(event:FlexEvent):void
+			{
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.PREADDWINDOWEVENT));
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="xiangqianbg" source='assets/blacksmith/xiangqianBg.png'  x="270" y="-12"/>
+	<mx:Image id="commonStrBg" source='assets/blacksmith/commonStrbg.png' x="50" y="-4" />
+	<mx:Image id="xiangqianPart" source='assets/blacksmith/xiangqiangPartBg.png'  x="86" y="29"/>
+	<s:List id="equipment" dragEnabled="false" width="185" height="138" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_pack_info.itemList}" itemRenderer="sceneModule.view.blacksmith.view.XiangQianItemRender" x="289" y="32">
+		<s:layout>
+			<s:TileLayout requestedColumnCount="4" requestedRowCount="3" horizontalGap="2" verticalGap="3"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="e_pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  y="165" x="329" enabled="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_pack_info.curPage>1}"/>
+	<component:CrotaBasicLabel id="e_page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="357" y="165"
+							   text="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_pack_info.curPage+'/'+SystemDataModel.mainStrInfoVo.xqInfoVo.xq_pack_info.maxPage}"
+							   textAlign="center" width="38"/>
+	<util:CommonButton id="e_next_btn"
+			  x="405" y="165" enabled="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_pack_info.maxPage>SystemDataModel.mainStrInfoVo.xqInfoVo.xq_pack_info.curPage}"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	<s:List id="storeList"   dragEnabled="false" width="176" height="90" skinClass="style.Skin_CrotaBasicList" dataProvider="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_store_info.storeList}" itemRenderer="sceneModule.view.blacksmith.view.XiangQianItemRender" x="290" y="209">
+		<s:layout>
+			<s:TileLayout  requestedColumnCount="4" requestedRowCount="2" horizontalGap="1" verticalGap="1"/>
+		</s:layout>
+	</s:List>
+	<util:CommonButton id="s_pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  y="301" x="329" enabled="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_store_info.curPage>1}"/>
+	<component:CrotaBasicLabel id="s_page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="357" y="301"
+							   text="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_store_info.curPage+'/'+SystemDataModel.mainStrInfoVo.xqInfoVo.xq_store_info.maxPage}"
+							   textAlign="center" width="38"/>
+	<util:CommonButton id="s_next_btn"
+			  x="405" y="301" enabled="{SystemDataModel.mainStrInfoVo.xqInfoVo.xq_store_info.maxPage>SystemDataModel.mainStrInfoVo.xqInfoVo.xq_store_info.curPage}"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	<view:MainEquipmentComponent id="s1" x="184" y="110" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<view:MainEquipmentComponent data="{}" id="itemComp" x="99" y="41" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<view:MainEquipmentComponent id="s2" x="184" y="159" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<view:MainEquipmentComponent id="s3" x="184" y="208" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<view:MainEquipmentComponent id="s4" x="184" y="256" useHandCursor="true" buttonMode="true" doubleClickEnabled="true"/>
+	<component:CrotaBasicLabel id="l1" textAlign="left" x="133" y="126" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="63"/>
+	<component:CrotaBasicLabel id="l2" textAlign="left" x="133" y="174" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="63"/>
+	<component:CrotaBasicLabel id="l3" textAlign="left" x="134" y="223" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="63"/>
+	<component:CrotaBasicLabel id="l4" textAlign="left" x="133" y="271" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="63"/>
+	<component:CrotaBasicLabel id="reqCoin" visible="{slStore != 0}"  textAlign="left" x="85" y="295" fontSize="12" styleName="MAINMENUROLEFONT12a18c70" width="89"/>
+	<util:CommonButton id="unloadBtn" enabled="{slStore != 0}"  skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_xz')}" x="157" y="49"/>
+</s:Group>

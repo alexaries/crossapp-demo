@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 creationComplete="basewindow1_creationCompleteHandler(event)"
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="681" height="423" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import flash.desktop.Clipboard;
+			import flash.desktop.ClipboardFormats;
+			
+			import flashx.textLayout.operations.DeleteTextOperation;
+			import flashx.textLayout.operations.InsertTextOperation;
+			import flashx.textLayout.operations.PasteOperation;
+			import flashx.textLayout.operations.SplitParagraphOperation;
+			
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.chat.vo.WhisperChatObjectInfoVO;
+			import sceneModule.view.friend.command.FriendMessage;
+			import sceneModule.view.friend.event.NFriendEvent;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCloseButton111;
+			import style.Skin_CrotaCommonButton1;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			public static var NAME:String = "sceneModule.view.chat.view.MainOneToOneChatWindow";
+			
+			[Bindable]
+			private var selfdata:Object = data;
+			
+			/**
+			 * 计算邮件内容输入框还可以输入的字数
+			 * Function __getStringBytesLength获取字符串的字节长度
+			 */
+			public function onMainChange(evt:TextOperationEvent=null):void{
+				if(evt == null)return;
+				if(evt.operation as InsertTextOperation)
+				{
+					var input:String=(evt.operation as InsertTextOperation).text;
+					
+					if((ByteArrayUtil.__getStringBytesLength(evt.target.text,"gb2312") + ByteArrayUtil.__getStringBytesLength(input,'gb2312')) > evt.target.maxChars)
+					{
+						var remainCount:int = evt.target.maxChars - ByteArrayUtil.__getStringBytesLength(evt.target.text,"gb2312");
+						evt.target.text += ByteArrayUtil.getStringOnNumberBytes(input,'gb2312',remainCount);
+						evt.preventDefault();
+					}else{
+//						evt.target.text += input;
+					}
+				}else if(evt.operation as PasteOperation){
+					var clipStr:String = Clipboard.generalClipboard.getData(ClipboardFormats.TEXT_FORMAT) as String;
+					if((ByteArrayUtil.__getStringBytesLength(evt.target.text,"gb2312") + ByteArrayUtil.__getStringBytesLength(clipStr,'gb2312')) > evt.target.maxChars)
+					{
+						var _remainCount:int = evt.target.maxChars - ByteArrayUtil.__getStringBytesLength(evt.target.text,"gb2312");
+						evt.target.text += ByteArrayUtil.getStringOnNumberBytes(clipStr,'gb2312',_remainCount);
+						evt.preventDefault();
+					}else{
+//						evt.target.text += clipStr;
+					}
+				}else if(evt.operation as SplitParagraphOperation){
+//					evt.preventDefault();
+//					evt.stopPropagation();
+				}
+//					writeChatContent.selectRange(writeChatContent.text.length,writeChatContent.text.length);
+					var setLen:int = ByteArrayUtil.__getStringBytesLength(writeChatContent.text,"gb2312");
+					var setCount:int = ((writeChatContent.maxChars - setLen) + 1 ) / 2;
+					contentSizeShow.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_hky')+setCount+CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_gz');
+				
+			}
+            public var bg_bitmap:Bitmap;
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+				bg_bitmap = new Bitmap();
+				whisperBg.source = bg_bitmap;
+				viewInfo.addEventListener(MouseEvent.CLICK,onClick);
+				
+				onSelectedInFriendsList();
+			}
+			
+			[Bindable]
+			public var f_btn_flag:Boolean = false;
+			public function onSelectedInFriendsList():void{
+				var l:int = FriendMessage.getInstance().friendsList.length;
+				for(var i:int=0;i<l;i++){
+					if(FriendMessage.getInstance().friendsList[i].roleId == data.chatObjectId){
+						f_btn_flag = true;
+						return;
+					}
+				}
+				f_btn_flag = false;
+			}
+			
+			private function onClick(evt:MouseEvent):void
+			{
+				this.dispatchEvent(new NFriendEvent(NFriendEvent.NFriendEvent_LOOK_INFO,data,true));
+			}
+			private function getCurListSelectedIndex(arr:ArrayCollection):int{
+				var l:int = arr.length;
+				var slId:int;
+				for(var i:int=0;i<l;i++){
+					if(arr[i].chatObjectId == data.chatObjectId){
+						slId = i;
+						break;
+					}
+				}
+				return slId;
+			}
+
+
+			protected function writeChatContent_changeHandler(event:TextOperationEvent):void
+			{
+				var setLen:int = ByteArrayUtil.__getStringBytesLength(writeChatContent.text,"gb2312");
+				var setCount:int = ((writeChatContent.maxChars - setLen) + 1 ) / 2;
+				contentSizeShow.text = CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_hky')+setCount+CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_gz');;
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image id="whisperBg" />
+		<component:CrotaBasicLabel 
+			id="contentSizeShow" 
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_hkyo')}" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			x="17" y="343" width="150"/>
+		<component:CrotaBasicLabel 
+			id="contentSizeShow1" 
+			text="{selfdata.perfession ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcWM_zy')+selfdata.perfession) : CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcWM_zy')}" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			x="309" y="49" width="67"/>
+		<component:CrotaBasicLabel 
+			id="contentSizeShow2" 
+			text="{selfdata.level ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')+selfdata.level) : CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')}" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			x="309" y="69" width="67"/>
+		<component:CrotaBasicLabel 
+			id="contentSizeShow3" 
+			text="{selfdata.chatObjectPos ? selfdata.chatObjectPos : ''}" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			x="309" y="84" width="67"/>
+		<component:CrotaBasicLabel 
+			id="contentSizeShow0" 
+			text="{selfdata.name ? (CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_y')+selfdata.name+CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_zzsl')) : ''}" 
+			styleName="MAINMENUROLEFONT12bebebe" 
+			x="32" y="50" width="202"/>
+		<s:List id="chatObjectList" 
+			width="125" height="308" 
+			selectedIndex="{getCurListSelectedIndex(SystemDataModel.whisperObjList)}" 
+			skinClass="style.Skin_CrotaBasicList" 
+			itemRenderer="sceneModule.view.chat.view.MainOneToOneChatItemRender" 
+			dataProvider="{SystemDataModel.whisperObjList}" 
+			x="396" y="72">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="1" requestedRowCount="15" verticalGap="0" horizontalGap="0"/>
+			</s:layout>
+		</s:List>
+		<!-- verticalScrollBarStyleName="myCustomScrollBarStyleName" -->
+		<mx:TextArea leading="6" backgroundAlpha="0" borderStyle="none"
+			id="chatInfoTextArea" editable="false" selectable="false"
+			width="372" height="125" x="16" y="107"
+			styleName="MAINMENUROLEFONT12bebebe"/>
+		<component:CrotaBasicTextArea 
+			id="writeChatContent" 
+			width="344" height="70"
+			styleName="MAINMENUROLEFONT12bebebe" 
+			changing="{onMainChange(event)}"
+			change="writeChatContent_changeHandler(event)"
+			restrict="^ " 
+			maxChars="200" x="18" y="240"/>
+		<util:CommonButton 
+			id="sendBtn" 
+			skinClass="style.Skin_CrotaCommonButton2" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_fs')}" 
+			x="305" y="332"/>
+		<util:CommonButton 
+			id="addFriends" 
+			skinClass="style.Skin_CrotaPackRedButton" 
+			label="{f_btn_flag?CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_schy'):CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_jwhy')}" 
+			x="15" y="65"/>
+		<util:CommonButton 
+			id="addBlackFriends" 
+			skinClass="style.Skin_CrotaPackRedButton" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_hmd')}" 
+			x="105" y="65"/>
+		<util:CommonButton 
+			id="viewInfo" 
+			skinClass="style.Skin_CrotaPackRedButton" 
+			label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_ckzl')}" 
+			x="195" y="65"/>
+		<util:CommonButton 
+			id="closeBtn" 
+			skinClass="style.Skin_CrotaCloseButton111" 
+			x="496" y="5"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   xmlns:view="createRoleModule.view.*"
+		   implements="interfaces.ICreateRoleModule"
+		   width="100%" height="100%" layout="horizontal"
+		   preinitialize="module1_creationCompleteHandler(event)"
+		   >
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import org.robotlegs.core.IContext;
+			
+			import sceneModule.view.popupWin.IPopUpShow;
+			
+			import service.ISocketServer;
+			
+			/**
+			 * 模块的context
+			 * 
+			 */
+			protected var _context:CreateRoleModuleContext;
+				
+			protected var _socketServer:ISocketServer;
+			
+			protected var _popUpShow:IPopUpShow;
+			
+			/**
+			 * 获取模块的context
+			 * @return iContext
+			 * 
+			 */
+			public function getContext():IContext{
+			    return _context;
+			}
+			/**
+			 * 获取服务器实例
+			 * @return ISocketServer
+			 * 
+			 */	
+			public function getSocketService():ISocketServer
+			{
+				_socketServer = (this.parentApplication as WebClient).appContext.getISocketServer();
+				return _socketServer;
+			}
+			/**
+			 * 获取PopUpShow实例
+			 */
+			public function getPopUpShow():IPopUpShow{
+				_popUpShow = (this.parentApplication as WebClient).appContext.getPopUpShow();
+				return _popUpShow;
+			}
+ 
+			protected function module1_creationCompleteHandler(event:FlexEvent):void
+			{
+				_context = new CreateRoleModuleContext(this);
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:HBox width="100%" height="100%" horizontalAlign="center">
+		<!--<view:CreateRolePageView/>-->
+		<!--<view:CreateRoleView/>-->
+		<view:CreateRoleFTView/>
+	</mx:HBox>
+</mx:Module>

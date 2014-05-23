@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow
+		xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:component="component.*" 
+		  creationComplete="init()"
+		   width="859" height="536"
+		 xmlns:win="managers.*" xmlns:util="util.*"
+		  >
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import resource.AssetCenter;
+			
+			import util.CommonTools;
+
+			public static const NAME:String = "sceneModule.view.tavern.view.WOWXingYunTavernComponent";
+			
+			private function init():void
+			{
+				CommonTools.make_bitmap(tavernxy).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet","pet_tavernXy");
+//				source="assets/pet/TavernXingYunbg.png" 
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+		<mx:Image id="tavernxy"   x="0" y="-33"/>
+		<s:List id="WOWList"  selectedIndex="0" skinClass="style.Skin_CrotaBasicList" 
+				itemRenderer="sceneModule.view.tavern.view.WOWXingYunItemRender" 
+				dataProvider="{SystemDataModel.xingYunTravernInfo.xingYunwowInfo}" width="700" height="428" x="83" y="24">
+			<s:layout>
+				<s:TileLayout horizontalGap="0"    requestedColumnCount="4" requestedRowCount="1"  verticalGap="0" />
+			</s:layout>
+		</s:List>
+	
+	<util:CommonButton id="pre_btn" 
+			  skinClass="style.Skin_CrotaBasicPreButton"
+			  x="381" y="461" enabled="{SystemDataModel.xingYunTravernInfo.page>1}"/>
+	<component:CrotaBasicLabel id="page_info"
+							   styleName="MAINMENUROLEFONT12a18c70"
+							   x="403" y="460"
+							   text="{SystemDataModel.xingYunTravernInfo.page+'/'+SystemDataModel.xingYunTravernInfo.zong}"
+							   textAlign="center" width="38" height="17"/>
+	<util:CommonButton id="next_btn"
+			  x="446" y="461" enabled="{SystemDataModel.xingYunTravernInfo.zong>SystemDataModel.xingYunTravernInfo.page}"
+			  skinClass="style.Skin_CrotaBasicNextButton"/>
+	
+	<util:CommonButton 
+		skinClass="style.Skin_CrotaCloseButton111" 
+		id="closeBtn" 
+		x="765" y="-18"/>
+</win:BaseWindow>
+

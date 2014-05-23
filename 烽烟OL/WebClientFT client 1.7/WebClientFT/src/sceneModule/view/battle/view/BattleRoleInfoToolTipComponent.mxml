@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" mouseChildren="false"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*" xmlns:ui="sceneModule.view.ui.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.model.rvo.RBattleTipVo;
+			
+			import style.Skin_CrotaBasicList;
+			
+			[Bindable]
+			private var bat_obj:Object;
+			
+			public function set curObj(value:RBattleTipVo):void{
+				bat_obj = value;
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaBasicEquipmentTooltip" width="226">
+		<component:CrotaBasicLabel 
+			styleName="ROLEINFOTEXTFORMAT"
+			x="12" y="14"
+			text="{bat_obj.chaName+' '+bat_obj.chaLevel+CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_ji')}"
+			id="nameAndLev" width="200"/>
+		<component:CrotaBasicLabel 
+			styleName="ROLEINFOTEXTFORMAT"
+			x="12" y="36"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','briTC_sm')}:"
+			id="l_shanbi0"/>
+		<component:CrotaBasicLabel 
+			styleName="ROLEINFOTEXTFORMAT"
+			x="12" y="52"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','briTC_nl')}:"
+			id="l_shanbi1"/>
+		<component:CrotaBasicLabel 
+			styleName="ROLEINFOTEXTFORMAT"
+			x="12" y="75"
+			text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','briTC_zt')}:"
+			id="l_shanbi2"/>
+		<ui:RedAndBludComponent 
+			_bgWidth="103" height="11" x="60" y="35" 
+			_bgUrl='assets/role/blueBackground.png' 
+			_Obj="0" 
+			cur_Num="{bat_obj.chaHp}" max_Num="{bat_obj.chaTotalHp}"
+			id="comp_hp"/>
+		<ui:RedAndBludComponent 
+			_bgWidth="103" height="11" x="60" y="52" 
+			_bgUrl='assets/role/blueBackground.png' 
+			_Obj="2" 
+			cur_Num="{bat_obj.chaPower}" max_Num="{bat_obj.chaTotalPower}"
+			id="comp_jingli"/>
+		<s:List id="buffList" skinClass="style.Skin_CrotaBasicList" dataProvider="{bat_obj.chaStateArr as ArrayCollection}" itemRenderer="sceneModule.view.battle.view.BattleRoleInfoToolTipItemRender" x="43" y="72" height="22" width="169">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="10" requestedRowCount="1" horizontalGap="0"/>
+			</s:layout>
+		</s:List>
+	</s:SkinnableContainer>	
+</s:Group>

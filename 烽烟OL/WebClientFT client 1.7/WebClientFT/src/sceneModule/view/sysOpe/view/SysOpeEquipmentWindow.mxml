@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 mouseEnabled="false"
+		 creationComplete="itemrenderer1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*" x="73" y="6" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import spark.filters.GlowFilter;
+			
+			import style.Skin_CrotaCommonButton2;
+			
+			import util.CommonTools;
+			
+			[Bindable]
+			public var curObj:Object;
+			
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(rewardDayBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge('ui_day_reward', 'dy_reward_item_bg');
+			}
+			
+			//获取装备图标路径
+			public function setEquipmentUrl(s:int,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="261" height="139" >
+		<mx:Image id="rewardDayBg" x="14" y="45"/>
+		<mx:Image source='assets/ncorps/union_rise.png'/>
+		<mx:Image id="equipImg" source="{setEquipmentUrl(curObj.icon,curObj.iconType)}" x="20" y="55" width="42" height="42"/>
+		<component:CrotaBasicChatTextArea  borderStyle="none" id="iTextArea"  rollOver="this.iTextArea.setFocus();" editable="false" textAlign="left"
+										   text="{curObj.contentStr}" wordWrap="true"
+										  selectable="false" focusEnabled="false" focusAlpha="0"  height="38" width="170" backgroundAlpha="0.0" 
+										  styleName="SKILLINFOTEXTFORMAT" x="69" y="46"/>
+		<mx:Label id="anBtn" mouseChildren="false" buttonMode="true" useHandCursor="true" text="{curObj.caozuoStr}" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}"  textAlign="left" fontSize="12" width="71" x="103" y="88" textDecoration="underline" color="#17F906"/>
+		<mx:Text id="profession0" selectable="false" filters="{new spark.filters.GlowFilter(0x333333,1,2,2,8)}" text="{curObj.tishiStr}"  textAlign="left" fontWeight="bold" fontSize="12" width="105" x="93" y="11" color="#17F906"/>
+		<util:CommonButton id="closeBtn" skinClass="style.Skin_CrotaCloseButton111" x="239" y="1"/>
+	</s:SkinnableContainer>
+</s:Group>

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="989" height="422" 
+		 creationComplete="initApp()" 
+		 xmlns:view="sceneModule.view.mainMenu.view.*" 
+		 xmlns:view1="sceneModule.view.friend.view.*" 
+		 xmlns:view2="sceneModule.view.mail.view.*" 
+		 xmlns:view3="sceneModule.view.systemSetting.view.*" 
+		 xmlns:view4="sceneModule.view.role.view.*" 
+		 xmlns:event="sceneModule.view.skill.event.*" 
+		 xmlns:view5="sceneModule.view.skill.view.*" 
+		 xmlns:family="sceneModule.view.family.*" 
+		 xmlns:view6="sceneModule.view.family.view.*" 
+		 xmlns:view7="sceneModule.view.task.view.*" 
+		 xmlns:view8="sceneModule.view.corps.view.*" 
+		 xmlns:view9="sceneModule.view.ranking.view.*" 
+		 xmlns:win="managers.*" preinitialize="basewindow1_preinitializeHandler(event)"
+		 xmlns:view10="sceneModule.view.pet.view.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.event.GetRoleItemInPackageResponseEvent;
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import style.Skin_CrotaMainMenuFamilyButton;
+			import style.Skin_CrotaMainMenuFriendsButton;
+			import style.Skin_CrotaMainMenuMailButton;
+			import style.Skin_CrotaMainMenuPetButton;
+			import style.Skin_CrotaMainMenuRankingButton;
+			import style.Skin_CrotaMainMenuRoleButton;
+			import style.Skin_CrotaMainMenuSkillButton;
+			import style.Skin_CrotaMainMenuSystemButton;
+			import style.Skin_CrotaMainMenuTaskButton;
+			
+			public static var NAME:String = "sceneModule.view.mainMenu.view.MainMenuComponent";
+			
+			public var bg_bitmap:Bitmap;
+			private function initApp():void{
+//				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				bg_bitmap = new Bitmap();
+				mainBg.source = bg_bitmap;
+				bg_bitmap.bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_mainMenu","mainMenuBg");
+			}
+
+
+			protected function basewindow1_preinitializeHandler(event:FlexEvent):void
+			{
+//				trace('priInitialize.....................');
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype" selectedValue="roleBtn"/>
+	</fx:Declarations>
+
+	<s:SkinnableContainer width="100%" height="100%">
+		<!--人物背景-->
+		<mx:Image id="mainBg"  x="25" y="0"/>
+		<!--<s:RadioButton id="roleBtn" label="roleBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuRoleButton" width="109" height="48" x="-70" y="10"/>
+		<s:RadioButton label="skillBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuSkillButton" width="109" height="48" x="-70" y="50"/>
+		<s:RadioButton label="corpsBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuFamilyButton" width="109" height="48"  x="-70" y="90"/>
+		<s:RadioButton label="friendsBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuFriendsButton" width="109" height="48"  x="-70" y="130"/>-->
+		<!--<s:RadioButton label="taskBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuTaskButton" width="109" height="48" x="30" y="250"/>-->
+		<s:RadioButton label="mailBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuMailButton" width="109" height="48"  x="-70" y="170"/>
+		<s:RadioButton label="rankingBtn" textAlpha="0" group="{cardtype}" skinClass="style.Skin_CrotaMainMenuRankingButton" width="109" height="48"  x="-70" y="210"/>
+		
+		<mx:ViewStack id="viewStack" x="151" width="849" height="100%" y="0">
+			<mx:VBox width="100%" height="100%" id="roleSkinnableContainer">
+				<view4:MainMenuRoleComponent id="mainRoleComp" width="100%" height="100%"/>
+			</mx:VBox>
+			<mx:VBox width="100%" height="100%" id="skillSkinnableContainer">
+				<view5:MainMenuSkillComponent id="mainSkillComp" width="100%" height="100%"/>
+			</mx:VBox>		
+			<mx:VBox width="100%" height="100%" id="familySkinnableContainer">
+			    <view8:NCropsRootView id="mainCorpsComp" width="100%" height="100%"/>
+			</mx:VBox>
+			<mx:VBox width="100%" height="100%" id="friendsSkinnableContainer">
+			    <view1:MainMenuFriendView id="mainFriendComp" width="100%" height="100%"/>
+			</mx:VBox>
+			<mx:VBox width="100%" height="100%" id="mailSkinnableContainer">
+				<view2:MainMenuMailComponent id="mainMailComp" width="100%" height="100%"/>
+			</mx:VBox>
+			<mx:VBox width="100%" height="100%" id="rankingSkinnableContainer">
+				<view9:MainMenuRankingComponent id="mainRankingComp" width="100%" height="100%"/>
+			</mx:VBox>
+			<mx:VBox width="100%" height="100%" id="taskSkinnableContainer">
+				<view7:MainMenuTaskComponent id="mainTaskComp" width="100%" height="100%"/>
+			</mx:VBox>
+		</mx:ViewStack>
+		
+	</s:SkinnableContainer>
+	
+</win:BaseWindow>

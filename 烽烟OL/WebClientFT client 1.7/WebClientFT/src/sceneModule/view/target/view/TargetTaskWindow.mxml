@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow creationComplete="basewindow1_creationCompleteHandler(event)"
+	height="455"
+	width="786"
+	xmlns:component="component.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:util="util.*"
+	xmlns:win="managers.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.announ.AddWindowEvent;
+			import sceneModule.view.announ.AddWindowEventDispatcher;
+			
+			import util.CommonTools;
+			public static var NAME:String = 'sceneModule.view.target.view.TargetTaskWindow';
+			
+			[Bindable]
+			public var curIndex:int = 0; //当前所选任务索引
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void {
+				AddWindowEventDispatcher.getInstance().dispatchEvent(new AddWindowEvent(AddWindowEvent.ADDWINDOWEVENT));
+				// TODO Auto-generated method stub
+//				<mx:Image source='assets/gaji/targetBg.png' width="653" height="450" maintainAspectRatio="false"/>
+				CommonTools.make_bitmap(targetTaskImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "targetTask_Bg");
+				CommonTools.make_bitmap(obImg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img1).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img2).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img3).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img4).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img5).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img6).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img7).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img8).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img9).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+				CommonTools.make_bitmap(img10).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_targetTask", "obtainImg_Bg");
+			
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup id="cardtype"
+			selectedValue="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_1')}" />
+	</fx:Declarations>
+	<mx:Image id="targetTaskImg" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_1')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="103"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_2')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="161"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_3')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="219"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_4')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="277"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_5')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="335"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_6')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="393"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_7')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="451"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_8')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="509"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_9')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="58"
+		x="567"
+		y="54" />
+	<s:RadioButton group="{cardtype}"
+		height="30"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_0')}"
+		skinClass="style.Skin_CrotaPackRadioButtonRight"
+		styleName="EQUIPMENTTEXTFORMAT"
+		width="62"
+		x="625"
+		y="54" />
+	<mx:Image height="29"
+		id="img1"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(0).isSucFlag}"
+		width="40"
+		x="40"
+		y="55" />
+	<mx:Image height="29"
+		id="img2"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(1).isSucFlag}"
+		width="40"
+		x="100"
+		y="55" />
+	<mx:Image height="29"
+		id="img3"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(2).isSucFlag}"
+		width="40"
+		x="160"
+		y="55" />
+	<mx:Image height="29"
+		id="img4"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(3).isSucFlag}"
+		width="40"
+		x="220"
+		y="55" />
+	<mx:Image height="29"
+		id="img5"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(4).isSucFlag}"
+		width="40"
+		x="280"
+		y="55" />
+	<mx:Image height="29"
+		id="img6"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(5).isSucFlag}"
+		width="40"
+		x="340"
+		y="55" />
+	<mx:Image height="29"
+		id="img7"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(6).isSucFlag}"
+		width="40"
+		x="400"
+		y="55" />
+	<mx:Image height="29"
+		id="img8"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(7).isSucFlag}"
+		width="40"
+		x="460"
+		y="55" />
+	<mx:Image height="29"
+		id="img9"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(8).isSucFlag}"
+		width="40"
+		x="520"
+		y="55" />
+	<mx:Image height="29"
+		id="img10"
+		mouseChildren="false"
+		mouseEnabled="false"
+		visible="{SystemDataModel.targetInfoList.getItemAt(9).isSucFlag}"
+		width="40"
+		x="580"
+		y="55" />
+	<s:List dataProvider="{SystemDataModel.targetInfoList.getItemAt(curIndex).dayListTaskInfo}"
+		height="114"
+		id="taskList"
+		itemRenderer="sceneModule.view.target.view.TargetTaskItemRender"
+		skinClass="style.Skin_CrotaBasicList"
+		width="582"
+		x="101"
+		y="100">
+		<s:layout>
+			<s:TileLayout horizontalAlign="center"
+				horizontalGap="5"
+				requestedColumnCount="6"
+				requestedRowCount="1"
+				verticalGap="8" />
+		</s:layout>
+	</s:List>
+	<component:CrotaBasicLabel id="l_msg0"
+		styleName="MAINMENUROLEFONT12a18c70"
+		textAlign="left"
+		width="278"
+		x="121"
+		y="245" />
+	<s:List height="53"
+		id="rewardList"
+		itemRenderer="sceneModule.view.target.view.TargetTaskRewardItemRender"
+		skinClass="style.Skin_CrotaBasicList"
+		width="372"
+		x="121"
+		y="302">
+		<s:layout>
+			<s:TileLayout horizontalAlign="center"
+				horizontalGap="5"
+				requestedColumnCount="5"
+				requestedRowCount="1"
+				verticalGap="8" />
+		</s:layout>
+	</s:List>
+	<mx:Image id="obImg"
+		visible="{taskList.selectedItem.isObtainFlag}"
+		x="499"
+		y="247" />
+	<component:CrotaBasicLabel id="l_msg2"
+		styleName="MAINMENUROLEFONT12a18c70"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('target','ttWM_rwjl')}"
+		textAlign="left"
+		width="278"
+		x="124"
+		y="363" />
+	<util:CommonButton enabled="{taskList.selectedItem.isCompleteFlag ? (taskList.selectedItem.isObtainFlag ? false : true) : false}"
+		id="rBtn"
+		label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('reward','rdogIR_lq')}"
+		skinClass="style.Skin_CrotaCommonButton2"
+		x="508"
+		y="311" />
+	<util:CommonButton id="clokeBtn"
+		skinClass="style.Skin_CrotaCloseButton111"
+		x="693"
+		y="20" />
+</win:BaseWindow>

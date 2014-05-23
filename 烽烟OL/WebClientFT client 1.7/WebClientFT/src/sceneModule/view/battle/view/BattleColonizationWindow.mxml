@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:BaseWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			    creationComplete="basewindow1_creationCompleteHandler(event)"
+		 xmlns:s="library://ns.adobe.com/flex/spark"      
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:win="managers.*" width="341" height="249" xmlns:component="component.*" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.ProConst;
+			import model.SystemDataModel;
+			
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.chat.vo.WhisperChatObjectInfoVO;
+			
+			import spark.events.TextOperationEvent;
+			
+			import style.Skin_CrotaBasicList;
+			import style.Skin_CrotaCommonButton1;
+			
+			import util.ByteArrayUtil;
+			import util.CommonTools;
+			
+			public static var NAME:String = "sceneModule.view.battle.view.BattleColonizationWindow";
+			
+			protected function basewindow1_creationCompleteHandler(event:FlexEvent):void
+			{
+			}
+			
+			//获取装备图标路径
+			public function setEquipmentUrl(s:String,t:int):String{
+				if(t == 0){
+					return '';
+				}else{
+					var url:String = ProConst.getImageResUrl(t);
+					url += (s + '.png');
+					return url
+				}
+			}
+			
+			private function getURL(pos:int):String{
+				return SystemDataModel.battleInfoVo.battleSettlementArr.length > 0 ? 
+					setEquipmentUrl(SystemDataModel.battleInfoVo.battleSettlementArr[0].icon,SystemDataModel.battleInfoVo.battleSettlementArr[0].type) : 
+					'';
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<mx:Image source='assets/battle/coloSucBg.png' bottom="0"/>
+		<component:CrotaBasicLabel id="itemName" text="{SystemDataModel.battleInfoVo.sucNum}" x="102" y="99" width="122" styleName="ROLEINFOTEXTFORMAT"/>
+		<component:CrotaBasicLabel id="itemName0" text="{SystemDataModel.battleInfoVo.goldNum}" x="252" y="99" width="75" styleName="ROLEINFOTEXTFORMAT"/>
+		<mx:Image id="equipImg" source="{getURL(0)}" x="86" y="127" width="42" height="42"/>
+		<mx:Image id="equipImg0" source="{getURL(1)}}" x="154" y="127" width="42" height="42"/>
+		<mx:Image id="equipImg1" source="{getURL(2)}" x="224" y="127" width="42" height="42"/>
+		<util:CommonButton id="submitBtn" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_qd')}" x="71" y="202"/>
+		<util:CommonButton id="rewardMan" enabled="false" skinClass="style.Skin_CrotaPackRedButton" label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','bcW_zmgl')}" x="200" y="202"/>
+	</s:SkinnableContainer>
+</win:BaseWindow>

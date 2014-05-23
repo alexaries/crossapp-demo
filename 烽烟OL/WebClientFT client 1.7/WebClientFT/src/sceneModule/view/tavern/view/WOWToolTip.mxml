@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import proto.tavern.tavern3500.Schedule;
+			
+			import resource.CrotaResourceConfig;
+			
+			public function set putWowInfo(value:Schedule):void{
+//				sTitle.htmlText = '['+value.sgName+'] ';
+//				if(value.activateFlag){
+//					sTitle.htmlText += '已激活';
+//				}else{
+//					sTitle.htmlText += '<font color="#ff0000">未激活</font>';
+//				}
+//				desTxt.text = value.sgDes;
+//				reqTxt.htmlText = '需要<font color="#fcff00">'+value.reqDQ+'斗气值</font>激活神格';
+				
+				mingzi.htmlText=CrotaResourceConfig.getInstance().getTextByModuleAndId('role','nmrsC_mz')+"："+value.Name;
+				level.htmlText =CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')+"："+value.Dengji;
+				hp.htmlText    =CrotaResourceConfig.getInstance().getTextByModuleAndId('battle','briTC_sm')+"："+value.Hp;
+				jineng.htmlText=CrotaResourceConfig.getInstance().getTextByModuleAndId('tavern','wTT_jn')+"："+value.Skill;
+				texing.htmlText=CrotaResourceConfig.getInstance().getTextByModuleAndId('tavern','wTT_tx')+"："+value.Texing;
+				liliang.htmlText=CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_ll')+"："+value.Liliang;
+				zhili.htmlText =CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_zl')+"："+value.Zhili;
+				naili.htmlText =CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_nl')+"："+value.Naili;
+				minjie.htmlText=CrotaResourceConfig.getInstance().getTextByModuleAndId('pack','mmeT_mj')+"："+value.Minjie;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:SkinnableContainer skinClass="style.Skin_CrotaCoinTooltip">
+		<s:VGroup gap="1" horizontalAlign="left" top="5"  right="5" bottom="5">
+			<component:CrotaBasicText id="mingzi" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicText id="level" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicText id="hp" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicText id="jineng" styleName="TOOLTIPTEXTFORMAT5" />
+			<component:CrotaBasicText id="texing" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicText id="liliang" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicText id="zhili" styleName="TOOLTIPTEXTFORMAT5" />
+			<component:CrotaBasicText id="naili" styleName="TOOLTIPTEXTFORMAT5"/>
+			<component:CrotaBasicText id="minjie" styleName="TOOLTIPTEXTFORMAT5" />
+		</s:VGroup>
+	</s:SkinnableContainer>	
+</s:Group>

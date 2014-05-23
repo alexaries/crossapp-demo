@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="168" height="190" xmlns:component="component.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import resource.AssetCenter;
+			
+			import sceneModule.view.pet.vo.PetInfoVO;
+			
+			import util.CommonTools;
+			[Bindable]
+			private var petInfo:PetInfoVO;
+			
+			public static var NAME:String = "sceneModule.view.pet.view.PetToolTipComponent";
+			
+			public function curPetInfo(value:PetInfoVO):void{
+				petInfo = value;
+			}
+
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				CommonTools.make_bitmap(tipsBg).bitmapData = AssetCenter.getInstance().get_img_form_pacakge("ui_pet","pet_tips_bg");
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image id="tipsBg" source='assets/pet/petTooltipBg.png'/>
+	<component:CrotaBasicLabel text="{petInfo.petName+'   Lv.'+petInfo.petLevel}" styleName="RANKINGFORMAT1" width="143" textAlign="left" x="15" y="16"/>
+	<component:CrotaBasicLabel text="{petInfo.baseHp+petInfo.manualHp}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="39"/>
+	<component:CrotaBasicLabel text="{petInfo.basePhyDefense+petInfo.manualPhyDefense}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="76"/>
+	<component:CrotaBasicLabel text="{petInfo.baseMagicDefense+petInfo.manualMagicDefense}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="93"/>
+	<component:CrotaBasicLabel text="{petInfo.baseCritRate+petInfo.manualCritRate}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="111"/>
+	<component:CrotaBasicLabel text="{petInfo.baseSpeed+petInfo.manualSpeed}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="129"/>
+	<component:CrotaBasicLabel text="{petInfo.baseHitRate+petInfo.manualHitRate}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="147"/>
+	<component:CrotaBasicLabel text="{petInfo.baseDodgeRate+petInfo.manualDodgeRate}" styleName="RANKINGFORMAT1" width="95" textAlign="left" x="57" y="165"/>
+	<component:CrotaBasicLabel text="{petInfo.basePhyAttack+petInfo.manualPhyAttack+'/'+petInfo.baseMagicAttack+petInfo.manualMagicAttack}" styleName="RANKINGFORMAT1" width="69" textAlign="left" x="87" y="56"/>
+</s:Group>

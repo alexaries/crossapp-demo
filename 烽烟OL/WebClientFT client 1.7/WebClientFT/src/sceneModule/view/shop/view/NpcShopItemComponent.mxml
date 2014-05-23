@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 购买和回购页面 -->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:component="component.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="initApp()" width="614" height="346" xmlns:util="util.*">
+	<fx:Script>
+		<![CDATA[
+			import model.SystemDataModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.CollectionEvent;
+			import mx.events.ItemClickEvent;
+			
+			import resource.AssetCenter;
+			import resource.CrotaResourceConfig;
+			
+			import style.Skin_CrotaPackRadioButtonLeft;
+			
+			import util.CommonTools;
+			//每一页显示数据的条数
+			private const pageList:int = 15;
+			//总页数
+			[Bindable]
+			private var pageCount:int;
+			//当前页数
+			[Bindable]
+			public var currentPage:int = 1;
+			//DataGrid dataprovider
+			[Bindable]
+			private var dataCollection:ArrayCollection = new ArrayCollection();
+			
+			private function initApp():void {
+				init_imgs();
+				
+			}
+			
+			private function init_imgs():void {
+				CommonTools.make_bitmap(img_bg).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_shop_bg');
+				CommonTools.make_bitmap(img_small_face).bitmapData = 
+					AssetCenter.getInstance().get_img_form_pacakge('ui_npcshop', 'npc_shop_small_face');
+			}
+			
+			private function handleCard(event:ItemClickEvent):void {
+				var cardValue:Object = cardtype.selectedValue;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:RadioButtonGroup 
+		id="cardtype" selectedValue="{SystemDataModel.shopInfoVo.itemType == 0 ? CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_gm') : CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_hg')}"
+		itemClick="handleCard(event);"/>
+	</fx:Declarations>
+	<s:SkinnableContainer width="100%" height="100%">
+		<!-- <mx:Image source="assets/shop/npcShopTabItemBg.png"/> -->
+		<mx:Image id="img_bg" x="-23" y="2" />
+			<s:List 
+				id="shopList" 
+				x="-13" y="18"
+				width="605" height="317"
+				skinClass="style.Skin_CrotaBasicList" 
+				dataProvider="{SystemDataModel.shopInfoVo.weaponryShopInfo}"
+				itemRenderer="sceneModule.view.shop.view.NpcShopItemView">
+				<s:layout>
+					<s:TileLayout requestedColumnCount="3" verticalGap="7" horizontalGap="7"/>
+				</s:layout>
+			</s:List>
+			<s:RadioButton 
+				group="{cardtype}" 
+				skinClass="style.Skin_CrotaPackRadioButtonRight" styleName="MAINMENUROLEFONT12e4e0b3" 
+				x="0" y="-16" width="70" height="30"
+				value="{CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_gm')}"
+				label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_gm')}" />
+			<s:RadioButton 
+				group="{cardtype}" 
+				skinClass="style.Skin_CrotaPackRadioButtonRight" styleName="MAINMENUROLEFONT12e4e0b3" 
+				x="70" y="-16" width="70" height="30"
+				value="{CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_hg')}"
+				label="{CrotaResourceConfig.getInstance().getTextByModuleAndId('shop','nsIC_hg')}"/>
+		<util:CommonButton 
+			id="preBtn" 
+			skinClass="style.Skin_CrotaBasicPreButton" 
+			enabled="{SystemDataModel.shopInfoVo.curPage > 1}" 
+			x="208" y="309" width="18" height="13"/>
+		<util:CommonButton 
+			id="nextBtn" 
+			skinClass="style.Skin_CrotaBasicNextButton" 
+			enabled="{SystemDataModel.shopInfoVo.maxPage > SystemDataModel.shopInfoVo.curPage}" 
+			x="263" y="309" width="18" height="13"/>
+		<component:CrotaBasicLabel id="page_info"
+										 styleName="MAINMENUROLEFONT12a18c70"
+										 x="225" y="310"
+										 text="{SystemDataModel.shopInfoVo.curPage+'/'+ SystemDataModel.shopInfoVo.maxPage}"
+										 textAlign="center" width="38"/>
+		<mx:Image id="img_small_face" x="169" y="347"/>
+		<component:CrotaBasicLabel id="l_tip"
+										 styleName="MAINMENUROLEFONT12a18c70"
+										 x="184" y="348"
+										 text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','atbwC_ts')}"
+										 textAlign="center"/>
+	</s:SkinnableContainer>
+</s:Group>

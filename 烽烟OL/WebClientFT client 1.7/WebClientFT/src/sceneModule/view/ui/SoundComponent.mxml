@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="68" height="26">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import managers.SoundManager;
+			
+			import model.SystemDataModel;
+			[Bindable]
+			public var isOpenFlag:Boolean = true;
+
+			protected function image1_clickHandler(event:MouseEvent):void
+			{
+				if(isOpenFlag){
+					SoundManager.getInstance().stopAll();
+					isOpenFlag = false;
+				}else{
+					SoundManager.getInstance().startAll();
+					isOpenFlag = true;
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Image 
+		id="shImg" 
+		useHandCursor="true" 
+		buttonMode="true" 
+		source="{SystemDataModel.hideOtherPlayer?('assets/sound/show.png'):('assets/sound/hide.png')}" 
+		x="-2"/>
+	<mx:Image 
+		id="musicbtn" 
+		useHandCursor="true" 
+		buttonMode="true" 
+		source="{isOpenFlag?('assets/sound/startMusic.png'):('assets/sound/stopMusic.png')}" 
+		click="image1_clickHandler(event)" 
+		x="34" y="19" />
+</s:Group>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<utilComp:CrotaBasicBaseItemRender xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:component="component.*"
+				xmlns:utilComp="util.*"
+				width="518" height="27"
+				creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.controls.Menu;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			
+			import resource.CrotaResourceConfig;
+			
+			import sceneModule.view.friend.event.MediatorRegisterFriendEvent;
+			import sceneModule.view.friend.event.NFriendEvent;
+			
+			import util.CommonTools;
+			
+			
+			private function init():void {
+				this.dispatchEvent(new MediatorRegisterFriendEvent(MediatorRegisterFriendEvent.MR_FRIEND_ITEMRENDER,this,true));
+				
+				refresh_view();
+				
+				this.addEventListener(MouseEvent.CLICK, on_item_click);
+				this.addEventListener(FlexEvent.DATA_CHANGE, refresh_view);
+			}
+			
+			private function refresh_view(e:FlexEvent = null):void {
+				l_name.text = data.roleName;
+				l_job.text = CommonTools.getRoleProfession(data.roleProfession);
+				l_level.text = data.level;
+				l_union.text = data.comp;
+//				l_scenename.text = data.scenename;
+				l_state.text = data.spirit;
+				//好友在线或者不在线显示不同颜色
+				if(1 == data.zx){
+					l_name.styleName = "MAINMENUROLEFONT12a18c70";
+					l_job.styleName = "MAINMENUROLEFONT12a18c70";
+					l_level.styleName = "MAINMENUROLEFONT12a18c70";
+					l_union.styleName = "MAINMENUROLEFONT12a18c70";
+				//	l_scenename.styleName = "MAINMENUROLEFONT12a18c70";
+					l_state.styleName = "MAINMENUROLEFONT12a18c70";
+				}
+				else{
+					l_name.styleName = "MAINMENUROLEFONT808080";
+					l_job.styleName = "MAINMENUROLEFONT808080";
+					l_level.styleName = "MAINMENUROLEFONT808080";
+					l_union.styleName = "MAINMENUROLEFONT808080";
+					//l_scenename.styleName = "MAINMENUROLEFONT808080";
+					l_state.styleName = "MAINMENUROLEFONT808080";
+				}
+			}
+			
+			
+			private function on_item_click(e:MouseEvent):void {
+				var arr:Array = null;
+				if( CrotaResourceConfig.getInstance().getTextByModuleAndId('common','comm_wu')== data.comp){
+					arr = new Array([CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_fsyj')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_ckzl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_yqjr')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_jrh')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_schy')]);
+				}
+				else{
+					arr = new Array([CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_fsyj')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_ckzl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_jrh')],[CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_schy')]);
+				}
+				
+				var myMenu:Menu = Menu.createMenu(null,getItemMenuData(arr), false);
+//				myMenu.width = 80;
+				myMenu.labelField = 'label';
+				myMenu.addEventListener(MenuEvent.ITEM_CLICK,onMenuItemClick);
+				myMenu.show(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
+			}
+			
+			private function getItemMenuData(itemArr:Array):Array {
+				var l:int = itemArr.length;
+				var itemMenuData:Array = new Array();
+				for(var i:int=0;i<l;i++){
+					var menuItem:Object = new Object();
+					menuItem.label = itemArr[i];
+					itemMenuData.push(menuItem);
+				}
+				return itemMenuData;
+			}
+			
+			private function onMenuItemClick(e:MenuEvent):void{
+				var event_str:String = null;
+				switch (e.label) 
+				{
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('corps','cmIR_fsyj'):
+						event_str = NFriendEvent.NFriendEvent_SEND_MAIL;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_ckzl'):
+						event_str = NFriendEvent.NFriendEvent_LOOK_INFO;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_yqjr'):
+						event_str = NFriendEvent.NFriendEvent_INVIDE_TO_UNION;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','cwM_sl'):
+						event_str = NFriendEvent.NFriendEvent_CHAT;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_jrh'):
+						event_str = NFriendEvent.NFriendEvent_BLOCK;
+						break;
+					case CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_schy'):
+						event_str = NFriendEvent.NFriendEvent_REMOVE;
+						break;
+					default:
+				}
+				if(null != event_str){
+					this.dispatchEvent(new NFriendEvent(event_str,data,true));
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	
+	<component:CrotaBasicLabel
+		id="l_name"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_nc')}"
+	 	width="106" x="30" y="7"
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center"/>
+	<component:CrotaBasicLabel
+		id="l_job"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcWM_zy')}" 
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center" 
+		x="126" y="7" width="43"/>
+	<component:CrotaBasicLabel
+		id="l_level"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('chat','mtotcW_dj')}" 
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center" 
+		x="192" y="7" width="43"/>
+	<component:CrotaBasicLabel
+		id="l_union"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_ssjt')}" 
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center" 
+		x="246" y="7" width="88"/>
+	<!--<component:CrotaBasicLabel
+		id="l_scenename"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_dqcj')}" 
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center" 
+		x="408" y="7" width="106"/>-->
+	<component:CrotaBasicLabel
+		id="l_state"
+		text="{CrotaResourceConfig.getInstance().getTextByModuleAndId('friend','nfIR_xq')}" 
+		styleName="MAINMENUROLEFONT12a18c70" textAlign="center" 
+		x="514" y="7" width="175"/>
+</utilComp:CrotaBasicBaseItemRender>

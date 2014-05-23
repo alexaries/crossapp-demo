@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark"		    
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   implements="interfaces.ISceneModule"
+		   preinitialize="module1_preinitializeHandler(event)" 
+		   mouseEnabled="false"
+		   xmlns:view="sceneModule.view.*">
+	<fx:Script>
+		<![CDATA[
+			<!-- @mxmlc -source-path=src,libs -library-path=libs -o bin/output.swf -->
+		
+			import interfaces.ISceneModule;
+			
+			import loader.ProgressBarControl;
+			
+			import model.ServerConfig;
+			
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import org.robotlegs.core.IContext;
+			
+			import sceneModule.view.pack.view.MainMenuEquipmentTooltip;
+			import sceneModule.view.pack.view.MainSmallDesTooltip;
+			import sceneModule.view.popupWin.IPopUpShow;
+			
+			import service.ISocketServer;
+            
+			/*
+			* 模块的Context
+			*/
+			protected var _context:SceneModuleContext;
+			
+			protected var _socketServer:ISocketServer;
+			
+			protected var _serverConfig:ServerConfig;
+			
+			protected var _popUpShow:IPopUpShow;
+			
+			/**
+			 * 获取模块级Context 
+			 * @return IContext
+			 * 
+			 */	
+			public function getContext():IContext
+			{
+				return _context;
+			}
+			/**
+			 * 获取服务器实例
+			 * @return IRemoteService
+			 * 
+			 */	
+			public function getSocketService():ISocketServer
+			{
+				_socketServer = (this.parentApplication as WebClient).appContext.getISocketServer();
+				return _socketServer;
+			}
+			/**
+			 * 获取本地配置实例
+			 * @return ServerConfig
+			 * 
+			 */
+			public function getServerConfig():ServerConfig{
+				_serverConfig = (this.parentApplication as WebClient).appContext.getServerConfig();
+				return _serverConfig;
+			}
+			/**
+			 * 获取弹出窗popUpShow实例
+			 * @return IPopUpShow
+			 */
+			public function getPopUpShow():IPopUpShow{
+				_popUpShow=(this.parentApplication as WebClient).appContext.getPopUpShow();
+				return _popUpShow;
+			}
+			/**
+			 * 获取Tooltip实例
+			 */
+			public function getTooltip():MainMenuEquipmentTooltip{
+				return (this.parentApplication as WebClient).appContext.getTooltip();
+			}
+			/**
+			 * 注册context，不放在Declarations中，保护context私有化 
+			 */	
+			protected function module1_preinitializeHandler(event:FlexEvent):void
+			{
+				_context = new SceneModuleContext(this);
+			}
+			/**
+			 * 获取PBE的Sprite实例
+			 */
+			public function getSpritePBE():Sprite{
+				return (this.parentApplication as WebClient).appContext.getApplicationScene();
+			}
+			/**
+			 * 获取加载进度条实例
+			 */
+			public function getProgressBarInstance():ProgressBarControl{
+				return (this.parentApplication as WebClient).appContext.getProgressLoadInstance();
+			}
+			/**
+			 * 获取弹出窗口实例
+			 */
+			public function getPopUpWindow():PopUpWindowLayer{
+				return (this.parentApplication as WebClient).appContext.getPopUpWindow();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<view:ScenePageView id="scenePageView" mouseEnabled="false"/>
+</mx:Module>
